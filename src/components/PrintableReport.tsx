@@ -208,25 +208,10 @@ export default function PrintableReport({ report, auditId }: Props) {
                 </span>
               </div>
 
-              {/* 4. Pasarelas de Pago */}
-              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${(report.score ?? 0) >= 85 ? 'bg-emerald-50/50 border-emerald-300' : (report.score ?? 0) >= 60 ? 'bg-amber-50/50 border-amber-300' : 'bg-rose-50/50 border-rose-300'}`}>
-                <div>
-                  <strong className="text-neutral-900 block font-bold">4. Compatibilidad con Pasarelas de Pago (Yape, Niubiz, Culqi):</strong>
-                  <span className="text-neutral-700 leading-tight">
-                    {(report.score ?? 0) >= 85
-                      ? 'Óptimo: Cumple con los estándares perimetrales de seguridad exigidos por pasarelas peruanas, asegurando fluidez en tus cobros.'
-                      : 'Riesgo Comercial: Las pasarelas pueden aplicar revisiones de riesgo o retener fondos preventivamente en webs con calificación baja o sin directivas estrictas.'}
-                  </span>
-                </div>
-                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${(report.score ?? 0) >= 85 ? 'bg-emerald-200 text-emerald-900' : (report.score ?? 0) >= 60 ? 'bg-amber-200 text-amber-900' : 'bg-rose-200 text-rose-900'}`}>
-                  {(report.score ?? 0) >= 85 ? '🟢 Óptimo' : (report.score ?? 0) >= 60 ? '🟡 Advertencia' : '🔴 Crítico'}
-                </span>
-              </div>
-
-              {/* 5. Ley de Protección de Datos */}
+              {/* 4. Ley de Protección de Datos */}
               <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${hasValidSsl && !hasDowngradeRisk ? 'bg-emerald-50/50 border-emerald-300' : 'bg-amber-50/50 border-amber-300'}`}>
                 <div>
-                  <strong className="text-neutral-900 block font-bold">5. Ley de Protección de Datos Personales (Perú Ley N° 29733):</strong>
+                  <strong className="text-neutral-900 block font-bold">4. Ley de Protección de Datos Personales (Perú Ley N° 29733):</strong>
                   <span className="text-neutral-700 leading-tight">
                     {hasValidSsl && !hasDowngradeRisk
                       ? 'En cumplimiento: Las sesiones de clientes viajan con cifrado forzado, protegiendo datos personales conforme a la Ley N° 29733.'

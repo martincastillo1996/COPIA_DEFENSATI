@@ -49,12 +49,6 @@ export default function BusinessOverview({ report }: Props) {
     ? 'red'
     : 'green';
 
-  const paymentStatus: 'green' | 'yellow' | 'red' = (report.score ?? 0) < 60
-    ? 'red'
-    : (report.score ?? 0) < 85
-    ? 'yellow'
-    : 'green';
-
   const privacyLawStatus: 'green' | 'yellow' | 'red' = !report.ssl?.valid
     ? 'red'
     : hasDowngradeRisk || missingHeaders.length >= 2
@@ -283,28 +277,7 @@ export default function BusinessOverview({ report }: Props) {
             );
           })()}
 
-          {/* 4. Compatibilidad con Pasarelas de Pago */}
-          {(() => {
-            const styles = getTrafficLightStyles(paymentStatus);
-            return (
-              <div className={`flex items-start justify-between gap-3 p-3.5 rounded-2xl border transition-colors ${styles.container}`}>
-                <div className="flex items-start gap-3">
-                  {styles.icon}
-                  <div className="space-y-0.5">
-                    <strong className="text-white block">4. Compatibilidad con Pasarelas de Pago (Yape, Niubiz, Culqi):</strong>
-                    <span className="text-neutral-300">
-                      {paymentStatus === 'green' && `Óptimo (Calificación ${report.grade || 'A'}): Cumple con los estándares perimetrales exigidos por pasarelas peruanas (Yape, Niubiz, Culqi), asegurando fluidez en tus cobros.`}
-                      {paymentStatus === 'yellow' && `Atención (Calificación ${report.grade || 'B'}): La web es funcional pero carece de directivas perimetrales completas; las pasarelas pueden aplicar revisiones preventivas.`}
-                      {paymentStatus === 'red' && `Crítico (Calificación ${report.grade || 'F'}): Las pasarelas de pago rechazan transacciones o retienen fondos preventivamente ante sospecha de riesgo transaccional o web no blindada.`}
-                    </span>
-                  </div>
-                </div>
-                <div className="shrink-0">{styles.badge}</div>
-              </div>
-            );
-          })()}
-
-          {/* 5. Ley de Protección de Datos Personales (Perú Ley N° 29733) */}
+          {/* 4. Ley de Protección de Datos Personales (Perú Ley N° 29733) */}
           {(() => {
             const styles = getTrafficLightStyles(privacyLawStatus);
             return (
@@ -312,7 +285,7 @@ export default function BusinessOverview({ report }: Props) {
                 <div className="flex items-start gap-3">
                   {styles.icon}
                   <div className="space-y-0.5">
-                    <strong className="text-white block">5. Ley de Protección de Datos Personales (Perú Ley N° 29733):</strong>
+                    <strong className="text-white block">4. Ley de Protección de Datos Personales (Perú Ley N° 29733):</strong>
                     <span className="text-neutral-300">
                       {privacyLawStatus === 'green' && 'Protegido: Las sesiones de los clientes viajan con cifrado seguro forzado, protegiendo los datos personales conforme a la Ley N° 29733.'}
                       {privacyLawStatus === 'yellow' && 'En riesgo: Requiere forzar cifrado estricto y cookies seguras (Secure / HttpOnly) para prevenir filtraciones de sesiones y cumplir la Ley N° 29733.'}
