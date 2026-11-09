@@ -38,7 +38,7 @@ export default function DefensatiHowItWorks() {
   ];
 
   return (
-    <section id="como-funciona" className="w-full max-w-5xl mx-auto space-y-6 scroll-mt-24 px-4 sm:px-6">
+    <section id="como-funciona" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24">
       <div className="p-6 sm:p-10 rounded-[32px] bg-[#121214]/80 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl space-y-8 text-left relative overflow-hidden">
         
         {/* Cabecera */}

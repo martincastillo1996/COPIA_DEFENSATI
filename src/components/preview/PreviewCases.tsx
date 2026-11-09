@@ -21,7 +21,7 @@ export default function PreviewCases() {
   const [activeTab, setActiveTab] = useState<'ecommerce' | 'corporate'>('ecommerce');
 
   return (
-    <section id="ejemplos" className="w-full max-w-5xl mx-auto space-y-6 scroll-mt-24 px-4 sm:px-6">
+    <section id="ejemplos" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24">
       
       {/* 1. La Oportunidad Comercial en Perú (Datos Oficiales del Estado Peruano) */}
       <div className="rounded-[32px] bg-[#121214]/80 border border-white/10 p-6 sm:p-9 backdrop-blur-2xl shadow-xl space-y-6">

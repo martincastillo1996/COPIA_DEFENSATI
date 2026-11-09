@@ -5,7 +5,7 @@ import { ShieldCheck, CheckCircle2, RotateCcw, Sparkles } from 'lucide-react';
 
 export default function PreviewWarranty() {
   return (
-    <section id="garantia" className="w-full max-w-5xl mx-auto scroll-mt-24 px-4 sm:px-6">
+    <section id="garantia" className="w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24">
       <div className="p-7 sm:p-10 rounded-[32px] bg-linear-to-b from-[#10141e] via-[#0d1017] to-[#090b10] border border-emerald-500/30 shadow-[0_15px_40px_rgba(16,185,129,0.1)] relative overflow-hidden">
         
         {/* Glow de seguridad verde esmeralda */}

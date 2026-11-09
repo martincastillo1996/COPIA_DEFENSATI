@@ -195,7 +195,7 @@ export default function DefensatiPage() {
         
         {/* Encabezado Oficial DEFENSA TI (Mobile First) */}
         <header className="sticky top-0 z-50 border-b border-white/10 bg-[#000000]/80 backdrop-blur-2xl transition-all">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             
             {/* Logo de DEFENSA TI con Escudo de Ciberseguridad */}
             <div className="flex items-center gap-3">
@@ -243,7 +243,7 @@ export default function DefensatiPage() {
         </header>
 
         {/* Contenido Principal */}
-        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-12 space-y-16 sm:space-y-20 flex-1 w-full overflow-x-hidden">
+        <main className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-14 space-y-16 sm:space-y-24 flex-1 w-full overflow-x-hidden">
           
           {/* SECCIÓN 1: HERO (Mobile First, Alto Impacto, WhatsApp con tag [Hero]) */}
           <DefensatiHero />
@@ -566,7 +566,7 @@ export default function DefensatiPage() {
 
         {/* PIE DE PÁGINA (Contacto, Confianza, RUC, WhatsApp +1, Términos y Libro de Reclamaciones) */}
         <footer className="border-t border-white/10 py-14 text-xs text-neutral-400 bg-[#000000]/95 backdrop-blur-xl mt-20">
-          <div className="max-w-5xl mx-auto px-6 space-y-8 text-center">
+          <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-center">
             
             {/* Canales de Contacto */}
             <div className="flex flex-wrap items-center justify-center gap-3">
