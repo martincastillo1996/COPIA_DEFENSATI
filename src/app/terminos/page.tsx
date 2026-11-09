@@ -153,24 +153,95 @@ export default function TerminosYPrivacidadPage() {
             </section>
 
             {/* 3. Definición de Planes, Precios en Soles y Tiempos de Entrega */}
-            <section className="space-y-3 text-sm leading-relaxed">
+            <section className="space-y-4 text-sm leading-relaxed">
               <h3 className="text-base font-bold text-white">3. Modalidades de Contratación y Plazos Técnicos de Entrega</h3>
               <p>
-                Las tarifas se expresan preferentemente en moneda nacional (PEN / Nuevos Soles) e incluyen los siguientes alcances y plazos de ejecución técnica:
+                Las tarifas oficiales se expresan en moneda nacional (PEN / Nuevos Soles) e integran los 5 servicios canónicos comercializados por DEFENSA TI con sus respectivos alcances y plazos de ejecución:
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs">
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                  <span className="font-bold text-white block text-sm">Dictamen Técnico (Gratis por Lanzamiento • Antes S/. 65)</span>
-                  <p className="text-neutral-300">Diagnóstico externo no intrusivo sin acceso a claves. Entrega de informe técnico con prioridades al instante.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-2 text-xs">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">1. Diagnóstico gratuito</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sin Costo</span>
+                  </div>
+                  <p className="text-neutral-300">Escaneo perimetral pasivo no intrusivo de cabeceras HTTP, SSL y puertos. Entrega instantánea de informe técnico sin acceso a claves.</p>
                 </div>
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                  <span className="font-bold text-white block text-sm">Blindaje Esencial (S/. 165 PEN)</span>
-                  <p className="text-neutral-300">Incluye auditoría previa y remediación directa de cabeceras críticas (HSTS, CSP, X-Frame), endurecimiento de accesos y CMS estándar en <strong>3 a 5 días hábiles</strong>.</p>
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">2. Limpieza de WordPress infectados</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">Desde S/. 250</span>
+                  </div>
+                  <p className="text-neutral-300">Desinfección forense profunda de archivos y base de datos, retiro de backdoors y recuperación de acceso administrativo en <strong>2 a 4 días hábiles</strong> (con garantía de 30 días).</p>
                 </div>
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                  <span className="font-bold text-white block text-sm">Blindaje Total (S/. 335 PEN)</span>
-                  <p className="text-neutral-300">Auditoría + Blindaje + WAF perimetral y meta técnica de Grado A en la re-evaluación final, ejecutado en <strong>5 a 7 días hábiles</strong>.</p>
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">3. Blindaje de sitios web</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">S/. 165 PEN</span>
+                  </div>
+                  <p className="text-neutral-300">Auditoría previa y fortalecimiento perimetral de cabeceras canónicas (HSTS, CSP, X-Frame), endurecimiento de accesos y ocultamiento de versiones en <strong>3 a 5 días hábiles</strong>.</p>
                 </div>
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">4. Protección mediante WAF</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">Desde S/. 335</span>
+                  </div>
+                  <p className="text-neutral-300">Blindaje de cabeceras + configuración profesional de Firewall de Aplicaciones Web (Cloudflare) contra bots y ataques DDoS en <strong>5 a 7 días hábiles</strong>.</p>
+                </div>
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 md:col-span-2 lg:col-span-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">5. Monitoreo y mantenimiento mensual</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">S/. 49 y S/. 99 / mes</span>
+                  </div>
+                  <p className="text-neutral-300">Vigilancia proactiva automatizada con aviso inmediato a WhatsApp ante caídas, alertas de SSL y re-escaneos periódicos con límite estricto de soporte manual acotado por escrito.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* 3.1. Condiciones Específicas del Monitoreo Mensual */}
+            <section className="space-y-3 text-sm leading-relaxed p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+              <h4 className="text-base font-bold text-white flex items-center gap-2">
+                <span>3.1. Condiciones Específicas del Monitoreo y Mantenimiento Mensual (Planes S/. 49 y S/. 99 PEN)</span>
+              </h4>
+              <p className="text-xs text-neutral-300">
+                Los servicios de monitoreo mensual están estructurados sobre procesos de supervisión automatizada continua para garantizar un precio asequible y una detección inmediata de incidencias. Para asegurar la viabilidad técnica y operativa, el soporte manual de intervención humana está taxativamente acotado:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
+                <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">Plan Esencial (S/. 49 PEN / mes)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Vigilancia Base</span>
+                  </div>
+                  <ul className="space-y-1.5 text-neutral-300">
+                    <li>• <strong>Qué se monitorea:</strong> Disponibilidad web (Uptime HTTP/HTTPS) y fecha de expiración del certificado SSL/TLS.</li>
+                    <li>• <strong>Frecuencia:</strong> Muestreo de disponibilidad cada 15 minutos; alerta preventiva de SSL a los 30 días previos; re-escaneo perimetral mensual.</li>
+                    <li>• <strong>Canal de alertas:</strong> Mensaje inmediato a WhatsApp oficial del cliente ante caída confirmada y reporte mensual consolidado.</li>
+                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 30 minutos al mes</strong> de soporte técnico para ajustes menores de configuración perimetral o renovación básica de SSL.</li>
+                  </ul>
+                </div>
+                <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">Plan Pro (S/. 99 PEN / mes)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">Supervisión Proactiva</span>
+                  </div>
+                  <ul className="space-y-1.5 text-neutral-300">
+                    <li>• <strong>Qué se monitorea:</strong> Disponibilidad en tiempo real, SSL/TLS, integridad de cabeceras y detección perimetral de malware conocido.</li>
+                    <li>• <strong>Frecuencia:</strong> Muestreo de disponibilidad cada 5 minutos; monitoreo continuo de SSL; re-escaneo perimetral semanal con informe detallado.</li>
+                    <li>• <strong>Canal de alertas:</strong> Notificación inmediata y prioritaria a WhatsApp + reporte ejecutivo semanal.</li>
+                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 1.5 horas (90 minutos) al mes</strong> para optimización de cabeceras, endurecimiento y parches rápidos.</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-neutral-300 space-y-1.5">
+                <strong className="text-white block font-semibold">Términos Operativos y Exclusiones de la Suscripción:</strong>
+                <p>
+                  <strong>a) No acumulación de horas:</strong> Los minutos u horas de soporte técnico mensual incluidos caducan al cierre de cada ciclo mensual y en ningún caso son transferibles ni acumulables para meses futuros.
+                </p>
+                <p>
+                  <strong>b) Exclusiones estrictas y cotizaciones independientes:</strong> La cuota mensual no cubre desinfección forense tras hackeos masivos o infecciones sobrevenidas en la web del cliente (cotizado bajo la tarifa de Limpieza de WordPress Desde S/. 250), ni desarrollo web a medida, diseño, creación de nuevas funciones, ni fallas derivadas de caídas del datacenter o hosting del cliente.
+                </p>
+                <p>
+                  <strong>c) Baja voluntaria sin penalizaciones:</strong> El cliente puede cancelar el servicio de monitoreo en cualquier momento antes de la fecha de su siguiente ciclo mensual mediante aviso por WhatsApp o correo electrónico, sin penalizaciones ni cláusulas de permanencia obligatoria.
+                </p>
               </div>
             </section>
 
@@ -190,7 +261,7 @@ export default function TerminosYPrivacidadPage() {
                 <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 space-y-1.5">
                   <strong className="text-white block font-semibold">Tope Máximo de Responsabilidad Patrimonial (Límite al Valor del Servicio):</strong>
                   <p>
-                    Dado que el servicio es prestado bajo la modalidad de Persona Natural con Negocio (Karol Martín Castillo Rojas &bull; RUC 10704877850), la responsabilidad patrimonial total, acumulada y máxima del prestador frente al cliente por cualquier concepto (contractual, extracontractual, civil o comercial) <strong>queda estrictamente topada y limitada al cien por ciento (100%) del importe efectivamente pagado por el cliente por dicho plan contratado</strong> (ej. S/. 165 o S/. 335 PEN).
+                    Dado que el servicio es prestado bajo la modalidad de Persona Natural con Negocio (Karol Martín Castillo Rojas &bull; RUC 10704877850), la responsabilidad patrimonial total, acumulada y máxima del prestador frente al cliente por cualquier concepto (contractual, extracontractual, civil o comercial) <strong>queda estrictamente topada y limitada al cien por ciento (100%) del importe efectivamente pagado por el cliente por dicho plan contratado</strong> (ej. S/. 165 o S/. 335 PEN en servicios puntuales, o el valor de la última mensualidad efectivamente pagada en planes recurrentes de S/. 49 o S/. 99 PEN).
                   </p>
                   <p>
                     Bajo ninguna circunstancia existirá responsabilidad indemnizatoria sobre el patrimonio personal del titular, ni por lucro cesante, daño emergente, pérdida de ventas, retenciones preventivas de pasarelas de pago independientes (Yape, Niubiz, Culqi, etc.) ni reclamaciones de terceros.

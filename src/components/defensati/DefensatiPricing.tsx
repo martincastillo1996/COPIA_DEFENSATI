@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Check, Zap, Sparkles, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Check, Zap, Sparkles, MessageCircle, ShieldCheck, Clock } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 
 interface Props {
@@ -78,18 +78,21 @@ export default function DefensatiPricing({ targetUrl }: Props) {
       name: 'Monitoreo y mantenimiento mensual',
       badge: 'Tranquilidad Continua',
       badgeColor: 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
-      price: 'S/ 49',
-      period: 'al mes (y nivel superior de S/ 99)',
+      price: 'S/ 49 / S/ 99',
+      period: 'Esencial S/ 49/mes • Pro S/ 99/mes',
       description: 'Monitoreo proactivo con alcance y límites por escrito para detectar caídas antes que tus clientes.',
       features: [
-        'Plan Esencial (S/ 49/mes): Aviso inmediato de caídas de web',
-        'Alerta preventiva ante vencimiento del certificado SSL',
+        'Plan Esencial (S/ 49/mes): Uptime cada 15 min + aviso inmediato',
+        'Alerta preventiva ante vencimiento del certificado SSL (30 días)',
         'Re-escaneo mensual de seguridad con informe a tu WhatsApp',
-        'Nivel Superior (S/ 99/mes): Re-escaneos semanales + soporte prioritario',
+        'Nivel Pro (S/ 99/mes): Uptime cada 5 min + escaneos semanales',
+        'Soporte manual incluido: máx. 30 min/mes (Esencial) | 1.5 h/mes (Pro)',
         'Alcance y límites por escrito: cancela en cualquier momento',
       ],
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioMensual(cleanUrl),
-      btnText: 'Activar Monitoreo',
+      secondaryWhatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro(cleanUrl),
+      btnText: 'Activar Esencial (S/ 49)',
+      secondaryBtnText: 'Ver Plan Pro (S/ 99)',
       highlight: false,
       extraNote: 'Alcance y límites por escrito. Sin penalizaciones.',
     },
@@ -221,12 +224,132 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 <span>{plan.btnText}</span>
               </a>
 
+              {plan.secondaryWhatsappUrl && (
+                <a
+                  href={plan.secondaryWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 px-3 rounded-full text-xs font-medium text-sky-400 hover:text-sky-300 hover:bg-sky-500/10 border border-sky-500/20 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                >
+                  <span>{plan.secondaryBtnText || 'Ver Plan Pro (S/ 99)'}</span>
+                  <span>&rarr;</span>
+                </a>
+              )}
+
               <p className="text-[11px] text-center text-[#86868b] leading-tight font-normal">
                 {plan.extraNote}
               </p>
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Detalle y Límites Técnicos del Monitoreo Mensual (S/ 49 vs S/ 99) */}
+      <div className="rounded-[32px] bg-[#121214]/90 border border-white/10 p-6 sm:p-8 backdrop-blur-2xl shadow-xl space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-[#2997ff] text-xs font-semibold">
+              <Clock className="w-3.5 h-3.5" />
+              <span>Transparencia Técnica &amp; Operativa</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              Límites y Alcance del Monitoreo Mensual por Escrito
+            </h3>
+            <p className="text-xs sm:text-sm text-[#a1a1a6] leading-relaxed max-w-2xl">
+              Un servicio de monitoreo asequible solo es rentable y rápido si el 95% es automatizado y el soporte manual está acotado por escrito. Conoce los detalles de cada nivel:
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Plan Esencial S/ 49 */}
+          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Nivel Esencial</span>
+                <span className="text-xl font-bold text-white font-mono">S/ 49 <span className="text-xs font-normal text-neutral-400">/ mes</span></span>
+              </div>
+              <h4 className="text-base font-semibold text-white">Vigilancia Básica &amp; Alertas Tempranas</h4>
+              <ul className="space-y-2.5 text-xs text-neutral-300">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Qué se monitorea:</strong> Disponibilidad web (Uptime HTTP/HTTPS) y estado del certificado SSL/TLS.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Frecuencia:</strong> Uptime check cada 15 min. Alerta preventiva SSL con 30 días de anticipación. Re-escaneo de seguridad perimetral mensual.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Canal de alertas:</strong> Notificación inmediata a WhatsApp ante caídas + reporte mensual resumido.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Soporte manual incluido:</strong> Hasta <strong>30 minutos/mes</strong> de intervención técnica para ajustes perimetrales menores (reactivación SSL básica, cabeceras).</span>
+                </li>
+                <li className="flex items-start gap-2 text-neutral-400 border-t border-white/5 pt-2">
+                  <span className="text-amber-400 font-bold shrink-0">•</span>
+                  <span><strong>Cotización aparte:</strong> Desinfección forense por hackeo, cambios de código/diseño o caídas por infraestructura de hosting ajeno.</span>
+                </li>
+              </ul>
+            </div>
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.precioMensual(cleanUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 px-4 rounded-full bg-white/[0.08] hover:bg-white/[0.12] text-white text-xs font-semibold flex items-center justify-center gap-2 border border-white/10 transition-all cursor-pointer"
+            >
+              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+              <span>Activar Plan Esencial (S/ 49/mes)</span>
+            </a>
+          </div>
+
+          {/* Plan Pro S/ 99 */}
+          <div className="p-6 rounded-2xl bg-blue-500/[0.04] border border-blue-500/25 flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#38bdf8]">Nivel Pro</span>
+                <span className="text-xl font-bold text-white font-mono">S/ 99 <span className="text-xs font-normal text-neutral-400">/ mes</span></span>
+              </div>
+              <h4 className="text-base font-semibold text-white">Vigilancia Continua &amp; Soporte Prioritario</h4>
+              <ul className="space-y-2.5 text-xs text-neutral-300">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Qué se monitorea:</strong> Disponibilidad en tiempo real, SSL/TLS, integridad de cabeceras y escaneo contra malware conocido.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Frecuencia:</strong> Uptime check prioritario cada 5 min. Monitoreo continuo SSL. Re-escaneo semanal completo con informe consolidado.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Canal de alertas:</strong> Alerta inmediata y prioritaria a WhatsApp + reporte semanal ejecutivo.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Soporte manual incluido:</strong> Hasta <strong>1.5 horas (90 min)/mes</strong> de intervención técnica directa para endurecimiento, directivas y parches perimetrales.</span>
+                </li>
+                <li className="flex items-start gap-2 text-neutral-400 border-t border-white/5 pt-2">
+                  <span className="text-amber-400 font-bold shrink-0">•</span>
+                  <span><strong>Cotización aparte:</strong> Desinfección forense por hackeo, desarrollos web a medida o problemas ajenos del datacenter.</span>
+                </li>
+              </ul>
+            </div>
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro(cleanUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 px-4 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-md shadow-[#0071e3]/30 transition-all cursor-pointer"
+            >
+              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+              <span>Activar Plan Pro (S/ 99/mes)</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] text-[#86868b] leading-relaxed flex items-center gap-2">
+          <span>* Los minutos de soporte técnico son de uso dentro de cada ciclo mensual y no son acumulables. Sin permanencia obligatoria: cancela en cualquier momento avisando por WhatsApp.</span>
+        </div>
       </div>
 
       {/* Aclaración de Alcance y Qué NO cubre el servicio */}
