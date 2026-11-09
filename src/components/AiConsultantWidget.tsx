@@ -251,7 +251,7 @@ export default function AiConsultantWidget({ report }: Props) {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 select-none font-sans">
+    <div className="fixed bottom-22 right-5 sm:bottom-24 sm:right-6 z-50 select-none font-sans">
       
       {/* 1. PROACTIVE PREVIEW BUBBLE (IDÉNTICO AL EJEMPLO PROPORCIONADO) */}
       {!isOpen && !bubbleDismissed && (

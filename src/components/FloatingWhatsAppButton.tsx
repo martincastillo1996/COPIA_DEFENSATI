@@ -14,7 +14,7 @@ export default function FloatingWhatsAppButton({ url, score }: Props) {
   const href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   return (
-    <aside aria-label="Contacto de Soporte por WhatsApp" className="fixed bottom-6 left-6 z-40 flex items-center gap-3">
+    <aside aria-label="Contacto de Soporte por WhatsApp" className="fixed bottom-6 right-6 z-40 flex items-center gap-3 flex-row-reverse">
       {/* Botón Circular con el SVG Oficial de WhatsApp */}
       <a
         href={href}
