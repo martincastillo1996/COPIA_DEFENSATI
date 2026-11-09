@@ -485,6 +485,21 @@ export default function PrintableReport({ report, auditId }: Props) {
             </div>
           </div>
 
+          {/* 4. Protocolo Documental de Remediación e Incidencia */}
+          <div className="mb-2 p-2 rounded border border-neutral-300 bg-neutral-100 text-[8px] leading-tight space-y-1">
+            <strong className="text-neutral-900 block font-bold text-[8.5px]">
+              4. Protocolo de Remediación e Informe al Cliente (Documentación Obligatoria):
+            </strong>
+            <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-neutral-800">
+              <p>&bull; <strong>1. Qué se encontró:</strong> Diagnóstico perimetral y hallazgos en cabeceras/SSL/puertos.</p>
+              <p>&bull; <strong>2. Qué se corrigió:</strong> Parches y directivas defensivas aplicadas en servidor.</p>
+              <p>&bull; <strong>3. Qué quedó pendiente:</strong> Tareas adicionales recomendadas al titular del sitio.</p>
+              <p>&bull; <strong>4. Respaldos realizados:</strong> Copia de seguridad previa antes de cualquier intervención.</p>
+              <p>&bull; <strong>5. Responsabilidad:</strong> Alcance perimetral estricto sin acceso a datos privados.</p>
+              <p>&bull; <strong>6. Garantías:</strong> 30 días si reinfecta por la misma causa; no cubre fallos de terceros.</p>
+            </div>
+          </div>
+
           {/* Descargo Legal */}
           <div className="p-2 rounded border border-neutral-300 bg-neutral-50 text-[7.5px] text-neutral-600 leading-normal font-sans">
             <strong>Aviso Legal y Descargo de Responsabilidad:</strong> Diagnóstico automatizado no intrusivo generado con base en directivas públicas OWASP y análisis de cabeceras de transporte. Este documento es un <strong>ejemplo didáctico no oficial</strong> emitido a título informativo de buenas prácticas perimetrales. No constituye una certificación ISO, PCI-DSS ni auditoría de código interno.

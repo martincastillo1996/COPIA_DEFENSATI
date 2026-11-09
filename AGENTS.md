@@ -27,3 +27,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
    - **Página y subpáginas de DEFENSA TI (`/defensati`, escáner, etc.):** Utilizan el icono de **escudo de seguridad** (`ShieldCheck`) correspondiente al producto de ciberseguridad perimetral.
    - Respuestas concisas, en español y directas.
 
+6. **Protocolo Obligatorio para Auditorías, Informes y Limpieza de Webs a Clientes:**
+   - Cada vez que el usuario solicite auditar una web o generar un informe/PDF con resultados para un cliente (especialmente en servicios de limpieza de páginas infectadas o remediación), DEBE quedar documentado de forma obligatoria y estructurada:
+     1. **Qué se encontró:** Detalle de virus, malware, redirecciones maliciosas, fallas de cabeceras, puertos expuestos o vulnerabilidades detectadas.
+     2. **Qué se corrigió:** Acciones exactas de desinfección, parches perimetrales y cabeceras aplicadas.
+     3. **Qué quedó pendiente:** Tareas fuera del alcance o dependientes del cliente (ej. actualización de plugins con licencias vencidas).
+     4. **Qué respaldos se realizaron:** Copia de seguridad integral de archivos y base de datos previa a la intervención.
+     5. **Qué responsabilidad se asume:** Alcance técnico directo sobre la desinfección y blindaje perimetral implementado.
+     6. **Qué garantías se ofrecen y cuáles no:** Garantía de 30 días si la web se vuelve a infectar por la misma causa remediada; exclusión de garantía ante instalación de plugins piratas/vulnerables, contraseñas débiles o modificaciones de terceros posteriores.
+
