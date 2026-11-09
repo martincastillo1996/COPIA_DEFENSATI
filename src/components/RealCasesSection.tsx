@@ -246,7 +246,7 @@ export default function RealCasesSection() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-400 font-bold">✓</span>
-                    <span><strong>Cookies HttpOnly & SameSite=Strict:</strong> Blindaje total contra secuestro de sesión y robo de credenciales.</span>
+                    <span><strong>Cookies HttpOnly & SameSite=Strict:</strong> Fortalecimiento contra secuestro de sesión y reducción de riesgo de credenciales.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-400 font-bold">✓</span>

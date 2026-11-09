@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://neuronalgravity.com"),
   openGraph: {
     title: "DEFENSA TI | Blindaje y Seguridad Web para Negocios",
-    description: "Auditamos la seguridad de tu página web y corregimos cada punto débil. Auditoría desde S/ 65 y Blindaje Total con garantía de mejora por escrito.",
+    description: "Auditoría de seguridad web, fortalecimiento de configuración y reducción de riesgo para negocios. Diagnóstico independiente y garantía por escrito.",
     url: "https://neuronalgravity.com",
     siteName: "DEFENSA TI • Neuronal Gravity",
     locale: "es_PE",

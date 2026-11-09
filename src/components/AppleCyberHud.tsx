@@ -142,9 +142,9 @@ export default function AppleCyberHud() {
             <CheckCircle2 className="w-4 h-4" />
           </div>
           <div className="space-y-0.5">
-            <span className="text-xs font-bold text-white block">Aprobación Pasarelas</span>
+            <span className="text-xs font-bold text-white block">Buenas Prácticas E-commerce</span>
             <p className="text-[11px] text-neutral-400 leading-snug">
-              Verifica los estándares perimetrales que evitan retenciones en Yape, Niubiz y Culqi.
+              Verifica los estándares perimetrales recomendados para reducción de riesgo en comercio electrónico.
             </p>
           </div>
         </div>

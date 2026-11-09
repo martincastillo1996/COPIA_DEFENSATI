@@ -407,7 +407,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 </div>
 
                 <p className="text-xs text-neutral-300 leading-relaxed">
-                  En el Perú, una sola retención de fondos por riesgo perimetral en pasarelas como Niubiz o Culqi inmoviliza capital comercial durante 15 a 30 días, y una queja ante INDECOPI por filtración de datos acarrea sanciones que superan las 5 UIT. Cuentas con dos alternativas directas:
+                  En el Perú, las observaciones de seguridad o sanciones ante INDECOPI por falta de cifrado en datos de clientes acarrean multas de hasta 50 UIT bajo la Ley N° 29733. Implementar buenas prácticas perimetrales reduce drásticamente el riesgo operativo:
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">

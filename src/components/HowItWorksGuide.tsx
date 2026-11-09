@@ -66,7 +66,7 @@ export default function HowItWorksGuide() {
 
             <div className="text-[11px] text-neutral-400 flex items-center gap-1.5 font-medium pt-3 border-t border-white/5">
               <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-              <span>Cero riesgo para tu servidor</span>
+              <span>Sondeo no invasivo sin riesgo operativo</span>
             </div>
           </div>
 
@@ -97,7 +97,7 @@ export default function HowItWorksGuide() {
               <div>
                 <h4 className="text-base font-extrabold text-white">Diagnóstico al instante</h4>
                 <p className="text-xs sm:text-[13px] text-neutral-300 leading-relaxed mt-1.5">
-                  En 1 segundo ves tu nota: si tu web es vulnerable a <strong>clonación de pagos o robo de compras</strong> en Wi-Fi.
+                  En 1 segundo ves tu nota: detecta fallas perimetrales y oportunidades de <strong>fortalecimiento de configuración</strong>.
                 </p>
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function HowItWorksGuide() {
 
             <div className="text-[11px] text-neutral-400 flex items-center gap-1.5 font-medium pt-3 border-t border-white/5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Menor riesgo de retención en pasarelas (Yape, Niubiz, Culqi)</span>
+              <span>Reducción de riesgo perimetral y fortalecimiento de configuración</span>
             </div>
           </div>
 
