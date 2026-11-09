@@ -247,6 +247,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             auditId={auditId} 
             grade={report.grade} 
             score={report.score} 
+            badgeToken={report.badgeToken}
           />
 
           {/* Alerta Preventiva de Vencimiento SSL en WhatsApp */}

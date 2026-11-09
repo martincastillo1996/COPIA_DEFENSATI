@@ -26,6 +26,7 @@ export interface AuditReportRecord {
   cookies?: CookieScanResult;
   scannedAt?: string;
   isHyperscale?: boolean;
+  badgeToken?: string;
 }
 
 const globalForReports = globalThis as unknown as {
@@ -53,4 +54,38 @@ export function saveReport(id: string, report: AuditReportRecord): void {
 
 export function getReportById(id: string): AuditReportRecord | undefined {
   return reportStore.get(id);
+}
+
+export function getReportByDomain(domain: string): AuditReportRecord | undefined {
+  const clean = domain
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//i, '')
+    .replace(/\/.*$/, '')
+    .replace(/[^a-z0-9.-]/g, '');
+
+  if (!clean) return undefined;
+
+  let latest: AuditReportRecord | undefined;
+  for (const report of reportStore.values()) {
+    const reportDomain = (report.url || '')
+      .trim()
+      .toLowerCase()
+      .replace(/^https?:\/\//i, '')
+      .replace(/\/.*$/, '')
+      .replace(/[^a-z0-9.-]/g, '');
+
+    if (reportDomain === clean || reportDomain.endsWith('.' + clean) || clean.endsWith('.' + reportDomain)) {
+      if (!latest) {
+        latest = report;
+      } else {
+        const t1 = report.scannedAt ? new Date(report.scannedAt).getTime() : 0;
+        const t0 = latest.scannedAt ? new Date(latest.scannedAt).getTime() : 0;
+        if (t1 >= t0) {
+          latest = report;
+        }
+      }
+    }
+  }
+  return latest;
 }

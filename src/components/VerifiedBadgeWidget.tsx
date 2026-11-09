@@ -1,16 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Award, Check, Copy, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Award, Check, Copy, ShieldCheck } from 'lucide-react';
 
 interface VerifiedBadgeWidgetProps {
   domain: string;
   auditId?: string;
   grade?: string;
   score?: number;
+  badgeToken?: string;
 }
 
-export default function VerifiedBadgeWidget({ domain, auditId, grade, score = 0 }: VerifiedBadgeWidgetProps) {
+export default function VerifiedBadgeWidget({ domain, auditId, grade, score = 0, badgeToken }: VerifiedBadgeWidgetProps) {
   const [copied, setCopied] = useState(false);
 
   // Solo se muestra a sitios con Grado A o calificación de alta seguridad
@@ -18,7 +19,14 @@ export default function VerifiedBadgeWidget({ domain, auditId, grade, score = 0 
   if (!isHighGrade) return null;
 
   const cleanDomain = domain.replace(/^https?:\/\//i, '').split('/')[0].toLowerCase();
-  const badgeUrl = `https://neuronalgravity.com/api/badge/${encodeURIComponent(cleanDomain)}`;
+  
+  const queryParts: string[] = [];
+  if (auditId) queryParts.push(`auditId=${encodeURIComponent(auditId)}`);
+  if (badgeToken) queryParts.push(`token=${encodeURIComponent(badgeToken)}`);
+  const queryStr = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
+
+  const badgeUrl = `https://neuronalgravity.com/api/badge/${encodeURIComponent(cleanDomain)}${queryStr}`;
+  const localBadgeSrc = `/api/badge/${encodeURIComponent(cleanDomain)}${queryStr}`;
   const reportUrl = auditId ? `https://neuronalgravity.com/report/${auditId}` : `https://neuronalgravity.com/defensati?target=${encodeURIComponent(cleanDomain)}`;
 
   const embedSnippet = `<!-- Sello de Blindaje Web Verificado por DEFENSA TI -->\n<a href="${reportUrl}" target="_blank" rel="noopener noreferrer" title="Certificado de Seguridad DEFENSA TI - Neuronal Gravity">\n  <img src="${badgeUrl}" alt="Blindaje Web Verificado por DEFENSA TI" width="280" height="42" style="border:none;" />\n</a>`;
@@ -62,7 +70,7 @@ export default function VerifiedBadgeWidget({ domain, auditId, grade, score = 0 
           <span className="text-[11px] font-mono text-slate-400 block mb-2">Vista previa en tu sitio:</span>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`/api/badge/${encodeURIComponent(cleanDomain)}`}
+            src={localBadgeSrc}
             alt="Sello de Seguridad DEFENSA TI"
             className="rounded-lg shadow-md max-w-full mx-auto sm:mx-0"
             width={280}

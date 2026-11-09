@@ -9,6 +9,7 @@ import { lookupServerLocation } from '@/lib/scanner/geoScanner';
 import { v4 as uuidv4 } from 'uuid';
 import { isPrivateOrLocalHost, verifyDnsResolution } from '@/lib/security/ssrfValidator';
 import { saveAuditConsent, AuditConsentRecord } from '@/lib/storage/auditConsentStore';
+import { signBadge } from '@/lib/security/badgeSigner';
 
 // Caché en Memoria de Escaneos por Dominio (TTL de 2 horas para soportar picos masivos)
 const DOMAIN_SCAN_CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 horas
@@ -343,6 +344,10 @@ export async function POST(req: Request) {
     const auditId = uuidv4();
     const durationMs = Date.now() - startTime;
 
+    const badgeToken = (grade === 'A+' || grade === 'A' || score >= 85)
+      ? signBadge(target.origin, grade, auditId)
+      : undefined;
+
     const fullReport = {
       id: auditId,
       url: target.origin,
@@ -355,6 +360,7 @@ export async function POST(req: Request) {
       remediations,
       location: serverLocation,
       cookies: !Array.isArray(headerResult) && headerResult && 'cookies' in headerResult ? headerResult.cookies : undefined,
+      badgeToken,
       telemetry: {
         durationMs,
         aiModel: 'gemini-1.5-flash',

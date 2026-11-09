@@ -480,6 +480,7 @@ export default function DefensatiPreviewPage() {
                 auditId={auditId || undefined} 
                 grade={report.grade} 
                 score={report.score} 
+                badgeToken={report.badgeToken}
               />
 
               <SslAlertWidget 
