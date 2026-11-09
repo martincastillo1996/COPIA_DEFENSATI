@@ -14,7 +14,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
   const plans = [
     {
       id: 'limpieza',
-      name: 'Limpieza de web infectada',
+      name: 'Limpieza de WordPress infectados',
       badge: 'Oferta Principal • Rescate',
       badgeColor: 'bg-rose-500/10 border-rose-500/25 text-rose-300',
       price: 'Desde S/ 250',
@@ -34,7 +34,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
     },
     {
       id: 'blindaje',
-      name: 'Blindaje básico',
+      name: 'Blindaje de sitios web',
       badge: 'Configuración Esencial',
       badgeColor: 'bg-white/[0.08] border-white/15 text-[#f5f5f7]',
       price: 'S/ 165',
@@ -48,20 +48,20 @@ export default function DefensatiPricing({ targetUrl }: Props) {
         'Entrega rápida llave en mano sin tocar datos privados',
       ],
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioBlindaje(cleanUrl),
-      btnText: 'Pedir Blindaje Básico',
+      btnText: 'Pedir Blindaje Web',
       highlight: false,
       extraNote: 'Auditoría y fortalecimiento de configuración.',
     },
     {
       id: 'blindaje-waf',
-      name: 'Blindaje avanzado con WAF',
+      name: 'Protección mediante WAF',
       badge: 'Máxima Protección • Recomendado',
       badgeColor: 'bg-[#2997ff]/10 border-[#2997ff]/25 text-[#38bdf8]',
       price: 'Desde S/ 335',
       period: 'pago único de implementación',
       description: 'Incluye todo el Blindaje Básico + configuración experta de Firewall de Aplicaciones Web (WAF).',
       features: [
-        'Todo lo incluido en el Blindaje Básico (S/ 165)',
+        'Todo lo incluido en el Blindaje de sitios web (S/ 165)',
         'Configuración profesional de WAF perimetral (Cloudflare)',
         'Reglas activas anti-bots maliciosos y scrapers',
         'Mitigación de ataques DDoS de capa 7',
@@ -69,13 +69,13 @@ export default function DefensatiPricing({ targetUrl }: Props) {
       ],
       optionalAddon: '* Incluye configuración de WAF; el costo del servicio WAF de terceros puede ir aparte.',
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl),
-      btnText: 'Pedir Blindaje con WAF',
+      btnText: 'Pedir Protección WAF',
       highlight: true,
       extraNote: 'Configuración perimetral de WAF llave en mano.',
     },
     {
       id: 'vigilancia',
-      name: 'Vigilancia mensual',
+      name: 'Monitoreo y mantenimiento mensual',
       badge: 'Tranquilidad Continua',
       badgeColor: 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
       price: 'S/ 49',
@@ -89,7 +89,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
         'Alcance y límites por escrito: cancela en cualquier momento',
       ],
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioMensual(cleanUrl),
-      btnText: 'Activar Vigilancia',
+      btnText: 'Activar Monitoreo',
       highlight: false,
       extraNote: 'Alcance y límites por escrito. Sin penalizaciones.',
     },
@@ -125,7 +125,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               <span>100% Sin Costo</span>
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-[#f5f5f7] tracking-tight">
-              Diagnóstico inicial: Gratis
+              Diagnóstico gratuito
             </h3>
             <p className="text-xs sm:text-sm text-[#a1a1a6] leading-relaxed font-normal">
               Solo revisiones pasivas de cabeceras, SSL y puertos. Te mostramos qué encontramos antes de que pagues.

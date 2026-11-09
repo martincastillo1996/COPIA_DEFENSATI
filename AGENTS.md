@@ -36,3 +36,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
      5. **Qué responsabilidad se asume:** Alcance técnico directo sobre la desinfección y blindaje perimetral implementado.
      6. **Qué garantías se ofrecen y cuáles no:** Garantía de 30 días si la web se vuelve a infectar por la misma causa remediada; exclusión de garantía ante instalación de plugins piratas/vulnerables, contraseñas débiles o modificaciones de terceros posteriores.
 
+7. **Catálogo Oficial de Servicios Comercializados por DEFENSA TI:**
+   - La oferta comercial de DEFENSA TI se compone estrictamente de estos 5 servicios oficiales:
+     1. **Diagnóstico gratuito:** Escáner pasivo de cabeceras, SSL y puertos (100% sin costo, gancho comercial para mostrar qué encontramos antes de que pagues).
+     2. **Limpieza de WordPress infectados:** Desinfección profunda de archivos y base de datos, eliminación de virus/malware/backdoors y recuperación de acceso administrativo (Desde S/ 250, cotizado según complejidad con garantía de 30 días).
+     3. **Blindaje de sitios web:** Fortalecimiento perimetral de cabeceras estrictas (HSTS, CSP, X-Frame), ocultamiento de versiones de servidor/PHP/CMS y actualización segura de CMS/plugins (S/ 165).
+     4. **Protección mediante WAF:** Configuración profesional perimetral de Firewall de Aplicaciones Web (Cloudflare) contra bots maliciosos, DDoS y scrapers (Desde S/ 335).
+     5. **Monitoreo y mantenimiento mensual:** Vigilancia proactiva con aviso inmediato de caídas, alerta de vencimiento SSL y re-escaneos periódicos con informe a WhatsApp, con alcance y límites por escrito (S/ 49/mes y nivel Pro S/ 99/mes).
+

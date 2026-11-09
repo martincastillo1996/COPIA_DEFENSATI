@@ -31,32 +31,32 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
   },
   precioLimpieza: (domain = '') => {
     const text = domain
-      ? `Hola, quiero consultar por la Limpieza de web hackeada. Mi página es: ${domain}`
-      : 'Hola, quiero consultar por la Limpieza de web hackeada. Mi página es: ';
+      ? `Hola, quiero consultar por la Limpieza de WordPress infectado. Mi página es: ${domain}`
+      : 'Hola, quiero consultar por la Limpieza de WordPress infectado. Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Limpieza]');
   },
   precioBlindaje: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el plan Blindaje básico (S/ 165). Mi página es: ${domain}`
-      : 'Hola, quiero el plan Blindaje básico (S/ 165). Mi página es: ';
+      ? `Hola, quiero el servicio de Blindaje de sitios web (S/ 165). Mi página es: ${domain}`
+      : 'Hola, quiero el servicio de Blindaje de sitios web (S/ 165). Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Blindaje]');
   },
   precioBlindajeWaf: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el plan Blindaje avanzado con WAF (Desde S/ 335). Mi página es: ${domain}`
-      : 'Hola, quiero el plan Blindaje avanzado con WAF (Desde S/ 335). Mi página es: ';
+      ? `Hola, quiero el servicio de Protección mediante WAF (Desde S/ 335). Mi página es: ${domain}`
+      : 'Hola, quiero el servicio de Protección mediante WAF (Desde S/ 335). Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Blindaje-WAF]');
   },
   precioMensual: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el plan Vigilancia mensual (S/ 49). Mi página es: ${domain}`
-      : 'Hola, quiero el plan Vigilancia mensual (S/ 49). Mi página es: ';
+      ? `Hola, quiero el servicio de Monitoreo y mantenimiento mensual (S/ 49). Mi página es: ${domain}`
+      : 'Hola, quiero el servicio de Monitoreo y mantenimiento mensual (S/ 49). Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Mensual]');
   },
   precioMensualPro: (domain = '') => {
     const text = domain
-      ? `Hola, me interesa la Vigilancia mensual nivel Pro (S/ 99). Mi página es: ${domain}`
-      : 'Hola, me interesa la Vigilancia mensual nivel Pro (S/ 99). Mi página es: ';
+      ? `Hola, me interesa el Monitoreo y mantenimiento mensual nivel Pro (S/ 99). Mi página es: ${domain}`
+      : 'Hola, me interesa el Monitoreo y mantenimiento mensual nivel Pro (S/ 99). Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Mensual-Pro]');
   },
   escaner: (domain: string, score?: number, grade?: string) => {
