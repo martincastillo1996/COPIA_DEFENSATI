@@ -39,20 +39,20 @@ export default function DefensatiHowItWorks() {
 
   return (
     <section id="como-funciona" className="w-full max-w-5xl mx-auto space-y-6 scroll-mt-24 px-4 sm:px-6">
-      <div className="p-6 sm:p-10 rounded-[32px] bg-[#0c0d10] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] space-y-8 text-left relative overflow-hidden">
+      <div className="p-6 sm:p-10 rounded-[32px] bg-[#121214]/80 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl space-y-8 text-left relative overflow-hidden">
         
         {/* Cabecera */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs font-medium tracking-tight">
+              <Sparkles className="w-3.5 h-3.5" />
               <span>Cómo funciona</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-[#f5f5f7] tracking-[-0.03em] leading-snug">
               Solución en 3 pasos simples
             </h2>
           </div>
-          <span className="text-xs text-neutral-400 font-mono">
+          <span className="text-xs text-[#86868b] font-mono">
             Sin burocracia &bull; Directo al grano
           </span>
         </div>
@@ -64,7 +64,7 @@ export default function DefensatiHowItWorks() {
             return (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-[#141416] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden"
+                className="p-6 sm:p-7 rounded-[24px] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden backdrop-blur-xl"
               >
                 {/* Glow suave */}
                 <div className={`absolute top-0 right-0 w-24 h-24 bg-linear-to-br ${item.color} rounded-full blur-2xl pointer-events-none`} />
@@ -74,16 +74,16 @@ export default function DefensatiHowItWorks() {
                     <div className={`w-11 h-11 rounded-2xl bg-white/5 border ${item.borderColor} flex items-center justify-center ${item.iconColor} shadow-inner`}>
                       <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-xs font-mono font-black text-neutral-400 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                    <span className="text-xs font-mono font-medium text-[#2997ff] bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-white leading-snug pt-1">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#f5f5f7] leading-snug pt-1 tracking-tight">
                     {item.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                  <p className="text-sm text-[#a1a1a6] leading-relaxed font-normal">
                     {item.desc}
                   </p>
                 </div>

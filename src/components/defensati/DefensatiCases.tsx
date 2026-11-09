@@ -21,15 +21,15 @@ export default function DefensatiCases() {
     <section id="ejemplos" className="w-full max-w-5xl mx-auto space-y-6 scroll-mt-24 px-4 sm:px-6">
       
       {/* Cabecera de Sección con Botón Colapsable */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto p-6 sm:p-8 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-sky-400 text-xs sm:text-sm font-semibold">
+      <div className="text-center space-y-4 max-w-3xl mx-auto p-6 sm:p-8 rounded-[32px] bg-[#121214]/80 border border-white/10 backdrop-blur-2xl shadow-xl">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs sm:text-[13px] font-medium tracking-tight">
           <Sparkles className="w-4 h-4" />
           <span>Ejemplos ilustrativos &bull; Simulación didáctica</span>
         </div>
-        <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-5xl font-semibold text-[#f5f5f7] tracking-[-0.035em] leading-tight">
           Ejemplos ilustrativos: Antes y Después del Blindaje
         </h2>
-        <p className="text-sm sm:text-base text-neutral-200 leading-relaxed max-w-2xl mx-auto font-normal">
+        <p className="text-sm sm:text-base text-[#a1a1a6] leading-relaxed max-w-2xl mx-auto font-normal">
           Escenarios modelo representativos basados en configuraciones habituales de páginas web en Perú. Muestran cómo un sitio con fallas perimetrales se transforma tras aplicar buenas prácticas y blindaje.
         </p>
 
@@ -38,17 +38,17 @@ export default function DefensatiCases() {
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#0071e3]/20 hover:bg-[#0071e3]/30 border border-[#0071e3]/50 text-[#38bdf8] font-bold text-sm sm:text-base transition-all shadow-md active:scale-[0.98] cursor-pointer"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/15 text-[#f5f5f7] font-medium text-sm sm:text-base transition-all shadow-md active:scale-[0.98] cursor-pointer"
           >
             {isExpanded ? (
               <>
                 <span>Ocultar detalle de ejemplos</span>
-                <ChevronUp className="w-4 h-4" />
+                <ChevronUp className="w-4 h-4 text-[#2997ff]" />
               </>
             ) : (
               <>
                 <span>Ver detalle de casos de ejemplo (Antes vs Después)</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-4 h-4 text-[#2997ff]" />
               </>
             )}
           </button>
@@ -98,7 +98,7 @@ export default function DefensatiCases() {
                     <span className="text-xs sm:text-sm font-mono text-sky-400 uppercase font-bold tracking-wider">
                       Sector Retail &bull; Simulación de Muestra
                     </span>
-                    <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight mt-1">
+                    <h3 className="text-xl sm:text-3xl font-semibold text-[#f5f5f7] tracking-tight mt-1">
                       Tienda Online de Calzado & Moda (Simulación WooCommerce)
                     </h3>
                   </div>
@@ -122,7 +122,7 @@ export default function DefensatiCases() {
                     </div>
 
                     <div className="space-y-3 pt-1">
-                      <h4 className="text-base sm:text-lg font-black text-white">Vulnerabilidades de muestra:</h4>
+                      <h4 className="text-base sm:text-lg font-semibold text-[#f5f5f7]">Vulnerabilidades de muestra:</h4>
                       <ul className="space-y-2.5 text-sm sm:text-base text-neutral-100 leading-relaxed font-normal">
                         <li className="flex items-start gap-2.5">
                           <span className="text-rose-400 font-bold text-base">&times;</span>
@@ -151,7 +151,7 @@ export default function DefensatiCases() {
                     </div>
 
                     <div className="space-y-3 pt-1">
-                      <h4 className="text-base sm:text-lg font-black text-white">Mejoras implementadas:</h4>
+                      <h4 className="text-base sm:text-lg font-semibold text-[#f5f5f7]">Mejoras implementadas:</h4>
                       <ul className="space-y-2.5 text-sm sm:text-base text-neutral-100 leading-relaxed font-normal">
                         <li className="flex items-start gap-2.5">
                           <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
@@ -179,7 +179,7 @@ export default function DefensatiCases() {
                     <span className="text-xs sm:text-sm font-mono text-sky-400 uppercase font-bold tracking-wider">
                       Sector Servicios &bull; Simulación de Muestra
                     </span>
-                    <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight mt-1">
+                    <h3 className="text-xl sm:text-3xl font-semibold text-[#f5f5f7] tracking-tight mt-1">
                       Portal Corporativo B2B (Simulación Servicios & Logística)
                     </h3>
                   </div>
@@ -203,7 +203,7 @@ export default function DefensatiCases() {
                     </div>
 
                     <div className="space-y-3 pt-1">
-                      <h4 className="text-base sm:text-lg font-black text-white">Vulnerabilidades de muestra:</h4>
+                      <h4 className="text-base sm:text-lg font-semibold text-[#f5f5f7]">Vulnerabilidades de muestra:</h4>
                       <ul className="space-y-2.5 text-sm sm:text-base text-neutral-100 leading-relaxed font-normal">
                         <li className="flex items-start gap-2.5">
                           <span className="text-rose-400 font-bold text-base">&times;</span>
@@ -232,7 +232,7 @@ export default function DefensatiCases() {
                     </div>
 
                     <div className="space-y-3 pt-1">
-                      <h4 className="text-base sm:text-lg font-black text-white">Mejoras implementadas:</h4>
+                      <h4 className="text-base sm:text-lg font-semibold text-[#f5f5f7]">Mejoras implementadas:</h4>
                       <ul className="space-y-2.5 text-sm sm:text-base text-neutral-100 leading-relaxed font-normal">
                         <li className="flex items-start gap-2.5">
                           <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
