@@ -218,12 +218,30 @@ export default function AiConsultantWidget({ report }: Props) {
     }
   };
 
-  const handleLaunchScan = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!scanUrl.trim()) return;
-    const clean = scanUrl.trim().replace(/^https?:\/\//i, '');
+  const handleLaunchScan = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const raw = scanUrl.trim();
+    const clean = raw ? raw.replace(/^https?:\/\//i, '') : '';
+    const finalTarget = clean ? (clean.startsWith('http') ? clean : `https://${clean}`) : '';
+
     setIsOpen(false);
-    router.push(`/defensati?target=${encodeURIComponent(`https://${clean}`)}`);
+
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname.includes('/defensati')) {
+        if (finalTarget) {
+          window.dispatchEvent(new CustomEvent('set-target-url', { detail: finalTarget }));
+        }
+        const inputEl = document.getElementById('url-scan-input');
+        if (inputEl) {
+          inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => inputEl.focus(), 350);
+        }
+        return;
+      }
+    }
+
+    const targetQuery = finalTarget ? `?target=${encodeURIComponent(finalTarget)}` : '';
+    router.push(`/defensati${targetQuery}#url-scan-input`);
   };
 
   const handleOpenDonation = () => {
@@ -510,13 +528,12 @@ export default function AiConsultantWidget({ report }: Props) {
             {view === 'scan' && (
               <div className="space-y-4 py-2">
                 <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-neutral-300 leading-relaxed">
-                  Ingresa tu dominio web para auditar de inmediato cabeceras HTTP, cifrado SSL y estado perimetral:
+                  Ingresa tu dominio para transferirlo al escáner perimetral oficial (con declaración jurada bajo la Ley N° 30096):
                 </div>
 
                 <form onSubmit={handleLaunchScan} className="space-y-3">
                   <input
                     type="text"
-                    required
                     placeholder="ej: mitienda.pe o miweb.com"
                     value={scanUrl}
                     onChange={(e) => setScanUrl(e.target.value)}
@@ -524,15 +541,15 @@ export default function AiConsultantWidget({ report }: Props) {
                   />
                   <button
                     type="submit"
-                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#0071e3] to-sky-500 hover:from-[#0077ed] hover:to-sky-400 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#0071e3] to-sky-500 hover:from-[#0077ed] hover:to-sky-400 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95"
                   >
                     <span>Auditar Web Ahora</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
 
-                <p className="text-[10px] text-neutral-400 text-center font-mono">
-                  Diagnóstico 100% externo, no invasivo y sin pedir contraseñas.
+                <p className="text-[10.5px] text-neutral-400 text-center leading-relaxed font-sans">
+                  🔒 Te dirigirá al escáner principal con tu dominio listo para marcar la declaración jurada conforme a ley.
                 </p>
               </div>
             )}

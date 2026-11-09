@@ -106,14 +106,41 @@ export default function HomePage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const handleSetTarget = (e: Event) => {
+        const customEv = e as CustomEvent<string | { url?: string }>;
+        const targetVal = typeof customEv.detail === 'string' ? customEv.detail : customEv.detail?.url;
+        if (targetVal) {
+          setUrl(targetVal);
+          const inputEl = document.getElementById('url-scan-input');
+          if (inputEl) {
+            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => inputEl.focus(), 300);
+          }
+        }
+      };
+
+      window.addEventListener('set-target-url', handleSetTarget as EventListener);
+
       const params = new URLSearchParams(window.location.search);
       const target = params.get('target') || params.get('url');
       if (target) {
         const timer = setTimeout(() => {
           setUrl(target);
-        }, 50);
-        return () => clearTimeout(timer);
+          const inputEl = document.getElementById('url-scan-input');
+          if (inputEl) {
+            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => inputEl.focus(), 300);
+          }
+        }, 150);
+        return () => {
+          clearTimeout(timer);
+          window.removeEventListener('set-target-url', handleSetTarget as EventListener);
+        };
       }
+
+      return () => {
+        window.removeEventListener('set-target-url', handleSetTarget as EventListener);
+      };
     }
   }, []);
 
