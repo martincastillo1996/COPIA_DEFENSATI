@@ -135,16 +135,16 @@ export default function DefensatiPreviewPage() {
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
-      {/* Fondo interactivo y luces ambientales */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
+      {/* Fondo interactivo y luces ambientales (25% más visible y nítido) */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-65">
         <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/50 to-[#000000]/90" />
+        <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/30 to-[#000000]/70" />
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-0 flex justify-center">
         <div 
-          className="absolute rounded-full bg-linear-to-b from-[#0071e3]/20 via-[#1d4ed8]/10 to-transparent"
-          style={{ top: '-80px', height: '500px', width: '800px', filter: 'blur(150px)' }} 
+          className="absolute rounded-full bg-linear-to-b from-[#0071e3]/30 via-[#1d4ed8]/18 to-transparent"
+          style={{ top: '-80px', height: '520px', width: '900px', filter: 'blur(140px)' }} 
         />
       </div>
 
