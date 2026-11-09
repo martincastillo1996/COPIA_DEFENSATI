@@ -26,7 +26,7 @@ export default function DefensatiHero() {
 
       {/* Título Principal Apple Pro Display (Tipografía SF Pro equilibrada, sin grosor excesivo) */}
       <div className="max-w-4xl mx-auto space-y-3 px-4">
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] text-[#f5f5f7] leading-[1.08] sm:leading-[1.05] whitespace-normal">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] text-[#f5f5f7] leading-[1.08] sm:leading-[1.05] whitespace-normal drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
           ¿Tu web fue hackeada?
           <span className="block text-transparent bg-clip-text bg-linear-to-r from-[#2997ff] via-[#70baff] to-[#c084fc] mt-2 sm:mt-3 font-semibold tracking-[-0.035em]">
             La limpiamos y la dejamos blindada
@@ -34,7 +34,7 @@ export default function DefensatiHero() {
         </h1>
 
         {/* Subtítulo Estilo Apple */}
-        <p className="text-base sm:text-xl text-[#a1a1a6] font-normal leading-relaxed max-w-xl mx-auto pt-3 tracking-[-0.01em] whitespace-normal">
+        <p className="text-base sm:text-xl text-[#a1a1a6] font-normal leading-relaxed max-w-xl mx-auto pt-3 tracking-[-0.01em] whitespace-normal drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
           Te mostramos lo que encontramos antes de que pagues.
         </p>
       </div>

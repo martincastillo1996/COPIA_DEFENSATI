@@ -135,10 +135,10 @@ export default function DefensatiPreviewPage() {
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
-      {/* Fondo interactivo y luces ambientales (25% más visible y nítido) */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-65">
+      {/* Fondo interactivo y luces ambientales (Opacado ~15% para máxima legibilidad sin invadir el texto) */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-50">
         <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/30 to-[#000000]/70" />
+        <div className="absolute inset-0 bg-radial from-[#000000]/30 via-[#000000]/55 to-[#000000]/80" />
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-0 flex justify-center">
