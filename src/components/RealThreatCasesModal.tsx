@@ -238,15 +238,15 @@ export default function RealThreatCasesModal() {
           >
             {/* Header del Modal */}
             <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-              <div className="space-y-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                  <span className="text-sm">🇵🇪</span>
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-bold">
+                  <span className="text-base">🇵🇪</span>
                   <span>Mapa de Ciberseguridad &bull; Cobertura Nacional en todo el Perú</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   Identificación de Casos y Riesgos Web por Regiones del Perú
                 </h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-sm sm:text-base text-neutral-200 leading-relaxed font-normal">
                   Monitoreo de vulnerabilidades en comercios locales y empresas del país con respaldo documental y fuentes públicas oficiales:
                 </p>
               </div>
@@ -363,29 +363,29 @@ export default function RealThreatCasesModal() {
 
               {/* Botones Selectores por Región */}
               <div className="lg:col-span-7 space-y-3">
-                <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider block font-mono">
-                  Macro-Región Seleccionada:
+                <span className="text-sm font-bold text-neutral-300 uppercase tracking-wider block font-mono">
+                  Selecciona una Región del Perú:
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {regions.map((reg) => (
                     <button
                       key={reg.code}
                       onClick={() => setActiveRegion(reg.code)}
-                      className={`p-3.5 rounded-2xl border text-xs font-bold text-left transition-all cursor-pointer flex flex-col justify-between gap-1.5 ${
+                      className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 ${
                         activeRegion === reg.code
                           ? 'bg-[#0071e3] border-[#38bdf8] text-white shadow-lg shadow-blue-500/30 scale-[1.02]'
-                          : 'bg-white/5 border-white/10 text-neutral-300 hover:bg-white/10 hover:text-white'
+                          : 'bg-white/5 border-white/15 text-neutral-200 hover:bg-white/10 hover:text-white'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-base">{reg.icon}</span>
-                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-black/40 border border-white/10">
+                        <span className="text-xl">{reg.icon}</span>
+                        <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-black/60 border border-white/20 text-white">
                           {reg.code}
                         </span>
                       </div>
                       <div>
-                        <span className="leading-tight text-xs font-extrabold block">{reg.name}</span>
-                        <span className="text-[10px] font-normal text-neutral-300 opacity-90 block mt-0.5">
+                        <span className="leading-snug text-sm sm:text-base font-extrabold text-white block">{reg.name}</span>
+                        <span className="text-xs text-neutral-300 leading-snug block mt-1">
                           {reg.departments}
                         </span>
                       </div>
@@ -397,69 +397,89 @@ export default function RealThreatCasesModal() {
             </div>
 
             {/* SECCIÓN 2: TARJETAS DE INDICADORES DE RIESGO DE LA REGIÓN SELECCIONADA */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                <span className="text-[10px] text-neutral-400 uppercase font-mono block">Vulnerabilidad de sitios web</span>
-                <div className="text-2xl font-black text-rose-400 font-mono">{currentStats.unshieldedRate}</div>
-                <p className="text-[11px] text-neutral-300">Carecen de cabeceras estrictas de protección perimetral.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2">
+                <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
+                  Vulnerabilidad de Sitios Web
+                </span>
+                <div className="text-3xl sm:text-4xl font-black text-rose-400 font-mono">
+                  {currentStats.unshieldedRate}
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                  Carecen de cabeceras estrictas de protección perimetral.
+                </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                <span className="text-[10px] text-neutral-400 uppercase font-mono block">Fraude informático en el Perú</span>
-                <div className="text-2xl font-black text-amber-400 font-mono">{currentStats.fraudGrowth}</div>
-                <p className="text-[11px] text-neutral-300">Crecimiento en denuncias de réplicas web según la PNP.</p>
+              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2">
+                <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
+                  Fraude Informático en el Perú
+                </span>
+                <div className="text-3xl sm:text-4xl font-black text-amber-400 font-mono">
+                  {currentStats.fraudGrowth}
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                  Crecimiento en denuncias de réplicas web según la PNP.
+                </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                <span className="text-[10px] text-neutral-400 uppercase font-mono block">Mayor riesgo perimetral detectado</span>
-                <div className="text-xs font-bold text-white leading-snug">{currentStats.topThreat}</div>
-                <p className="text-[11px] text-neutral-300">Punto crítico verificado en pasarelas de pago y comercios.</p>
+              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2">
+                <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
+                  Mayor Riesgo Perimetral Detectado
+                </span>
+                <div className="text-sm sm:text-base font-extrabold text-white leading-snug">
+                  {currentStats.topThreat}
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                  Punto crítico verificado en pasarelas de pago y comercios.
+                </p>
               </div>
             </div>
 
             {/* SECCIÓN 3: CASOS REALES RESUMIDOS */}
-            <div className="space-y-3">
-              <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider block font-mono">
-                Casos y situaciones reales en {currentStats.name}:
-              </span>
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm sm:text-base font-black text-white uppercase tracking-wider block font-mono">
+                  Escenarios y situaciones documentadas en {currentStats.name}:
+                </span>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {currentCases.map((incident, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2.5 flex flex-col justify-between"
+                    className="p-5 rounded-2xl bg-white/[0.04] border border-white/15 space-y-3.5 flex flex-col justify-between"
                   >
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start justify-between gap-3">
                       <div>
-                        <span className="text-[10px] font-mono font-semibold text-[#38bdf8] block uppercase">
+                        <span className="text-xs font-mono font-bold text-[#38bdf8] block uppercase tracking-wider">
                           {incident.badge}
                         </span>
-                        <h4 className="text-xs sm:text-sm font-bold text-white leading-snug">
+                        <h4 className="text-base sm:text-lg font-black text-white leading-snug mt-0.5">
                           {incident.businessType}
                         </h4>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-300 text-[10px] font-mono font-bold shrink-0">
+                      <span className="px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-mono font-bold shrink-0">
                         {incident.threatType}
                       </span>
                     </div>
 
-                    <div className="space-y-2 text-xs pt-1">
-                      <div className="p-2.5 rounded-xl bg-rose-950/20 border border-rose-500/20">
-                        <span className="text-[10px] font-bold text-rose-300 flex items-center gap-1 uppercase font-mono">
-                          <AlertTriangle className="w-3 h-3 shrink-0" />
-                          <span>Riesgo / Incidente:</span>
+                    <div className="space-y-3 pt-1">
+                      <div className="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30">
+                        <span className="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-1.5 uppercase font-mono">
+                          <AlertTriangle className="w-4 h-4 shrink-0" />
+                          <span>Riesgo / Incidente Detectado:</span>
                         </span>
-                        <p className="text-neutral-300 text-[11px] leading-relaxed mt-0.5">
+                        <p className="text-neutral-100 text-xs sm:text-sm leading-relaxed mt-1 font-normal">
                           {incident.lossMetric}
                         </p>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-emerald-950/20 border border-emerald-500/20">
-                        <span className="text-[10px] font-bold text-emerald-300 flex items-center gap-1 uppercase font-mono">
-                          <ShieldCheck className="w-3 h-3 shrink-0" />
-                          <span>Solución DEFENSA TI:</span>
+                      <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30">
+                        <span className="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-1.5 uppercase font-mono">
+                          <ShieldCheck className="w-4 h-4 shrink-0" />
+                          <span>Solución y Blindaje Aplicado:</span>
                         </span>
-                        <p className="text-neutral-300 text-[11px] leading-relaxed mt-0.5">
+                        <p className="text-neutral-100 text-xs sm:text-sm leading-relaxed mt-1 font-normal">
                           {incident.solution}
                         </p>
                       </div>
@@ -469,47 +489,47 @@ export default function RealThreatCasesModal() {
               </div>
             </div>
 
-            {/* SECCIÓN 4: FUENTES OFICIALES (COMPACTO Y ELEGANTE) */}
-            <div className="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-2.5">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <span className="text-xs font-bold text-white flex items-center gap-2">
-                  <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
+            {/* SECCIÓN 4: FUENTES OFICIALES */}
+            <div className="p-5 rounded-2xl bg-black/70 border border-white/15 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+                <span className="text-sm font-bold text-white flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-[#38bdf8]" />
                   <span>Fuentes Públicas Oficiales (2025 - 2026):</span>
                 </span>
-                <span className="text-[10px] text-neutral-400 font-mono">Información Verificable</span>
+                <span className="text-xs text-neutral-300 font-mono">Información Verificable</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {officialSources.map((source, sIdx) => (
                   <a
                     key={sIdx}
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-[#38bdf8]/40 transition-all flex items-center justify-between gap-3 group text-xs cursor-pointer"
+                    className="p-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#38bdf8]/50 transition-all flex items-center justify-between gap-3 group text-xs sm:text-sm cursor-pointer"
                   >
                     <div className="min-w-0">
-                      <span className="text-[10px] font-mono text-[#38bdf8] block truncate">
+                      <span className="text-xs font-mono text-[#38bdf8] block truncate font-semibold">
                         {source.badge} &bull; {source.source}
                       </span>
-                      <span className="text-neutral-200 group-hover:text-white font-medium truncate block text-xs">
+                      <span className="text-neutral-100 group-hover:text-white font-medium truncate block text-xs sm:text-sm mt-0.5">
                         {source.title}
                       </span>
                     </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-neutral-500 group-hover:text-[#38bdf8] shrink-0" />
+                    <ExternalLink className="w-4 h-4 text-neutral-400 group-hover:text-[#38bdf8] shrink-0" />
                   </a>
                 ))}
               </div>
             </div>
 
             {/* Footer del Modal */}
-            <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-              <span className="text-[11px] text-neutral-400">
+            <div className="pt-4 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <span className="text-xs sm:text-sm text-neutral-300 text-center sm:text-left">
                 ¿Tu sitio web opera en alguna de estas regiones del Perú y deseas verificar su estado?
               </span>
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold transition-all cursor-pointer shadow-lg"
+                className="w-full sm:w-auto px-7 py-3 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white font-bold text-sm transition-all cursor-pointer shadow-lg"
               >
                 Cerrar y Revisar mi Web
               </button>
