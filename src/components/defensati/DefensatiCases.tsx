@@ -10,7 +10,10 @@ import {
   ExternalLink,
   FileText,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  TrendingUp,
+  BarChart3,
+  Scale
 } from 'lucide-react';
 
 export default function DefensatiCases() {
@@ -20,6 +23,88 @@ export default function DefensatiCases() {
   return (
     <section id="ejemplos" className="w-full max-w-5xl mx-auto space-y-6 scroll-mt-24 px-4 sm:px-6">
       
+      {/* 1. La Oportunidad Comercial en Perú (Datos Oficiales del Estado Peruano) */}
+      <div className="rounded-[32px] bg-[#121214]/80 border border-white/10 p-6 sm:p-9 backdrop-blur-2xl shadow-xl space-y-6">
+        <div className="space-y-2 text-center sm:text-left">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-[#ff453a] text-xs sm:text-[13px] font-medium tracking-tight">
+            <span className="w-2 h-2 rounded-full bg-[#ff453a] animate-ping" />
+            <span>Oportunidad respaldada por datos oficiales</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#f5f5f7] tracking-[-0.035em]">
+            1. La oportunidad comercial en Perú
+          </h2>
+          <p className="text-sm sm:text-base text-[#a1a1a6] font-normal leading-relaxed max-w-2xl">
+            Hay cifras oficiales que puedes utilizar para justificar la necesidad urgente de blindar tus servicios y tu plataforma web:
+          </p>
+        </div>
+
+        {/* 3 Tarjetas de Métricas Oficiales Apple Pro */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+          {/* Métrica 1 */}
+          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[#86868b]">
+                <span className="text-xs font-medium uppercase tracking-wider">
+                  Crecimiento de denuncias
+                </span>
+                <TrendingUp className="w-4 h-4 text-[#ff453a]" />
+              </div>
+              <div className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-r from-[#ff453a] via-[#ff6961] to-[#ff9f0a]">
+                +134%
+              </div>
+              <p className="text-xs sm:text-sm text-[#f5f5f7] leading-relaxed font-normal">
+                Entre 2021 y 2025, las denuncias pasaron de aproximadamente 19 mil a <strong>44,703</strong>, según el Ministerio Público.
+              </p>
+            </div>
+            <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[11px] text-[#86868b]">
+              <span>🏛️ Plataforma del Estado Peruano</span>
+            </div>
+          </div>
+
+          {/* Métrica 2 */}
+          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[#86868b]">
+                <span className="text-xs font-medium uppercase tracking-wider">
+                  Primer cuatrimestre de 2026
+                </span>
+                <Scale className="w-4 h-4 text-[#ff9f0a]" />
+              </div>
+              <div className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-r from-[#ff9f0a] via-[#ffd60a] to-[#30d158]">
+                +26.04%
+              </div>
+              <p className="text-xs sm:text-sm text-[#f5f5f7] leading-relaxed font-normal">
+                Se registraron <strong>16,144</strong> delitos informáticos denunciados frente a 12,809 en el mismo periodo de 2025.
+              </p>
+            </div>
+            <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[11px] text-[#86868b]">
+              <span>⚖️ Ministerio Público del Perú</span>
+            </div>
+          </div>
+
+          {/* Métrica 3 */}
+          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[#86868b]">
+                <span className="text-xs font-medium uppercase tracking-wider">
+                  Victimización urbana
+                </span>
+                <BarChart3 className="w-4 h-4 text-[#2997ff]" />
+              </div>
+              <div className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-transparent bg-clip-text bg-gradient-to-r from-[#2997ff] via-[#70baff] to-[#c084fc]">
+                2.4%
+              </div>
+              <p className="text-xs sm:text-sm text-[#f5f5f7] leading-relaxed font-normal">
+                Tasa de víctimas de delitos informáticos por cada 100 habitantes urbanos de 15 años o más durante 2025.
+              </p>
+            </div>
+            <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[11px] text-[#86868b]">
+              <span>📊 INEI (Instituto Nacional de Estadística)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Cabecera de Sección con Botón Colapsable */}
       <div className="text-center space-y-4 max-w-3xl mx-auto p-6 sm:p-8 rounded-[32px] bg-[#121214]/80 border border-white/10 backdrop-blur-2xl shadow-xl">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs sm:text-[13px] font-medium tracking-tight">

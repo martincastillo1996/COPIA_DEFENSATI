@@ -203,17 +203,17 @@ export default function RealThreatCasesModal() {
 
             {/* Textos descriptivos de gran formato */}
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-400 text-[11px] font-bold uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
-                <span>Casos Reales y Denuncias en Perú (2025 - 2026)</span>
+              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-400 text-[11px] font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping" />
+                <span>Oportunidad respaldada por datos oficiales</span>
               </div>
               
               <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight leading-tight group-hover:text-red-100 transition-colors">
-                ¿Cómo atacan y cómo protegen sus webs los negocios peruanos?
+                1. La oportunidad comercial en Perú (+134% denuncias)
               </h3>
               
               <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-                Explora el mapa por regiones: <strong>Lima, Norte, Centro y Sur</strong> con casos documentados de clonación web, robo de pasarelas y sanciones.
+                Cifras oficiales de instituciones del Estado (Ministerio Público e INEI) que justifican la urgencia de blindar tu sitio web.
               </p>
             </div>
           </div>
@@ -221,8 +221,8 @@ export default function RealThreatCasesModal() {
           {/* Lado derecho: Botón 3D con Sombra de Profundidad Física */}
           <div className="shrink-0 self-start md:self-center w-full md:w-auto">
             <div className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-b from-red-500 via-red-600 to-red-700 hover:from-red-400 hover:to-red-600 border-t border-rose-300/50 text-white font-extrabold text-xs sm:text-sm whitespace-nowrap shadow-[0_6px_0_#991b1b,0_12px_25px_rgba(239,68,68,0.5)] group-hover:shadow-[0_4px_0_#991b1b,0_15px_30px_rgba(239,68,68,0.65)] group-hover:translate-y-[2px] active:translate-y-[6px] active:shadow-[0_0px_0_#991b1b] transition-all">
-              <span className="text-base">🇵🇪</span>
-              <span className="tracking-wide uppercase">Abrir Casos Reales</span>
+              <span className="text-base">📊</span>
+              <span className="tracking-wide uppercase">Ver Datos Oficiales</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
@@ -396,42 +396,57 @@ export default function RealThreatCasesModal() {
 
             </div>
 
-            {/* SECCIÓN 2: TARJETAS DE INDICADORES DE RIESGO DE LA REGIÓN SELECCIONADA */}
+            {/* SECCIÓN 2: TARJETAS DE INDICADORES OFICIALES (MINISTERIO PÚBLICO E INEI) */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2">
-                <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
-                  Vulnerabilidad de Sitios Web
-                </span>
-                <div className="text-3xl sm:text-4xl font-black text-rose-400 font-mono">
-                  {currentStats.unshieldedRate}
+              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2 flex flex-col justify-between">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
+                    Crecimiento de Denuncias
+                  </span>
+                  <div className="text-3xl sm:text-4xl font-black text-rose-400 font-mono">
+                    +134%
+                  </div>
+                  <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Entre 2021 y 2025, las denuncias pasaron de aproximadamente 19 mil a 44,703 según el Ministerio Público.
+                  </p>
                 </div>
-                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                  Carecen de cabeceras estrictas de protección perimetral.
-                </p>
+                <span className="text-[11px] text-neutral-400 block pt-2 border-t border-white/5">
+                  🏛️ Plataforma del Estado Peruano
+                </span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2">
-                <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
-                  Fraude Informático en el Perú
-                </span>
-                <div className="text-3xl sm:text-4xl font-black text-amber-400 font-mono">
-                  {currentStats.fraudGrowth}
+              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2 flex flex-col justify-between">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
+                    Primer Cuatrimestre de 2026
+                  </span>
+                  <div className="text-3xl sm:text-4xl font-black text-amber-400 font-mono">
+                    +26.04%
+                  </div>
+                  <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Se registraron 16,144 delitos informáticos denunciados frente a 12,809 en el mismo periodo de 2025.
+                  </p>
                 </div>
-                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                  Crecimiento en denuncias de réplicas web según la PNP.
-                </p>
+                <span className="text-[11px] text-neutral-400 block pt-2 border-t border-white/5">
+                  ⚖️ Ministerio Público del Perú
+                </span>
               </div>
 
-              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2">
-                <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
-                  Mayor Riesgo Perimetral Detectado
-                </span>
-                <div className="text-sm sm:text-base font-extrabold text-white leading-snug">
-                  {currentStats.topThreat}
+              <div className="p-5 rounded-2xl bg-white/[0.05] border border-white/15 space-y-2 flex flex-col justify-between">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold text-neutral-300 uppercase font-mono tracking-wider block">
+                    Victimización Urbana
+                  </span>
+                  <div className="text-3xl sm:text-4xl font-black text-sky-400 font-mono">
+                    2.4%
+                  </div>
+                  <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Tasa de víctimas de delitos informáticos por cada 100 habitantes urbanos de 15 años o más durante 2025.
+                  </p>
                 </div>
-                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                  Punto crítico verificado en pasarelas de pago y comercios.
-                </p>
+                <span className="text-[11px] text-neutral-400 block pt-2 border-t border-white/5">
+                  📊 INEI (Instituto Nacional de Estadística)
+                </span>
               </div>
             </div>
 
