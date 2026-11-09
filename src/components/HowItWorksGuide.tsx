@@ -136,7 +136,7 @@ export default function HowItWorksGuide() {
 
             <div className="text-[11px] text-neutral-400 flex items-center gap-1.5 font-medium pt-3 border-t border-white/5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Cero cobros bloqueados en Yape o Niubiz</span>
+              <span>Menor riesgo de retención en pasarelas (Yape, Niubiz, Culqi)</span>
             </div>
           </div>
 

@@ -74,7 +74,7 @@ export default function PricingSection({ targetUrl, score, grade }: Props) {
         'Todo lo del plan Blindaje Llave en Mano',
         'Configuración avanzada de WAF (Cloudflare / servidor) contra ataques web',
         'Reglas de Rate Limiting y bloqueo de bots automatizados sospechosos',
-        'Meta Grado A con re-medición incluida: ajustes sin costo hasta alcanzar la nota',
+        'Meta Grado A con re-medición: hasta 2 ciclos de ajuste técnico sin costo (plazo máx. 14 días)',
         'Constancia técnica de evaluación perimetral y entrega de directivas',
       ],
       ctaAction: 'Pedir Blindaje Total WAF',
@@ -225,7 +225,7 @@ export default function PricingSection({ targetUrl, score, grade }: Props) {
       {/* Aviso de Garantía y Términos */}
       <div className="text-center pt-2 max-w-2xl mx-auto space-y-1">
         <p className="text-xs text-neutral-400">
-          * <strong>Meta Grado A con Re-medición:</strong> Si tu sitio no alcanza Grado A en la primera auditoría tras nuestra intervención, aplicamos correcciones y re-escaneos adicionales sin costo hasta certificar la meta acordada. Servicio preventivo de reducción perimetral; no cubre ataques futuros ni negligencia en accesos conforme a nuestros{' '}
+          * <strong>Meta Grado A con Re-medición (Tope de Alcance):</strong> Aplica para las 6 directivas perimetrales canónicas acordadas e incluye hasta 2 ciclos de re-escaneo y ajuste técnico sin costo dentro de los 14 días calendario posteriores a la entrega. Servicio preventivo de reducción de superficie; no cubre ataques futuros ni negligencia en accesos. Responsabilidad patrimonial expresamente limitada al valor facturado del plan conforme a nuestros{' '}
           <a href="/terminos#garantia" className="text-[#38bdf8] hover:underline font-medium">
             Términos y Condiciones
           </a>.

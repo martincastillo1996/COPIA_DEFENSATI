@@ -178,22 +178,31 @@ export default function TerminosYPrivacidadPage() {
             <section id="garantia" className="space-y-3 text-sm leading-relaxed scroll-mt-20">
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>4. Alcance de la Garantía Grado A, Re-medición y Exclusión de Responsabilidad por Ataques Futuros</span>
+                <span>4. Alcance de la Meta Grado A, Re-medición, Topes de Tiempo y Límite de Responsabilidad Patrimonial</span>
               </h3>
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-neutral-300 leading-relaxed space-y-3">
                 <p>
-                  <strong>Compromiso Técnico de Meta Grado A:</strong> En los planes contratados que incluyan remediación técnica (Blindaje Llave en Mano y Blindaje Total WAF), nos comprometemos a llevar la infraestructura perimetral del cliente a la meta acordada (Grado A, 90-100 pts) al momento de la entrega. Si tras la primera remediación no se alcanza dicho Grado en el re-escaneo oficial de validación, aplicaremos las correcciones adicionales necesarias sin costo suplementario hasta certificar la meta acordada en el informe de entrega.
+                  <strong>Compromiso Técnico Acotado y Tope de Alcance:</strong> En los planes contratados que incluyan remediación técnica (Blindaje Llave en Mano y Blindaje Total WAF), nos comprometemos a implementar las directivas perimetrales canónicas (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy y Permissions-Policy) con meta técnica de alcanzar Grado A (90-100 pts) al momento de la entrega formal. Si tras la primera intervención no se alcanza dicho Grado en el re-escaneo oficial, aplicaremos hasta un <strong>máximo de dos (2) ciclos de ajuste técnico y re-medición sin costo adicional</strong> dentro de un <strong>plazo perentorio de catorce (14) días calendario</strong> contados desde el inicio de los trabajos. Vencido dicho plazo o completados los dos ciclos de ajuste, el servicio se considerará plenamente concluido y entregado.
                 </p>
                 <p>
-                  <strong>Naturaleza Preventiva y No Inmunidad:</strong> La ciberseguridad perimetral es una disciplina técnica de reducción objetiva de superficie de exposición y endurecimiento de cabeceras, no un escudo de inmunidad absoluta o infalible.
+                  <strong>Exclusión de Código y Sistemas Ajenos:</strong> El servicio perimetral no incluye reprogramación de la lógica de negocio del cliente, reparación de bases de datos corruptas, remediación de plugins incompatibles de terceros ni solución a deficiencias de infraestructura atribuibles al proveedor de hosting del cliente.
                 </p>
                 <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 space-y-1.5">
-                  <strong className="text-white block font-semibold">Exclusión Expresa de Responsabilidad por Ataques Futuros:</strong>
+                  <strong className="text-white block font-semibold">Tope Máximo de Responsabilidad Patrimonial (Límite al Valor del Servicio):</strong>
                   <p>
-                    DEFENSA TI y Neuronal Gravity <strong>no asumen responsabilidad civil, comercial, penal ni indemnizatoria alguna por ataques cibernéticos futuros, intrusiones, suplantaciones, brechas de datos o incidentes que ocurran en el futuro</strong> tras la entrega formal del servicio o la emisión del dictamen.
+                    Dado que el servicio es prestado bajo la modalidad de Persona Natural con Negocio (Karol Martín Castillo Rojas &bull; RUC 10704877850), la responsabilidad patrimonial total, acumulada y máxima del prestador frente al cliente por cualquier concepto (contractual, extracontractual, civil o comercial) <strong>queda estrictamente topada y limitada al cien por ciento (100%) del importe efectivamente pagado por el cliente por dicho plan contratado</strong> (ej. S/. 165 o S/. 335 PEN).
                   </p>
                   <p>
-                    La seguridad informática depende de una gestión continua y activa que escapa al control de DEFENSA TI una vez finalizada la remediación perimetral.
+                    Bajo ninguna circunstancia existirá responsabilidad indemnizatoria sobre el patrimonio personal del titular, ni por lucro cesante, daño emergente, pérdida de ventas, retenciones preventivas de pasarelas de pago independientes (Yape, Niubiz, Culqi, etc.) ni reclamaciones de terceros.
+                  </p>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-neutral-300 space-y-1.5">
+                  <strong className="text-white block font-semibold">Exclusión Expresa de Responsabilidad por Ataques Futuros y Promesas Absolutas:</strong>
+                  <p>
+                    DEFENSA TI y Neuronal Gravity <strong>no asumen responsabilidad alguna por ataques cibernéticos futuros, intrusiones, suplantaciones, brechas de datos o incidentes que ocurran con posterioridad</strong> a la entrega formal del servicio o la emisión del dictamen.
+                  </p>
+                  <p>
+                    Ningún servicio perimetral puede garantizar de forma absoluta &ldquo;cero bloqueos&rdquo; ni &ldquo;inmunidad infalible&rdquo;, ya que las entidades bancarias y pasarelas aplican políticas internas de riesgo ajenas a la configuración técnica del servidor.
                   </p>
                 </div>
                 <div className="space-y-1.5 text-neutral-300">

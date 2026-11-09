@@ -271,7 +271,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 <span>Entrega: <strong>24 a 48 Horas Laborables</strong></span>
                 <span>Auditor Responsable: <strong className="text-white">Karol Martín Castillo Rojas</strong></span>
                 <span>RUC: <strong>10704877850</strong> (Neuronal Gravity &bull; Lima, Perú)</span>
-                <span className="text-emerald-400 font-semibold mt-0.5">✓ Soporte Directo y Garantía de Grado A</span>
+                <span className="text-emerald-400 font-semibold mt-0.5">✓ Soporte Directo y Meta Grado A (Tope 14 Días)</span>
               </div>
             </div>
 
@@ -427,7 +427,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                       <span className="text-xs font-mono font-black text-emerald-400">S/ 165 PEN</span>
                     </div>
                     <p className="text-[11px] text-neutral-300 leading-relaxed">
-                      Nosotros inyectamos y configuramos las cabeceras perimetrales directamente en tu servidor (Nginx/Apache/Cloudflare) con re-auditoría incluida y <strong>garantía de Grado A</strong>.
+                      Nosotros inyectamos y configuramos las cabeceras perimetrales directamente en tu servidor (Nginx/Apache/Cloudflare) con re-auditoría incluida y <strong>meta técnica de Grado A (hasta 14 días de soporte)</strong>.
                     </p>
                   </div>
                 </div>

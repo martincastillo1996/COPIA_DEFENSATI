@@ -267,7 +267,7 @@ export default function PrintableReport({ report, auditId }: Props) {
               <div className="p-1.5 rounded border border-neutral-300 bg-white">
                 <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje Perimetral Llave en Mano (S/ 165 PEN)</span>
                 <p className="text-neutral-700 leading-tight mt-0.5">
-                  Nosotros nos encargamos de inyectar las directivas perimetrales directamente en tu servidor con re-auditoría incluida y garantía de Grado A.
+                  Nosotros nos encargamos de inyectar las directivas perimetrales directamente en tu servidor con re-auditoría incluida y meta Grado A (soporte hasta 14 días).
                 </p>
               </div>
             </div>

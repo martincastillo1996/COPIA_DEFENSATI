@@ -26,13 +26,13 @@ export default function RealCasesSection() {
       <div className="text-center space-y-3 max-w-3xl mx-auto p-6 sm:p-7 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Casos Reales Auditados &bull; Prueba Social</span>
+          <span>Escenarios Modelo de Auditoría &bull; Casos de Ejemplo</span>
         </div>
         <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
-          Empresas en Perú: Antes y Después del Blindaje
+          Casos de Ejemplo: Antes y Después del Blindaje
         </h2>
         <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-2xl mx-auto">
-          Resultados medibles con auditoría determinista independiente. Mira cómo sitios vulnerables pasaron de alertas rojas en navegadores a calificación técnica Grado A.
+          Escenarios representativos de muestra basados en arquitecturas habituales de comercio y servicios en Perú. Conoce cómo una web con fallas perimetrales se transforma tras la remediación a calificación técnica Grado A.
         </p>
       </div>
 
@@ -48,7 +48,7 @@ export default function RealCasesSection() {
                 : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            🛒 Caso 1: E-commerce & Tienda Online (WooCommerce)
+            🛒 Ejemplo 1: E-commerce & Tienda de Calzado (WooCommerce)
           </button>
           <button
             type="button"
@@ -59,7 +59,7 @@ export default function RealCasesSection() {
                 : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            🏢 Caso 2: Portal Corporativo B2B (Servicios & Logística)
+            🏢 Ejemplo 2: Portal Corporativo B2B (Servicios & Logística)
           </button>
         </div>
       </div>
@@ -74,15 +74,15 @@ export default function RealCasesSection() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
               <div>
                 <span className="text-[11px] font-mono text-emerald-400 uppercase font-bold tracking-wider">
-                  Sector Retail &bull; Lima, Perú
+                  Sector Retail &bull; Escenario de Ejemplo Didáctico
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5">
-                  Tienda Online de Calzado & Moda (WooCommerce)
+                  Tienda Online de Calzado & Moda (Simulación en WooCommerce)
                 </h3>
               </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold shrink-0">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Tiempo de Ejecución: 4 días</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold shrink-0">
+                <CheckCircle2 className="w-4 h-4 text-amber-400" />
+                <span>Caso Modelo de Muestra</span>
               </div>
             </div>
 
@@ -94,7 +94,7 @@ export default function RealCasesSection() {
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold">
                     <AlertTriangle className="w-3.5 h-3.5" />
-                    <span>Situación Inicial (Vulnerable)</span>
+                    <span>Situación Inicial de Muestra</span>
                   </div>
                   <div className="text-right">
                     <span className="text-2xl font-black text-rose-400 font-mono">24/100</span>
@@ -123,7 +123,7 @@ export default function RealCasesSection() {
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Tras el Blindaje DEFENSA TI</span>
+                    <span>Resultado Modelo tras el Blindaje</span>
                   </div>
                   <div className="text-right">
                     <span className="text-2xl font-black text-emerald-400 font-mono">94/100</span>
@@ -157,15 +157,15 @@ export default function RealCasesSection() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
               <div>
                 <span className="text-[11px] font-mono text-sky-400 uppercase font-bold tracking-wider">
-                  Sector Servicios B2B &bull; Callao, Perú
+                  Sector Servicios B2B &bull; Escenario de Ejemplo Didáctico
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5">
-                  Operador Logístico & Exportación Industrial
+                  Portal Corporativo B2B (Simulación de Operador Logístico)
                 </h3>
               </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-300 text-xs font-bold shrink-0">
-                <CheckCircle2 className="w-4 h-4 text-sky-400" />
-                <span>Tiempo de Ejecución: 5 días</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold shrink-0">
+                <CheckCircle2 className="w-4 h-4 text-amber-400" />
+                <span>Caso Modelo de Muestra</span>
               </div>
             </div>
 
@@ -177,7 +177,7 @@ export default function RealCasesSection() {
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold">
                     <AlertTriangle className="w-3.5 h-3.5" />
-                    <span>Situación Inicial (Observado)</span>
+                    <span>Situación Inicial de Muestra</span>
                   </div>
                   <div className="text-right">
                     <span className="text-2xl font-black text-rose-400 font-mono">48/100</span>
@@ -192,7 +192,7 @@ export default function RealCasesSection() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-rose-400 font-bold">✕</span>
-                    <span><strong>Requisito de Cliente Corporativo:</strong> Clientes multinacionales exigían aprobación perimetral antes de renovar contratos de transporte.</span>
+                    <span><strong>Requisito de Cliente Corporativo:</strong> Clientes corporativos exigían acreditación perimetral antes de contratar servicios logísticos.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-rose-400 font-bold">✕</span>
@@ -206,7 +206,7 @@ export default function RealCasesSection() {
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Tras el Blindaje Total WAF</span>
+                    <span>Resultado Modelo tras el Blindaje</span>
                   </div>
                   <div className="text-right">
                     <span className="text-2xl font-black text-emerald-400 font-mono">98/100</span>
@@ -225,7 +225,7 @@ export default function RealCasesSection() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-400 font-bold">✓</span>
-                    <span><strong>Constancia Formal de Cumplimiento:</strong> Dictamen técnico firmado con RUC 10704877850 entregado a la junta directiva.</span>
+                    <span><strong>Constancia Formal de Remediación:</strong> Dictamen técnico firmado con RUC 10704877850 entregado formalmente para auditorías de gerencia.</span>
                   </li>
                 </ul>
               </div>
