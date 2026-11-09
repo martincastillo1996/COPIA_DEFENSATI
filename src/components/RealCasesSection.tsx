@@ -7,23 +7,23 @@ import {
   ArrowRight, 
   FileText, 
   Sparkles, 
-  TrendingUp, 
   CheckCircle2, 
-  AlertTriangle,
-  ExternalLink,
-  Lock,
-  Eye
+  AlertTriangle, 
+  Eye,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import RealThreatCasesModal from '@/components/RealThreatCasesModal';
 
 export default function RealCasesSection() {
+  const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'ecommerce' | 'corporate'>('ecommerce');
 
   return (
-    <section id="casos-reales" className="space-y-10 scroll-mt-24 py-8">
+    <section id="casos-reales" className="space-y-6 scroll-mt-24 py-8">
       
       {/* Cabecera de Sección */}
-      <div className="text-center space-y-3 max-w-3xl mx-auto p-6 sm:p-7 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
+      <div className="text-center space-y-4 max-w-3xl mx-auto p-6 sm:p-7 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Escenarios Modelo de Auditoría &bull; Casos de Ejemplo</span>
@@ -34,7 +34,32 @@ export default function RealCasesSection() {
         <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-2xl mx-auto">
           Escenarios representativos de muestra basados en arquitecturas habituales de comercio y servicios en Perú. Conoce cómo una web con fallas perimetrales se transforma tras la remediación a calificación técnica Grado A.
         </p>
+
+        {/* Botón para Mostrar / Ocultar Detalle (Oculto por defecto) */}
+        <div className="pt-2 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 border border-[#0071e3]/40 text-[#38bdf8] font-bold text-xs sm:text-sm transition-all shadow-md active:scale-[0.98] cursor-pointer"
+          >
+            {isExpanded ? (
+              <>
+                <span>Ocultar detalle de ejemplos</span>
+                <ChevronUp className="w-4 h-4" />
+              </>
+            ) : (
+              <>
+                <span>Ver detalle de casos de ejemplo (Antes vs Después)</span>
+                <ChevronDown className="w-4 h-4" />
+              </>
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* Contenido detallado desplegable */}
+      {isExpanded && (
+        <div className="space-y-8 animate-in fade-in duration-300">
 
       {/* Selector de Pestañas de Casos */}
       <div className="flex justify-center">
@@ -290,6 +315,9 @@ export default function RealCasesSection() {
       <div className="w-full">
         <RealThreatCasesModal />
       </div>
+
+        </div>
+      )}
 
     </section>
   );
