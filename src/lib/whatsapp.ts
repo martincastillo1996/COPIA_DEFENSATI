@@ -4,7 +4,9 @@ export type WhatsAppTag =
   | '[Hero]'
   | '[Precio-Limpieza]'
   | '[Precio-Blindaje]'
+  | '[Precio-Blindaje-WAF]'
   | '[Precio-Mensual]'
+  | '[Precio-Mensual-Pro]'
   | '[Escaner]'
   | '[General]';
 
@@ -35,15 +37,27 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
   },
   precioBlindaje: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el plan Blindaje. Mi página es: ${domain}`
-      : 'Hola, quiero el plan Blindaje. Mi página es: ';
+      ? `Hola, quiero el plan Blindaje básico (S/ 165). Mi página es: ${domain}`
+      : 'Hola, quiero el plan Blindaje básico (S/ 165). Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Blindaje]');
+  },
+  precioBlindajeWaf: (domain = '') => {
+    const text = domain
+      ? `Hola, quiero el plan Blindaje avanzado con WAF (Desde S/ 335). Mi página es: ${domain}`
+      : 'Hola, quiero el plan Blindaje avanzado con WAF (Desde S/ 335). Mi página es: ';
+    return getWhatsAppUrl(text, '[Precio-Blindaje-WAF]');
   },
   precioMensual: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el plan Vigilancia mensual. Mi página es: ${domain}`
-      : 'Hola, quiero el plan Vigilancia mensual. Mi página es: ';
+      ? `Hola, quiero el plan Vigilancia mensual (S/ 49). Mi página es: ${domain}`
+      : 'Hola, quiero el plan Vigilancia mensual (S/ 49). Mi página es: ';
     return getWhatsAppUrl(text, '[Precio-Mensual]');
+  },
+  precioMensualPro: (domain = '') => {
+    const text = domain
+      ? `Hola, me interesa la Vigilancia mensual nivel Pro (S/ 99). Mi página es: ${domain}`
+      : 'Hola, me interesa la Vigilancia mensual nivel Pro (S/ 99). Mi página es: ';
+    return getWhatsAppUrl(text, '[Precio-Mensual-Pro]');
   },
   escaner: (domain: string, score?: number, grade?: string) => {
     const scoreText = typeof score === 'number' ? ` (Nota: ${score}/100, Grado ${grade || 'F'})` : '';
