@@ -133,7 +133,7 @@ export const siteConfig = {
           'Detección perimetral de inyección de código y listas negras',
           'Notificación prioritaria e inmediata a WhatsApp',
           'Re-escaneo semanal exhaustivo con informe técnico ejecutivo',
-          'Soporte técnico preferencial: hasta 1.5 horas (90 min) al mes para parches y ajustes',
+          'Soporte técnico preferencial: hasta 60 minutos (1 hora) al mes para parches, reglas WAF y ajustes de seguridad',
         ],
       },
     ],

@@ -72,7 +72,7 @@ export default function DefensatiMonthlyPlans() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Orientación directa por WhatsApp:</strong> Asistencia y verificación ante alertas de caída o dudas de seguridad (servicios de desarrollo o diseño web adicionales con tarifa preferencial).</span>
+                <span><strong>Soporte técnico incluido:</strong> Hasta 30 min al mes de intervención directa para ajustes menores de configuración perimetral o renovación básica de SSL (horas adicionales con tarifa preferencial).</span>
               </li>
             </ul>
           </div>
@@ -136,7 +136,7 @@ export default function DefensatiMonthlyPlans() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Soporte técnico prioritario:</strong> Hasta 40 min al mes de intervención directa para ajustes de seguridad, WAF o incidentes (horas adicionales con 25% de descuento).</span>
+                <span><strong>Soporte técnico prioritario:</strong> Hasta 60 min (1 hora) al mes de intervención directa para optimización de seguridad, reglas WAF o parches urgentes (horas adicionales con 25% de descuento).</span>
               </li>
             </ul>
           </div>

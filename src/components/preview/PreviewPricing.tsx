@@ -327,7 +327,7 @@ export default function PreviewPricing({ targetUrl }: Props) {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
-                  <span><strong>Soporte manual incluido:</strong> Hasta <strong>1.5 horas (90 min)/mes</strong> de intervención técnica directa para endurecimiento, directivas y parches perimetrales.</span>
+                  <span><strong>Soporte manual incluido:</strong> Hasta <strong>60 minutos (1 hora)/mes</strong> de intervención técnica directa para endurecimiento, directivas y parches perimetrales.</span>
                 </li>
                 <li className="flex items-start gap-2 text-neutral-400 border-t border-white/5 pt-2">
                   <span className="text-amber-400 font-bold shrink-0">•</span>

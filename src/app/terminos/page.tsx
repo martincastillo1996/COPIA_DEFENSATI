@@ -227,7 +227,7 @@ export default function TerminosYPrivacidadPage() {
                     <li>• <strong>Qué se monitorea:</strong> Disponibilidad en tiempo real, SSL/TLS, integridad de cabeceras y detección perimetral de malware conocido.</li>
                     <li>• <strong>Frecuencia:</strong> Muestreo de disponibilidad cada 5 minutos; monitoreo continuo de SSL; re-escaneo perimetral semanal con informe detallado.</li>
                     <li>• <strong>Canal de alertas:</strong> Notificación inmediata y prioritaria a WhatsApp + reporte ejecutivo semanal.</li>
-                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 1.5 horas (90 minutos) al mes</strong> para optimización de cabeceras, endurecimiento y parches rápidos.</li>
+                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 60 minutos (1 hora) al mes</strong> para optimización de cabeceras, endurecimiento y parches rápidos de seguridad.</li>
                   </ul>
                 </div>
               </div>
