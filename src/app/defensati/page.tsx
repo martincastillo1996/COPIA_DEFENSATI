@@ -32,16 +32,17 @@ import RemediationList from '@/components/RemediationList';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
 import AppleCyberHud from '@/components/AppleCyberHud';
-import SocialViralHub from '@/components/SocialViralHub';
-import NeuronalGravityHub from '@/components/NeuronalGravityHub';
 import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
 
 // Componentes Oficiales DEFENSA TI
 import DefensatiHero from '@/components/defensati/DefensatiHero';
-import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
+import DefensatiProblems from '@/components/defensati/DefensatiProblems';
 import DefensatiPricing from '@/components/defensati/DefensatiPricing';
+import DefensatiMonthlyPlans from '@/components/defensati/DefensatiMonthlyPlans';
+import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
 import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
-import DefensatiCases from '@/components/defensati/DefensatiCases';
+import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
+import DefensatiFinalCTA from '@/components/defensati/DefensatiFinalCTA';
 
 import { siteConfig } from '@/config/site';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -238,11 +239,12 @@ export default function DefensatiPage() {
 
             {/* Navegación Desktop */}
             <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-neutral-300">
+              <a href="#problemas" className="hover:text-white transition-colors">Problemas</a>
+              <a href="#servicios" className="hover:text-sky-400 transition-colors">Servicios</a>
+              <a href="#planes" className="hover:text-[#30d158] transition-colors">Planes mensuales</a>
               <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
-              <a href="#precios" className="hover:text-sky-400 transition-colors">Precios</a>
-              <a href="#garantia" className="hover:text-emerald-400 transition-colors">Garantía</a>
-              <a href="#escaner-gratis" className="hover:text-white transition-colors">Escáner gratis</a>
-              <a href="#ejemplos" className="hover:text-white transition-colors">Ejemplos</a>
+              <a href="#escaner-gratis" className="hover:text-[#38bdf8] transition-colors">Escáner gratis</a>
+              <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
 
             {/* Botón WhatsApp de Contacto Oficial */}
@@ -264,19 +266,22 @@ export default function DefensatiPage() {
         {/* Contenido Principal */}
         <main className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-14 space-y-16 sm:space-y-24 flex-1 w-full overflow-x-hidden">
           
-          {/* SECCIÓN 1: HERO (Mobile First, Alto Impacto, WhatsApp con tag [Hero]) */}
+          {/* SECCIÓN 1: HERO COMERCIAL */}
           <DefensatiHero />
 
-          {/* SECCIÓN 2: CÓMO FUNCIONA (3 Pasos Claros: Me escribes -> Te mando lo que encontré -> La limpio y la blindo) */}
-          <DefensatiHowItWorks />
+          {/* SECCIÓN 2: PROBLEMAS QUE SOLUCIONAMOS */}
+          <DefensatiProblems />
 
-          {/* SECCIÓN 3: PRECIOS (3 Tarjetas en Soles con WAF opcional dentro de Blindaje y tags WhatsApp) */}
+          {/* SECCIÓN 3: SERVICIOS OFICIALES */}
           <DefensatiPricing targetUrl={report?.url} />
 
-          {/* SECCIÓN 4: GARANTÍA (30 Días: Si tu web se vuelve a infectar por la misma causa, la limpio gratis) */}
-          <DefensatiWarranty />
+          {/* SECCIÓN 4: PLANES MENSUALES (Monitoreo & Tranquilidad) */}
+          <DefensatiMonthlyPlans />
 
-          {/* SECCIÓN 5: ESCÁNER GRATIS (Con Casilla Obligatoria Ley N° 30096 + Botón 'Lo arreglamos por ti' con tag [Escaner]) */}
+          {/* SECCIÓN 5: CÓMO TRABAJAMOS (3 Pasos Simples) */}
+          <DefensatiHowItWorks />
+
+          {/* SECCIÓN 6: ESCÁNER GRATUITO (Con Declaración Jurada Ley N° 30096) */}
           <section id="escaner-gratis" className="w-full max-w-3xl mx-auto space-y-6 scroll-mt-24 text-center">
             
             <div className="space-y-3 p-6 sm:p-7 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
@@ -602,12 +607,14 @@ export default function DefensatiPage() {
             </div>
           )}
 
-          {/* SECCIÓN 6: CASOS (Ejemplos Ilustrativos, sin frases prohibidas) */}
-          <DefensatiCases />
+          {/* SECCIÓN 8: CONFIANZA & GARANTÍA OFICIAL */}
+          <DefensatiWarranty />
 
-          {/* Hub de Difusión y Ecosistema */}
-          <SocialViralHub targetUrl={report?.url} score={report?.score} />
-          <NeuronalGravityHub />
+          {/* SECCIÓN 9: PREGUNTAS FRECUENTES */}
+          <DefensatiFAQ />
+
+          {/* SECCIÓN 10: CTA FINAL DE CONVERSIÓN */}
+          <DefensatiFinalCTA />
 
         </main>
 

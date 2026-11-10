@@ -11,57 +11,57 @@ export type WhatsAppTag =
   | '[General]';
 
 /**
- * Genera el enlace directo a WhatsApp oficial (+1 785 643-3991) con el mensaje preformateado y etiqueta de seguimiento.
+ * Genera el enlace directo a WhatsApp oficial (+1 785 643-3991) con mensaje claro y natural.
+ * Se han eliminado etiquetas raras visibles para una comunicación 100% humana y comercial.
  */
-export function getWhatsAppUrl(message: string, tag?: WhatsAppTag): string {
+export function getWhatsAppUrl(message: string): string {
   const number = (siteConfig.contact.whatsappNumber || '17856433991').replace(/[^0-9]/g, '');
-  const fullMessage = tag ? `${message.trim()} ${tag}` : message.trim();
-  return `https://wa.me/${number}?text=${encodeURIComponent(fullMessage)}`;
+  return `https://wa.me/${number}?text=${encodeURIComponent(message.trim())}`;
 }
 
 /**
- * Mensajes oficiales de DEFENSA TI por sección para seguimiento de conversión.
+ * Mensajes comerciales aprobados para DEFENSA TI.
  */
 export const DEFENSATI_WHATSAPP_MESSAGES = {
   hero: (domain = '') => {
     const text = domain 
-      ? `Hola, mi web fue hackeada. Mi página es: ${domain}`
-      : 'Hola, mi web fue hackeada. Mi página es: ';
-    return getWhatsAppUrl(text, '[Hero]');
+      ? `Hola Martín, vi tu página de DEFENSA TI. Tengo problemas con mi web (${domain}) y quisiera que me ayudes a revisarla.`
+      : 'Hola Martín, vi tu página de DEFENSA TI. Tengo problemas con mi página web y quisiera que me ayudes a revisarla.';
+    return getWhatsAppUrl(text);
   },
   precioLimpieza: (domain = '') => {
     const text = domain
-      ? `Hola, quiero consultar por la Limpieza de WordPress infectado. Mi página es: ${domain}`
-      : 'Hola, quiero consultar por la Limpieza de WordPress infectado. Mi página es: ';
-    return getWhatsAppUrl(text, '[Precio-Limpieza]');
+      ? `Hola Martín, mi página web (${domain}) tiene virus o redirecciones extrañas. Quiero consultar por el servicio de limpieza y recuperación de WordPress.`
+      : 'Hola Martín, mi página web tiene virus o redirecciones extrañas. Quiero consultar por el servicio de limpieza y recuperación de WordPress.';
+    return getWhatsAppUrl(text);
   },
   precioBlindaje: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el servicio de Blindaje de sitios web (S/ 165). Mi página es: ${domain}`
-      : 'Hola, quiero el servicio de Blindaje de sitios web (S/ 165). Mi página es: ';
-    return getWhatsAppUrl(text, '[Precio-Blindaje]');
+      ? `Hola Martín, me interesa el servicio de Blindaje Preventivo de S/ 165 para proteger mi web (${domain}). ¿Cómo empezamos?`
+      : 'Hola Martín, me interesa el servicio de Blindaje Preventivo de S/ 165 para proteger mi página web. ¿Cómo empezamos?';
+    return getWhatsAppUrl(text);
   },
   precioBlindajeWaf: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el servicio de Protección mediante WAF (Desde S/ 335). Mi página es: ${domain}`
-      : 'Hola, quiero el servicio de Protección mediante WAF (Desde S/ 335). Mi página es: ';
-    return getWhatsAppUrl(text, '[Precio-Blindaje-WAF]');
+      ? `Hola Martín, quisiera cotizar la configuración de Firewall WAF (desde S/ 335) para mi sitio (${domain}).`
+      : 'Hola Martín, quisiera cotizar la configuración de Firewall WAF (desde S/ 335) para mi página web.';
+    return getWhatsAppUrl(text);
   },
   precioMensual: (domain = '') => {
     const text = domain
-      ? `Hola, quiero el servicio de Monitoreo y mantenimiento mensual (S/ 49). Mi página es: ${domain}`
-      : 'Hola, quiero el servicio de Monitoreo y mantenimiento mensual (S/ 49). Mi página es: ';
-    return getWhatsAppUrl(text, '[Precio-Mensual]');
+      ? `Hola Martín, me gustaría activar el Monitoreo Esencial de S/ 49/mes para mi página (${domain}) y recibir alertas directas por WhatsApp.`
+      : 'Hola Martín, me gustaría activar el Monitoreo Esencial de S/ 49/mes para mi página web y recibir alertas directas por WhatsApp.';
+    return getWhatsAppUrl(text);
   },
   precioMensualPro: (domain = '') => {
     const text = domain
-      ? `Hola, me interesa el Monitoreo y mantenimiento mensual nivel Pro (S/ 99). Mi página es: ${domain}`
-      : 'Hola, me interesa el Monitoreo y mantenimiento mensual nivel Pro (S/ 99). Mi página es: ';
-    return getWhatsAppUrl(text, '[Precio-Mensual-Pro]');
+      ? `Hola Martín, me gustaría contratar el Monitoreo Pro de S/ 99/mes para mi página (${domain}) con chequeos cada 5 minutos y soporte mensual.`
+      : 'Hola Martín, me gustaría contratar el Monitoreo Pro de S/ 99/mes para mi página web con chequeos cada 5 minutos y soporte mensual.';
+    return getWhatsAppUrl(text);
   },
   escaner: (domain: string, score?: number, grade?: string) => {
     const scoreText = typeof score === 'number' ? ` (Nota: ${score}/100, Grado ${grade || 'F'})` : '';
-    const text = `Hola, acabo de escanear mi web ${domain ? `(${domain})` : ''}${scoreText} en DEFENSA TI y quiero que la arreglen por mí.`;
-    return getWhatsAppUrl(text, '[Escaner]');
+    const text = `Hola Martín, acabo de escanear mi web ${domain ? `(${domain})` : ''}${scoreText} en DEFENSA TI y quiero que me ayuden a corregir las fallas encontradas.`;
+    return getWhatsAppUrl(text);
   },
 };
