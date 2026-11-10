@@ -9,9 +9,9 @@ import {
   Clock, 
   Zap, 
   RotateCcw,
-  Sparkles,
-  MessageCircle 
+  Sparkles
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackPlanSelect, trackWhatsAppClick } from '@/lib/analytics';
 
@@ -94,7 +94,7 @@ export default function DefensatiMonthlyPlans() {
             }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all text-center cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+            <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>Activar Monitoreo por WhatsApp (S/ 49/mes)</span>
           </a>
         </div>
@@ -158,7 +158,7 @@ export default function DefensatiMonthlyPlans() {
             }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all text-center cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+            <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
             <span>Contratar Plan Pro por WhatsApp (S/ 99/mes)</span>
           </a>
         </div>

@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { MessageCircle, Search, ShieldCheck, CheckCircle2, Sparkles, Clock, FileText } from 'lucide-react';
+import { Search, ShieldCheck, CheckCircle2, Sparkles, Clock, FileText } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
 import { trackWhatsAppClick, trackDiagnosticRequest } from '@/lib/analytics';
@@ -52,7 +53,7 @@ export default function DefensatiFinalCTA() {
             }
             className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-bold text-base sm:text-lg shadow-[0_12px_35px_rgba(37,211,102,0.35)] flex items-center justify-center gap-3 transition-all cursor-pointer"
           >
-            <MessageCircle className="w-5 h-5 fill-current shrink-0" />
+            <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
             <span>Hablar por WhatsApp</span>
           </a>
 

@@ -5,13 +5,13 @@ import {
   ShieldCheck, 
   Search, 
   ShieldAlert,
-  MessageCircle, 
   CheckCircle2, 
   Sparkles, 
   Lock, 
   Clock, 
   FileText 
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
 import { trackDiagnosticRequest, trackWhatsAppClick } from '@/lib/analytics';
@@ -89,9 +89,9 @@ export default function DefensatiHero() {
               placement: 'hero_text_link',
             })
           }
-          className="text-[#25D366] hover:underline font-bold inline-flex items-center gap-1"
+          className="text-[#25D366] hover:underline font-bold inline-flex items-center gap-1.5"
         >
-          <MessageCircle className="w-3.5 h-3.5 fill-current inline" />
+          <WhatsAppIcon className="w-3.5 h-3.5 fill-current inline" />
           <span>Escríbenos a WhatsApp (+51 987 010 380)</span>
         </a>
       </div>

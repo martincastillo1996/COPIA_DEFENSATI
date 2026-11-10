@@ -4,7 +4,6 @@ import React from 'react';
 import { 
   ShieldAlert, 
   ShieldCheck, 
-  MessageCircle, 
   Check, 
   ArrowRight,
   Shield, 
@@ -12,6 +11,7 @@ import {
   Clock,
   Sparkles
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackServiceClick, trackWhatsAppClick } from '@/lib/analytics';
 
@@ -126,7 +126,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               }}
               className="w-full py-4 px-8 rounded-xl bg-gradient-to-r from-[#25D366] via-emerald-500 to-[#20ba59] hover:brightness-110 active:scale-[0.98] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_10px_35px_rgba(37,211,102,0.4)] transition-all cursor-pointer text-center"
             >
-              <MessageCircle className="w-5 h-5 fill-current shrink-0" />
+              <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
               <span>Quiero que revisen mi web infectada</span>
             </a>
           </div>
@@ -199,7 +199,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 text-[#38bdf8] shrink-0" />
+            <WhatsAppIcon className="w-4 h-4 text-[#38bdf8] shrink-0" />
             <span>Pedir Blindaje por WhatsApp (S/ 165)</span>
           </a>
         </div>
@@ -266,7 +266,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+            <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
             <span>Configurar Firewall por WhatsApp (Desde S/ 335)</span>
           </a>
         </div>

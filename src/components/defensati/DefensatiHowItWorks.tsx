@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { MessageCircle, Search, ShieldCheck } from 'lucide-react';
+import { Search, ShieldCheck } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function DefensatiHowItWorks() {
   const steps = [
@@ -9,7 +10,7 @@ export default function DefensatiHowItWorks() {
       num: '1',
       title: 'Me escribes con el link de tu web',
       desc: 'Me mandas el enlace por WhatsApp y me cuentas brevemente qué le ocurre a tu sitio.',
-      icon: MessageCircle,
+      icon: WhatsAppIcon,
       iconColor: 'text-[#30d158]',
       accentBg: 'bg-[#30d158]/15 border-[#30d158]/30',
     },

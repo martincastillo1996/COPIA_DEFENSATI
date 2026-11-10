@@ -6,9 +6,9 @@ import {
   TrendingDown, 
   Ban, 
   ArrowRight,
-  ShieldCheck,
-  MessageCircle
+  ShieldCheck
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackWhatsAppClick } from '@/lib/analytics';
 
@@ -117,7 +117,7 @@ export default function DefensatiProblems() {
                   }
                   className={`w-full py-3 px-4 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer ${p.btnClass}`}
                 >
-                  <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                  <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                   <span>{p.buttonText}</span>
                 </a>
               </div>
@@ -147,7 +147,7 @@ export default function DefensatiProblems() {
             }
             className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-xs sm:text-sm shadow-md shadow-[#25D366]/20 transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+            <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
             <span>Consultar rescate de emergencia</span>
           </a>
         </div>

@@ -12,11 +12,11 @@ import {
   Check, 
   Briefcase, 
   Terminal, 
-  MessageCircle,
   Wrench,
   ChevronDown,
   Cpu
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import NeuralBackground from '@/components/NeuralBackground';
 import PrintableReport from '@/components/PrintableReport';
 import ScoreCircle from '@/components/ScoreCircle';
@@ -268,7 +268,7 @@ export default function DefensatiPage() {
                 onClick={() => trackWhatsAppClick({ service: 'general', placement: 'sticky_header' })}
                 className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp</span>
               </a>
             </div>
@@ -635,7 +635,7 @@ export default function DefensatiPage() {
                 onClick={() => trackWhatsAppClick({ service: 'general', placement: 'footer' })}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
               >
-                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp: {siteConfig.contact.whatsappFormatted}</span>
               </a>
 

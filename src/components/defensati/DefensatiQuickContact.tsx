@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MessageCircle, ShieldCheck, CheckCircle2, ArrowRight, Sparkles, Send } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, ArrowRight, Sparkles, Send } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { getWhatsAppUrl } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
 import { trackFormSubmit, trackWhatsAppClick } from '@/lib/analytics';
@@ -146,7 +147,7 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
               type="submit"
               className="w-full py-4 px-6 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-sm sm:text-base shadow-[0_10px_30px_rgba(37,211,102,0.35)] flex items-center justify-center gap-2.5 transition-all cursor-pointer"
             >
-              <MessageCircle className="w-5 h-5 fill-current shrink-0" />
+              <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
               <span>Enviar consulta técnica a WhatsApp (+51 987 010 380)</span>
             </button>
           </div>

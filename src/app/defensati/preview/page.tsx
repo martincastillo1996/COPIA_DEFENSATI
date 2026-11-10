@@ -12,11 +12,11 @@ import {
   Check, 
   Briefcase, 
   Terminal, 
-  MessageCircle,
   Wrench,
   ChevronDown,
   Cpu
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import NeuralBackground from '@/components/NeuralBackground';
 import PrintableReport from '@/components/PrintableReport';
 import ScoreCircle from '@/components/ScoreCircle';
@@ -208,7 +208,7 @@ export default function DefensatiPreviewPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp</span>
               </a>
             </div>
@@ -424,7 +424,7 @@ export default function DefensatiPreviewPage() {
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#30d158] hover:bg-[#28cd41] active:scale-[0.98] text-[#000000] font-semibold text-base sm:text-lg shadow-[0_10px_30px_rgba(48,209,88,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] flex items-center justify-center gap-3 transition-all shrink-0 cursor-pointer"
                 >
-                  <MessageCircle className="w-5 h-5 fill-current shrink-0" />
+                  <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
                   <span className="whitespace-nowrap">Lo arreglamos por ti</span>
                 </a>
               </div>
@@ -579,7 +579,7 @@ export default function DefensatiPreviewPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
               >
-                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp: {siteConfig.contact.whatsappFormatted}</span>
               </a>
 
