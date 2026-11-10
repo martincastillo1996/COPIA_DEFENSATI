@@ -3,7 +3,8 @@
 import React from 'react';
 import { 
   ShieldCheck, 
-  ArrowDown, 
+  Search, 
+  ShieldAlert,
   MessageCircle, 
   CheckCircle2, 
   Sparkles, 
@@ -15,8 +16,6 @@ import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
 
 export default function DefensatiHero() {
-  const whatsappUrl = DEFENSATI_WHATSAPP_MESSAGES.hero();
-
   const scrollToScanner = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const target = document.getElementById('escaner-gratis');
@@ -46,26 +45,40 @@ export default function DefensatiHero() {
       </div>
 
       {/* Botones de Acción de Alta Conversión */}
-      <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto px-4">
-        {/* Botón Principal WhatsApp */}
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-base shadow-[0_10px_30px_rgba(37,211,102,0.35)] transition-all cursor-pointer"
-        >
-          <MessageCircle className="w-5 h-5 fill-current shrink-0" />
-          <span>Escríbeme por WhatsApp y reviso tu web</span>
-        </a>
-
-        {/* Botón Secundario Frosted Glass */}
+      <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-xl mx-auto px-4">
+        {/* CTA 1 Principal: Diagnóstico Gratuito */}
         <a
           href="#escaner-gratis"
           onClick={scrollToScanner}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] active:scale-[0.98] text-white font-semibold text-sm sm:text-base border border-white/15 backdrop-blur-xl transition-all cursor-pointer text-center"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white font-extrabold text-base shadow-[0_10px_30px_rgba(0,113,227,0.4)] transition-all cursor-pointer"
         >
-          <span>Probar escáner gratis</span>
-          <ArrowDown className="w-4 h-4 text-[#38bdf8] shrink-0" />
+          <Search className="w-5 h-5 text-sky-200 shrink-0" />
+          <span>Diagnóstico gratuito de tu web</span>
+        </a>
+
+        {/* CTA 2 Secundario: Recuperación de páginas hackeadas (WhatsApp de Rescate) */}
+        <a
+          href={DEFENSATI_WHATSAPP_MESSAGES.recuperacionHackeo()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 active:scale-[0.98] text-rose-300 hover:text-white font-bold text-base border border-rose-500/40 backdrop-blur-xl shadow-[0_10px_25px_rgba(244,63,94,0.15)] transition-all cursor-pointer text-center"
+        >
+          <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0" />
+          <span>Recuperar página hackeada</span>
+        </a>
+      </div>
+
+      {/* Enlace sutil directo de WhatsApp con número oficial peruano */}
+      <div className="mt-4 text-xs text-neutral-400">
+        <span>¿Urgencia técnica directa? </span>
+        <a
+          href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#25D366] hover:underline font-bold inline-flex items-center gap-1"
+        >
+          <MessageCircle className="w-3.5 h-3.5 fill-current inline" />
+          <span>Escríbenos a WhatsApp (+51 987 010 380)</span>
         </a>
       </div>
 

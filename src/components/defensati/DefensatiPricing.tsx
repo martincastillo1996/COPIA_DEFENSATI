@@ -171,10 +171,10 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioBlindaje(cleanUrl)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-white text-sm font-bold border border-white/15 transition-all"
+            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all cursor-pointer"
           >
-            <span>Pedir Blindaje Preventivo (S/ 165)</span>
-            <ArrowRight className="w-4 h-4 text-[#38bdf8]" />
+            <MessageCircle className="w-4 h-4 text-[#38bdf8] shrink-0" />
+            <span>Pedir Blindaje por WhatsApp (S/ 165)</span>
           </a>
         </div>
 
@@ -226,10 +226,10 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all"
+            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all cursor-pointer"
           >
-            <span>Proteger mi web con Firewall (Desde S/ 335)</span>
-            <ArrowRight className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+            <span>Configurar Firewall por WhatsApp (Desde S/ 335)</span>
           </a>
         </div>
 

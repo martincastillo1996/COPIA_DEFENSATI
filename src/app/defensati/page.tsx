@@ -43,6 +43,8 @@ import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
 import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
 import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
 import DefensatiFinalCTA from '@/components/defensati/DefensatiFinalCTA';
+import DefensatiScanRecommendation from '@/components/defensati/DefensatiScanRecommendation';
+import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact';
 
 import { siteConfig } from '@/config/site';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -423,6 +425,9 @@ export default function DefensatiPage() {
               )}
             </div>
 
+            {/* Formulario Sencillo de Consulta Directa por WhatsApp */}
+            <DefensatiQuickContact initialUrl={url} />
+
           </section>
 
           {/* RESULTADOS DEL ESCÁNER + BOTÓN DESTACADO "LO ARREGLAMOS POR TI" [Escaner] */}
@@ -453,31 +458,8 @@ export default function DefensatiPage() {
                 </div>
               </div>
 
-              {/* BOTÓN PROMINENTE REQUERIDO: "LO ARREGLAMOS POR TI" (WhatsApp con tag [Escaner]) */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-linear-to-r from-emerald-950/40 via-[#121c16] to-[#0d1612] border-2 border-emerald-500/50 shadow-[0_0_40px_rgba(16,185,129,0.2)] text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
-                <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold">
-                    <Wrench className="w-3.5 h-3.5" />
-                    <span>Servicio Llave en Mano</span>
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-semibold text-[#f5f5f7] tracking-tight leading-snug">
-                    ¿Encontraste vulnerabilidades o notas bajas en tu web?
-                  </h4>
-                  <p className="text-sm text-[#a1a1a6] leading-relaxed max-w-xl font-normal">
-                    Nos encargamos de parchar las cabeceras, corregir el SSL y blindar el perimetro de tu sitio de inmediato.
-                  </p>
-                </div>
-
-                <a
-                  href={DEFENSATI_WHATSAPP_MESSAGES.escaner(cleanDomain, report.score, report.grade)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#30d158] hover:bg-[#28cd41] active:scale-[0.98] text-[#000000] font-semibold text-base sm:text-lg shadow-[0_10px_30px_rgba(48,209,88,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] flex items-center justify-center gap-3 transition-all shrink-0 cursor-pointer"
-                >
-                  <MessageCircle className="w-5 h-5 fill-current shrink-0" />
-                  <span className="whitespace-nowrap">Lo arreglamos por ti</span>
-                </a>
-              </div>
+              {/* BOTÓN PROMINENTE & RECOMENDACIÓN COMERCIAL DINÁMICA POST-ESCÁNER */}
+              <DefensatiScanRecommendation report={report} cleanDomain={cleanDomain} />
 
               {/* Selector de Perspectiva (Negocio vs Técnico) */}
               <div className="flex justify-center py-2">

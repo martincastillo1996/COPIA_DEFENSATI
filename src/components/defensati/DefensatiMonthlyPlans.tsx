@@ -9,7 +9,8 @@ import {
   Clock, 
   Zap, 
   RotateCcw,
-  Sparkles 
+  Sparkles,
+  MessageCircle 
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 
@@ -78,10 +79,10 @@ export default function DefensatiMonthlyPlans() {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioMensual()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-white text-sm font-bold border border-white/15 transition-all text-center"
+            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all text-center cursor-pointer"
           >
-            <span>Activar Monitoreo (S/ 49/mes)</span>
-            <ArrowRight className="w-4 h-4 text-emerald-400" />
+            <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>Activar Monitoreo por WhatsApp (S/ 49/mes)</span>
           </a>
         </div>
 
@@ -131,10 +132,10 @@ export default function DefensatiMonthlyPlans() {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all text-center"
+            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all text-center cursor-pointer"
           >
-            <span>Contratar Plan Pro (S/ 99/mes)</span>
-            <ArrowRight className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+            <span>Contratar Plan Pro por WhatsApp (S/ 99/mes)</span>
           </a>
         </div>
 

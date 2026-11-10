@@ -8,9 +8,9 @@ export const siteConfig = {
   
   // Contacto Oficial
   contact: {
-    whatsappNumber: '+17856433991',
-    whatsappFormatted: '+1 (785) 643-3991',
-    whatsappLink: 'https://wa.me/17856433991',
+    whatsappNumber: '+51987010380',
+    whatsappFormatted: '+51 987 010 380',
+    whatsappLink: 'https://wa.me/51987010380',
     email: 'contacto@neuronalgravity.com',
     hours: 'Lunes a Sábado, 9:00 a 20:00 (Hora Perú)',
   },

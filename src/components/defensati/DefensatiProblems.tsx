@@ -7,7 +7,7 @@ import {
   Ban, 
   ArrowRight,
   ShieldCheck,
-  CheckCircle2
+  MessageCircle
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 
@@ -20,6 +20,9 @@ export default function DefensatiProblems() {
       icon: Ban,
       color: 'text-rose-400',
       badge: 'Pérdida de Confianza',
+      buttonText: 'Quitar pantalla roja por WhatsApp',
+      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.problemaGoogleRed(),
+      btnClass: 'bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border-rose-500/30',
     },
     {
       title: 'Redirecciones a páginas dudosas o spam',
@@ -28,6 +31,9 @@ export default function DefensatiProblems() {
       icon: TrendingDown,
       color: 'text-amber-400',
       badge: 'Fuga de Ventas',
+      buttonText: 'Eliminar redirecciones por WhatsApp',
+      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.problemaRedirecciones(),
+      btnClass: 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border-amber-500/30',
     },
     {
       title: 'Cuenta suspendida por tu proveedor de hosting',
@@ -36,6 +42,9 @@ export default function DefensatiProblems() {
       icon: AlertOctagon,
       color: 'text-sky-400',
       badge: 'Sitio Inaccesible',
+      buttonText: 'Reactivar mi hosting por WhatsApp',
+      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.problemaHosting(),
+      btnClass: 'bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border-sky-500/30',
     },
   ];
 
@@ -56,14 +65,14 @@ export default function DefensatiProblems() {
           </p>
         </div>
 
-        {/* Cuadrícula de Problemas y Soluciones */}
+        {/* Cuadrícula de Problemas y Soluciones con botones de WhatsApp contextuales */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {problems.map((p, idx) => {
             const Icon = p.icon;
             return (
               <div
                 key={idx}
-                className="p-6 sm:p-8 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-5"
+                className="p-6 sm:p-8 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -82,24 +91,35 @@ export default function DefensatiProblems() {
                   <p className="text-sm text-neutral-300 leading-relaxed font-normal">
                     {p.desc}
                   </p>
+
+                  <div className="pt-3 border-t border-white/10 space-y-2 bg-sky-950/20 p-3.5 rounded-xl border-sky-500/20">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#38bdf8]">
+                      <ShieldCheck className="w-4 h-4 shrink-0 text-[#38bdf8]" />
+                      <span>Nuestra solución directa:</span>
+                    </div>
+                    <p className="text-xs text-neutral-200 leading-relaxed">
+                      {p.solution}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/10 space-y-2 bg-sky-950/20 p-3.5 rounded-xl border-sky-500/20">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#38bdf8]">
-                    <ShieldCheck className="w-4 h-4 shrink-0 text-[#38bdf8]" />
-                    <span>Nuestra solución directa:</span>
-                  </div>
-                  <p className="text-xs text-neutral-200 leading-relaxed">
-                    {p.solution}
-                  </p>
-                </div>
+                {/* Botón contextual de WhatsApp */}
+                <a
+                  href={p.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 px-4 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer ${p.btnClass}`}
+                >
+                  <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                  <span>{p.buttonText}</span>
+                </a>
               </div>
             );
           })}
         </div>
 
         {/* Llamado de Acción al Pie de Problemas */}
-        <div className="p-4 sm:p-6 rounded-2xl bg-linear-to-r from-rose-950/40 via-[#101422] to-sky-950/40 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="p-5 sm:p-7 rounded-2xl bg-gradient-to-r from-rose-950/40 via-[#101422] to-sky-950/40 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
           <div className="space-y-1">
             <h4 className="text-base sm:text-lg font-bold text-white">
               ¿Tu sitio presenta uno de estos síntomas ahora mismo?
@@ -109,13 +129,13 @@ export default function DefensatiProblems() {
             </p>
           </div>
           <a
-            href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
+            href={DEFENSATI_WHATSAPP_MESSAGES.recuperacionHackeo()}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 rounded-xl bg-white text-black hover:bg-neutral-200 active:scale-95 font-bold text-xs sm:text-sm transition-all whitespace-nowrap shrink-0 flex items-center gap-2"
+            className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-xs sm:text-sm shadow-md shadow-[#25D366]/20 transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer"
           >
-            <span>Revisar mi web con un técnico</span>
-            <ArrowRight className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+            <span>Consultar rescate de emergencia</span>
           </a>
         </div>
 
