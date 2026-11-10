@@ -17,8 +17,8 @@ export default function DefensatiWarranty() {
   return (
     <section id="garantia" className="w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24 space-y-6">
       
-      {/* Tarjeta Principal de Garantía */}
-      <div className="p-7 sm:p-11 rounded-[32px] bg-gradient-to-b from-[#101824]/90 via-[#0d141e]/90 to-[#0a0f16]/95 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative overflow-hidden">
+      {/* Tarjeta Principal de Garantía Estilo Apple Pro */}
+      <div className="p-7 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl relative overflow-hidden">
         
         {/* Glow de seguridad verde esmeralda */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />

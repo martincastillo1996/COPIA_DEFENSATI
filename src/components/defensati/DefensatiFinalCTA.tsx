@@ -18,23 +18,23 @@ export default function DefensatiFinalCTA() {
 
   return (
     <section className="w-full max-w-5xl mx-auto scroll-mt-24 text-center">
-      <div className="relative p-8 sm:p-14 rounded-[36px] bg-gradient-to-b from-[#0e1626]/95 via-[#0c121e]/95 to-[#080d14]/98 border border-white/12 shadow-[0_25px_70px_rgba(0,0,0,0.7)] backdrop-blur-3xl overflow-hidden space-y-8">
+      <div className="relative p-7 sm:p-14 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl overflow-hidden space-y-8">
         
         {/* Glow de fondo Apple Pro */}
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#0071e3]/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-32 right-1/4 w-80 h-80 bg-[#30d158]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[#38bdf8] text-xs font-semibold tracking-tight">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold tracking-tight">
             <Sparkles className="w-3.5 h-3.5 text-[#30d158]" />
             <span>ATENCIÓN TÉCNICA INMEDIATA</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
             No arriesgues la reputación ni las ventas de tu negocio
           </h2>
 
-          <p className="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
+          <p className="text-base sm:text-lg text-[#86868b] leading-relaxed font-normal">
             Escríbenos por WhatsApp y te decimos qué vulnerabilidades o archivos infectados encontramos en tu web antes de que contrates cualquier servicio.
           </p>
         </div>

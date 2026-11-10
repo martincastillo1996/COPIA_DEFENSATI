@@ -34,41 +34,41 @@ export default function DefensatiHowItWorks() {
 
   return (
     <section id="como-funciona" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24 text-left">
-      <div className="p-7 sm:p-12 rounded-[32px] bg-[#0c101c]/85 border border-white/12 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-8">
+      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-8">
         
-        {/* Cabecera Simple y Directa */}
+        {/* Cabecera Estilo Apple Pro */}
         <div className="space-y-2 border-b border-white/10 pb-5">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#38bdf8] font-bold">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#2997ff] font-semibold px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 inline-block">
             CÓMO FUNCIONA
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight pt-2">
             Solución en 3 pasos simples
           </h2>
         </div>
 
         {/* 3 Pasos: Gran Legibilidad, Letra Clara y Alto Contraste */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {steps.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.num}
-                className="p-6 sm:p-8 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-start space-y-4"
+                className="p-6 sm:p-8 rounded-[24px] bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-start space-y-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
               >
                 <div className="flex items-center justify-between">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${item.accentBg} ${item.iconColor}`}>
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${item.accentBg} ${item.iconColor}`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-3xl sm:text-4xl font-black text-white/25 font-mono">
+                  <span className="text-3xl sm:text-4xl font-bold text-white/25 font-mono">
                     0{item.num}
                   </span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] leading-snug tracking-tight">
                   {item.title}
                 </h3>
 
-                <p className="text-base sm:text-lg text-neutral-200 leading-relaxed font-normal">
+                <p className="text-base sm:text-lg text-[#86868b] leading-relaxed font-normal">
                   {item.desc}
                 </p>
               </div>

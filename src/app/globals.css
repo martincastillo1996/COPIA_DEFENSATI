@@ -29,6 +29,11 @@ body {
   color: #d1d5db !important; /* Gris claro de alto contraste legible sobre fondo oscuro */
 }
 
+/* Tipografía Apple Pro Display */
+h1, h2, h3 {
+  letter-spacing: -0.035em;
+}
+
 /* Apple Pro Liquid Glass & Glow Effects */
 .apple-glass {
   background: rgba(22, 22, 24, 0.72);

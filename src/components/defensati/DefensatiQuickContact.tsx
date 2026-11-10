@@ -55,17 +55,17 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
 
   return (
     <section id="contacto-rapido" className="w-full max-w-4xl mx-auto scroll-mt-24 text-left">
-      <div className="p-7 sm:p-10 rounded-[32px] bg-[#0c101c]/90 border border-white/12 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-6">
+      <div className="p-6 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-6">
         
         <div className="space-y-2 border-b border-white/10 pb-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0071e3]/15 border border-[#0071e3]/30 text-[#38bdf8] text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>CONSULTA TÉCNICA SIN COSTO</span>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug">
+          <h3 className="text-2xl sm:text-3xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-snug">
             ¿Prefieres que revisemos tu caso de forma directa?
           </h3>
-          <p className="text-sm sm:text-base text-neutral-300 font-normal">
+          <p className="text-sm sm:text-base text-[#86868b] font-normal">
             Completa estos 2 datos básicos y te responderemos por WhatsApp con un diagnóstico preliminar sin compromiso.
           </p>
         </div>
@@ -141,11 +141,11 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
             />
           </div>
 
-          {/* Botón de Envío Directo a WhatsApp */}
+          {/* Botón de Envío Directo a WhatsApp Apple Pill */}
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full py-4 px-6 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-sm sm:text-base shadow-[0_10px_30px_rgba(37,211,102,0.35)] flex items-center justify-center gap-2.5 transition-all cursor-pointer"
+              className="w-full py-4 px-6 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-sm sm:text-base shadow-[0_4px_24px_rgba(37,211,102,0.35)] flex items-center justify-center gap-2.5 transition-all cursor-pointer"
             >
               <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
               <span>Enviar consulta técnica a WhatsApp (+51 987 010 380)</span>

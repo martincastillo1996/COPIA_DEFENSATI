@@ -110,72 +110,72 @@ export default function DefensatiCases() {
     <section id="casos-reales" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left">
       
       {/* 1. Contexto de Ciberseguridad en el Mercado Peruano (Datos Oficiales) */}
-      <div className="rounded-[32px] bg-[#0c101c]/85 border border-white/12 p-6 sm:p-10 backdrop-blur-2xl shadow-xl space-y-6">
+      <div className="rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 p-6 sm:p-12 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-6">
         <div className="space-y-2 text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-[#ff453a] text-xs font-semibold tracking-tight">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-[#ff453a] text-xs font-semibold tracking-tight">
             <span className="w-2 h-2 rounded-full bg-[#ff453a] animate-ping" />
             <span>DATOS OFICIALES DEL MERCADO PERUANO</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
             La realidad de la seguridad web en Perú (2024 - 2026)
           </h2>
-          <p className="text-sm sm:text-base text-neutral-300 font-normal leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base text-[#86868b] font-normal leading-relaxed max-w-3xl">
             Las amenazas contra páginas web y tiendas online en el país no son teóricas. La falta de mantenimiento y plugins desactualizados son el principal vector de hackeos a pymes y negocios peruanos:
           </p>
         </div>
 
         {/* 3 Métricas Oficiales Verificables */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all">
+          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
             <div className="space-y-2">
               <div className="flex items-center justify-between text-neutral-400">
                 <span className="text-xs font-medium uppercase tracking-wider">Crecimiento de denuncias</span>
                 <TrendingUp className="w-4 h-4 text-[#ff453a]" />
               </div>
-              <div className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#ff453a] to-[#ff9f0a]">
+              <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff453a] to-[#ff9f0a]">
                 +134%
               </div>
               <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
                 En Perú, las denuncias por delitos informáticos crecieron de 19 mil a <strong>44,703</strong>, según reportes del Ministerio Público.
               </p>
             </div>
-            <div className="pt-3 border-t border-white/5 text-[11px] text-neutral-400">
+            <div className="pt-3 border-t border-white/5 text-[11px] text-[#86868b]">
               <span>🏛️ Ministerio Público del Perú</span>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all">
+          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
             <div className="space-y-2">
               <div className="flex items-center justify-between text-neutral-400">
                 <span className="text-xs font-medium uppercase tracking-wider">Causa raíz en WordPress</span>
                 <Scale className="w-4 h-4 text-[#ff9f0a]" />
               </div>
-              <div className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#ff9f0a] to-[#30d158]">
+              <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff9f0a] to-[#30d158]">
                 82%
               </div>
               <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
                 De las intrusiones en sitios web comerciales ingresan por <strong>plugins desactualizados o temas piratas</strong> que contienen backdoors.
               </p>
             </div>
-            <div className="pt-3 border-t border-white/5 text-[11px] text-neutral-400">
+            <div className="pt-3 border-t border-white/5 text-[11px] text-[#86868b]">
               <span>🛡️ CSIRT / Alertas de Ciberseguridad</span>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all">
+          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
             <div className="space-y-2">
               <div className="flex items-center justify-between text-neutral-400">
                 <span className="text-xs font-medium uppercase tracking-wider">Impacto comercial</span>
-                <BarChart3 className="w-4 h-4 text-[#38bdf8]" />
+                <BarChart3 className="w-4 h-4 text-[#2997ff]" />
               </div>
-              <div className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-[#c084fc]">
+              <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#2997ff] to-[#c084fc]">
                 100%
               </div>
               <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
                 Responsabilidad del cliente ante el hosting: si tu web se infecta o envía spam, el hosting suspende tu cuenta sin previo aviso.
               </p>
             </div>
-            <div className="pt-3 border-t border-white/5 text-[11px] text-neutral-400">
+            <div className="pt-3 border-t border-white/5 text-[11px] text-[#86868b]">
               <span>💼 Políticas contractuales de hosting</span>
             </div>
           </div>
@@ -183,29 +183,29 @@ export default function DefensatiCases() {
       </div>
 
       {/* 2. Ejemplos Reales de Intervención y Remediación en Perú */}
-      <div className="p-6 sm:p-10 rounded-[32px] bg-[#0c101c]/85 border border-white/12 backdrop-blur-2xl shadow-2xl space-y-8">
+      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-8">
         
         <div className="space-y-3 border-b border-white/10 pb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0071e3]/15 border border-[#0071e3]/30 text-[#38bdf8] text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>CASOS DOCUMENTADOS EN EL MERCADO PERUANO</span>
           </div>
-          <h3 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+          <h3 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
             Casos de estudio: Cómo resolvemos emergencias reales
           </h3>
-          <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl font-normal">
+          <p className="text-sm sm:text-base text-[#86868b] leading-relaxed max-w-3xl font-normal">
             Conoce casos típicos intervenidos en plataformas WordPress y servidores empresariales en Perú, con su respectivo protocolo técnico de diagnóstico, limpieza y garantía.
           </p>
         </div>
 
-        {/* Selector de Casos (Mobile first y accesible) */}
-        <div className="flex flex-col sm:flex-row gap-2.5 p-1.5 rounded-2xl bg-white/[0.04] border border-white/10">
+        {/* Selector de Casos Apple Pills */}
+        <div className="flex flex-col sm:flex-row gap-2.5 p-1.5 rounded-full bg-white/[0.04] border border-white/10">
           <button
             type="button"
             onClick={() => setActiveCase('ecommerce')}
-            className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-3 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeCase === 'ecommerce'
-                ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
+                ? 'bg-[#0071e3] text-white shadow-[0_4px_14px_rgba(0,113,227,0.35)]'
                 : 'text-neutral-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -216,9 +216,9 @@ export default function DefensatiCases() {
           <button
             type="button"
             onClick={() => setActiveCase('corporate')}
-            className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-3 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeCase === 'corporate'
-                ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
+                ? 'bg-[#0071e3] text-white shadow-[0_4px_14px_rgba(0,113,227,0.35)]'
                 : 'text-neutral-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -229,9 +229,9 @@ export default function DefensatiCases() {
           <button
             type="button"
             onClick={() => setActiveCase('distributor')}
-            className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-3 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeCase === 'distributor'
-                ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
+                ? 'bg-[#0071e3] text-white shadow-[0_4px_14px_rgba(0,113,227,0.35)]'
                 : 'text-neutral-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -305,16 +305,16 @@ export default function DefensatiCases() {
           </div>
 
           {/* Resultado Comercial y Garantía Aplicada */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-[#0e1626] border border-[#0071e3]/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="p-6 sm:p-7 rounded-[24px] bg-[#161618]/80 border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="space-y-1.5 flex-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#38bdf8] uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#2997ff] uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>Impacto y Garantía Cumplida</span>
               </div>
-              <p className="text-xs sm:text-sm text-white font-medium">
+              <p className="text-xs sm:text-sm text-[#f5f5f7] font-medium">
                 <strong>Resultado:</strong> {current.result}
               </p>
-              <p className="text-xs text-neutral-400">
+              <p className="text-xs text-[#86868b]">
                 <strong>Alcance:</strong> {current.warrantyApplied}
               </p>
             </div>
@@ -323,7 +323,7 @@ export default function DefensatiCases() {
               href={`https://wa.me/51987010380?text=${encodeURIComponent(current.ctaMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full md:w-auto px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all shadow-md shadow-[#25D366]/20 cursor-pointer shrink-0"
+              className="w-full md:w-auto px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all shadow-[0_4px_16px_rgba(37,211,102,0.35)] cursor-pointer shrink-0"
             >
               <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
               <span>Consultar este caso por WhatsApp</span>
@@ -334,12 +334,12 @@ export default function DefensatiCases() {
 
         {/* Acceso al Informe Completo de Muestra */}
         <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs sm:text-sm text-neutral-300 text-center sm:text-left font-normal">
+          <span className="text-xs sm:text-sm text-[#86868b] text-center sm:text-left font-normal">
             ¿Quieres ver cómo entregamos un informe técnico real con telemetría de sockets, cabeceras y dictamen?
           </span>
           <Link
             href="/defensati/informe-ejemplo"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#38bdf8] font-bold text-xs sm:text-sm transition-all shrink-0"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#2997ff] font-semibold text-xs sm:text-sm transition-all shrink-0"
           >
             <FileText className="w-4 h-4" />
             <span>Ver informe técnico de ejemplo</span>

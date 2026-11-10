@@ -58,15 +58,16 @@ export default function DefensatiFAQ() {
 
   return (
     <section id="faq" className="w-full max-w-5xl mx-auto space-y-8 scroll-mt-24 text-left">
+      {/* Cabecera Estilo Apple Pro */}
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-semibold">
-          <HelpCircle className="w-3.5 h-3.5 text-[#38bdf8]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
+          <HelpCircle className="w-3.5 h-3.5" />
           <span>DUDAS RESUELTAS</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
           Preguntas frecuentes
         </h2>
-        <p className="text-sm sm:text-base text-neutral-300 max-w-2xl mx-auto font-normal leading-relaxed">
+        <p className="text-sm sm:text-base text-[#86868b] max-w-2xl mx-auto font-normal leading-relaxed">
           Todo lo que necesitas saber sobre nuestros procesos de desinfección, tiempos, garantías y facturación formal.
         </p>
       </div>
@@ -78,11 +79,11 @@ export default function DefensatiFAQ() {
           return (
             <div
               key={faq.id}
-              className={`rounded-2xl transition-all border ${
+              className={`rounded-[20px] sm:rounded-[24px] transition-all border ${
                 isOpen
-                  ? 'bg-[#101622]/90 border-[#38bdf8]/40 shadow-[0_10px_30px_rgba(0,113,227,0.12)]'
-                  : 'bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]'
-              } backdrop-blur-xl overflow-hidden`}
+                  ? 'bg-[#161618]/90 border-[#0071e3]/50 shadow-[0_10px_30px_rgba(0,113,227,0.15)]'
+                  : 'bg-[#161618]/60 border-white/10 hover:border-white/20 hover:bg-[#161618]/80'
+              } backdrop-blur-2xl overflow-hidden`}
             >
               <button
                 type="button"

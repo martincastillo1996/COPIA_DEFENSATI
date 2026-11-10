@@ -26,21 +26,21 @@ export default function DefensatiPricing({ targetUrl }: Props) {
     <section id="servicios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left relative">
       <div id="precios" className="absolute -top-24 pointer-events-none" />
       
-      {/* Encabezado de Sección */}
+      {/* Cabecera Estilo Apple Pro */}
       <div className="space-y-2 border-b border-white/10 pb-5 max-w-4xl">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#38bdf8] font-bold px-3 py-1 rounded-full bg-[#0071e3]/10 border border-[#0071e3]/30 inline-block">
+        <span className="text-xs font-mono uppercase tracking-widest text-[#2997ff] font-semibold px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 inline-block">
           SERVICIOS OFICIALES DE CIBERSEGURIDAD
         </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight pt-2">
+        <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight pt-2">
           Soluciones puntuales con precio transparente en Soles
         </h2>
-        <p className="text-base sm:text-lg text-neutral-300">
+        <p className="text-base sm:text-lg text-[#86868b] font-normal">
           Sin contratos forzosos ni tarifas infladas. Te mostramos qué encontramos antes de que pagues.
         </p>
       </div>
 
       {/* 1. TARJETA PRINCIPAL: LIMPIEZA DE WORDPRESS (Oferta Estrella de Rescate) */}
-      <div className="p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-[#1c121b]/95 via-[#120a12]/95 to-[#080509]/98 border-2 border-rose-500/40 hover:border-rose-500/60 shadow-[0_20px_60px_rgba(244,63,94,0.22)] backdrop-blur-2xl relative overflow-hidden transition-all">
+      <div className="p-7 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-gradient-to-b from-[#1a131b]/85 via-[#161618]/90 to-[#101012] border-2 border-rose-500/35 hover:border-rose-500/50 shadow-[0_30px_70px_rgba(244,63,94,0.18),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl relative overflow-hidden transition-all">
         
         {/* Glow sutil de emergencia */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -49,10 +49,10 @@ export default function DefensatiPricing({ targetUrl }: Props) {
           
           {/* Badge superior */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
-            <span className="text-xs uppercase tracking-widest font-mono text-rose-400 font-bold px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30">
+            <span className="text-xs uppercase tracking-widest font-mono text-[#ff453a] font-semibold px-3.5 py-1 rounded-full bg-rose-500/15 border border-rose-500/25">
               RESCATE URGENTE &bull; WORDPRESS &amp; WOOCOMMERCE
             </span>
-            <span className="text-xs text-neutral-400 flex items-center gap-1.5 font-mono">
+            <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
               Diagnóstico en &lt; 2h &bull; Entrega en 24-48h
             </span>
@@ -61,24 +61,24 @@ export default function DefensatiPricing({ targetUrl }: Props) {
           {/* Título y Precio */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-[#ff453a] shrink-0">
                 <ShieldAlert className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                <h3 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-tight leading-tight">
                   Limpieza y Desinfección de WordPress:{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-rose-300">
                     desde S/ 250
                   </span>
                 </h3>
-                <p className="text-sm sm:text-base text-neutral-300 mt-1">
+                <p className="text-sm sm:text-base text-[#86868b] mt-1 font-normal">
                   Para sitios que sufren virus, redirecciones a sitios de apuestas, penalización en Google o suspensión de hosting.
                 </p>
               </div>
             </div>
 
             {/* Garantía Destacada */}
-            <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 text-sm sm:text-base flex items-center gap-3 shadow-inner">
+            <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-200 text-sm sm:text-base flex items-center gap-3">
               <ShieldCheck className="w-6 h-6 text-emerald-400 shrink-0" />
               <span className="font-semibold">
                 Garantía por escrito de 30 días: si tu web se vuelve a infectar por la misma causa, la limpio gratis.
@@ -106,7 +106,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             </div>
           </div>
 
-          {/* Botón de Conversión Inmediata */}
+          {/* Botón de Conversión Inmediata Apple Pill */}
           <div className="pt-2">
             <a
               href={DEFENSATI_WHATSAPP_MESSAGES.precioLimpieza(cleanUrl)}
@@ -124,7 +124,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                   domain: cleanUrl,
                 });
               }}
-              className="w-full py-4 px-8 rounded-xl bg-gradient-to-r from-[#25D366] via-emerald-500 to-[#20ba59] hover:brightness-110 active:scale-[0.98] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_10px_35px_rgba(37,211,102,0.4)] transition-all cursor-pointer text-center"
+              className="w-full py-4 px-8 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_4px_24px_rgba(37,211,102,0.35)] transition-all cursor-pointer text-center"
             >
               <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
               <span>Quiero que revisen mi web infectada</span>
@@ -138,44 +138,44 @@ export default function DefensatiPricing({ targetUrl }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
         
         {/* Blindaje Esencial */}
-        <div className="p-7 sm:p-8 rounded-[28px] bg-[#0c101c]/85 border border-white/12 hover:border-white/20 transition-all flex flex-col justify-between space-y-5 backdrop-blur-xl">
+        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <div className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
-                <Shield className="w-5 h-5 text-[#38bdf8]" />
+              <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white">
+                <Shield className="w-6 h-6 text-[#2997ff]" />
               </div>
-              <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+              <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
                 Prevención Técnica
               </span>
             </div>
 
             <div>
-              <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <h4 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
                 Blindaje Esencial de Sitios Web
               </h4>
-              <p className="text-3xl font-extrabold text-white font-mono mt-1">
-                S/ 165 <span className="text-xs text-neutral-400 font-normal font-sans">pago único por sitio</span>
+              <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
+                S/ 165 <span className="text-xs text-[#86868b] font-normal font-sans">pago único por sitio</span>
               </p>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mt-2">
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
                 Fortalecimiento técnico para páginas sanas que desean prevenir intrusiones antes de ser atacadas.
               </p>
             </div>
 
-            <ul className="space-y-2 pt-2 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame).</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Ocultamiento de versiones de servidor y CMS para despistar atacantes.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Actualización segura de CMS y plugins sin romper el diseño.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Endurecimiento de accesos y contraseñas de administrador.</span>
               </li>
             </ul>
@@ -197,52 +197,52 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 domain: cleanUrl,
               });
             }}
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-[#f5f5f7] text-sm font-semibold border border-white/15 backdrop-blur-xl transition-all cursor-pointer"
           >
-            <WhatsAppIcon className="w-4 h-4 text-[#38bdf8] shrink-0" />
+            <WhatsAppIcon className="w-4 h-4 text-[#2997ff] shrink-0" />
             <span>Pedir Blindaje por WhatsApp (S/ 165)</span>
           </a>
         </div>
 
         {/* Protección WAF */}
-        <div className="p-7 sm:p-8 rounded-[28px] bg-[#0c101c]/85 border border-[#0071e3]/40 hover:border-[#0071e3]/60 transition-all flex flex-col justify-between space-y-5 backdrop-blur-xl relative">
+        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-[#0071e3]/40 hover:border-[#0071e3]/60 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,113,227,0.18),inset_0_1px_0_rgba(255,255,255,0.1)] relative">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <div className="w-11 h-11 rounded-xl bg-[#0071e3]/15 border border-[#0071e3]/30 flex items-center justify-center text-[#38bdf8]">
-                <Lock className="w-5 h-5 text-[#38bdf8]" />
+              <div className="w-12 h-12 rounded-2xl bg-[#0071e3]/15 border border-[#0071e3]/30 flex items-center justify-center text-[#2997ff]">
+                <Lock className="w-6 h-6 text-[#2997ff]" />
               </div>
-              <span className="text-[11px] font-mono text-[#38bdf8] uppercase tracking-wider bg-[#0071e3]/20 px-2.5 py-1 rounded-full border border-[#0071e3]/30 font-bold">
+              <span className="text-[11px] font-mono text-[#2997ff] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/30 font-semibold">
                 Recomendado para Tiendas Online
               </span>
             </div>
 
             <div>
-              <h4 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <h4 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
                 Protección Mediante Firewall (WAF)
               </h4>
-              <p className="text-3xl font-extrabold text-white font-mono mt-1">
-                Desde S/ 335 <span className="text-xs text-neutral-400 font-normal font-sans">implementación técnica</span>
+              <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
+                Desde S/ 335 <span className="text-xs text-[#86868b] font-normal font-sans">implementación técnica</span>
               </p>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mt-2">
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
                 Incluye todo el Blindaje Esencial más la configuración profesional de un Firewall perimetral en Cloudflare.
               </p>
             </div>
 
-            <ul className="space-y-2 pt-2 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Todo lo incluido en el Blindaje Esencial (S/ 165).</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Reglas activas para frenar bots maliciosos y scrapers.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Protección anti-fuerza bruta en tus formularios de login y pasarelas de pago.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
                 <span>Mitigación de ataques de denegación de servicio (DDoS capa 7).</span>
               </li>
             </ul>
@@ -264,7 +264,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 domain: cleanUrl,
               });
             }}
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-semibold shadow-[0_4px_16px_rgba(0,113,227,0.35)] transition-all cursor-pointer"
           >
             <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
             <span>Configurar Firewall por WhatsApp (Desde S/ 335)</span>

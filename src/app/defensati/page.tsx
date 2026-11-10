@@ -192,7 +192,7 @@ export default function DefensatiPage() {
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
       {/* Fondo interactivo y luces ambientales (El fondo clásico original de DEFENSA TI) */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-50">
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-80">
         <NeuralBackground 
           onSelectDomain={(selectedDomain) => {
             setUrl(`https://${selectedDomain}`);
@@ -203,7 +203,7 @@ export default function DefensatiPage() {
             }
           }}
         />
-        <div className="absolute inset-0 bg-radial from-[#000000]/30 via-[#000000]/55 to-[#000000]/80" />
+        <div className="absolute inset-0 bg-radial from-black/20 via-black/50 to-black/80" />
       </div>
 
       {/* Luces cósmicas Apple Pro de fondo */}
@@ -269,7 +269,7 @@ export default function DefensatiPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick({ service: 'general', placement: 'sticky_header' })}
-                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
               >
                 <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp</span>
@@ -311,15 +311,15 @@ export default function DefensatiPage() {
           {/* SECCIÓN 6: ESCÁNER GRATUITO (Con Declaración Jurada Ley N° 30096) */}
           <section id="escaner-gratis" className="w-full max-w-3xl mx-auto space-y-6 scroll-mt-24 text-center">
             
-            <div className="space-y-3 p-6 sm:p-7 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-400 text-xs font-semibold">
+            <div className="space-y-3 p-6 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)]">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
                 <Search className="w-3.5 h-3.5" />
                 <span>Auditoría Perimetral Gratuita</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
                 Prueba el escáner gratuito de tu web
               </h2>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl mx-auto">
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed max-w-xl mx-auto font-normal">
                 Analiza en segundos certificados SSL/TLS, cabeceras de transporte HTTP y puertos expuestos.
               </p>
 
@@ -331,8 +331,8 @@ export default function DefensatiPage() {
                 }}
                 className="pt-4 max-w-xl mx-auto space-y-3 text-left"
               >
-                <div className="relative p-1.5 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,113,227,0.15)] flex items-center gap-2 ring-1 ring-white/10 focus-within:ring-[#0071e3]/80 focus-within:border-[#0071e3]/80 transition-all">
-                  <div className="pl-3.5 text-neutral-500">
+                <div className="relative p-1.5 rounded-full bg-white/[0.05] border border-white/15 backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,113,227,0.15)] flex items-center gap-2 ring-1 ring-white/10 focus-within:ring-2 focus-within:ring-[#0071e3] transition-all">
+                  <div className="pl-4 text-neutral-400">
                     <Search className="w-4 h-4" />
                   </div>
                   <input
@@ -341,13 +341,13 @@ export default function DefensatiPage() {
                     placeholder="https://tudominio.com"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    className="w-full bg-transparent border-none py-2 text-[16px] sm:text-sm text-white placeholder-neutral-500 focus:outline-none font-normal"
+                    className="w-full bg-transparent border-none py-2.5 text-[16px] sm:text-sm text-[#f5f5f7] placeholder-neutral-500 focus:outline-none font-normal"
                   />
                   <button
                     type="submit"
                     disabled={loading || !legalConsent || !url.trim()}
                     title={!legalConsent ? 'Marca la casilla obligatoria para activar el botón' : 'Iniciar auditoría'}
-                    className={`px-4 sm:px-5 py-2.5 font-medium text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+                    className={`px-5 sm:px-6 py-2.5 font-semibold text-xs rounded-full transition-all flex items-center justify-center gap-1.5 shrink-0 ${
                       loading || !legalConsent || !url.trim()
                         ? 'bg-neutral-800 text-neutral-500 border border-white/5 cursor-not-allowed opacity-60'
                         : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/30 cursor-pointer active:scale-[0.98]'
@@ -637,22 +637,22 @@ export default function DefensatiPage() {
             
             {/* Canales de Contacto */}
             <div className="flex flex-wrap items-center justify-center gap-3">
-              {/* WhatsApp Oficial */}
+              {/* WhatsApp Oficial Apple Pill */}
               <a
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick({ service: 'general', placement: 'footer' })}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
               >
                 <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp: {siteConfig.contact.whatsappFormatted}</span>
               </a>
 
-              {/* Email */}
+              {/* Email Apple Pill */}
               <a
                 href="mailto:contacto@neuronalgravity.com"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[#f5f5f7] font-medium transition-all"
               >
                 <span>contacto@neuronalgravity.com</span>
               </a>

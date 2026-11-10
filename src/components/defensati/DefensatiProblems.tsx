@@ -51,33 +51,33 @@ export default function DefensatiProblems() {
 
   return (
     <section id="problemas" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left">
-      <div className="p-7 sm:p-12 rounded-[32px] bg-[#0c101c]/85 border border-white/12 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-8">
+      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-8">
         
-        {/* Cabecera */}
+        {/* Cabecera Estilo Apple Pro */}
         <div className="space-y-2 border-b border-white/10 pb-6">
-          <span className="text-xs font-mono uppercase tracking-widest text-rose-400 font-bold px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/25 inline-block">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#ff453a] font-semibold px-3.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 inline-block">
             PROBLEMAS QUE SOLUCIONAMOS
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight pt-2">
+          <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight pt-2">
             ¿Reconoces alguna de estas señales en tu web?
           </h2>
-          <p className="text-base sm:text-lg text-neutral-300 font-normal max-w-2xl">
+          <p className="text-base sm:text-lg text-[#86868b] font-normal max-w-2xl">
             Cada hora que tu web pasa infectada o bloqueada daña tu reputación de marca, te hace perder ventas y destruye tu posicionamiento en Google.
           </p>
         </div>
 
         {/* Cuadrícula de Problemas y Soluciones con botones de WhatsApp contextuales */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {problems.map((p, idx) => {
             const Icon = p.icon;
             return (
               <div
                 key={idx}
-                className="p-6 sm:p-8 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6"
+                className="p-6 sm:p-7 rounded-[24px] bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center">
                       <Icon className={`w-6 h-6 ${p.color}`} />
                     </div>
                     <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
@@ -85,7 +85,7 @@ export default function DefensatiProblems() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug tracking-tight">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] leading-snug tracking-tight">
                     {p.title}
                   </h3>
 
@@ -93,7 +93,7 @@ export default function DefensatiProblems() {
                     {p.desc}
                   </p>
 
-                  <div className="pt-3 border-t border-white/10 space-y-2 bg-sky-950/20 p-3.5 rounded-xl border-sky-500/20">
+                  <div className="pt-3 border-t border-white/10 space-y-2 bg-sky-950/20 p-3.5 rounded-2xl border border-sky-500/20">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-[#38bdf8]">
                       <ShieldCheck className="w-4 h-4 shrink-0 text-[#38bdf8]" />
                       <span>Nuestra solución directa:</span>
@@ -104,7 +104,7 @@ export default function DefensatiProblems() {
                   </div>
                 </div>
 
-                {/* Botón contextual de WhatsApp */}
+                {/* Botón contextual de WhatsApp Apple Pill */}
                 <a
                   href={p.whatsappUrl}
                   target="_blank"
@@ -115,7 +115,7 @@ export default function DefensatiProblems() {
                       placement: `problems_card_${idx + 1}`,
                     })
                   }
-                  className={`w-full py-3 px-4 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer ${p.btnClass}`}
+                  className={`w-full py-3.5 px-4 rounded-full border font-semibold text-xs flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer ${p.btnClass}`}
                 >
                   <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                   <span>{p.buttonText}</span>
@@ -126,12 +126,12 @@ export default function DefensatiProblems() {
         </div>
 
         {/* Llamado de Acción al Pie de Problemas */}
-        <div className="p-5 sm:p-7 rounded-2xl bg-gradient-to-r from-rose-950/40 via-[#101422] to-sky-950/40 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+        <div className="p-6 sm:p-8 rounded-[24px] bg-gradient-to-r from-rose-950/30 via-[#161618] to-sky-950/30 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
           <div className="space-y-1">
-            <h4 className="text-base sm:text-lg font-bold text-white">
+            <h4 className="text-base sm:text-lg font-bold text-[#f5f5f7]">
               ¿Tu sitio presenta uno de estos síntomas ahora mismo?
             </h4>
-            <p className="text-xs sm:text-sm text-neutral-300">
+            <p className="text-xs sm:text-sm text-[#86868b]">
               Escríbenos el enlace de tu web. Hacemos un diagnóstico previo sin costo en menos de 2 horas.
             </p>
           </div>
@@ -145,7 +145,7 @@ export default function DefensatiProblems() {
                 placement: 'problems_footer_banner',
               })
             }
-            className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-xs sm:text-sm shadow-md shadow-[#25D366]/20 transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer"
+            className="px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-bold text-xs sm:text-sm shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer"
           >
             <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
             <span>Consultar rescate de emergencia</span>

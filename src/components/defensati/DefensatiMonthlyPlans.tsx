@@ -20,15 +20,15 @@ export default function DefensatiMonthlyPlans() {
     <section id="planes" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left relative">
       <div id="planes-mensuales" className="absolute -top-24 pointer-events-none" />
       
-      {/* Encabezado */}
+      {/* Encabezado Estilo Apple Pro */}
       <div className="space-y-2 border-b border-white/10 pb-5 max-w-4xl">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#30d158] font-bold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 inline-block">
+        <span className="text-xs font-mono uppercase tracking-widest text-[#30d158] font-semibold px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 inline-block">
           TRANQUILIDAD CONTINUA &bull; MENSUALIDADES ACCESIBLES
         </span>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight pt-2">
+        <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight pt-2">
           Monitoreo y Mantenimiento Mensual
         </h2>
-        <p className="text-base sm:text-lg text-neutral-300">
+        <p className="text-base sm:text-lg text-[#86868b] font-normal">
           Un sitio web no se protege una sola vez. Vigilamos tu web día y noche para avisarte de inmediato si algo falla antes de que lo noten tus clientes.
         </p>
       </div>
@@ -37,22 +37,22 @@ export default function DefensatiMonthlyPlans() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Plan 1: Esencial (S/ 49/mes) */}
-        <div className="p-7 sm:p-9 rounded-[32px] bg-[#0c101c]/85 border border-white/12 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 backdrop-blur-xl">
+        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-bold text-neutral-300 uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
+              <span className="text-xs font-mono font-bold text-[#f5f5f7] uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
                 Plan Esencial
               </span>
-              <span className="text-xs text-neutral-400 font-mono">Sin permanencia</span>
+              <span className="text-xs text-[#86868b] font-mono">Sin permanencia</span>
             </div>
 
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono">S/ 49</span>
-                <span className="text-neutral-400 text-sm">/ mes (prepago)</span>
+                <span className="text-4xl sm:text-5xl font-bold text-[#f5f5f7] font-mono">S/ 49</span>
+                <span className="text-[#86868b] text-sm font-normal">/ mes (prepago)</span>
               </div>
-              <p className="text-xs text-neutral-400 mt-1">Menos de S/ 1.70 al día por cuidar tu web.</p>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mt-3">
+              <p className="text-xs text-[#86868b] mt-1 font-normal">Menos de S/ 1.70 al día por cuidar tu web.</p>
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-3 font-normal">
                 Ideal para blogs de negocio, páginas corporativas y profesionales independientes.
               </p>
             </div>
@@ -92,7 +92,7 @@ export default function DefensatiMonthlyPlans() {
                 placement: 'monthly_plans_esencial',
               });
             }}
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all text-center cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-[#f5f5f7] text-sm font-semibold border border-white/15 backdrop-blur-xl transition-all text-center cursor-pointer"
           >
             <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>Activar Monitoreo por WhatsApp (S/ 49/mes)</span>
@@ -100,11 +100,11 @@ export default function DefensatiMonthlyPlans() {
         </div>
 
         {/* Plan 2: Pro (S/ 99/mes) */}
-        <div className="p-7 sm:p-9 rounded-[32px] bg-gradient-to-b from-[#101b2a]/95 via-[#0c121e]/95 to-[#080d16]/98 border-2 border-[#0071e3]/50 hover:border-[#0071e3]/80 shadow-[0_20px_50px_rgba(0,113,227,0.25)] transition-all flex flex-col justify-between space-y-6 backdrop-blur-xl relative">
+        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border-2 border-[#0071e3]/40 hover:border-[#0071e3]/70 shadow-[0_20px_50px_rgba(0,113,227,0.2),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl relative">
           
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-bold text-[#38bdf8] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/40">
+              <span className="text-xs font-mono font-bold text-[#2997ff] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/30">
                 Nivel Pro &bull; Alta Disponibilidad
               </span>
               <span className="text-xs text-sky-400 font-mono font-semibold">Prioridad Máxima</span>
@@ -112,11 +112,11 @@ export default function DefensatiMonthlyPlans() {
 
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono">S/ 99</span>
-                <span className="text-neutral-400 text-sm">/ mes (prepago)</span>
+                <span className="text-4xl sm:text-5xl font-bold text-[#f5f5f7] font-mono">S/ 99</span>
+                <span className="text-[#86868b] text-sm font-normal">/ mes (prepago)</span>
               </div>
-              <p className="text-xs text-neutral-400 mt-1">S/ 3.30 al día para blindar tu negocio transaccional.</p>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mt-3">
+              <p className="text-xs text-[#86868b] mt-1 font-normal">S/ 3.30 al día para blindar tu negocio transaccional.</p>
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-3 font-normal">
                 Para tiendas WooCommerce, e-commerce activos y empresas con facturación constante en internet.
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function DefensatiMonthlyPlans() {
                 placement: 'monthly_plans_pro',
               });
             }}
-            className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all text-center cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-semibold shadow-[0_4px_16px_rgba(0,113,227,0.35)] transition-all text-center cursor-pointer"
           >
             <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
             <span>Contratar Plan Pro por WhatsApp (S/ 99/mes)</span>
