@@ -263,14 +263,14 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         const renderY = Math.round(n1.y);
 
         if (showDomains) {
-          // Puntos y nombres de dominios flotantes (Para DEFENSA TI)
+          // Puntos y nombres de dominios flotantes (Para DEFENSA TI) con +15% de visibilidad
           ctx.beginPath();
           ctx.arc(renderX, renderY, n1.radius, 0, Math.PI * 2);
-          ctx.fillStyle = n1.isImportant ? 'rgba(56, 189, 248, 0.65)' : 'rgba(255, 255, 255, 0.45)';
+          ctx.fillStyle = n1.isImportant ? 'rgba(56, 189, 248, 0.82)' : 'rgba(255, 255, 255, 0.58)';
           ctx.fill();
 
           ctx.font = `500 ${n1.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
-          ctx.fillStyle = n1.isImportant ? 'rgba(125, 211, 252, 0.6)' : 'rgba(226, 232, 240, 0.38)';
+          ctx.fillStyle = n1.isImportant ? 'rgba(125, 211, 252, 0.75)' : 'rgba(226, 232, 240, 0.50)';
           ctx.fillText(n1.domain, renderX + 9, renderY + 4);
         } else {
           // Modo Estelar Neuronal (Para la P├ígina Principal - solo nodos iluminados como estrellas)
@@ -309,7 +309,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxLinkDist) {
-            const alpha = (1 - dist / maxLinkDist) * 0.35;
+            const alpha = (1 - dist / maxLinkDist) * 0.42;
             ctx.beginPath();
             ctx.moveTo(renderX, renderY);
             ctx.lineTo(Math.round(n2.x), Math.round(n2.y));

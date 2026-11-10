@@ -191,19 +191,10 @@ export default function DefensatiPage() {
   return (
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
-      {/* Fondo interactivo y luces ambientales (El fondo clásico original de DEFENSA TI) */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-80">
-        <NeuralBackground 
-          onSelectDomain={(selectedDomain) => {
-            setUrl(`https://${selectedDomain}`);
-            const inputEl = document.getElementById('url-scan-input-defensati');
-            if (inputEl) {
-              inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              setTimeout(() => inputEl.focus(), 300);
-            }
-          }}
-        />
-        <div className="absolute inset-0 bg-radial from-black/20 via-black/50 to-black/80" />
+      {/* Fondo estético y luces ambientales (El fondo clásico original de DEFENSA TI con +15% de visibilidad) */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-95">
+        <NeuralBackground />
+        <div className="absolute inset-0 bg-radial from-black/10 via-black/35 to-black/65" />
       </div>
 
       {/* Luces cósmicas Apple Pro de fondo */}
