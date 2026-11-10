@@ -101,7 +101,7 @@ export default function DefensatiCases() {
       evidence: {
         ticketId: 'DEF-2025-IND-02',
         serviceDate: 'Febrero 2025 • Tiempo de hardening: 4 horas de configuración perimetral',
-        confidentiality: 'Telemetría de sockets y arquitectura de servidor VPS resguardada bajo NDA bilateral (Ley N° 29733 del Perú).',
+        confidentiality: 'Identidad, infraestructura y reportes de seguridad resguardados bajo Acuerdo de Confidencialidad (NDA bilateral y Ley N° 29733 del Perú).',
         attackVector: 'Ataques distribuidos de fuerza bruta masiva sobre /wp-login.php y xmlrpc.php (más de 140,000 peticiones POST/hora desde redes de bots en Europa del Este y Asia). Puertos 22 (SSH) y 3306 (MySQL) expuestos a la red pública.',
         validationSource: 'Registros de acceso Nginx, telemetría de agotamiento de procesos PHP-FPM y posterior mitigación al 100% verificada en el panel de analítica de Cloudflare WAF.'
       },

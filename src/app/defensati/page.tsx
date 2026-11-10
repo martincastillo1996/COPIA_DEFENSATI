@@ -14,7 +14,6 @@ import {
   Terminal, 
   Wrench,
   ChevronDown,
-  Cpu,
   Clock
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
@@ -32,7 +31,6 @@ import CookieResults from '@/components/CookieResults';
 import RemediationList from '@/components/RemediationList';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
-import AppleCyberHud from '@/components/AppleCyberHud';
 import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
 
 // Componentes Oficiales DEFENSA TI
@@ -63,7 +61,6 @@ export default function DefensatiPage() {
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [legalConsent, setLegalConsent] = useState(false);
-  const [showCyberHud, setShowCyberHud] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const handleScan = useCallback(async (targetUrl?: string, overrideConsent?: boolean) => {
@@ -584,40 +581,6 @@ export default function DefensatiPage() {
                   </div>
                 </div>
               )}
-
-              {/* Desplegable de Telemetría e Infraestructura (Solo visible tras escanear) */}
-              <div className="rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-2xl overflow-hidden transition-all">
-                <button
-                  type="button"
-                  onClick={() => setShowCyberHud(!showCyberHud)}
-                  className="w-full p-5 sm:p-6 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-[#38bdf8] shrink-0">
-                      <Cpu className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                        Telemetría y Motor Perimetral (Inspección a Nivel Sockets)
-                      </h4>
-                      <p className="text-xs text-neutral-400">
-                        Ver arquitectura técnica de sondeo asíncrono, RFC 1918 y puertos
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#38bdf8] bg-sky-500/10 px-3.5 py-1.5 rounded-full border border-sky-500/25 shrink-0 ml-3">
-                    <span>{showCyberHud ? 'Ocultar telemetría' : 'Ver telemetría'}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showCyberHud ? 'rotate-180' : ''}`} />
-                  </div>
-                </button>
-
-                {showCyberHud && (
-                  <div className="p-4 sm:p-6 pt-0 border-t border-white/5 animate-in fade-in duration-300">
-                    <AppleCyberHud />
-                  </div>
-                )}
-              </div>
 
             </div>
           )}

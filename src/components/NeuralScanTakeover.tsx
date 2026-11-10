@@ -10,44 +10,44 @@ interface NeuralScanTakeoverProps {
 
 const SCAN_STEPS = [
   { 
-    phase: 'Fase 1 / 4 • Motor de Red DEFENSA TI',
-    title: 'Mapeando Topología de Red y DNS',
-    log: '[DNS/TCP] Resolviendo registros A/AAAA y abriendo socket seguro...',
+    phase: 'Fase 1 / 4 • Verificación de Dominio',
+    title: 'Comprobando Conexión y Estado del Servidor',
+    log: '[CONEXIÓN] Comprobando disponibilidad del servidor y dominio...',
     progress: 25, 
     icon: Cpu 
   },
   { 
-    phase: 'Fase 2 / 4 • Inspección Criptográfica',
-    title: 'Inspeccionando Cifrado SSL / TLS 1.3',
-    log: '[X.509] Negociando handshake TLSv1.3 y validando cadena de confianza...',
+    phase: 'Fase 2 / 4 • Certificado y Cifrado',
+    title: 'Inspeccionando Certificado SSL / HTTPS',
+    log: '[SSL/TLS] Verificando candado de seguridad y vigencia del certificado...',
     progress: 55, 
     icon: Lock 
   },
   { 
-    phase: 'Fase 3 / 4 • Auditoría Determinista OWASP',
-    title: 'Auditando Cabeceras y Puertos de Red',
-    log: '[RFC 9110] Evaluando HSTS, CSP, X-Frame y escaneando puertos seguros...',
+    phase: 'Fase 3 / 4 • Protección Web',
+    title: 'Auditando Cabeceras y Puertos Expuestos',
+    log: '[DEFENSA] Evaluando cabeceras de protección y puertos expuestos...',
     progress: 82, 
     icon: ShieldCheck 
   },
   { 
     phase: 'Fase 4 / 4 • Compilación de Dictamen',
-    title: 'Generando Diagnóstico y Recomendaciones',
-    log: '[DEFENSA TI] Estructurando dictamen de seguridad perimetral...',
+    title: 'Generando Diagnóstico para tu Negocio',
+    log: '[INFORME] Estructurando diagnóstico y recomendaciones para tu negocio...',
     progress: 98, 
     icon: Activity 
   },
 ];
 
 const REALTIME_LOGS = [
-  '[RESOLVER] Query DNS para host objetivo... OK (200)',
-  '[TCP SOCKET] Conexión establecida a socket seguro (puerto 443)',
-  '[TLS HANDSHAKE] Negociando cifrado TLSv1.3 ECDHE-RSA-AES128-GCM',
-  '[CERT X.509] Cadena de certificación verificada y vigente',
-  '[HTTP HEADERS] Inspeccionando Strict-Transport-Security (HSTS)...',
-  '[OWASP HARDENING] Evaluando Content-Security-Policy y X-Frame-Options...',
-  '[PORTS SCAN] Sondeo asíncrono pasivo de puertos de infraestructura...',
-  '[ANALYZER] Compilando hallazgos y generando informe perimetral...'
+  '[DOMINIO] Verificando resolución del sitio web... OK',
+  '[CONEXIÓN] Conexión establecida a servidor web seguro (puerto 443)',
+  '[SSL/TLS] Verificando cifrado HTTPS de alta seguridad',
+  '[CERTIFICADO] Cadena de certificación verificada y vigente',
+  '[PROTECCIÓN] Inspeccionando cabeceras de seguridad web (HSTS)...',
+  '[DEFENSA] Evaluando defensas contra clonación y robo de datos...',
+  '[PUERTOS] Verificando que no existan accesos vulnerables expuestos...',
+  '[INFORME] Compilando resultados y calificación final...'
 ];
 
 interface Node {

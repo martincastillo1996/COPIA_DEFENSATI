@@ -477,12 +477,12 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 <span className="font-mono text-[10px] text-sky-300">Código Listo para Copiar</span>
               </div>
 
-              {/* Matriz de Sockets TCP Auditados */}
+              {/* Matriz de Puertos Auditados */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
                     <Server className="w-4 h-4 text-[#38bdf8]" />
-                    <span>Superficie de Exposición de Red (Zero-Downtime TCP Sockets)</span>
+                    <span>Revisión de Puertos Expuestos a Internet (Sondeo Seguro)</span>
                   </h3>
                   <span className="text-[11px] font-mono text-neutral-400">
                     Puerto 443 = Canal Seguro HTTPS &bull; Puerto 80 = Redirección Obligatoria
