@@ -1,74 +1,89 @@
 'use client';
 
 import React from 'react';
-import { MessageSquare, Search, ShieldCheck } from 'lucide-react';
+import { MessageSquare, Search, ShieldCheck, Sparkles } from 'lucide-react';
 
 export default function DefensatiHowItWorks() {
   const steps = [
     {
-      num: '1',
-      title: '1. Me escribes con el link de tu web.',
-      desc: 'Cuéntame qué está pasando con tu página (virus, redirecciones raras o si Google la bloqueó).',
+      step: '01',
+      title: 'Me escribes por WhatsApp',
+      desc: 'Nos pasas el link de tu web y nos cuentas qué está pasando (redirecciones sospechosas, hackeo visible o prevención).',
       icon: MessageSquare,
       color: 'from-emerald-500/20 to-teal-500/10',
       iconColor: 'text-emerald-400',
-      borderColor: 'border-emerald-500/40',
+      borderColor: 'border-emerald-500/30',
+      badge: 'Paso 1',
     },
     {
-      num: '2',
-      title: '2. Reviso y te muestro qué encontré, gratis.',
-      desc: 'Analizo tu sitio sin cobrarte nada por adelantado. Te muestro las fallas o archivos infectados.',
+      step: '02',
+      title: 'Te mando lo que encontré en tu web',
+      desc: 'Revisamos tu sitio y te mostramos el diagnóstico con los puntos vulnerables o archivos infectados antes de que pagues.',
       icon: Search,
       color: 'from-sky-500/20 to-blue-500/10',
       iconColor: 'text-sky-400',
-      borderColor: 'border-sky-500/40',
+      borderColor: 'border-sky-500/30',
+      badge: 'Paso 2',
     },
     {
-      num: '3',
-      title: '3. Si quieres, la limpio y la blindo.',
-      desc: 'Elimino los virus por completo, recupero tus accesos y dejo tu web protegida con garantía de 30 días.',
+      step: '03',
+      title: 'La limpio y la blindo',
+      desc: 'Eliminamos el malware por completo y aplicamos las directivas de blindaje perimetral para que no te vuelvan a entrar.',
       icon: ShieldCheck,
       color: 'from-purple-500/20 to-indigo-500/10',
       iconColor: 'text-purple-400',
-      borderColor: 'border-purple-500/40',
+      borderColor: 'border-purple-500/30',
+      badge: 'Paso 3',
     },
   ];
 
   return (
-    <section id="como-funciona" className="w-full max-w-5xl mx-auto space-y-6 scroll-mt-24 text-left">
-      <div className="p-6 sm:p-10 rounded-[32px] bg-gradient-to-b from-[#12172a]/90 via-[#0c101e]/90 to-[#080b16]/95 border border-sky-500/30 shadow-[0_20px_50px_rgba(0,113,227,0.2)] backdrop-blur-2xl space-y-8 relative overflow-hidden">
+    <section id="como-funciona" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24">
+      <div className="p-6 sm:p-10 rounded-[32px] bg-[#121214]/80 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl space-y-8 text-left relative overflow-hidden">
         
-        {/* Glow cósmico de cabecera */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-
         {/* Cabecera */}
-        <div className="border-b border-white/15 pb-4 relative z-10">
-          <h2 className="text-xs uppercase tracking-widest font-mono text-[#38bdf8] font-bold">
-            CÓMO FUNCIONA
-          </h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs font-medium tracking-tight">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Cómo funciona</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-[#f5f5f7] tracking-[-0.03em] leading-snug">
+              Solución en 3 pasos simples
+            </h2>
+          </div>
+          <span className="text-xs text-[#86868b] font-mono">
+            Sin burocracia &bull; Directo al grano
+          </span>
         </div>
 
-        {/* 3 Pasos */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10">
+        {/* 3 Pasos (Mobile first: apilados verticalmente con amplio espacio de lectura) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {steps.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="p-6 sm:p-7 rounded-[26px] bg-white/[0.04] border border-white/15 hover:border-sky-400/60 transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden backdrop-blur-xl shadow-lg hover:shadow-[0_10px_35px_rgba(0,113,227,0.25)]"
+                className="p-6 sm:p-7 rounded-[24px] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden backdrop-blur-xl"
               >
-                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500`} />
+                {/* Glow suave */}
+                <div className={`absolute top-0 right-0 w-24 h-24 bg-linear-to-br ${item.color} rounded-full blur-2xl pointer-events-none`} />
 
                 <div className="space-y-3 relative z-10">
-                  <div className={`w-12 h-12 rounded-2xl bg-white/10 border ${item.borderColor} flex items-center justify-center ${item.iconColor} shadow-[0_0_15px_rgba(56,189,248,0.2)]`}>
-                    <Icon className="w-6 h-6" />
+                  <div className="flex items-center justify-between">
+                    <div className={`w-11 h-11 rounded-2xl bg-white/5 border ${item.borderColor} flex items-center justify-center ${item.iconColor} shadow-inner`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className="text-xs font-mono font-medium text-[#2997ff] bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                      {item.badge}
+                    </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-white leading-snug pt-1 tracking-tight">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#f5f5f7] leading-snug pt-1 tracking-tight">
                     {item.title}
                   </h3>
 
-                  <p className="text-sm text-neutral-300 leading-relaxed font-normal">
+                  <p className="text-sm text-[#a1a1a6] leading-relaxed font-normal">
                     {item.desc}
                   </p>
                 </div>

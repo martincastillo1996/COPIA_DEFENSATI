@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Check, Zap, Sparkles, MessageCircle, ShieldCheck, Clock, ShieldAlert, Shield, Activity } from 'lucide-react';
+import { Check, Zap, Sparkles, MessageCircle, ShieldCheck, Clock } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 
 interface Props {
@@ -15,11 +15,11 @@ export default function PreviewPricing({ targetUrl }: Props) {
     {
       id: 'limpieza',
       name: 'Limpieza de WordPress infectados',
-      badge: 'Oferta Principal • Rescate Inmediato',
-      badgeColor: 'bg-rose-500/20 border-rose-400/60 text-rose-200 shadow-[0_0_15px_rgba(244,63,94,0.35)]',
+      badge: 'Oferta Principal • Rescate',
+      badgeColor: 'bg-rose-500/10 border-rose-500/25 text-rose-300',
       price: 'Desde S/ 250',
       period: 'pago único (según complejidad)',
-      description: 'Oferta principal para sitios que ya presentan virus, redirecciones extrañas, pantallas rojas o bloqueos de Google.',
+      description: 'Oferta principal para sitios que ya presentan virus, redirecciones extrañas o bloqueos de Google.',
       features: [
         'Diagnóstico previo de infección sin costo',
         'Desinfección profunda de archivos y CMS',
@@ -29,23 +29,17 @@ export default function PreviewPricing({ targetUrl }: Props) {
       ],
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioLimpieza(cleanUrl),
       btnText: 'Consultar Limpieza de WordPress',
-      btnStyle: 'bg-gradient-to-r from-rose-600 via-rose-500 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white shadow-[0_4px_25px_rgba(244,63,94,0.45)] hover:shadow-[0_6px_35px_rgba(244,63,94,0.65)]',
-      cardStyle: 'bg-gradient-to-b from-[#201018]/90 via-[#150b12]/90 to-[#0b060a]/95 border border-rose-500/40 hover:border-rose-400/80 shadow-[0_12px_45px_rgba(244,63,94,0.18)] hover:shadow-[0_16px_60px_rgba(244,63,94,0.32)]',
-      glowColor: 'bg-rose-500/20',
-      iconColor: 'text-rose-400',
-      priceColor: 'drop-shadow-[0_0_18px_rgba(244,63,94,0.45)]',
-      icon: ShieldAlert,
       highlight: false,
       extraNote: 'Se cotiza previamente según el nivel de complejidad.',
     },
     {
       id: 'blindaje',
       name: 'Blindaje de sitios web',
-      badge: 'Configuración Esencial Recomendada',
-      badgeColor: 'bg-sky-500/20 border-sky-400/60 text-sky-200 shadow-[0_0_15px_rgba(56,189,248,0.35)]',
+      badge: 'Configuración Esencial',
+      badgeColor: 'bg-white/[0.08] border-white/15 text-[#f5f5f7]',
       price: 'S/ 165',
       period: 'pago único por sitio web',
-      description: 'Auditoría y fortalecimiento de configuración técnica para proteger tu web contra ataques comunes e inyecciones.',
+      description: 'Auditoría y fortalecimiento de configuración técnica para proteger tu web contra ataques comunes.',
       features: [
         'Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame)',
         'Ocultamiento de versiones de servidor y CMS',
@@ -55,23 +49,17 @@ export default function PreviewPricing({ targetUrl }: Props) {
       ],
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioBlindaje(cleanUrl),
       btnText: 'Pedir Blindaje de Sitio Web (S/ 165)',
-      btnStyle: 'bg-gradient-to-r from-[#0071e3] via-[#2997ff] to-[#38bdf8] hover:from-[#0077ed] hover:to-[#60a5fa] text-white shadow-[0_4px_25px_rgba(0,113,227,0.5)] hover:shadow-[0_6px_35px_rgba(0,113,227,0.7)]',
-      cardStyle: 'bg-gradient-to-b from-[#0e192c]/90 via-[#0a1220]/90 to-[#060a12]/95 border border-sky-500/40 hover:border-sky-400/80 shadow-[0_12px_45px_rgba(56,189,248,0.18)] hover:shadow-[0_16px_60px_rgba(56,189,248,0.32)]',
-      glowColor: 'bg-sky-500/20',
-      iconColor: 'text-sky-400',
-      priceColor: 'drop-shadow-[0_0_18px_rgba(56,189,248,0.45)]',
-      icon: Shield,
       highlight: false,
       extraNote: 'Auditoría y fortalecimiento de configuración.',
     },
     {
       id: 'blindaje-waf',
       name: 'Protección mediante WAF',
-      badge: '★ Máxima Protección • La Más Elegida',
-      badgeColor: 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-extrabold border border-indigo-300/60 shadow-[0_0_20px_rgba(99,102,241,0.6)] uppercase tracking-wider',
+      badge: 'Máxima Protección • Recomendado',
+      badgeColor: 'bg-[#2997ff]/10 border-[#2997ff]/25 text-[#38bdf8]',
       price: 'Desde S/ 335',
       period: 'pago único de implementación',
-      description: 'Incluye todo el Blindaje Básico + configuración experta de Firewall de Aplicaciones Web (WAF) contra ataques masivos.',
+      description: 'Incluye todo el Blindaje Básico + configuración experta de Firewall de Aplicaciones Web (WAF).',
       features: [
         'Todo lo incluido en el Blindaje de sitios web (S/ 165)',
         'Configuración profesional de WAF perimetral (Cloudflare)',
@@ -79,26 +67,20 @@ export default function PreviewPricing({ targetUrl }: Props) {
         'Mitigación de ataques DDoS de capa 7',
         'Filtro contra inyecciones SQL y ataques web',
       ],
-      optionalAddon: '* Incluye configuración experta de WAF; el plan WAF de terceros puede ir aparte si aplica.',
+      optionalAddon: '* Incluye configuración de WAF; el costo del servicio WAF de terceros puede ir aparte.',
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl),
       btnText: 'Pedir Protección mediante WAF (Desde S/ 335)',
-      btnStyle: 'bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#8b5cf6] hover:from-[#4338ca] hover:to-[#7c3aed] text-white shadow-[0_4px_30px_rgba(99,102,241,0.65)] hover:shadow-[0_6px_40px_rgba(99,102,241,0.85)]',
-      cardStyle: 'bg-gradient-to-b from-[#181d3d]/95 via-[#11152e]/95 to-[#0a0d1d]/98 border-2 border-[#818cf8] shadow-[0_15px_55px_rgba(99,102,241,0.35)] hover:shadow-[0_20px_75px_rgba(99,102,241,0.6)] ring-1 ring-[#818cf8]/40',
-      glowColor: 'bg-indigo-500/25',
-      iconColor: 'text-indigo-300',
-      priceColor: 'drop-shadow-[0_0_22px_rgba(129,140,248,0.6)]',
-      icon: Sparkles,
       highlight: true,
       extraNote: 'Configuración perimetral de WAF llave en mano.',
     },
     {
       id: 'vigilancia',
       name: 'Monitoreo y mantenimiento mensual',
-      badge: 'Tranquilidad Continua • Escudo Activo',
-      badgeColor: 'bg-emerald-500/20 border-emerald-400/60 text-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.35)]',
+      badge: 'Tranquilidad Continua',
+      badgeColor: 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
       price: 'S/ 49 / S/ 99',
       period: 'Esencial S/ 49/mes • Pro S/ 99/mes',
-      description: 'Monitoreo proactivo con alcance y límites por escrito para detectar caídas y fallas antes que tus clientes.',
+      description: 'Monitoreo proactivo con alcance y límites por escrito para detectar caídas antes que tus clientes.',
       features: [
         'Plan Esencial (S/ 49/mes): Uptime cada 15 min + aviso inmediato',
         'Alerta preventiva ante vencimiento del certificado SSL (30 días)',
@@ -111,193 +93,180 @@ export default function PreviewPricing({ targetUrl }: Props) {
       secondaryWhatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro(cleanUrl),
       btnText: 'Activar Plan Esencial (S/ 49/mes)',
       secondaryBtnText: 'Contratar Plan Pro (S/ 99/mes)',
-      btnStyle: 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-[0_4px_25px_rgba(16,185,129,0.45)] hover:shadow-[0_6px_35px_rgba(16,185,129,0.65)]',
-      cardStyle: 'bg-gradient-to-b from-[#0c241b]/90 via-[#081912]/90 to-[#050f0c]/95 border border-emerald-500/40 hover:border-emerald-400/80 shadow-[0_12px_45px_rgba(16,185,129,0.18)] hover:shadow-[0_16px_60px_rgba(16,185,129,0.32)]',
-      glowColor: 'bg-emerald-500/20',
-      iconColor: 'text-emerald-400',
-      priceColor: 'drop-shadow-[0_0_18px_rgba(16,185,129,0.45)]',
-      icon: Activity,
       highlight: false,
       extraNote: 'Alcance y límites por escrito. Sin penalizaciones.',
     },
   ];
 
   return (
-    <section id="precios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10 scroll-mt-24 relative">
+    <section id="precios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10 scroll-mt-24">
       
-      {/* Luces difusas de fondo para dar calidez y color al contenedor */}
-      <div className="absolute -top-10 left-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-10 right-1/4 w-96 h-96 bg-purple-600/15 rounded-full blur-[140px] pointer-events-none" />
-
       {/* Cabecera Estilo Apple Pro */}
-      <div className="text-center space-y-3 max-w-3xl mx-auto p-6 sm:p-8 rounded-[32px] bg-gradient-to-b from-[#141828]/90 via-[#0f1220]/90 to-[#0a0d18]/95 border border-sky-500/30 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,113,227,0.18)] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/15 border border-sky-400/35 text-[#38bdf8] text-xs font-semibold tracking-tight shadow-[0_0_15px_rgba(56,189,248,0.25)]">
+      <div className="text-center space-y-3 max-w-3xl mx-auto p-6 sm:p-8 rounded-[32px] bg-[#121214]/80 border border-white/10 backdrop-blur-2xl shadow-xl">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs font-medium tracking-tight">
           <Zap className="w-3.5 h-3.5" />
-          <span>Precios transparentes en Soles &bull; RUC 10704877850</span>
+          <span>Precios transparentes en Soles</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-100 to-sky-300 tracking-tight leading-tight">
+        <h2 className="text-3xl sm:text-5xl font-semibold text-[#f5f5f7] tracking-[-0.035em] leading-tight">
           Elige la solución que tu web necesita
         </h2>
-        <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
+        <p className="text-sm sm:text-base text-[#a1a1a6] leading-relaxed font-normal">
           Sin costos ocultos ni letras pequeñas. Te mostramos el diagnóstico antes de que decidas.
         </p>
       </div>
 
-      {/* Banner Diagnóstico Inicial Gratis (Gancho comercial vibrante) */}
-      <div className="rounded-[28px] bg-gradient-to-r from-emerald-950/60 via-[#0a1813] to-emerald-950/60 border-2 border-emerald-400/50 p-6 sm:p-7 backdrop-blur-2xl shadow-[0_0_40px_rgba(16,185,129,0.22)] flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="flex items-center gap-4 relative z-10">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400/50 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-            <ShieldCheck className="w-7 h-7 text-[#34d399]" />
+      {/* Banner Diagnóstico Inicial Gratis (Gancho comercial) */}
+      <div className="rounded-[28px] bg-gradient-to-r from-emerald-500/10 via-[#121214] to-emerald-500/10 border border-emerald-500/30 p-5 sm:p-7 backdrop-blur-2xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
+            <ShieldCheck className="w-6 h-6 text-[#30d158]" />
           </div>
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-emerald-500/25 border border-emerald-400/40 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-1.5 shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-[#30d158] text-[11px] font-bold uppercase tracking-wider mb-1">
               <span>Gancho Comercial</span>
               <span>&bull;</span>
               <span>100% Sin Costo</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Diagnóstico previo gratuito
+            <h3 className="text-lg sm:text-xl font-semibold text-[#f5f5f7] tracking-tight">
+              Diagnóstico gratuito
             </h3>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal mt-0.5">
-              Revisiones pasivas de cabeceras, SSL y puertos. Te mostramos qué encontramos antes de que pagues.
+            <p className="text-xs sm:text-sm text-[#a1a1a6] leading-relaxed font-normal">
+              Solo revisiones pasivas de cabeceras, SSL y puertos. Te mostramos qué encontramos antes de que pagues.
             </p>
           </div>
         </div>
-
         <a
           href="#escaner-gratis"
-          className="shrink-0 px-7 py-3.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 active:scale-95 text-black font-extrabold text-sm shadow-[0_0_25px_rgba(16,185,129,0.5)] transition-all cursor-pointer whitespace-nowrap relative z-10"
+          className="shrink-0 px-6 py-3 rounded-full bg-[#30d158] hover:bg-[#28cd41] active:scale-[0.98] text-black font-semibold text-xs sm:text-sm shadow-md transition-all cursor-pointer whitespace-nowrap"
         >
           Probar escáner gratis &darr;
         </a>
       </div>
 
-      {/* Grid de 4 Tarjetas de Servicios y Blindaje (Ultra llamativo y vibrante) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch relative z-10">
-        {plans.map((plan) => {
-          const PlanIcon = plan.icon;
-          return (
-            <div
-              key={plan.id}
-              className={`p-6 sm:p-8 rounded-[32px] flex flex-col justify-between transition-all duration-300 relative overflow-hidden backdrop-blur-2xl ${plan.cardStyle}`}
-            >
-              {/* Glow ambiental interno en la esquina */}
-              <div className={`absolute top-0 right-0 w-48 h-48 ${plan.glowColor} rounded-full blur-3xl pointer-events-none`} />
+      {/* Grid de 4 Tarjetas de Servicios y Blindaje (Apple Pro Dark Glass - 2x2 Amplio y Espacioso) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+        {plans.map((plan) => (
+          <div
+            key={plan.id}
+            className={`p-6 sm:p-8 rounded-[32px] flex flex-col justify-between transition-all duration-300 relative ${
+              plan.highlight
+                ? 'bg-linear-to-b from-[#141b26] to-[#0f141d] border-2 border-[#0071e3] shadow-[0_20px_50px_rgba(0,113,227,0.25)]'
+                : 'bg-[#121214]/80 border border-white/10 hover:border-white/20 shadow-xl backdrop-blur-2xl'
+            }`}
+          >
+            {/* Glow sutil para tarjeta recomendada */}
+            {plan.highlight && (
+              <div className="absolute top-0 right-0 w-44 h-44 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+            )}
 
-              <div className="space-y-4 relative z-10">
-                {/* Badge del plan + Icono temático */}
-                <div className="flex items-center justify-between gap-2">
-                  <span className={`text-xs font-bold px-3.5 py-1.5 rounded-full border ${plan.badgeColor}`}>
-                    {plan.badge}
-                  </span>
-                  <div className={`w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center ${plan.iconColor} shadow-inner`}>
-                    <PlanIcon className="w-5 h-5" />
-                  </div>
-                </div>
-
-                {/* Título y descripción */}
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
-                    {plan.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mt-2 font-normal">
-                    {plan.description}
-                  </p>
-                </div>
-
-                {/* Precio con realce y drop-shadow */}
-                <div className="py-4 my-2 border-y border-white/15 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 bg-white/[0.02] px-4 rounded-2xl">
-                  <div className="flex items-baseline gap-2">
-                    <span className={`text-3xl sm:text-4xl font-black text-white tracking-tight font-mono whitespace-nowrap ${plan.priceColor}`}>
-                      {plan.price}
-                    </span>
-                  </div>
-                  <span className="text-xs sm:text-sm text-neutral-300 font-medium sm:text-right">
-                    {plan.period}
-                  </span>
-                </div>
-
-                {/* Lista de características */}
-                <ul className="space-y-3 pt-2">
-                  {plan.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-                      <Check className={`w-4 h-4 ${plan.iconColor} shrink-0 mt-0.5`} />
-                      <span className="whitespace-normal">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Nota opcional de WAF */}
-                {plan.optionalAddon && (
-                  <div className="p-3.5 rounded-2xl bg-indigo-950/50 border border-indigo-400/40 text-indigo-200 text-xs sm:text-sm flex items-start gap-2.5 leading-relaxed mt-3 shadow-inner">
-                    <Sparkles className="w-4 h-4 text-indigo-300 shrink-0 mt-0.5" />
-                    <span>{plan.optionalAddon}</span>
-                  </div>
-                )}
+            <div className="space-y-4">
+              {/* Badge del plan */}
+              <div className="flex items-center justify-between gap-2">
+                <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${plan.badgeColor} tracking-tight`}>
+                  {plan.badge}
+                </span>
               </div>
 
-              {/* Botón WhatsApp de Acción con Gradiente Llamativo */}
-              <div className="pt-6 space-y-2.5 relative z-10">
-                <a
-                  href={plan.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-full py-4 px-6 rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all cursor-pointer text-center active:scale-[0.98] ${plan.btnStyle}`}
-                >
-                  <MessageCircle className="w-4 h-4 fill-current shrink-0" />
-                  <span className="leading-snug">{plan.btnText}</span>
-                </a>
-
-                {plan.secondaryWhatsappUrl && (
-                  <a
-                    href={plan.secondaryWhatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 px-5 rounded-full text-xs sm:text-sm font-bold text-emerald-300 hover:text-white bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/50 flex items-center justify-center gap-2 transition-all cursor-pointer text-center shadow-[0_0_15px_rgba(16,185,129,0.25)]"
-                  >
-                    <span>{plan.secondaryBtnText || 'Ver Plan Pro (S/ 99)'}</span>
-                    <span>&rarr;</span>
-                  </a>
-                )}
-
-                <p className="text-xs text-center text-neutral-400 leading-tight font-medium pt-1">
-                  {plan.extraNote}
+              {/* Título y descripción */}
+              <div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight leading-snug">
+                  {plan.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#a1a1a6] leading-relaxed mt-1.5 font-normal">
+                  {plan.description}
                 </p>
               </div>
+
+              {/* Precio */}
+              <div className="py-4 my-2 border-y border-white/10 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] tracking-tight font-mono whitespace-nowrap">
+                    {plan.price}
+                  </span>
+                </div>
+                <span className="text-xs sm:text-sm text-[#86868b] font-normal sm:text-right">
+                  {plan.period}
+                </span>
+              </div>
+
+              {/* Lista de características */}
+              <ul className="space-y-3 pt-2">
+                {plan.features.map((feature, fIdx) => (
+                  <li key={fIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#d1d5db] leading-relaxed font-normal">
+                    <Check className="w-4 h-4 text-[#30d158] shrink-0 mt-0.5" />
+                    <span className="whitespace-normal">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Nota opcional de WAF */}
+              {plan.optionalAddon && (
+                <div className="p-3.5 rounded-2xl bg-sky-950/30 border border-sky-500/30 text-sky-200 text-xs sm:text-sm flex items-start gap-2.5 leading-relaxed mt-3">
+                  <Sparkles className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span>{plan.optionalAddon}</span>
+                </div>
+              )}
             </div>
-          );
-        })}
+
+            {/* Botón WhatsApp Estilo Apple Pill */}
+            <div className="pt-6 space-y-2.5">
+              <a
+                href={plan.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full py-3.5 px-6 rounded-full font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all cursor-pointer text-center ${
+                  plan.highlight
+                    ? 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/30 active:scale-[0.98]'
+                    : 'bg-white/[0.08] hover:bg-white/[0.14] text-[#f5f5f7] border border-white/15 active:scale-[0.98]'
+                }`}
+              >
+                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <span className="leading-snug">{plan.btnText}</span>
+              </a>
+
+              {plan.secondaryWhatsappUrl && (
+                <a
+                  href={plan.secondaryWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 px-5 rounded-full text-xs sm:text-sm font-semibold text-sky-400 hover:text-sky-300 hover:bg-sky-500/10 border border-sky-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer text-center"
+                >
+                  <span>{plan.secondaryBtnText || 'Ver Plan Pro (S/ 99)'}</span>
+                  <span>&rarr;</span>
+                </a>
+              )}
+
+              <p className="text-xs text-center text-[#86868b] leading-tight font-normal pt-1">
+                {plan.extraNote}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Detalle y Límites Técnicos del Monitoreo Mensual (S/ 49 vs S/ 99) */}
-      <div className="rounded-[32px] bg-gradient-to-b from-[#101524]/90 via-[#0b0e19]/90 to-[#070912]/95 border border-sky-500/30 p-6 sm:p-8 backdrop-blur-2xl shadow-[0_15px_50px_rgba(0,113,227,0.15)] space-y-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5 relative z-10">
+      <div className="rounded-[32px] bg-[#121214]/90 border border-white/10 p-6 sm:p-8 backdrop-blur-2xl shadow-xl space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-200 text-xs font-bold shadow-[0_0_12px_rgba(56,189,248,0.25)]">
-              <Clock className="w-3.5 h-3.5 text-sky-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-[#2997ff] text-xs font-semibold">
+              <Clock className="w-3.5 h-3.5" />
               <span>Transparencia Técnica &amp; Operativa</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
               Límites y Alcance del Monitoreo Mensual por Escrito
             </h3>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-2xl font-normal">
+            <p className="text-xs sm:text-sm text-[#a1a1a6] leading-relaxed max-w-2xl">
               Un servicio de monitoreo asequible solo es rentable y rápido si el 95% es automatizado y el soporte manual está acotado por escrito. Conoce los detalles de cada nivel:
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Plan Esencial S/ 49 */}
-          <div className="p-6 rounded-2xl bg-white/[0.04] border border-emerald-500/30 hover:border-emerald-500/60 shadow-[0_0_20px_rgba(16,185,129,0.1)] flex flex-col justify-between space-y-4">
+          <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/40">Nivel Esencial</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Nivel Esencial</span>
                 <span className="text-xl font-bold text-white font-mono">S/ 49 <span className="text-xs font-normal text-neutral-400">/ mes</span></span>
               </div>
               <h4 className="text-base font-semibold text-white">Vigilancia Básica &amp; Alertas Tempranas</h4>
@@ -312,11 +281,15 @@ export default function PreviewPricing({ targetUrl }: Props) {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span><strong>Canal de aviso:</strong> Notificación inmediata vía WhatsApp y correo del administrador.</span>
+                  <span><strong>Canal de alertas:</strong> Notificación inmediata a WhatsApp ante caídas + reporte mensual resumido.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span><strong>Soporte manual incluido:</strong> Hasta 30 minutos al mes para soporte preventivo o consultas menores.</span>
+                  <span><strong>Soporte manual incluido:</strong> Hasta <strong>30 minutos/mes</strong> de intervención técnica para ajustes perimetrales menores (reactivación SSL básica, cabeceras).</span>
+                </li>
+                <li className="flex items-start gap-2 text-neutral-400 border-t border-white/5 pt-2">
+                  <span className="text-amber-400 font-bold shrink-0">•</span>
+                  <span><strong>Cotización aparte:</strong> Desinfección forense por hackeo, cambios de código/diseño o caídas por infraestructura de hosting ajeno.</span>
                 </li>
               </ul>
             </div>
@@ -324,36 +297,41 @@ export default function PreviewPricing({ targetUrl }: Props) {
               href={DEFENSATI_WHATSAPP_MESSAGES.precioMensual(cleanUrl)}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 px-4 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-emerald-200 text-xs font-bold text-center transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+              className="w-full py-2.5 px-4 rounded-full bg-white/[0.08] hover:bg-white/[0.12] text-white text-xs font-semibold flex items-center justify-center gap-2 border border-white/10 transition-all cursor-pointer"
             >
-              Pedir Plan Esencial por WhatsApp &rarr;
+              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+              <span>Activar Plan Esencial (S/ 49/mes)</span>
             </a>
           </div>
 
           {/* Plan Pro S/ 99 */}
-          <div className="p-6 rounded-2xl bg-white/[0.04] border border-sky-500/30 hover:border-sky-500/60 shadow-[0_0_20px_rgba(56,189,248,0.1)] flex flex-col justify-between space-y-4">
+          <div className="p-6 rounded-2xl bg-blue-500/[0.04] border border-blue-500/25 flex flex-col justify-between space-y-4">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-sky-300 bg-sky-500/20 px-2.5 py-1 rounded-full border border-sky-500/40">Nivel Pro</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#38bdf8]">Nivel Pro</span>
                 <span className="text-xl font-bold text-white font-mono">S/ 99 <span className="text-xs font-normal text-neutral-400">/ mes</span></span>
               </div>
-              <h4 className="text-base font-semibold text-white">Vigilancia Crítica &amp; Remediación Prioritaria</h4>
+              <h4 className="text-base font-semibold text-white">Vigilancia Continua &amp; Soporte Prioritario</h4>
               <ul className="space-y-2.5 text-xs text-neutral-300">
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span><strong>Qué se monitorea:</strong> Uptime HTTP/HTTPS, SSL/TLS, verificación semanal de malware y estado de cabeceras.</span>
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Qué se monitorea:</strong> Disponibilidad en tiempo real, SSL/TLS, integridad de cabeceras y escaneo contra malware conocido.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span><strong>Frecuencia:</strong> Uptime check cada 5 min. Escaneo perimetral semanal con informe directo a tu WhatsApp.</span>
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Frecuencia:</strong> Uptime check prioritario cada 5 min. Monitoreo continuo SSL. Re-escaneo semanal completo con informe consolidado.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span><strong>Canal de aviso:</strong> Aviso prioritario directo a WhatsApp con reporte técnico listo para el webmaster.</span>
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Canal de alertas:</strong> Alerta inmediata y prioritaria a WhatsApp + reporte semanal ejecutivo.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span><strong>Soporte manual incluido:</strong> Hasta 1.5 horas al mes para aplicación de parches o mitigación de incidentes.</span>
+                  <Check className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
+                  <span><strong>Soporte manual incluido:</strong> Hasta <strong>1.5 horas (90 min)/mes</strong> de intervención técnica directa para endurecimiento, directivas y parches perimetrales.</span>
+                </li>
+                <li className="flex items-start gap-2 text-neutral-400 border-t border-white/5 pt-2">
+                  <span className="text-amber-400 font-bold shrink-0">•</span>
+                  <span><strong>Cotización aparte:</strong> Desinfección forense por hackeo, desarrollos web a medida o problemas ajenos del datacenter.</span>
                 </li>
               </ul>
             </div>
@@ -361,12 +339,22 @@ export default function PreviewPricing({ targetUrl }: Props) {
               href={DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro(cleanUrl)}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 px-4 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 border border-sky-400/50 text-sky-200 text-xs font-bold text-center transition-all shadow-[0_0_15px_rgba(56,189,248,0.2)]"
+              className="w-full py-2.5 px-4 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-md shadow-[#0071e3]/30 transition-all cursor-pointer"
             >
-              Pedir Plan Pro por WhatsApp &rarr;
+              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+              <span>Activar Plan Pro (S/ 99/mes)</span>
             </a>
           </div>
         </div>
+
+        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] text-[#86868b] leading-relaxed flex items-center gap-2">
+          <span>* Los minutos de soporte técnico son de uso dentro de cada ciclo mensual y no son acumulables. Sin permanencia obligatoria: cancela en cualquier momento avisando por WhatsApp.</span>
+        </div>
+      </div>
+
+      {/* Aclaración de Alcance y Qué NO cubre el servicio */}
+      <div className="p-4 sm:p-5 rounded-[24px] bg-white/[0.03] border border-white/10 text-center max-w-3xl mx-auto text-xs text-[#a1a1a6] leading-relaxed backdrop-blur-xl">
+        <strong className="text-[#f5f5f7]">Alcance del servicio:</strong> Nos enfocamos en auditoría de seguridad web, fortalecimiento de configuración perimetral y reducción de riesgo técnico. <span className="text-neutral-300 font-medium">Qué no cubre:</span> No cubre vulnerabilidades en código fuente personalizado, filtraciones por contraseñas débiles de usuarios ni fallos de infraestructura del proveedor de hosting.
       </div>
 
     </section>
