@@ -13,7 +13,8 @@ import {
   Scale, 
   BookOpen, 
   Server,
-  CheckCircle2
+  CheckCircle2,
+  Clock
 } from 'lucide-react';
 
 export default function TerminosYPrivacidadPage() {
@@ -72,6 +73,9 @@ export default function TerminosYPrivacidadPage() {
             </p>
             <p>
               <strong>Contacto Oficial y Ejercicio de Derechos:</strong> Correo Institucional: <a href="mailto:contacto@neuronalgravity.com" className="text-[#38bdf8] underline">contacto@neuronalgravity.com</a> &bull; WhatsApp Oficial: <a href="https://wa.me/17856433991" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">+1 (785) 643-3991</a>.
+            </p>
+            <p>
+              <strong>Horario Oficial de Atención y Soporte Técnico:</strong> Lunes a Sábado de 9:00 a 20:00 (Hora Oficial de la República del Perú &bull; UTC-5). Solicitudes fuera de horario o en días domingos/feriados se gestionan al inicio de la jornada hábil siguiente.
             </p>
             <p className="text-[11px] text-neutral-400">
               * Vigente a partir de 2026. Documento unificado de observancia obligatoria para contrataciones y uso en todo el territorio nacional peruano.
@@ -164,14 +168,14 @@ export default function TerminosYPrivacidadPage() {
                     <span className="font-bold text-white text-sm">1. Diagnóstico gratuito</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sin Costo</span>
                   </div>
-                  <p className="text-neutral-300">Escaneo perimetral pasivo no intrusivo de cabeceras HTTP, SSL y puertos. Entrega instantánea de informe técnico sin acceso a claves.</p>
+                  <p className="text-neutral-300">Escaneo perimetral pasivo no intrusivo en pantalla. Diagnóstico preliminar de orientación por WhatsApp en <strong>menos de 2 horas</strong> (dentro del horario de atención).</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-white text-sm">2. Limpieza de WordPress infectados</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">Desde S/. 250</span>
                   </div>
-                  <p className="text-neutral-300">Desinfección forense profunda de archivos y base de datos, retiro de backdoors y recuperación de acceso administrativo en <strong>2 a 4 días hábiles</strong> (con garantía de 30 días).</p>
+                  <p className="text-neutral-300">Desinfección forense profunda de archivos y base de datos, retiro de backdoors y recuperación de acceso administrativo. <strong>Plazo de entrega:</strong> Habitual de <strong>24 a 48 horas hábiles</strong> tras recibir los accesos válidos (hasta 2 a 4 días hábiles en casos de alta complejidad o múltiples bases de datos), con garantía de 30 días.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
@@ -185,15 +189,29 @@ export default function TerminosYPrivacidadPage() {
                     <span className="font-bold text-white text-sm">4. Protección mediante WAF</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">Desde S/. 335</span>
                   </div>
-                  <p className="text-neutral-300">Blindaje de cabeceras + configuración profesional de Firewall de Aplicaciones Web (Cloudflare) contra bots y ataques DDoS en <strong>5 a 7 días hábiles</strong>.</p>
+                  <p className="text-neutral-300">Blindaje de cabeceras + configuración profesional de Firewall de Aplicaciones Web (Cloudflare) contra bots y ataques DDoS en <strong>5 a 7 días hábiles</strong> (incluye fase de calibración y meta Grado A).</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 md:col-span-2 lg:col-span-2">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-white text-sm">5. Monitoreo y mantenimiento mensual</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">S/. 49 y S/. 99 / mes</span>
                   </div>
-                  <p className="text-neutral-300">Vigilancia proactiva automatizada con aviso inmediato a WhatsApp ante caídas, alertas de SSL y re-escaneos periódicos con límite estricto de soporte manual acotado por escrito.</p>
+                  <p className="text-neutral-300">Activación en <strong>menos de 24 horas</strong>. Vigilancia automatizada ininterrumpida 24/7 con aviso inmediato a WhatsApp ante caídas y alertas de SSL; re-escaneos periódicos e intervención técnica directa con límite estricto de soporte manual por escrito.</p>
                 </div>
+              </div>
+
+              {/* Caja de Reglas de Cómputo y Horario Oficial */}
+              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-neutral-300 space-y-2">
+                <div className="flex items-center gap-2 text-white font-semibold text-xs">
+                  <Clock className="w-4 h-4 text-[#38bdf8]" />
+                  <span>Reglas de Cómputo de Plazos y Horario de Atención Oficial:</span>
+                </div>
+                <p>
+                  <strong>Horario de Atención Técnica:</strong> Lunes a Sábado de 9:00 a 20:00 (Hora Oficial de la República del Perú &bull; UTC-5). Los días domingos y feriados nacionales peruanos no computan para el cálculo de días hábiles. Las solicitudes ingresadas fuera de horario o en domingos inician su cómputo a las 9:00 horas del siguiente día hábil.
+                </p>
+                <p>
+                  <strong>Inicio del Cómputo de Plazos:</strong> Todo plazo de ejecución técnica comienza a computarse a partir de la entrega efectiva por parte del cliente de las credenciales y accesos técnicos requeridos (cPanel, SSH, SFTP, CMS o Cloudflare) y su validación como operativos por nuestro equipo.
+                </p>
               </div>
             </section>
 

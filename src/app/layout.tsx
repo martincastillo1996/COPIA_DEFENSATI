@@ -65,7 +65,13 @@ const jsonLd = {
         "@type": "ContactPoint",
         "telephone": "+1-785-643-3991",
         "contactType": "customer service",
-        "availableLanguage": ["Spanish"]
+        "availableLanguage": ["Spanish"],
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        }
       }
     },
     {

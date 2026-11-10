@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ShieldCheck, CheckCircle2, ArrowRight, Sparkles, Send } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, ArrowRight, Sparkles, Send, Clock } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { getWhatsAppUrl } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
@@ -161,6 +161,11 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               Sin pedir contraseñas ni accesos confidenciales
             </span>
+          </div>
+
+          <div className="pt-2 text-center text-xs text-neutral-400 border-t border-white/5 flex items-center justify-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-[#38bdf8] shrink-0" />
+            <span>Horario de atención técnica: <strong>Lunes a Sábado de 9:00 a 20:00 (Hora Perú)</strong>. Solicitudes fuera de horario se atienden al iniciar la mañana hábil.</span>
           </div>
 
         </form>

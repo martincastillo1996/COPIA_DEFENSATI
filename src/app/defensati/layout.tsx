@@ -78,6 +78,14 @@ const jsonLd = {
         '@type': 'Country',
         name: 'Perú',
       },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          opens: '09:00',
+          closes: '20:00',
+        },
+      ],
       founder: {
         '@type': 'Person',
         name: 'Martín Castillo',
@@ -131,10 +139,10 @@ const jsonLd = {
       mainEntity: [
         {
           '@type': 'Question',
-          name: '¿En cuánto tiempo queda limpia y funcionando mi web?',
+          name: '¿Cuáles son los plazos de entrega y el horario de atención técnica?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'El diagnóstico inicial se entrega en menos de 2 horas tras recibir los accesos. Las limpiezas de malware y desinfección de WordPress se completan habitualmente entre 24 y 48 horas hábiles.',
+            text: 'Atención técnica de Lunes a Sábado de 9:00 a 20:00 (Hora Perú, UTC-5). Diagnóstico preliminar en menos de 2 horas. Limpieza de WordPress habitual en 24 a 48 horas hábiles tras recibir accesos (hasta 2 a 4 días en casos complejos). Blindaje en 3 a 5 días hábiles. Protección WAF en 5 a 7 días hábiles. Monitoreo mensual activo 24/7.',
           },
         },
         {

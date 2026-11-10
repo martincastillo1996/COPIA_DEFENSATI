@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, ShieldAlert, Lock, RotateCcw, Server, FileText, CheckCircle2 } from 'lucide-react';
+import { ChevronDown, HelpCircle, ShieldAlert, Lock, RotateCcw, Server, FileText, CheckCircle2, Clock } from 'lucide-react';
 
 interface FAQItem {
   id: string;
@@ -13,9 +13,9 @@ interface FAQItem {
 const FAQS: FAQItem[] = [
   {
     id: 'tiempo-entrega',
-    question: '¿En cuánto tiempo queda limpia y funcionando mi web?',
-    answer: 'El diagnóstico inicial se entrega en menos de 2 horas tras recibir los accesos. Las limpiezas de malware y desinfección de WordPress se completan habitualmente entre 24 y 48 horas hábiles, dependiendo del volumen de archivos infectados y la complejidad de la intrusión.',
-    icon: CheckCircle2,
+    question: '¿Cuáles son los plazos de entrega y el horario de atención técnica?',
+    answer: 'Atendemos consultas y soporte de Lunes a Sábado de 9:00 a 20:00 (Hora Perú, UTC-5). Los plazos de ejecución técnica por servicio son:\n\n• Diagnóstico gratuito preliminar: menos de 2 horas tras indicar tu dominio.\n• Limpieza de WordPress infectado: habitual de 24 a 48 horas hábiles tras recibir los accesos (hasta 2 a 4 días hábiles en desinfecciones complejas de múltiples bases de datos o red multisitio).\n• Blindaje de sitios web: de 3 a 5 días hábiles.\n• Protección Firewall WAF: de 5 a 7 días hábiles (incluye calibración fina de falsos positivos y meta Grado A).\n• Monitoreo mensual: activación en menos de 24 horas con vigilancia automatizada 24/7 y aviso inmediato a WhatsApp.',
+    icon: Clock,
   },
   {
     id: 'privacidad-datos',
@@ -118,7 +118,7 @@ export default function DefensatiFAQ() {
               {isOpen && (
                 <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-0 animate-in fade-in duration-200">
                   <div className="pl-12 border-l border-white/10 ml-4">
-                    <p className="text-sm sm:text-base text-neutral-200 leading-relaxed font-normal">
+                    <p className="text-sm sm:text-base text-neutral-200 leading-relaxed font-normal whitespace-pre-line">
                       {faq.answer}
                     </p>
                   </div>

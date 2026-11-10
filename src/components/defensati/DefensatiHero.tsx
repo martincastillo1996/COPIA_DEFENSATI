@@ -109,6 +109,11 @@ export default function DefensatiHero() {
         <span className="hidden sm:inline text-neutral-600">&bull;</span>
         <span className="inline-flex items-center gap-1.5 text-neutral-300">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          Atención Lun-Sáb 9:00 - 20:00
+        </span>
+        <span className="hidden sm:inline text-neutral-600">&bull;</span>
+        <span className="inline-flex items-center gap-1.5 text-neutral-300">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           Garantía de 30 días por escrito
         </span>
         <span className="hidden sm:inline text-neutral-600">&bull;</span>

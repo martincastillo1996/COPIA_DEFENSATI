@@ -14,7 +14,8 @@ import {
   Terminal, 
   Wrench,
   ChevronDown,
-  Cpu
+  Cpu,
+  Clock
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import NeuralBackground from '@/components/NeuralBackground';
@@ -590,6 +591,12 @@ export default function DefensatiPreviewPage() {
               >
                 <span>contacto@neuronalgravity.com</span>
               </a>
+
+              {/* Horario de Atención */}
+              <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-medium">
+                <Clock className="w-4 h-4 text-[#38bdf8] shrink-0" />
+                <span>Horario: {siteConfig.contact.hours}</span>
+              </div>
             </div>
 
             {/* Créditos y Legalidad */}

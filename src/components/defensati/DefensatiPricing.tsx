@@ -54,7 +54,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             </span>
             <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
-              Diagnóstico en &lt; 2h &bull; Entrega en 24-48h
+              Diagnóstico en &lt; 2h &bull; Entrega en 24-48h hábiles (máx. 4 días en casos complejos)
             </span>
           </div>
 
@@ -144,9 +144,15 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white">
                 <Shield className="w-6 h-6 text-[#2997ff]" />
               </div>
-              <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
-                Prevención Técnica
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-[#86868b] flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10">
+                  <Clock className="w-3 h-3 text-[#2997ff]" />
+                  3 a 5 días hábiles
+                </span>
+                <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                  Prevención Técnica
+                </span>
+              </div>
             </div>
 
             <div>
@@ -211,9 +217,15 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               <div className="w-12 h-12 rounded-2xl bg-[#0071e3]/15 border border-[#0071e3]/30 flex items-center justify-center text-[#2997ff]">
                 <Lock className="w-6 h-6 text-[#2997ff]" />
               </div>
-              <span className="text-[11px] font-mono text-[#2997ff] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/30 font-semibold">
-                Recomendado para Tiendas Online
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-[#86868b] flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10">
+                  <Clock className="w-3 h-3 text-[#2997ff]" />
+                  5 a 7 días hábiles
+                </span>
+                <span className="text-[11px] font-mono text-[#2997ff] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/30 font-semibold">
+                  Recomendado para Tiendas Online
+                </span>
+              </div>
             </div>
 
             <div>
@@ -271,6 +283,17 @@ export default function DefensatiPricing({ targetUrl }: Props) {
           </a>
         </div>
 
+      </div>
+
+      {/* Nota de Transparencia de Plazos y Horario */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#86868b]">
+        <div className="flex items-center gap-2 text-[#f5f5f7]">
+          <Clock className="w-4 h-4 text-[#2997ff] shrink-0" />
+          <span><strong>Cómputo de Plazos:</strong> Inician al recibir accesos técnicos válidos dentro de nuestro horario laborable.</span>
+        </div>
+        <div className="text-neutral-400">
+          Atención técnica directa: <strong>Lunes a Sábado, 9:00 a 20:00 (Hora Perú)</strong>
+        </div>
       </div>
 
     </section>

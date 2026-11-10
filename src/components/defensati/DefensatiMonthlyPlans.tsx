@@ -190,7 +190,7 @@ export default function DefensatiMonthlyPlans() {
         <span className="hidden sm:inline">&bull;</span>
         <span className="flex items-center gap-1.5 text-neutral-300">
           <Clock className="w-4 h-4 text-emerald-400" />
-          Facturación mes a mes formal con RUC
+          Vigilancia automatizada 24/7 &bull; Soporte Lun-Sáb 9:00 - 20:00
         </span>
       </div>
 
