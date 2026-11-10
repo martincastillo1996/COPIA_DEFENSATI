@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { ShieldCheck, Cpu, Lock, Sparkles, Activity, Check } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ShieldCheck, Cpu, Lock, Activity, Check, Terminal, Wifi } from 'lucide-react';
 
 interface NeuralScanTakeoverProps {
   targetUrl: string;
@@ -11,31 +12,42 @@ const SCAN_STEPS = [
   { 
     phase: 'Fase 1 / 4 • Motor de Red DEFENSA TI',
     title: 'Mapeando Topología de Red y DNS',
-    log: '[MOTOR DE RED v1.2] Mapeando resolución DNS segura y verificando sockets TCP...',
+    log: '[DNS/TCP] Resolviendo registros A/AAAA y abriendo socket seguro...',
     progress: 25, 
     icon: Cpu 
   },
   { 
-    phase: 'Fase 2 / 4 • Motor Criptográfico',
-    title: 'Inspeccionando Cifrado SSL / TLS',
-    log: '[CRIPTO X.509] Verificando cadena TLS 1.3, vigencia de días y certificados...',
+    phase: 'Fase 2 / 4 • Inspección Criptográfica',
+    title: 'Inspeccionando Cifrado SSL / TLS 1.3',
+    log: '[X.509] Negociando handshake TLSv1.3 y validando cadena de confianza...',
     progress: 55, 
     icon: Lock 
   },
   { 
-    phase: 'Fase 3 / 4 • Auditoría Determinista',
-    title: 'Auditando Cabeceras OWASP & RFC',
-    log: '[RFC 9110] Evaluando HSTS, CSP, X-Frame y blindaje anti-clonación...',
+    phase: 'Fase 3 / 4 • Auditoría Determinista OWASP',
+    title: 'Auditando Cabeceras y Puertos de Red',
+    log: '[RFC 9110] Evaluando HSTS, CSP, X-Frame y escaneando puertos seguros...',
     progress: 82, 
     icon: ShieldCheck 
   },
   { 
-    phase: 'Fase 4 / 4 • Módulo Neuronality AI',
-    title: 'Consultoría de Negocio y Recetas Dev',
-    log: '[NEURONALITY AI] Analizando impacto comercial en Soles (PEN) y recetas de código...',
+    phase: 'Fase 4 / 4 • Compilación de Dictamen',
+    title: 'Generando Diagnóstico y Recomendaciones',
+    log: '[DEFENSA TI] Estructurando dictamen de seguridad perimetral...',
     progress: 98, 
     icon: Activity 
   },
+];
+
+const REALTIME_LOGS = [
+  '[RESOLVER] Query DNS para host objetivo... OK (200)',
+  '[TCP SOCKET] Conexión establecida a socket seguro (puerto 443)',
+  '[TLS HANDSHAKE] Negociando cifrado TLSv1.3 ECDHE-RSA-AES128-GCM',
+  '[CERT X.509] Cadena de certificación verificada y vigente',
+  '[HTTP HEADERS] Inspeccionando Strict-Transport-Security (HSTS)...',
+  '[OWASP HARDENING] Evaluando Content-Security-Policy y X-Frame-Options...',
+  '[PORTS SCAN] Sondeo asíncrono pasivo de puertos de infraestructura...',
+  '[ANALYZER] Compilando hallazgos y generando informe perimetral...'
 ];
 
 interface Node {
@@ -55,16 +67,28 @@ interface Pulse {
 }
 
 export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProps) {
+  const [mounted, setMounted] = useState(false);
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
-  const [progress, setProgress] = useState(18);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [progress, setProgress] = useState(15);
 
   const cleanDomain = targetUrl
     .replace(/^https?:\/\//i, '')
     .replace(/\/.*$/, '')
-    .toLowerCase();
+    .toLowerCase() || 'tuweb.com';
 
-  // Bloquear el scroll del body mientras la pantalla de carga neuronal esté activa
+  const [logFeed, setLogFeed] = useState<string[]>([
+    `[INICIO] Iniciando auditoría perimetral de ${cleanDomain}`
+  ]);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const handle = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(handle);
+  }, []);
+
+  // Bloquear el scroll del body mientras la pantalla completa esté activa
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const originalOverflow = document.body.style.overflow;
@@ -75,7 +99,7 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
     }
   }, []);
 
-  // Transición guiada entre fases (~950ms por paso para apreciar la auditoría y telemetría en tiempo real)
+  // Progresión realista entre fases
   useEffect(() => {
     const stepInterval = setInterval(() => {
       setCurrentStepIdx((prev) => {
@@ -86,12 +110,26 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
         }
         return prev;
       });
-    }, 950);
+    }, 850);
 
     return () => clearInterval(stepInterval);
   }, []);
 
-  // Canvas interactivo: Red Neuronal con Nodos, Axones y Sinapsis Eléctricas
+  // Flujo continuo de logs realistas de terminal
+  useEffect(() => {
+    let logIdx = 0;
+    const logInterval = setInterval(() => {
+      if (logIdx < REALTIME_LOGS.length) {
+        const nextLog = REALTIME_LOGS[logIdx];
+        setLogFeed((prev) => [...prev.slice(-3), nextLog]);
+        logIdx++;
+      }
+    }, 420);
+
+    return () => clearInterval(logInterval);
+  }, []);
+
+  // Canvas de Red Neuronal en segundo plano completo
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -109,8 +147,7 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
     };
     window.addEventListener('resize', handleResize);
 
-    // Inicializar nodos neuronales
-    const nodeCount = Math.min(50, Math.floor((width * height) / 25000));
+    const nodeCount = Math.min(50, Math.floor((width * height) / 24000));
     const labels = [
       'SSL/TLS 1.3',
       'HSTS Gate',
@@ -119,8 +156,8 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
       'Anti-Bot',
       'DNS Root',
       'X-Frame',
-      'Niubiz/Yape Guard',
-      'WAF Synapse',
+      'Port Sockets',
+      'WAF Guard',
       'Cipher Suite'
     ];
 
@@ -136,9 +173,8 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
       });
     }
 
-    // Impulsos eléctricos sinápticos que viajan entre nodos
     const pulses: Pulse[] = [];
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 16; i++) {
       const from = Math.floor(Math.random() * nodes.length);
       let to = Math.floor(Math.random() * nodes.length);
       if (to === from) to = (from + 1) % nodes.length;
@@ -155,17 +191,17 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Onda concéntrica expansiva desde el centro
+      // Radar concéntrico que se expande desde el centro
       pulseWave = (pulseWave + 1.2) % (Math.max(width, height) * 0.75);
       ctx.save();
       ctx.beginPath();
       ctx.arc(width / 2, height / 2, pulseWave, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0, 0.25 - pulseWave / (Math.max(width, height) * 0.75))})`;
+      ctx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0, 0.2 - pulseWave / (Math.max(width, height) * 0.75))})`;
       ctx.lineWidth = 1.5;
       ctx.stroke();
       ctx.restore();
 
-      // Actualizar posiciones de nodos
+      // Mover nodos
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         n.x += n.vx;
@@ -173,17 +209,32 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
 
         if (n.x < 0 || n.x > width) n.vx *= -1;
         if (n.y < 0 || n.y > height) n.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        ctx.fillStyle = n.label ? '#38bdf8' : 'rgba(255, 255, 255, 0.6)';
+        ctx.shadowColor = '#38bdf8';
+        ctx.shadowBlur = n.label ? 10 : 4;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        if (n.label) {
+          ctx.font = '10px ui-monospace, SFMono-Regular, monospace';
+          ctx.fillStyle = 'rgba(186, 230, 253, 0.75)';
+          ctx.fillText(n.label, n.x + 8, n.y + 3);
+        }
       }
 
-      // Dibujar conexiones axonales (sinapsis)
+      // Conexiones sinápticas
+      const maxDistance = 150;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 140) {
-            const alpha = (1 - dist / 140) * 0.35;
+          if (dist < maxDistance) {
+            const alpha = (1 - dist / maxDistance) * 0.35;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -194,50 +245,30 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
         }
       }
 
-      // Dibujar impulsos eléctricos que viajan por las conexiones
+      // Pulsos eléctricos
       for (let i = 0; i < pulses.length; i++) {
         const p = pulses[i];
         p.progress += p.speed;
         if (p.progress >= 1) {
           p.progress = 0;
           p.fromNode = Math.floor(Math.random() * nodes.length);
-          p.toNode = (p.fromNode + Math.floor(Math.random() * 5) + 1) % nodes.length;
+          p.toNode = (p.fromNode + 1) % nodes.length;
         }
 
         const from = nodes[p.fromNode];
         const to = nodes[p.toNode];
         if (!from || !to) continue;
 
-        const currentX = from.x + (to.x - from.x) * p.progress;
-        const currentY = from.y + (to.y - from.y) * p.progress;
+        const curX = from.x + (to.x - from.x) * p.progress;
+        const curY = from.y + (to.y - from.y) * p.progress;
 
-        // Partícula brillante eléctrica
         ctx.beginPath();
-        ctx.arc(currentX, currentY, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#38bdf8';
+        ctx.arc(curX, curY, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
         ctx.shadowColor = '#38bdf8';
         ctx.shadowBlur = 10;
         ctx.fill();
         ctx.shadowBlur = 0;
-      }
-
-      // Dibujar nodos
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-        ctx.fillStyle = n.label ? '#38bdf8' : '#7928ca';
-        ctx.shadowColor = '#0071e3';
-        ctx.shadowBlur = 8;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // Etiquetas flotantes en nodos clave
-        if (n.label) {
-          ctx.font = '10px monospace';
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-          ctx.fillText(n.label, n.x + 8, n.y + 3);
-        }
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -251,11 +282,13 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
     };
   }, []);
 
+  if (!mounted) return null;
+
   const activeStep = SCAN_STEPS[currentStepIdx];
   const StepIcon = activeStep.icon;
 
-  return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#05070e]/95 backdrop-blur-3xl overflow-hidden select-none animate-in fade-in duration-300">
+  const takeoverContent = (
+    <div className="fixed inset-0 z-[999999] w-screen h-screen min-h-screen flex flex-col items-center justify-center bg-[#05070e]/96 backdrop-blur-3xl overflow-hidden select-none animate-in fade-in duration-300">
       
       {/* 1. LIENZO VIVO DE LA RED NEURONAL EN PANTALLA COMPLETA */}
       <canvas
@@ -263,62 +296,81 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
         className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-80"
       />
 
-      {/* 2. GRADIENTES Y AURAS CÓSMICAS ORBITALES */}
-      <div className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#0071e3]/20 via-[#7928ca]/20 to-[#38bdf8]/15 blur-[120px] pointer-events-none animate-pulse" />
-      <div className="absolute w-[350px] h-[350px] rounded-full bg-[#0071e3]/15 blur-[90px] pointer-events-none" />
+      {/* 2. GRADIENTES Y AURAS CÓSMICAS DE FONDO */}
+      <div className="absolute w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-[#0071e3]/22 via-[#7928ca]/20 to-[#38bdf8]/18 blur-[130px] pointer-events-none animate-pulse" />
+      <div className="absolute w-[360px] h-[360px] rounded-full bg-[#0071e3]/18 blur-[90px] pointer-events-none" />
 
       {/* 3. PANEL CENTRAL TIPO HUD APPLE PRO (PANTALLA DE CARGA NEURONAL) */}
-      <div className="relative z-10 w-full max-w-2xl mx-auto px-6 py-8 sm:py-12 flex flex-col items-center text-center space-y-7">
+      <div className="relative z-10 w-full max-w-2xl mx-auto px-6 py-6 sm:py-8 flex flex-col items-center text-center space-y-6">
         
-        {/* Badge superior: Red Neuronal Activa */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0071e3]/15 border border-[#38bdf8]/40 text-[#38bdf8] text-xs font-mono font-bold tracking-widest uppercase shadow-[0_0_25px_rgba(56,189,248,0.3)]">
-          <Sparkles className="w-4 h-4 text-[#38bdf8] animate-spin [animation-duration:4s]" />
-          <span>RED NEURONAL ACTIVA &bull; NEURONAL GRAVITY</span>
+        {/* Barra superior de estado técnico realista */}
+        <div className="flex items-center gap-3 text-xs font-mono text-neutral-400 bg-black/60 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-xl shadow-lg">
+          <span className="flex items-center gap-1.5 text-emerald-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <span>SOCKET EN VIVO</span>
+          </span>
+          <span className="text-neutral-600">&bull;</span>
+          <span className="flex items-center gap-1 text-sky-400">
+            <Wifi className="w-3.5 h-3.5" />
+            <span>TLSv1.3 / HTTP 2</span>
+          </span>
+          <span className="text-neutral-600 hidden sm:inline">&bull;</span>
+          <span className="hidden sm:inline text-neutral-300">Latencia ~38ms</span>
         </div>
 
-        {/* HOLOGRMA NEURONAL CENTRAL GIGANTE */}
-        <div className="relative w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center">
-          {/* Anillos concéntricos giratorios en direcciones opuestas */}
-          <div className="absolute inset-0 rounded-full border border-sky-400/30 animate-spin [animation-duration:8s]" />
+        {/* RADAR NEURONAL CENTRAL CON ANILLOS GIRATORIOS */}
+        <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border border-sky-400/35 animate-spin [animation-duration:8s]" />
           <div className="absolute inset-3 rounded-full border-2 border-dashed border-[#7928ca]/50 animate-spin [animation-duration:12s] [animation-direction:reverse]" />
           <div className="absolute inset-7 rounded-full border border-sky-300/40 animate-spin [animation-duration:5s]" />
           <div className="absolute inset-11 rounded-full border-2 border-t-transparent border-emerald-400/60 animate-spin [animation-duration:3s]" />
           
-          {/* Pulso de onda de radar */}
           <span className="absolute inset-0 rounded-full bg-[#38bdf8]/10 animate-ping [animation-duration:2.5s]" />
 
-          {/* Núcleo Neuronal Central */}
-          <div className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-[#0071e3] via-[#7928ca] to-[#38bdf8] p-1 shadow-[0_0_50px_rgba(56,189,248,0.7)] animate-pulse">
+          {/* Núcleo Central */}
+          <div className="relative z-10 w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-tr from-[#0071e3] via-[#7928ca] to-[#38bdf8] p-0.5 shadow-[0_0_50px_rgba(56,189,248,0.7)] animate-pulse">
             <div className="w-full h-full bg-[#07090e] rounded-3xl flex items-center justify-center text-[#38bdf8]">
-              <StepIcon className="w-10 h-10 sm:w-11 sm:h-11 animate-bounce" />
+              <StepIcon className="w-9 h-9 sm:w-10 sm:h-10 animate-bounce" />
             </div>
           </div>
-
-          {/* Nodos satelitales en órbita */}
-          <span className="absolute top-2 right-4 w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_12px_#38bdf8] animate-ping" />
-          <span className="absolute bottom-3 left-4 w-2.5 h-2.5 rounded-full bg-purple-400 shadow-[0_0_12px_#c084fc] animate-ping [animation-delay:400ms]" />
-          <span className="absolute top-1/2 -left-2 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399] animate-ping [animation-delay:800ms]" />
         </div>
 
         {/* Información del Objetivo & Dominio */}
-        <div className="space-y-2 max-w-lg">
+        <div className="space-y-1.5 max-w-lg">
           <div className="text-xs font-mono font-bold text-neutral-400 uppercase tracking-wider">
             {activeStep.phase} &bull; {activeStep.title}
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Auditando Perímetro de{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-sky-300 to-white block sm:inline">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-sky-300 to-white block sm:inline font-mono">
               {cleanDomain}
             </span>
           </h2>
+        </div>
 
-          {/* Consola de Telemetría Dinámica */}
-          <div className="h-8 flex items-center justify-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-black/70 border border-white/10 text-xs sm:text-sm font-mono text-neutral-300 shadow-inner">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="truncate max-w-sm sm:max-w-md">{activeStep.log}</span>
+        {/* TERMINAL DE LOGS TÉCNICOS EN TIEMPO REAL (MÁXIMO REALISMO) */}
+        <div className="w-full max-w-xl bg-black/80 rounded-2xl border border-white/10 p-3.5 text-left font-mono text-xs shadow-2xl backdrop-blur-2xl space-y-1.5 overflow-hidden">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10 text-[11px] text-neutral-400">
+            <div className="flex items-center gap-2">
+              <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-neutral-200 font-semibold">CONSOLA DE TELEMETRÍA EN VIVO</span>
             </div>
+            <span className="text-emerald-400 font-bold">200 OK</span>
+          </div>
+
+          <div className="space-y-1 font-mono text-[11.5px] sm:text-xs">
+            {logFeed.map((line, idx) => (
+              <div 
+                key={idx} 
+                className={`truncate ${
+                  idx === logFeed.length - 1 ? 'text-sky-300 font-semibold' : 'text-neutral-400'
+                }`}
+              >
+                <span className="text-neutral-600 mr-1.5">&gt;</span>
+                {line}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -329,7 +381,6 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
               className="h-full bg-gradient-to-r from-[#0071e3] via-[#7928ca] to-[#38bdf8] rounded-full transition-all duration-700 ease-out shadow-[0_0_20px_rgba(56,189,248,0.8)] relative"
               style={{ width: `${progress}%` }}
             >
-              {/* Reflejo de brillo móvil */}
               <div className="absolute inset-0 bg-white/20 animate-pulse" />
             </div>
           </div>
@@ -339,7 +390,7 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
               <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
               <span>Sondeo Cero-Riesgo (No invasivo)</span>
             </span>
-            <span className="font-extrabold text-[#38bdf8] text-sm">
+            <span className="font-extrabold text-[#38bdf8] text-sm font-mono">
               {progress}%
             </span>
           </div>
@@ -373,7 +424,7 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
                   <span className="text-[10px] font-bold">Paso {idx + 1}</span>
                 </div>
                 <span className="font-semibold text-[11px] truncate w-full text-center">
-                  {idx === 0 && 'Sinapsis'}
+                  {idx === 0 && 'DNS & Red'}
                   {idx === 1 && 'Cifrado SSL'}
                   {idx === 2 && 'OWASP'}
                   {idx === 3 && 'Dictamen'}
@@ -383,14 +434,14 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
           })}
         </div>
 
-        {/* Pie de pantalla: Garantía de seguridad y Motores Utilizados */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-neutral-400 font-mono pt-2 border-t border-white/5 w-full">
+        {/* Pie de pantalla: Garantía de seguridad */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-neutral-400 font-mono pt-1 border-t border-white/10 w-full max-w-xl">
           <span className="flex items-center gap-1.5 text-neutral-300">
             <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Auditoría perimetral sin tocar tu base de datos ni pedir contraseñas.</span>
+            <span>Auditoría perimetral sin tocar tu base de datos.</span>
           </span>
-          <span className="text-[#38bdf8] bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20 text-[10px]">
-            Motor: DEFENSA TI v1.2 &bull; IA: Neuronality AI
+          <span className="text-[#38bdf8] bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/25 text-[10px]">
+            DEFENSA TI v1.2 &bull; RFC 9110
           </span>
         </div>
 
@@ -398,4 +449,6 @@ export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProp
 
     </div>
   );
+
+  return createPortal(takeoverContent, document.body);
 }
