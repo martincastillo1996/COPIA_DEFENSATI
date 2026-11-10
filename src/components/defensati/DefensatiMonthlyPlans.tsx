@@ -36,22 +36,22 @@ export default function DefensatiMonthlyPlans() {
       {/* Cuadrícula de 2 Planes Mensuales */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
-        {/* Plan 1: Esencial (S/ 49/mes) */}
+        {/* Plan 1: Básico (S/ 90/mes) */}
         <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-[#f5f5f7] uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
-                Plan Esencial
+                Mantenimiento Básico
               </span>
               <span className="text-xs text-[#86868b] font-mono">Sin permanencia</span>
             </div>
 
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl sm:text-5xl font-bold text-[#f5f5f7] font-mono">S/ 49</span>
+                <span className="text-4xl sm:text-5xl font-bold text-[#f5f5f7] font-mono">S/ 90</span>
                 <span className="text-[#86868b] text-sm font-normal">/ mes (prepago)</span>
               </div>
-              <p className="text-xs text-[#86868b] mt-1 font-normal">Menos de S/ 1.70 al día por cuidar tu web.</p>
+              <p className="text-xs text-[#86868b] mt-1 font-normal">S/ 3 al día por cuidar tu web las 24 horas.</p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-3 font-normal">
                 Ideal para blogs de negocio, páginas corporativas y profesionales independientes.
               </p>
@@ -72,7 +72,7 @@ export default function DefensatiMonthlyPlans() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Soporte técnico incluido:</strong> Hasta 30 min al mes de intervención directa para ajustes menores de configuración perimetral o renovación básica de SSL (horas adicionales con tarifa preferencial).</span>
+                <span><strong>Soporte técnico incluido:</strong> Hasta 40 min al mes de intervención directa para ajustes menores de configuración perimetral o renovación básica de SSL.</span>
               </li>
             </ul>
           </div>
@@ -83,39 +83,39 @@ export default function DefensatiMonthlyPlans() {
             rel="noopener noreferrer"
             onClick={() => {
               trackPlanSelect({
-                planName: 'Monitoreo Esencial',
-                priceMonthlyPen: 49,
-                planId: 'plan_esencial_49',
+                planName: 'Mantenimiento Básico',
+                priceMonthlyPen: 90,
+                planId: 'plan_basico_90',
               });
               trackWhatsAppClick({
-                service: 'monitoreo_esencial',
-                placement: 'monthly_plans_esencial',
+                service: 'mantenimiento_basico',
+                placement: 'monthly_plans_basico',
               });
             }}
             className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-[#f5f5f7] text-sm font-semibold border border-white/15 backdrop-blur-xl transition-all text-center cursor-pointer"
           >
             <WhatsAppIcon className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Activar Monitoreo por WhatsApp (S/ 49/mes)</span>
+            <span>Activar Mantenimiento Básico por WhatsApp (S/ 90/mes)</span>
           </a>
         </div>
 
-        {/* Plan 2: Pro (S/ 99/mes) */}
+        {/* Plan 2: Tiendas Online (S/ 180/mes) */}
         <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border-2 border-[#0071e3]/40 hover:border-[#0071e3]/70 shadow-[0_20px_50px_rgba(0,113,227,0.2),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl relative">
           
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-[#2997ff] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/30">
-                Nivel Pro &bull; Alta Disponibilidad
+                Tiendas Online &bull; Soporte Prioritario
               </span>
               <span className="text-xs text-sky-400 font-mono font-semibold">Prioridad Máxima</span>
             </div>
 
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl sm:text-5xl font-bold text-[#f5f5f7] font-mono">S/ 99</span>
+                <span className="text-4xl sm:text-5xl font-bold text-[#f5f5f7] font-mono">S/ 180</span>
                 <span className="text-[#86868b] text-sm font-normal">/ mes (prepago)</span>
               </div>
-              <p className="text-xs text-[#86868b] mt-1 font-normal">S/ 3.30 al día para blindar tu negocio transaccional.</p>
+              <p className="text-xs text-[#86868b] mt-1 font-normal">S/ 6 al día para blindar tu negocio transaccional.</p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-3 font-normal">
                 Para tiendas en Shopify, WooCommerce, Wix y negocios con facturación constante en internet.
               </p>
@@ -136,7 +136,7 @@ export default function DefensatiMonthlyPlans() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Soporte técnico prioritario:</strong> Hasta 60 min (1 hora) al mes de intervención directa para optimización de seguridad, reglas WAF o parches urgentes (horas adicionales con 25% de descuento).</span>
+                <span><strong>Soporte técnico prioritario:</strong> Hasta 90 min (1.5 horas) al mes de intervención directa para optimización de seguridad, reglas WAF o parches urgentes.</span>
               </li>
             </ul>
           </div>
@@ -147,19 +147,19 @@ export default function DefensatiMonthlyPlans() {
             rel="noopener noreferrer"
             onClick={() => {
               trackPlanSelect({
-                planName: 'Monitoreo Pro',
-                priceMonthlyPen: 99,
-                planId: 'plan_pro_99',
+                planName: 'Mantenimiento Tiendas Online',
+                priceMonthlyPen: 180,
+                planId: 'plan_tiendas_180',
               });
               trackWhatsAppClick({
-                service: 'monitoreo_pro',
-                placement: 'monthly_plans_pro',
+                service: 'mantenimiento_tiendas',
+                placement: 'monthly_plans_tiendas',
               });
             }}
             className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-semibold shadow-[0_4px_16px_rgba(0,113,227,0.35)] transition-all text-center cursor-pointer"
           >
             <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-            <span>Contratar Plan Pro por WhatsApp (S/ 99/mes)</span>
+            <span>Contratar Plan Tiendas Online por WhatsApp (S/ 180/mes)</span>
           </a>
         </div>
 
