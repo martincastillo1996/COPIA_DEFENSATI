@@ -55,11 +55,11 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
 
   const servicesList = [
     { id: 'diagnostico', label: '1. Diagnóstico preliminar gratuito (S/ 0 • Entrega < 2h)' },
-    { id: 'limpieza', label: '2. Limpieza de virus o Saneamiento en Shopify / Wix (Desde S/ 250 • 24-48h con garantía)' },
-    { id: 'blindaje', label: '3. Blindaje de sitios web y anti-suplantación DNS (S/ 165 • 3 a 5 días hábiles)' },
-    { id: 'waf', label: '4. Protección mediante Firewall WAF en Cloudflare (Desde S/ 335 • 5 a 7 días hábiles)' },
-    { id: 'monitoreo-esencial', label: '5. Monitoreo mensual Plan Esencial (S/ 49 PEN / mes • 24/7)' },
-    { id: 'monitoreo-pro', label: '6. Monitoreo mensual Plan Pro (S/ 99 PEN / mes • 24/7)' },
+    { id: 'pack-corp', label: '2. Pack Completo: Rescate + Blindaje WAF + 3 meses monitoreo - Web Corporativa (S/ 600 • Llave en mano)' },
+    { id: 'pack-ecom', label: '3. Pack Completo: Rescate + Blindaje WAF + 3 meses monitoreo - E-commerce / Tienda Online (S/ 850 • Llave en mano)' },
+    { id: 'rescate-emergencia', label: '4. Rescate de Emergencia Puntual (S/ 450 - S/ 650 • Intervención urgente 24-48h)' },
+    { id: 'monitoreo-esencial', label: '5. Monitoreo mensual Plan Esencial (S/ 49 PEN / mes • Vigilancia 24/7)' },
+    { id: 'monitoreo-pro', label: '6. Monitoreo mensual Plan Pro (S/ 99 PEN / mes • Vigilancia continua y soporte)' },
   ];
 
   const isFormValid = Boolean(

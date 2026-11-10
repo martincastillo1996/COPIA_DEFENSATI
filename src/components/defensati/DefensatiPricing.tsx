@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ShieldAlert, 
   ShieldCheck, 
@@ -9,7 +9,11 @@ import {
   Shield, 
   Lock, 
   Clock,
-  Sparkles
+  Sparkles,
+  ShoppingBag,
+  Globe,
+  Flame,
+  Radio
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -21,6 +25,7 @@ interface Props {
 
 export default function DefensatiPricing({ targetUrl }: Props) {
   const cleanUrl = targetUrl ? targetUrl.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
+  const [selectedPlanType, setSelectedPlanType] = useState<'corp' | 'ecom'>('corp');
 
   return (
     <section id="servicios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left relative">
@@ -29,269 +34,374 @@ export default function DefensatiPricing({ targetUrl }: Props) {
       {/* Cabecera Estilo Apple Pro */}
       <div className="space-y-2 border-b border-white/10 pb-5 max-w-4xl">
         <span className="text-xs font-mono uppercase tracking-widest text-[#2997ff] font-semibold px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 inline-block">
-          SERVICIOS OFICIALES DE CIBERSEGURIDAD
+          PAQUETES COMPLETOS DE CIBERSEGURIDAD
         </span>
         <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight pt-2">
-          Soluciones puntuales con precio transparente en Soles
+          Todo en uno: Rescate, Blindaje y 3 meses de Monitoreo
         </h2>
         <p className="text-base sm:text-lg text-[#86868b] font-normal">
-          Sin contratos forzosos ni tarifas infladas. Te mostramos qué encontramos antes de que pagues.
+          No vendemos parches a medias. Limpiamos la infección, blindamos tu servidor con Cloudflare WAF y vigilamos tu web por 3 meses completos para que nunca más te vuelva a pasar.
         </p>
       </div>
 
-      {/* 1. TARJETA PRINCIPAL: LIMPIEZA DE WORDPRESS (Oferta Estrella de Rescate) */}
-      <div className="p-7 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-gradient-to-b from-[#1a131b]/85 via-[#161618]/90 to-[#101012] border-2 border-rose-500/35 hover:border-rose-500/50 shadow-[0_30px_70px_rgba(244,63,94,0.18),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl relative overflow-hidden transition-all">
+      {/* 1. TARJETA INSIGNIA PRINCIPAL: PAQUETE TODO EN UNO (Rescate + Blindaje WAF + 3 Meses Monitoreo) */}
+      <div className="p-7 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-gradient-to-b from-[#10192e]/90 via-[#121622]/90 to-[#0c0e14] border-2 border-[#2997ff]/40 hover:border-[#2997ff]/60 shadow-[0_30px_80px_rgba(41,151,255,0.18),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-3xl relative overflow-hidden transition-all">
         
-        {/* Glow sutil de emergencia */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Aura sutil */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#0071e3]/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 space-y-6">
+        <div className="relative z-10 space-y-8">
           
-          {/* Badge superior */}
+          {/* Badge superior y Plazos */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
-            <span className="text-xs uppercase tracking-widest font-mono text-[#ff453a] font-semibold px-3.5 py-1 rounded-full bg-rose-500/15 border border-rose-500/25">
-              RESCATE URGENTE &bull; WORDPRESS, WOOCOMMERCE, SHOPIFY &amp; WIX
+            <span className="text-xs uppercase tracking-widest font-mono text-[#38bdf8] font-bold px-3.5 py-1.5 rounded-full bg-[#0071e3]/20 border border-[#0071e3]/35 flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
+              OFERTA INSIGNIA TODO INCLUIDO • LLAVE EN MANO
             </span>
             <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
-              Diagnóstico en &lt; 2h &bull; Entrega en 24-48h hábiles (máx. 4 días en casos complejos)
+              Desinfección en 24-48h hábiles &bull; Blindaje y WAF en 3-5 días
             </span>
           </div>
 
-          {/* Título y Precio */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-[#ff453a] shrink-0">
-                <ShieldAlert className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-tight leading-tight">
-                  Limpieza y Saneamiento Web:{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-rose-300">
-                    desde S/ 250
-                  </span>
-                </h3>
-                <p className="text-sm sm:text-base text-[#86868b] mt-1 font-normal">
-                  Para WordPress y tiendas infectadas con virus, spam o suspensión de hosting; y para Shopify o Wix con scripts maliciosos en temas (Magecart/carding) o apps fraudulentas.
-                </p>
+          {/* Selector de Modalidad: Web Corporativa vs E-commerce */}
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+                Selecciona el tipo de sitio:
+              </span>
+              <div className="inline-flex p-1 rounded-2xl bg-white/[0.06] border border-white/12">
+                <button
+                  type="button"
+                  onClick={() => setSelectedPlanType('corp')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    selectedPlanType === 'corp'
+                      ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <Globe className="w-4 h-4" />
+                  <span>Web Corporativa / Blog (S/ 600)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedPlanType('ecom')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    selectedPlanType === 'ecom'
+                      ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>E-commerce / Tienda Online (S/ 850)</span>
+                </button>
               </div>
             </div>
 
-            {/* Aclaración Técnica Especial para Shopify y Wix */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-xs sm:text-[13px] text-neutral-300 space-y-1">
-              <span className="font-semibold text-white flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-                ¿Tienes tu tienda en Shopify o tu sitio en Wix?
+            {/* Título y Precio Dinámico */}
+            <div className="space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
+                <div>
+                  <h3 className="text-2xl sm:text-4xl font-extrabold text-[#f5f5f7] tracking-tight leading-tight">
+                    Rescate + Blindaje WAF Cloudflare + 3 Meses de Monitoreo
+                  </h3>
+                  <p className="text-sm sm:text-base text-[#86868b] mt-1 font-normal">
+                    {selectedPlanType === 'corp'
+                      ? 'Para sitios web corporativos, institucionales, blogs y portafolios en WordPress, Wix o a medida.'
+                      : 'Para tiendas online transaccionales con pasarelas de pago y carritos (WooCommerce, Shopify o Wix).'}
+                  </p>
+                </div>
+                <div className="sm:text-right shrink-0">
+                  <div className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-200 to-white font-mono">
+                    {selectedPlanType === 'corp' ? 'S/ 600' : 'S/ 850'}
+                  </div>
+                  <span className="text-xs text-[#86868b] font-mono">Pago único • Sin mensualidades forzosas</span>
+                </div>
+              </div>
+
+              {/* Banner de Garantía y Monitoreo Incluido */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-200 text-xs sm:text-sm flex items-center gap-3">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+                  <span>
+                    <strong>Garantía por escrito de 30 días:</strong> si tu web vuelve a infectarse por la causa remediada, la resuelvo gratis.
+                  </span>
+                </div>
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-sky-950/30 border border-sky-500/30 text-sky-200 text-xs sm:text-sm flex items-center gap-3">
+                  <Radio className="w-5 h-5 text-sky-400 shrink-0" />
+                  <span>
+                    <strong>3 meses de monitoreo 24/7 incluidos:</strong> alertas inmediatas a WhatsApp ante caídas y reportes mensuales.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Todo lo que incluye el paquete */}
+            <div className="pt-2">
+              <span className="text-xs uppercase font-mono tracking-wider text-neutral-400 font-semibold block mb-3">
+                ¿Qué incluye este paquete llave en mano?
               </span>
-              <p className="text-neutral-400 leading-relaxed font-normal">
-                Al ser plataformas SaaS en la nube no sufren virus de archivos PHP en servidor, pero sí sufren inyecciones de scripts espías en temas Liquid/Wix (robo de datos/tarjetas), apps rogue o robo de cuentas. Realizamos saneamiento forense de tema, auditoría de permisos de apps y blindaje perimetral desde <strong className="text-white">S/ 250</strong> con garantía de 30 días.
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Rescate & Desinfección Forense:</strong> Respaldo integral previo y eliminación de virus, malware, backdoors, spam y webshells.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Recuperación de Hosting y Google:</strong> Gestión directa de desbloqueo con el soporte del hosting y retiro de pantalla roja.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Blindaje Perimetral Estricto:</strong> Implementación de cabeceras canónicas (HSTS, CSP, X-Frame) y ocultamiento de versiones.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Firewall WAF en Cloudflare:</strong> Reglas activas contra bots fraudulentos, scrapers, ataques de denegación DDoS y fuerza bruta.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Endurecimiento DNS Anti-Suplantación:</strong> Configuración estricta de registros SPF, DKIM y DMARC para proteger tus correos corporativos.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>3 Meses de Vigilancia 24/7:</strong> Chequeos continuos de disponibilidad y alerta directa a tu WhatsApp personal ante cualquier caída.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Yo mismo reviso tu web:</strong> Auditoría y ejecución técnica personal por Martín Castillo. Sin intermediarios ni juniors.</span>
+                </div>
+                <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Comprobante Formal con RUC:</strong> Emisión de Factura o Boleta Electrónica con RUC 10704877850 para deducción fiscal.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Botones de Conversión */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
+              <a
+                href={
+                  selectedPlanType === 'corp'
+                    ? DEFENSATI_WHATSAPP_MESSAGES.precioPackCorp(cleanUrl)
+                    : DEFENSATI_WHATSAPP_MESSAGES.precioPackEcom(cleanUrl)
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackServiceClick({
+                    serviceName: selectedPlanType === 'corp' ? 'Pack Todo Incluido Corporativo' : 'Pack Todo Incluido E-commerce',
+                    pricePen: selectedPlanType === 'corp' ? 600 : 850,
+                    serviceId: selectedPlanType === 'corp' ? 'pack_corp' : 'pack_ecom',
+                  });
+                  trackWhatsAppClick({
+                    service: selectedPlanType === 'corp' ? 'pack_corp' : 'pack_ecom',
+                    placement: 'pricing_flagship_pack',
+                    domain: cleanUrl,
+                  });
+                }}
+                className="w-full sm:w-auto flex-1 py-4 px-8 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_4px_24px_rgba(37,211,102,0.35)] transition-all cursor-pointer text-center"
+              >
+                <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
+                <span>
+                  {selectedPlanType === 'corp'
+                    ? 'Contratar Pack Todo Incluido Web Corporativa (S/ 600)'
+                    : 'Contratar Pack Todo Incluido E-commerce (S/ 850)'}
+                </span>
+              </a>
+
+              <a
+                href="#contratar"
+                className="w-full sm:w-auto py-4 px-6 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white font-semibold text-sm border border-white/15 flex items-center justify-center gap-2 transition-all cursor-pointer"
+              >
+                <span>Llenar solicitud con RUC</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      {/* 2. OPCIONES ADICIONALES: RESCATE DE EMERGENCIA PUNTUAL & MONITOREO MENSUAL */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        
+        {/* Tarjeta: Rescate de Emergencia Puntual */}
+        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-rose-500/25 hover:border-rose-500/45 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                <Flame className="w-6 h-6 text-rose-400" />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-[#86868b] flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10">
+                  <Clock className="w-3 h-3 text-rose-400" />
+                  24 a 48h hábiles
+                </span>
+                <span className="text-[11px] font-mono text-rose-300 uppercase tracking-wider bg-rose-500/15 px-3 py-1 rounded-full border border-rose-500/25">
+                  Solo Emergencia
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
+                Rescate de Emergencia Puntual
+              </h4>
+              <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
+                S/ 450 – S/ 650 <span className="text-xs text-[#86868b] font-normal font-sans">por emergencia</span>
+              </p>
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
+                Para sitios caídos o infectados donde solo necesitas apagar el incendio inmediato sin contratar el blindaje perimetral ni el monitoreo extendido.
               </p>
             </div>
 
-            {/* Garantía Destacada */}
-            <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-200 text-sm sm:text-base flex items-center gap-3">
-              <ShieldCheck className="w-6 h-6 text-emerald-400 shrink-0" />
-              <span className="font-semibold">
-                Garantía por escrito de 30 días: si tu web se vuelve a infectar por la misma causa, la limpio gratis.
-              </span>
-            </div>
+            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <span>Diagnóstico forense previo sin costo para ver qué encontramos.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <span>Copia de seguridad forense integral previa a intervenir.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <span>Eliminación de virus, malware, scripts de spam y backdoors.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <span>Gestión de desbloqueo con el hosting y retiro de pantalla roja en Google.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <span>Garantía formal de 30 días si reinfecta por la misma causa.</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Prestaciones Reales */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-            <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span><strong>Diagnóstico previo sin costo:</strong> Confirmamos el tipo de infección antes de que abones un solo sol.</span>
+          <a
+            href={DEFENSATI_WHATSAPP_MESSAGES.precioRescateEmergencia(cleanUrl)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              trackServiceClick({
+                serviceName: 'Rescate de Emergencia Puntual',
+                pricePen: 450,
+                serviceId: 'rescate_emergencia',
+              });
+              trackWhatsAppClick({
+                service: 'rescate_emergencia',
+                placement: 'pricing_emergency_card',
+                domain: cleanUrl,
+              });
+            }}
+            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-sm font-semibold border border-rose-500/30 backdrop-blur-xl transition-all cursor-pointer"
+          >
+            <WhatsAppIcon className="w-4 h-4 text-rose-400 shrink-0" />
+            <span>Pedir Rescate de Emergencia (S/ 450 - S/ 650)</span>
+          </a>
+        </div>
+
+        {/* Tarjeta: Monitoreo y Mantenimiento Mensual Recurrente */}
+        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-emerald-500/25 hover:border-emerald-500/45 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <Radio className="w-6 h-6 text-emerald-400" />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-[#86868b] flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10">
+                  <Clock className="w-3 h-3 text-emerald-400" />
+                  Supervisión 24/7
+                </span>
+                <span className="text-[11px] font-mono text-emerald-300 uppercase tracking-wider bg-emerald-500/15 px-3 py-1 rounded-full border border-emerald-500/25">
+                  Vigilancia Continua
+                </span>
+              </div>
             </div>
-            <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span><strong>Copia de seguridad integral:</strong> Respaldamos tus archivos y base de datos antes de intervenir.</span>
+
+            <div>
+              <h4 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
+                Monitoreo y Mantenimiento Mensual
+              </h4>
+              <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
+                S/ 49 <span className="text-base text-neutral-400 font-sans font-normal">Esencial</span> &bull; S/ 99 <span className="text-base text-neutral-400 font-sans font-normal">Pro / mes</span>
+              </p>
+              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
+                Para sitios previamente blindados o tras vencer los 3 meses incluidos en tu paquete. Cero contratos de permanencia: cancelas cuando quieras.
+              </p>
             </div>
-            <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span><strong>Desinfección profunda:</strong> Eliminación de virus, scripts maliciosos, spam y puertas traseras (backdoors).</span>
-            </div>
-            <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span><strong>Recuperación y reactivación:</strong> Restablecemos el acceso de administrador y ayudamos con tu hosting.</span>
-            </div>
+
+            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>Muestreo de disponibilidad web (Uptime) cada 15 min (Esencial) o 5 min (Pro).</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>Alerta preventiva 30 días antes del vencimiento de tu certificado SSL.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>Aviso prioritario e inmediato a tu WhatsApp oficial si tu web se cae.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>Re-escaneos periódicos perimetrales con informe ejecutivo mensual.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>Soporte técnico directo incluido: 30 min/mes (Esencial) | 60 min/mes (Pro).</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Botón de Conversión Inmediata Apple Pill */}
-          <div className="pt-2">
+          <div className="grid grid-cols-2 gap-2">
             <a
-              href={DEFENSATI_WHATSAPP_MESSAGES.precioLimpieza(cleanUrl)}
+              href={DEFENSATI_WHATSAPP_MESSAGES.precioMensual(cleanUrl)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
                 trackServiceClick({
-                  serviceName: 'Limpieza de WordPress',
-                  pricePen: 250,
-                  serviceId: 'limpieza_wordpress',
+                  serviceName: 'Monitoreo Esencial',
+                  pricePen: 49,
+                  serviceId: 'monitoreo_esencial',
                 });
                 trackWhatsAppClick({
-                  service: 'limpieza_wordpress',
-                  placement: 'pricing_main_card',
+                  service: 'monitoreo_esencial',
+                  placement: 'pricing_monthly_card',
                   domain: cleanUrl,
                 });
               }}
-              className="w-full py-4 px-8 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_4px_24px_rgba(37,211,102,0.35)] transition-all cursor-pointer text-center"
+              className="inline-flex items-center justify-center gap-1.5 py-3 px-3 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 text-xs font-semibold border border-emerald-500/30 backdrop-blur-xl transition-all cursor-pointer text-center"
             >
-              <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
-              <span>Quiero que revisen mi web infectada</span>
+              <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Esencial (S/ 49/m)</span>
+            </a>
+
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro(cleanUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: 'Monitoreo Pro',
+                  pricePen: 99,
+                  serviceId: 'monitoreo_pro',
+                });
+                trackWhatsAppClick({
+                  service: 'monitoreo_pro',
+                  placement: 'pricing_monthly_card',
+                  domain: cleanUrl,
+                });
+              }}
+              className="inline-flex items-center justify-center gap-1.5 py-3 px-3 rounded-full bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 text-xs font-semibold border border-blue-500/30 backdrop-blur-xl transition-all cursor-pointer text-center"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+              <span>Pro (S/ 99/m)</span>
             </a>
           </div>
-
-        </div>
-      </div>
-
-      {/* 2. OPCIONES DE PREVENCIÓN: BLINDAJE ESENCIAL Y WAF */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-        
-        {/* Blindaje Esencial */}
-        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white">
-                <Shield className="w-6 h-6 text-[#2997ff]" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono text-[#86868b] flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10">
-                  <Clock className="w-3 h-3 text-[#2997ff]" />
-                  3 a 5 días hábiles
-                </span>
-                <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-3 py-1 rounded-full border border-white/10">
-                  Prevención Técnica
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
-                Blindaje Esencial de Sitios Web
-              </h4>
-              <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
-                S/ 165 <span className="text-xs text-[#86868b] font-normal font-sans">pago único por sitio</span>
-              </p>
-              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
-                Fortalecimiento técnico preventivo. Compatible con WordPress, WooCommerce, Shopify, Wix y webs a medida por el mismo precio exacto (S/ 165). En Shopify y Wix incluye cabeceras compatibles, DNSSEC y configuración estricta SPF/DKIM/DMARC anti-suplantación.
-              </p>
-            </div>
-
-            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame).</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Ocultamiento de versiones de servidor y CMS para despistar atacantes.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Actualización segura de CMS y plugins sin romper el diseño.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Endurecimiento de accesos y contraseñas de administrador.</span>
-              </li>
-            </ul>
-          </div>
-
-          <a
-            href={DEFENSATI_WHATSAPP_MESSAGES.precioBlindaje(cleanUrl)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              trackServiceClick({
-                serviceName: 'Blindaje Esencial',
-                pricePen: 165,
-                serviceId: 'blindaje_esencial',
-              });
-              trackWhatsAppClick({
-                service: 'blindaje_esencial',
-                placement: 'pricing_blindaje_card',
-                domain: cleanUrl,
-              });
-            }}
-            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-[#f5f5f7] text-sm font-semibold border border-white/15 backdrop-blur-xl transition-all cursor-pointer"
-          >
-            <WhatsAppIcon className="w-4 h-4 text-[#2997ff] shrink-0" />
-            <span>Pedir Blindaje por WhatsApp (S/ 165)</span>
-          </a>
-        </div>
-
-        {/* Protección WAF */}
-        <div className="p-7 sm:p-9 rounded-[28px] sm:rounded-[32px] bg-[#161618]/70 border border-[#0071e3]/40 hover:border-[#0071e3]/60 transition-all flex flex-col justify-between space-y-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,113,227,0.18),inset_0_1px_0_rgba(255,255,255,0.1)] relative">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-2xl bg-[#0071e3]/15 border border-[#0071e3]/30 flex items-center justify-center text-[#2997ff]">
-                <Lock className="w-6 h-6 text-[#2997ff]" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono text-[#86868b] flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10">
-                  <Clock className="w-3 h-3 text-[#2997ff]" />
-                  5 a 7 días hábiles
-                </span>
-                <span className="text-[11px] font-mono text-[#2997ff] uppercase tracking-wider bg-[#0071e3]/20 px-3 py-1 rounded-full border border-[#0071e3]/30 font-semibold">
-                  Recomendado para Tiendas Online
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-xl sm:text-2xl font-bold text-[#f5f5f7] tracking-tight">
-                Protección Mediante Firewall (WAF)
-              </h4>
-              <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
-                Desde S/ 335 <span className="text-xs text-[#86868b] font-normal font-sans">implementación técnica</span>
-              </p>
-              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
-                Incluye todo el Blindaje Esencial más la configuración profesional de un Firewall perimetral en Cloudflare. 100% compatible con Shopify, Wix, WooCommerce y WordPress contra bots, scrapers y ataques DDoS.
-              </p>
-            </div>
-
-            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Todo lo incluido en el Blindaje Esencial (S/ 165).</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Reglas activas para frenar bots maliciosos y scrapers.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Protección anti-fuerza bruta en tus formularios de login y pasarelas de pago.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Mitigación de ataques de denegación de servicio (DDoS capa 7).</span>
-              </li>
-            </ul>
-          </div>
-
-          <a
-            href={DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              trackServiceClick({
-                serviceName: 'Proteccion WAF',
-                pricePen: 335,
-                serviceId: 'proteccion_waf',
-              });
-              trackWhatsAppClick({
-                service: 'proteccion_waf',
-                placement: 'pricing_waf_card',
-                domain: cleanUrl,
-              });
-            }}
-            className="inline-flex items-center justify-center gap-2 w-full py-4 px-6 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-semibold shadow-[0_4px_16px_rgba(0,113,227,0.35)] transition-all cursor-pointer"
-          >
-            <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-            <span>Configurar Firewall por WhatsApp (Desde S/ 335)</span>
-          </a>
         </div>
 
       </div>
@@ -300,10 +410,10 @@ export default function DefensatiPricing({ targetUrl }: Props) {
       <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#86868b]">
         <div className="flex items-center gap-2 text-[#f5f5f7]">
           <Clock className="w-4 h-4 text-[#2997ff] shrink-0" />
-          <span><strong>Cómputo de Plazos:</strong> Inician al recibir accesos técnicos válidos dentro de nuestro horario laborable.</span>
+          <span><strong>Diagnóstico previo 100% gratuito:</strong> te mostramos qué encontramos antes de que abones un solo sol.</span>
         </div>
         <div className="text-neutral-400">
-          Atención técnica directa: <strong>Lunes a Sábado, 9:00 a 20:00 (Hora Perú)</strong>
+          Atención técnica directa: <strong>Lunes a Sábado, 9:00 a 20:00 (Hora Perú) &bull; RUC 10704877850</strong>
         </div>
       </div>
 

@@ -34,19 +34,19 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
   // Determinar nivel de diagnóstico comercial
   let planType: 'limpieza' | 'blindaje' | 'monitoreo' = 'blindaje';
   let badgeText = 'Vulnerabilidades Detectadas';
-  let title = 'Recomendación: Blindaje Perimetral de tu Sitio Web';
-  let priceText = 'S/ 165 (Pago único)';
-  let diagnosisText = `Tu sitio presenta ${missingHeadersCount} cabeceras de seguridad ausentes y posibles puntos ciegos perimetrales. Aunque carga en el navegador, no cuenta con barreras defensivas contra ataques automatizados.`;
-  let solutionText = 'Aplicamos cabeceras de seguridad estrictas (HSTS, CSP, X-Frame), ocultamos versiones de servidor y fortalecemos los accesos en menos de 48 horas sin alterar tu diseño.';
-  let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y configuración perimetral`;
+  let title = 'Recomendación: Pack Blindaje WAF Cloudflare + 3 Meses Monitoreo';
+  let priceText = 'S/ 600 – S/ 850 (Pago único)';
+  let diagnosisText = `Tu sitio presenta ${missingHeadersCount} cabeceras de seguridad ausentes y posibles puntos ciegos perimetrales. Aunque carga en el navegador, no cuenta con barreras defensivas contra ataques automatizados ni bots.`;
+  let solutionText = 'Aplicamos cabeceras estrictas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y 3 meses de monitoreo continuo 24/7 sin alterar tu diseño.';
+  let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y blindaje perimetral`;
 
   if (score < 60 || grade === 'F' || grade === 'D') {
     planType = 'limpieza';
     badgeText = 'Alerta de Riesgo Alto / Crítico';
-    title = 'Recomendación: Diagnóstico Forense & Limpieza de Urgencia';
-    priceText = 'Desde S/ 250 (Garantía 30 días)';
+    title = 'Recomendación: Pack Rescate + Blindaje WAF + 3 Meses Monitoreo';
+    priceText = 'Pack S/ 600 - S/ 850 (o Emergencia S/ 450 - S/ 650)';
     diagnosisText = `Tu sitio obtuvo nota baja (${score}/100, Grado ${grade}) con ${missingHeadersCount} fallas defensivas graves. Este estado lo hace un blanco fácil para virus, desvío de clientes a webs de spam o sanción en Google.`;
-    solutionText = 'Desinfectamos los archivos y bases de datos, eliminamos posibles puertas traseras (backdoors) y dejamos el sitio blindado con garantía formal de 30 días.';
+    solutionText = 'Desinfectamos los archivos y base de datos con respaldo previo, configuramos Cloudflare WAF y dejamos el sitio blindado con 3 meses de monitoreo y garantía formal de 30 días.';
     primaryIssue = `Puntaje crítico (${score}/100, Grado ${grade}) y vulnerabilidad perimetral`;
   } else if (score >= 85 && (grade === 'A' || grade === 'A+')) {
     planType = 'monitoreo';

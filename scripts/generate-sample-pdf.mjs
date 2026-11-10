@@ -338,11 +338,11 @@ async function generateSamplePdf() {
   );
 
   page1.drawText(
-    'Recomendación Urgente: Se requiere aplicar el paquete de cabeceras canónicas (Blindaje Llave en Mano, S/ 165 PEN) y',
+    'Recomendación Urgente: Se requiere el Pack Todo Incluido: Rescate + Blindaje WAF Cloudflare + 3 Meses Monitoreo',
     { x: 52, y: y - 46, size: 8, font: fontHelvetica, color: textDark }
   );
   page1.drawText(
-    'reforzar el perímetro con Cloudflare WAF (S/ 335 PEN) para asegurar Grado A+ y cumplimiento PCI-DSS en pasarelas.',
+    '(S/ 600 - S/ 850 PEN) o Rescate de Emergencia (S/ 450 - S/ 650 PEN) para mitigar riesgos y asegurar Grado A.',
     { x: 52, y: y - 58, size: 8, font: fontHelvetica, color: textDark }
   );
   page1.drawText(
@@ -467,7 +467,7 @@ async function generateSamplePdf() {
     font: fontHelvetica,
     color: textMuted,
   });
-  page2.drawText('este blindaje llave en mano por S/ 165 PEN (entrega en 3 a 5 días con re-medición incluida).', {
+  page2.drawText('este blindaje llave en mano con el Pack Todo Incluido (desde S/ 600 PEN con 3 meses de monitoreo incluidos).', {
     x: 50,
     y: y2 - 37,
     size: 7.5,

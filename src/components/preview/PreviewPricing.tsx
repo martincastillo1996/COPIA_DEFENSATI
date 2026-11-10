@@ -8,93 +8,110 @@ interface Props {
   targetUrl?: string;
 }
 
+interface PricingPlan {
+  id: string;
+  name: string;
+  badge: string;
+  badgeColor: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  whatsappUrl: string;
+  btnText: string;
+  highlight: boolean;
+  extraNote: string;
+  optionalAddon?: string;
+  secondaryWhatsappUrl?: string;
+  secondaryBtnText?: string;
+}
+
 export default function PreviewPricing({ targetUrl }: Props) {
   const cleanUrl = targetUrl ? targetUrl.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
 
-  const plans = [
+  const plans: PricingPlan[] = [
     {
-      id: 'limpieza',
-      name: 'Limpieza de WordPress infectados',
-      badge: 'Oferta Principal • Rescate',
-      badgeColor: 'bg-rose-500/10 border-rose-500/25 text-rose-300',
-      price: 'Desde S/ 250',
-      period: 'pago único (según complejidad)',
-      description: 'Oferta principal para sitios que ya presentan virus, redirecciones extrañas o bloqueos de Google.',
+      id: 'pack-corp',
+      name: 'Pack Rescate + Blindaje WAF (Web Corporativa)',
+      badge: 'Recomendado • Todo Incluido',
+      badgeColor: 'bg-[#2997ff]/15 border-[#2997ff]/30 text-[#38bdf8]',
+      price: 'S/ 600',
+      period: 'pago único (3 meses monitoreo incluidos)',
+      description: 'Solución integral: desinfección forense completa, blindaje de cabeceras, Firewall WAF Cloudflare y 3 meses de monitoreo 24/7 incluidos.',
       features: [
-        'Diagnóstico previo de infección sin costo',
-        'Desinfección profunda de archivos y CMS',
-        'Eliminación de virus, malware y backdoors',
-        'Recuperación de acceso al panel de administración',
-        'Garantía de 30 días si reinfecta por la misma causa',
+        'Desinfección forense de archivos y base de datos con respaldo previo',
+        'Blindaje de cabeceras canónicas (HSTS, CSP, X-Frame) y versiones ocultas',
+        'Configuración de WAF Cloudflare activo anti-bots y ataques DDoS',
+        '3 meses de monitoreo continuo 24/7 con aviso inmediato a WhatsApp',
+        'Garantía formal de 30 días y atención personal de Martín Castillo',
       ],
-      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioLimpieza(cleanUrl),
-      btnText: 'Consultar Limpieza de WordPress',
-      highlight: false,
-      extraNote: 'Se cotiza previamente según el nivel de complejidad.',
-    },
-    {
-      id: 'blindaje',
-      name: 'Blindaje de sitios web',
-      badge: 'Configuración Esencial',
-      badgeColor: 'bg-white/[0.08] border-white/15 text-[#f5f5f7]',
-      price: 'S/ 165',
-      period: 'pago único por sitio web',
-      description: 'Auditoría y fortalecimiento de configuración técnica para proteger tu web contra ataques comunes.',
-      features: [
-        'Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame)',
-        'Ocultamiento de versiones de servidor y CMS',
-        'Actualización segura de CMS (WordPress) y plugins',
-        'Endurecimiento de accesos y credenciales de admin',
-        'Entrega rápida llave en mano sin tocar datos privados',
-      ],
-      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioBlindaje(cleanUrl),
-      btnText: 'Pedir Blindaje de Sitio Web (S/ 165)',
-      highlight: false,
-      extraNote: 'Auditoría y fortalecimiento de configuración.',
-    },
-    {
-      id: 'blindaje-waf',
-      name: 'Protección mediante WAF',
-      badge: 'Máxima Protección • Recomendado',
-      badgeColor: 'bg-[#2997ff]/10 border-[#2997ff]/25 text-[#38bdf8]',
-      price: 'Desde S/ 335',
-      period: 'pago único de implementación',
-      description: 'Incluye todo el Blindaje Básico + configuración experta de Firewall de Aplicaciones Web (WAF).',
-      features: [
-        'Todo lo incluido en el Blindaje de sitios web (S/ 165)',
-        'Configuración profesional de WAF perimetral (Cloudflare)',
-        'Reglas activas anti-bots maliciosos y scrapers',
-        'Mitigación de ataques DDoS de capa 7',
-        'Filtro contra inyecciones SQL y ataques web',
-      ],
-      optionalAddon: '* Incluye configuración de WAF; el costo del servicio WAF de terceros puede ir aparte.',
-      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl),
-      btnText: 'Pedir Protección mediante WAF (Desde S/ 335)',
+      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioPackCorp(cleanUrl),
+      btnText: 'Pedir Pack Web Corporativa (S/ 600)',
       highlight: true,
-      extraNote: 'Configuración perimetral de WAF llave en mano.',
+      extraNote: 'Solución integral llave en mano. Factura formal con RUC.',
+    },
+    {
+      id: 'pack-ecom',
+      name: 'Pack Rescate + Blindaje WAF (E-commerce)',
+      badge: 'Máxima Seguridad • Tiendas Online',
+      badgeColor: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300',
+      price: 'S/ 850',
+      period: 'pago único (3 meses monitoreo incluidos)',
+      description: 'Diseñado para tiendas WooCommerce, Shopify y Wix con pasarelas de pago (Yape, Niubiz, Culqi) y protección de checkout.',
+      features: [
+        'Todo lo del pack corporativo adaptado a pasarelas de pago',
+        'Saneamiento y auditoría de checkout contra scripts espías (Magecart)',
+        'Endurecimiento DNS con registros SPF, DKIM y DMARC anti-suplantación',
+        'Reglas WAF específicas contra bots en checkout y scrapers de inventario',
+        '3 meses de monitoreo prioritario 24/7 con aviso inmediato a WhatsApp',
+        'Garantía por escrito de 30 días y comprobante formal con RUC',
+      ],
+      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioPackEcom(cleanUrl),
+      btnText: 'Pedir Pack Tienda Online (S/ 850)',
+      highlight: false,
+      extraNote: 'Protección para pasarelas de pago y carritos.',
+    },
+    {
+      id: 'rescate-emergencia',
+      name: 'Rescate de Emergencia Puntual',
+      badge: 'Solo Emergencia 24-48h',
+      badgeColor: 'bg-rose-500/15 border-rose-500/30 text-rose-300',
+      price: 'S/ 450 – S/ 650',
+      period: 'por emergencia (según complejidad)',
+      description: 'Para sitios caídos o infectados donde solo necesitas apagar el incendio inmediato sin contratar blindaje ni monitoreo extendido.',
+      features: [
+        'Diagnóstico forense previo sin costo para ver qué encontramos',
+        'Copia de seguridad forense integral previa a intervenir',
+        'Eliminación de virus, malware, scripts de spam y backdoors',
+        'Gestión directa de desbloqueo con el hosting y retiro de pantalla roja',
+        'Garantía formal de 30 días por escrito ante reinfecciones',
+      ],
+      whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioRescateEmergencia(cleanUrl),
+      btnText: 'Pedir Rescate de Emergencia (S/ 450 - S/ 650)',
+      highlight: false,
+      extraNote: 'Intervención forense urgente en 24 a 48 horas.',
     },
     {
       id: 'vigilancia',
       name: 'Monitoreo y mantenimiento mensual',
-      badge: 'Tranquilidad Continua',
-      badgeColor: 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
+      badge: 'Vigilancia Permanente',
+      badgeColor: 'bg-white/[0.08] border-white/15 text-neutral-300',
       price: 'S/ 49 / S/ 99',
       period: 'Esencial S/ 49/mes • Pro S/ 99/mes',
-      description: 'Monitoreo proactivo con alcance y límites por escrito para detectar caídas antes que tus clientes.',
+      description: 'Para webs previamente blindadas o al terminar los 3 meses incluidos de tu paquete. Sin contratos de permanencia.',
       features: [
-        'Plan Esencial (S/ 49/mes): Uptime cada 15 min + aviso inmediato',
-        'Alerta preventiva ante vencimiento del certificado SSL (30 días)',
+        'Plan Esencial (S/ 49/mes): Uptime cada 15 min + aviso inmediato a WhatsApp',
+        'Alerta preventiva ante vencimiento del certificado SSL a los 30 días',
         'Re-escaneo mensual de seguridad con informe a tu WhatsApp',
-        'Nivel Pro (S/ 99/mes): Uptime cada 5 min + escaneos semanales',
-        'Soporte manual incluido: máx. 30 min/mes (Esencial) | 1.5 h/mes (Pro)',
-        'Alcance y límites por escrito: cancela en cualquier momento',
+        'Nivel Pro (S/ 99/mes): Uptime cada 5 min + soporte preventivo de 1h/mes',
+        'Cero permanencia: cancela en cualquier momento por WhatsApp',
       ],
       whatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioMensual(cleanUrl),
       secondaryWhatsappUrl: DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro(cleanUrl),
       btnText: 'Activar Plan Esencial (S/ 49/mes)',
       secondaryBtnText: 'Contratar Plan Pro (S/ 99/mes)',
       highlight: false,
-      extraNote: 'Alcance y límites por escrito. Sin penalizaciones.',
+      extraNote: 'Supervisión ininterrumpida 24/7 sin permanencia.',
     },
   ];
 

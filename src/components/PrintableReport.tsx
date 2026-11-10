@@ -225,7 +225,7 @@ export default function PrintableReport({ report, auditId }: Props) {
             </div>
           </div>
 
-          {/* Planes Comerciales y Llamado a la Acción (S/ 65 y S/ 165) */}
+          {/* Planes Comerciales y Llamado a la Acción */}
           <div className="p-2.5 rounded-lg border-2 border-neutral-900 bg-neutral-50 mb-2.5">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-neutral-300 pb-1.5 mb-1.5">
               <div>
@@ -244,15 +244,15 @@ export default function PrintableReport({ report, auditId }: Props) {
 
             <div className="grid grid-cols-2 gap-2 text-[8.5px]">
               <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                <span className="font-bold text-neutral-900 block">OPCIÓN 1: Dictamen Firmado + Receta de Código (S/ 65 PEN)</span>
+                <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate de Emergencia Puntual (S/ 450 – S/ 650 PEN)</span>
                 <p className="text-neutral-700 leading-tight mt-0.5">
-                  Recibes el dictamen formal en PDF firmado por el auditor y el archivo de configuración exacto listo para que tu programador lo pegue en 5 minutos.
+                  Intervención forense urgente en 24-48h: respaldo integral previo, eliminación de virus, troyanos o webshells, gestión de desbloqueo con hosting y garantía de 30 días.
                 </p>
               </div>
               <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje Perimetral Llave en Mano (S/ 165 PEN)</span>
+                <span className="font-bold text-neutral-900 block">OPCIÓN 2: Pack Rescate + Blindaje WAF + 3 Meses Monitoreo (S/ 600 - S/ 850 PEN)</span>
                 <p className="text-neutral-700 leading-tight mt-0.5">
-                  Nosotros nos encargamos de inyectar las directivas perimetrales directamente en tu servidor con re-auditoría incluida y meta Grado A (soporte hasta 14 días).
+                  Solución integral llave en mano: desinfección completa, cabeceras estrictas, Cloudflare WAF perimetral y 3 meses de monitoreo 24/7 con garantía de 30 días.
                 </p>
               </div>
             </div>

@@ -37,10 +37,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
      6. **Qué garantías se ofrecen y cuáles no:** Garantía de 30 días si la web se vuelve a infectar por la misma causa remediada; exclusión de garantía ante instalación de plugins piratas/vulnerables, contraseñas débiles o modificaciones de terceros posteriores.
 
 7. **Catálogo Oficial de Servicios Comercializados por DEFENSA TI:**
-   - La oferta comercial de DEFENSA TI se compone estrictamente de estos 5 servicios oficiales:
+   - La oferta comercial de DEFENSA TI no vende parches a medias ni blindaje/WAF por separado. Se estructura en:
      1. **Diagnóstico gratuito:** Escáner pasivo de cabeceras, SSL y puertos (100% sin costo, gancho comercial para mostrar qué encontramos antes de que pagues).
-     2. **Limpieza de WordPress infectados:** Desinfección profunda de archivos y base de datos, eliminación de virus/malware/backdoors y recuperación de acceso administrativo (Desde S/ 250, cotizado según complejidad con garantía de 30 días).
-     3. **Blindaje de sitios web:** Fortalecimiento perimetral de cabeceras estrictas (HSTS, CSP, X-Frame), ocultamiento de versiones de servidor/PHP/CMS y actualización segura de CMS/plugins (S/ 165).
-     4. **Protección mediante WAF:** Configuración profesional perimetral de Firewall de Aplicaciones Web (Cloudflare) contra bots maliciosos, DDoS y scrapers (Desde S/ 335).
-     5. **Monitoreo y mantenimiento mensual:** Vigilancia proactiva con aviso inmediato de caídas, alerta de vencimiento SSL y re-escaneos periódicos con informe a WhatsApp, con alcance y límites por escrito (S/ 49/mes y nivel Pro S/ 99/mes).
+     2. **Pack Todo Incluido (Oferta Insignia Llave en Mano):** "Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo 24/7 incluidos", con pago único de S/ 600 (Web Corporativa / Blog) o S/ 850 (E-commerce / Tienda Online con WooCommerce, Shopify o Wix). Incluye desinfección forense completa, cabeceras canónicas, Cloudflare WAF anti-bots, 3 meses de monitoreo con aviso a WhatsApp, garantía formal de 30 días y comprobante formal con RUC 10704877850 ("yo mismo reviso tu web").
+     3. **Rescate de Emergencia Puntual:** Intervención urgente forense 24-48h para sitios caídos o infectados sin blindaje ni monitoreo extendido (S/ 450 – S/ 650 por emergencia, con garantía de 30 días).
+     4. **Monitoreo y mantenimiento mensual:** Vigilancia continua tras vencer los 3 meses incluidos o para webs previamente saneadas (Plan Esencial S/ 49/mes y Plan Pro S/ 99/mes), sin permanencia forzosa.
 

@@ -61,27 +61,49 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
     return getWhatsAppUrl(text);
   },
 
-  // Servicio 1: Limpieza de WordPress infectados (Desde S/ 250)
+  // Paquete Insignia 1: Rescate + Blindaje WAF Cloudflare + 3 Meses de Monitoreo - Web Corporativa (S/ 600)
+  precioPackCorp: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600) para mi web corporativa (${domain}).`
+      : 'Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600) para mi web corporativa.';
+    return getWhatsAppUrl(text);
+  },
+
+  // Paquete Insignia 2: Rescate + Blindaje WAF Cloudflare + 3 Meses de Monitoreo - E-commerce / Tienda Online (S/ 850)
+  precioPackEcom: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 850) para mi tienda online (${domain}).`
+      : 'Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 850) para mi tienda online.';
+    return getWhatsAppUrl(text);
+  },
+
+  // Rescate de Emergencia Puntual (S/ 450 - S/ 650)
+  precioRescateEmergencia: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, tengo una urgencia con mi web (${domain}) por virus, redirecciones o caída. Deseo contratar el Rescate de Emergencia (S/ 450 - S/ 650).`
+      : 'Hola Martín, tengo una urgencia con mi web por virus, redirecciones o caída. Deseo contratar el Rescate de Emergencia (S/ 450 - S/ 650).';
+    return getWhatsAppUrl(text);
+  },
+
+  // Aliases de compatibilidad retroactiva orientados a los nuevos paquetes
   precioLimpieza: (domain = '') => {
     const text = domain
-      ? `Hola Martín, mi sitio WordPress (${domain}) presenta infección o malware. Quisiera cotizar la Limpieza con garantía de 30 días (desde S/ 250).`
-      : 'Hola Martín, mi sitio WordPress presenta infección o malware. Quisiera cotizar la Limpieza con garantía de 30 días (desde S/ 250).';
+      ? `Hola Martín, mi sitio web (${domain}) presenta infección o malware. Quisiera contratar el rescate y blindaje con garantía (Pack Completo desde S/ 600 o Emergencia S/ 450 - S/ 650).`
+      : 'Hola Martín, mi sitio web presenta infección o malware. Quisiera contratar el rescate y blindaje con garantía (Pack Completo desde S/ 600 o Emergencia S/ 450 - S/ 650).';
     return getWhatsAppUrl(text);
   },
 
-  // Servicio 2: Blindaje de sitios web (S/ 165)
   precioBlindaje: (domain = '') => {
     const text = domain
-      ? `Hola Martín, me interesa contratar el Blindaje de Sitio Web de S/ 165 para fortalecer la seguridad de mi página (${domain}).`
-      : 'Hola Martín, me interesa contratar el Blindaje de Sitio Web de S/ 165 para fortalecer la seguridad de mi página web.';
+      ? `Hola Martín, deseo blindar mi sitio web (${domain}) con el Pack Llave en Mano: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600).`
+      : 'Hola Martín, deseo blindar mi sitio web con el Pack Llave en Mano: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600).';
     return getWhatsAppUrl(text);
   },
 
-  // Servicio 3: Protección WAF (Desde S/ 335)
   precioBlindajeWaf: (domain = '') => {
     const text = domain
-      ? `Hola Martín, quiero implementar la Protección mediante Firewall WAF (desde S/ 335) en mi sitio (${domain}) contra ataques DDoS y bots.`
-      : 'Hola Martín, quiero implementar la Protección mediante Firewall WAF (desde S/ 335) en mi página web contra ataques DDoS y bots.';
+      ? `Hola Martín, quiero implementar la Protección WAF Cloudflare con el Pack Completo de blindaje y 3 meses de monitoreo (S/ 600 - S/ 850) en mi web (${domain}).`
+      : 'Hola Martín, quiero implementar la Protección WAF Cloudflare con el Pack Completo de blindaje y 3 meses de monitoreo (S/ 600 - S/ 850) en mi web.';
     return getWhatsAppUrl(text);
   },
 

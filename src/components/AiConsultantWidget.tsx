@@ -89,12 +89,12 @@ export default function AiConsultantWidget({ report }: Props) {
       prompt: '¿Cómo puedo evitar que clonen mis formularios o pasarelas de pago de Yape y tarjetas?'
     },
     {
-      label: '💰 ¿Cómo funciona el Blindaje (S/ 165)?',
-      prompt: '¿Qué incluye exactamente el plan Blindaje Llave en Mano de S/ 165 y en cuántos días lo entregan?'
+      label: '💰 ¿Qué incluye el Pack Todo Incluido (S/ 600 - S/ 850)?',
+      prompt: '¿Qué incluye exactamente el Pack Todo Incluido de Rescate + Blindaje WAF + 3 meses de monitoreo y qué garantía tiene?'
     },
     {
-      label: '☕ ¿Cómo apoyar con donación Open Source?',
-      prompt: '¿Cómo puedo apoyar el proyecto Open Source DEFENSA TI por Yape o Culqi?'
+      label: '🚨 ¿Cómo funciona el Rescate de Emergencia (S/ 450 - S/ 650)?',
+      prompt: 'Mi web fue hackeada o suspendida por el hosting. ¿Cómo funciona el rescate de emergencia puntual y en cuánto tiempo lo resuelven?'
     },
     {
       label: '📱 Hablar directo con Martín por WhatsApp',
@@ -104,28 +104,36 @@ export default function AiConsultantWidget({ report }: Props) {
 
   const plans = [
     {
-      name: 'Dictamen Técnico & Receta',
+      name: 'Diagnóstico Gratuito',
       price: 'GRATIS',
-      original: 'S/ 65',
-      time: 'Inmediato',
-      desc: 'Diagnóstico perimetral profundo, membrete formal con RUC y receta de código lista para aplicar.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Dictamen%20T%C3%A9cnico%20gratuito%20de%20DEFENSA%20TI.'
+      original: '',
+      time: 'Inmediato (< 2h)',
+      desc: 'Diagnóstico perimetral determinista sin credenciales, membrete formal con RUC y dictamen descargable.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Diagn%C3%B3stico%20Gratuito%20de%20DEFENSA%20TI.'
     },
     {
-      name: 'Blindaje Llave en Mano',
-      price: 'S/ 165',
+      name: 'Pack Rescate + Blindaje WAF (Web Corporativa)',
+      price: 'S/ 600',
       original: '',
       time: '3 a 5 días',
-      desc: 'Implementación directa de cabeceras de seguridad, anti-clonación de formularios y endurecimiento de servidor.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20plan%20Blindaje%20Llave%20en%20Mano%20(S/%20165)%20para%20mi%20sitio%20web.'
+      desc: 'Desinfección forense completa, cabeceras estrictas, Cloudflare WAF y 3 meses de monitoreo 24/7 incluidos.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Pack%20Todo%20Incluido%20Web%20Corporativa%20(S/%20600)%20para%20mi%20sitio.'
     },
     {
-      name: 'Blindaje Total WAF + Meta Grado A',
-      price: 'S/ 335',
+      name: 'Pack Rescate + Blindaje WAF (E-commerce / Tienda)',
+      price: 'S/ 850',
       original: '',
-      time: '5 a 7 días',
-      desc: 'Auditoría integral, WAF perimetral activo (Cloudflare), bloqueo anti-bots y Meta Grado A con re-medición incluida.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20plan%20Blindaje%20Total%20WAF%20(S/%20335)%20para%20mi%20sitio%20web.'
+      time: '3 a 5 días',
+      desc: 'Saneamiento de checkout, registros DNS SPF/DKIM/DMARC, Cloudflare WAF anti-bots y 3 meses de monitoreo.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Pack%20Todo%20Incluido%20E-commerce%20(S/%20850)%20para%20mi%20tienda.'
+    },
+    {
+      name: 'Rescate de Emergencia Puntual',
+      price: 'S/ 450 – S/ 650',
+      original: '',
+      time: '24 a 48 horas',
+      desc: 'Intervención forense urgente para sitios caídos o bloqueados por hosting con garantía formal de 30 días.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20necesito%20un%20Rescate%20de%20Emergencia%20Puntual%20(S/%20450%20-%20S/%20650)%20para%20mi%20web.'
     }
   ];
 

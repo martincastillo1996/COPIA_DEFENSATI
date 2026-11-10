@@ -439,21 +439,21 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                   <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-extrabold text-white text-xs">Plan Dictamen Firmado + Receta Dev</span>
-                      <span className="text-xs font-mono font-black text-sky-400">S/ 65 PEN</span>
+                      <span className="font-extrabold text-white text-xs">Rescate de Emergencia Puntual</span>
+                      <span className="text-xs font-mono font-black text-rose-400">S/ 450 – S/ 650</span>
                     </div>
                     <p className="text-[11px] text-neutral-400 leading-relaxed">
-                      Recibes el <strong>dictamen formal en PDF firmado por el auditor</strong> (Karol Martín Castillo Rojas) con membrete oficial y el archivo exacto de configuración para que tu programador lo pegue en 5 minutos.
+                      Intervención forense urgente en 24 a 48h: eliminación profunda de virus, troyanos o puertas traseras, gestión de desbloqueo con el hosting y <strong>garantía formal de 30 días</strong>.
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+                  <div className="p-4 rounded-xl bg-sky-500/10 border border-sky-500/30 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-extrabold text-white text-xs">Plan Blindaje Llave en Mano</span>
-                      <span className="text-xs font-mono font-black text-emerald-400">S/ 165 PEN</span>
+                      <span className="font-extrabold text-white text-xs">Pack Todo Incluido: Rescate + Blindaje WAF + 3M Monitoreo</span>
+                      <span className="text-xs font-mono font-black text-[#38bdf8]">S/ 600 – S/ 850</span>
                     </div>
                     <p className="text-[11px] text-neutral-300 leading-relaxed">
-                      Nosotros inyectamos y configuramos las cabeceras perimetrales directamente en tu servidor (Nginx/Apache/Cloudflare) con re-auditoría incluida y <strong>meta técnica de Grado A (hasta 14 días de soporte)</strong>.
+                      Solución integral llave en mano: desinfección forense, cabeceras estrictas, Firewall WAF Cloudflare y <strong>3 meses de monitoreo continuo 24/7 incluidos</strong> con garantía de 30 días.
                     </p>
                   </div>
                 </div>
