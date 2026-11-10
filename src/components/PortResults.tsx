@@ -24,13 +24,19 @@ export default function PortResults({ ports }: PortResultsProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {ports.map((p) => {
+          const isPort443 = p.port === 443;
           const isPort80 = p.port === 80;
+          const isPort8080 = p.port === 8080;
           const isGitSsh = p.port === 22 && p.risk === 'BAJO';
 
           let cardClasses = 'bg-white/5 border-white/5 text-slate-300';
           if (p.isOpen) {
-            if (isPort80) {
-              cardClasses = 'bg-amber-950/20 border-amber-500/40 text-amber-200';
+            if (isPort443) {
+              cardClasses = 'bg-emerald-950/20 border-emerald-500/40 text-emerald-200';
+            } else if (isPort80) {
+              cardClasses = 'bg-blue-950/20 border-blue-500/40 text-blue-200';
+            } else if (isPort8080) {
+              cardClasses = 'bg-blue-950/20 border-blue-500/40 text-blue-200';
             } else if (isGitSsh) {
               cardClasses = 'bg-blue-950/20 border-blue-500/40 text-blue-200';
             } else {
@@ -49,10 +55,20 @@ export default function PortResults({ ports }: PortResultsProps) {
                 </span>
 
                 {p.isOpen ? (
-                  isPort80 ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400">
+                  isPort443 ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400">
+                      <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                      ABIERTO (ÓPTIMO)
+                    </span>
+                  ) : isPort80 ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-400">
                       <ArrowRightLeft className="w-3 h-3" />
                       REDIRECCIÓN (HTTP)
+                    </span>
+                  ) : isPort8080 ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-400">
+                      <ArrowRightLeft className="w-3 h-3" />
+                      PROXY CDN (OK)
                     </span>
                   ) : isGitSsh ? (
                     <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-400">
@@ -74,8 +90,12 @@ export default function PortResults({ ports }: PortResultsProps) {
               </div>
 
               <p className="text-[10px] text-slate-400 mt-2 leading-tight">
-                {isPort80 && p.isOpen
+                {isPort443 && p.isOpen
+                  ? 'Canal seguro HTTPS activo (Requerido para navegación segura y transacciones).'
+                  : isPort80 && p.isOpen
                   ? 'Abierto para capturar tráfico no seguro y redirigir hacia HTTPS.'
+                  : isPort8080 && p.isOpen
+                  ? 'Puerto proxy perimetral de distribución CDN activo.'
                   : p.description}
               </p>
             </div>

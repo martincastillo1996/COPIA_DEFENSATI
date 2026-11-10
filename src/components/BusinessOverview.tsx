@@ -29,10 +29,10 @@ export default function BusinessOverview({ report }: Props) {
   const hasClickjackingRisk = missingHeaders.some(h => h.header.toLowerCase().includes('frame'));
   const hasDowngradeRisk = missingHeaders.some(h => h.header.toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
-    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
   );
   const openAdminPortsList = (report.ports || []).filter(
-    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
   );
   const openAdminPortsNames = openAdminPortsList
     .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port})`)

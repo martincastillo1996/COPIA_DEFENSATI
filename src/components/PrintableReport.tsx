@@ -35,10 +35,10 @@ export default function PrintableReport({ report, auditId }: Props) {
   const missingHeaders = (report.headers || []).filter(h => !h.present);
   const hasDowngradeRisk = missingHeaders.some(h => (h.header || h.name || '').toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
-    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
   );
   const openAdminPortsList = (report.ports || []).filter(
-    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
   );
   const openAdminPortsNames = openAdminPortsList
     .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port})`)
@@ -396,6 +396,7 @@ export default function PrintableReport({ report, auditId }: Props) {
               {(report.ports || []).map((p) => {
                 const isPort80 = p.port === 80;
                 const isPort443 = p.port === 443;
+                const isPort8080 = p.port === 8080;
                 const isGitSsh = p.port === 22 && isGitPlatform;
 
                 let badgeText = 'CERRADO (OK)';
@@ -415,6 +416,10 @@ export default function PrintableReport({ report, auditId }: Props) {
                     portMeaning = hasValidSsl 
                       ? 'Redirección obligatoria hacia HTTPS' 
                       : 'Tráfico plano expuesto sin cifrado';
+                  } else if (isPort8080) {
+                    badgeText = 'PROXY CDN (OK)';
+                    borderStyle = 'border-sky-400 bg-sky-50/80 text-sky-900 font-bold';
+                    portMeaning = 'Proxy alternativo / CDN perimetral';
                   } else if (isGitSsh) {
                     badgeText = 'GIT SSH (OK)';
                     borderStyle = 'border-blue-400 bg-blue-50/80 text-blue-900 font-bold';
