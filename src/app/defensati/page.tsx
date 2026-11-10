@@ -187,19 +187,30 @@ export default function DefensatiPage() {
             }
           }}
         />
-        {/* Sutil viñeta periférica para balancear contraste y legibilidad con las tarjetas */}
-        <div className="absolute inset-0 bg-radial from-transparent via-[#060814]/25 to-[#060814]/80 pointer-events-none" />
+        {/* Viñeta hiper suave que mantiene la red 3D vibrante y luminosa */}
+        <div className="absolute inset-0 bg-radial from-transparent via-transparent to-[#060814]/35 pointer-events-none" />
       </div>
 
-      {/* Luces cósmicas de alta gama Apple Pro */}
+      {/* Luces cósmicas de alta gama Apple Pro Dark Glass */}
       <div className="pointer-events-none fixed inset-0 z-0 flex justify-center overflow-hidden">
+        {/* Luz hero superior */}
         <div 
-          className="absolute rounded-full bg-linear-to-b from-[#0071e3]/22 via-[#7928ca]/14 to-transparent"
-          style={{ top: '-70px', height: '580px', width: '980px', filter: 'blur(140px)' }} 
+          className="absolute rounded-full bg-gradient-to-b from-[#0071e3]/30 via-[#7928ca]/20 to-transparent"
+          style={{ top: '-60px', height: '640px', width: '1050px', filter: 'blur(130px)' }} 
+        />
+        {/* Luz lateral sección media (precios y cómo funciona) */}
+        <div 
+          className="absolute rounded-full bg-blue-500/18"
+          style={{ top: '30%', right: '-5%', height: '520px', width: '520px', filter: 'blur(160px)' }} 
         />
         <div 
-          className="absolute rounded-full bg-sky-500/10"
-          style={{ top: '35%', right: '-8%', height: '420px', width: '420px', filter: 'blur(160px)' }} 
+          className="absolute rounded-full bg-purple-600/16"
+          style={{ top: '55%', left: '-5%', height: '550px', width: '550px', filter: 'blur(170px)' }} 
+        />
+        {/* Luz esmeralda sección garantía y escáner */}
+        <div 
+          className="absolute rounded-full bg-emerald-500/14"
+          style={{ top: '75%', right: '15%', height: '480px', width: '480px', filter: 'blur(160px)' }} 
         />
       </div>
 
