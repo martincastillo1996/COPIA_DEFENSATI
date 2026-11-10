@@ -26,8 +26,6 @@ import AiConsultantWidget from '@/components/AiConsultantWidget';
 import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
 import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
 import SslAlertWidget from '@/components/SslAlertWidget';
-import DonationModal from '@/components/DonationModal';
-import OpenSourceSupportBanner from '@/components/OpenSourceSupportBanner';
 import { Briefcase, Terminal } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
@@ -280,9 +278,6 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           {/* Llamado a la Acción Comercial de Blindaje Inmediato */}
           <WhatsAppCta url={report.url} score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
 
-          {/* Banner de Apoyo Open Source (Yape & Culqi) */}
-          <OpenSourceSupportBanner />
-
           {viewMode === 'tech' && (
             <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
               <TechnicalLogs 
@@ -295,9 +290,6 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
           {/* Asistente IA Flotante */}
           <AiConsultantWidget report={report} />
-
-          {/* Modal de Donación con Yape y Culqi */}
-          <DonationModal />
         </main>
       </div>
     </div>

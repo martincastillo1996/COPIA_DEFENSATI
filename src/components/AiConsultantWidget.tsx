@@ -168,15 +168,14 @@ export default function AiConsultantWidget({ report }: Props) {
       return;
     }
 
-    // Detección de donaciones
-    if (/donaci[oó]n|apoyar|yape|culqi|open source|caf[eé]/i.test(text)) {
+    // Detección de apoyo / contacto
+    if (/donaci[oó]n|apoyar|caf[eé]/i.test(text)) {
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
           {
             role: 'assistant',
-            content: '¡Muchas gracias por valorar el código abierto! DEFENSA TI se mantiene gratuito gracias a donaciones voluntarias por **Yape** al **987 010 380** (Karol Martin Castillo) o con tarjeta mediante pasarela **Culqi** oficial.',
-            ctaType: 'donate'
+            content: 'DEFENSA TI ofrece su **diagnóstico perimetral 100% gratuito**. Si deseas contratar nuestros servicios de **Rescate / Desinfección** (desde S/ 380) o **Blindaje + WAF Cloudflare** (S/ 450), puedes escribirnos directamente a nuestro WhatsApp oficial: **+1 (785) 643-3991**.',
           }
         ]);
         setIsTyping(false);
