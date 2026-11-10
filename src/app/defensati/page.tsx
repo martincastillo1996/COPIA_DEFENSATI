@@ -7,41 +7,19 @@ import {
   Search, 
   ArrowRight, 
   AlertTriangle, 
-  Download, 
-  Share2, 
-  Check, 
-  Briefcase, 
-  Terminal, 
   MessageCircle,
-  Wrench
+  Wrench,
+  ExternalLink
 } from 'lucide-react';
 import NeuralBackground from '@/components/NeuralBackground';
-import PrintableReport from '@/components/PrintableReport';
-import ScoreCircle from '@/components/ScoreCircle';
-import SslResults from '@/components/SslResults';
-import ServerLocationCard from '@/components/ServerLocationCard';
-import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
-import SslAlertWidget from '@/components/SslAlertWidget';
-import BusinessOverview from '@/components/BusinessOverview';
-import PortResults from '@/components/PortResults';
-import HeaderResults from '@/components/HeaderResults';
-import CookieResults from '@/components/CookieResults';
-import RemediationList from '@/components/RemediationList';
-import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
-import AppleCyberHud from '@/components/AppleCyberHud';
-import OpenSourceSupportBanner from '@/components/OpenSourceSupportBanner';
-import SocialViralHub from '@/components/SocialViralHub';
-import NeuronalGravityHub from '@/components/NeuronalGravityHub';
-import DonationModal from '@/components/DonationModal';
-import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
+import ScoreCircle from '@/components/ScoreCircle';
 
-// Componentes Oficiales DEFENSA TI
+// 5 Secciones Requeridas en Orden Estricto para /defensati:
 import DefensatiHero from '@/components/defensati/DefensatiHero';
 import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
-import DefensatiPricing from '@/components/defensati/DefensatiPricing';
-import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
-import DefensatiCases from '@/components/defensati/DefensatiCases';
+import DefensatiSinglePricingCard from '@/components/defensati/DefensatiSinglePricingCard';
+import DefensatiQuienSoy from '@/components/defensati/DefensatiQuienSoy';
 
 import { siteConfig } from '@/config/site';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -51,10 +29,7 @@ export default function DefensatiPage() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<AuditReportRecord | null>(null);
-  const [auditId, setAuditId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
-  const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [legalConsent, setLegalConsent] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -64,14 +39,13 @@ export default function DefensatiPage() {
 
     const hasConsent = overrideConsent ?? legalConsent;
     if (!hasConsent) {
-      setError('Debes marcar la casilla obligatoria de declaración jurada bajo la Ley N° 30096 para poder auditar el dominio.');
+      setError('Por favor marca la casilla de declaración jurada bajo la Ley N° 30096 para poder auditar el dominio.');
       return;
     }
 
     setLoading(true);
     setError(null);
     setReport(null);
-    setAuditId(null);
 
     try {
       const scanPromise = fetch('/api/scan', {
@@ -86,17 +60,16 @@ export default function DefensatiPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Error al ejecutar auditoría');
+        throw new Error(data.error || 'No pudimos conectar con la web indicada. Revisa que esté escrita correctamente.');
       }
 
       setReport(data.report || data);
-      setAuditId(data.id || (data.report && data.report.id) || 'audit-local');
 
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error de conexión con el motor perimetral';
+      const msg = err instanceof Error ? err.message : 'Error al revisar el sitio web.';
       setError(msg);
     } finally {
       setLoading(false);
@@ -105,70 +78,13 @@ export default function DefensatiPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const handleSetTarget = (e: Event) => {
-        const customEv = e as CustomEvent<string | { url?: string }>;
-        const targetVal = typeof customEv.detail === 'string' ? customEv.detail : customEv.detail?.url;
-        if (targetVal) {
-          setUrl(targetVal);
-          const inputEl = document.getElementById('url-scan-input-defensati');
-          if (inputEl) {
-            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => inputEl.focus(), 300);
-          }
-        }
-      };
-
-      window.addEventListener('set-target-url', handleSetTarget as EventListener);
-
       const params = new URLSearchParams(window.location.search);
       const target = params.get('target') || params.get('url');
       if (target) {
-        const timer = setTimeout(() => {
-          setUrl(target);
-          const inputEl = document.getElementById('url-scan-input-defensati');
-          if (inputEl) {
-            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => inputEl.focus(), 300);
-          }
-        }, 150);
-        return () => {
-          clearTimeout(timer);
-          window.removeEventListener('set-target-url', handleSetTarget as EventListener);
-        };
+        setTimeout(() => setUrl(target), 0);
       }
-
-      return () => {
-        window.removeEventListener('set-target-url', handleSetTarget as EventListener);
-      };
     }
   }, []);
-
-  const copyShareLink = () => {
-    if (!auditId) return;
-    const shareableUrl = `${window.location.origin}/report/${auditId}`;
-    try {
-      if (report) {
-        localStorage.setItem(`report_${auditId}`, JSON.stringify(report));
-      }
-    } catch {
-      // Ignorar fallo de almacenamiento local
-    }
-    navigator.clipboard.writeText(shareableUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handlePrint = () => {
-    if (report?.url) {
-      try {
-        const cleanHost = new URL(report.url).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
-        document.title = `Dictamen-DEFENSA-TI-${cleanHost}`;
-      } catch {
-        // Ignorar
-      }
-    }
-    window.print();
-  };
 
   const cleanDomain = report?.url ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
 
@@ -187,40 +103,29 @@ export default function DefensatiPage() {
             }
           }}
         />
-        {/* Viñeta hiper suave que mantiene la red 3D vibrante y luminosa */}
         <div className="absolute inset-0 bg-radial from-transparent via-transparent to-[#060814]/35 pointer-events-none" />
       </div>
 
-      {/* Luces cósmicas de alta gama Apple Pro Dark Glass */}
+      {/* Luces cósmicas Apple Pro */}
       <div className="pointer-events-none fixed inset-0 z-0 flex justify-center overflow-hidden">
-        {/* Luz hero superior */}
         <div 
           className="absolute rounded-full bg-gradient-to-b from-[#0071e3]/30 via-[#7928ca]/20 to-transparent"
           style={{ top: '-60px', height: '640px', width: '1050px', filter: 'blur(130px)' }} 
         />
-        {/* Luz lateral sección media (precios y cómo funciona) */}
         <div 
           className="absolute rounded-full bg-blue-500/18"
-          style={{ top: '30%', right: '-5%', height: '520px', width: '520px', filter: 'blur(160px)' }} 
+          style={{ top: '35%', right: '-5%', height: '520px', width: '520px', filter: 'blur(160px)' }} 
         />
         <div 
           className="absolute rounded-full bg-purple-600/16"
-          style={{ top: '55%', left: '-5%', height: '550px', width: '550px', filter: 'blur(170px)' }} 
-        />
-        {/* Luz esmeralda sección garantía y escáner */}
-        <div 
-          className="absolute rounded-full bg-emerald-500/14"
-          style={{ top: '75%', right: '15%', height: '480px', width: '480px', filter: 'blur(160px)' }} 
+          style={{ top: '65%', left: '-5%', height: '550px', width: '550px', filter: 'blur(170px)' }} 
         />
       </div>
 
-      {/* Reporte Impreso Oficial */}
-      {report && auditId && <PrintableReport report={report} auditId={auditId} />}
-
-      <div className="relative z-10 print:hidden flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen">
         
-        {/* Encabezado Oficial DEFENSA TI (Mobile First) */}
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#000000]/80 backdrop-blur-2xl transition-all">
+        {/* Encabezado Oficial DEFENSA TI */}
+        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#060814]/80 backdrop-blur-2xl transition-all">
           <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             
             {/* Logo de DEFENSA TI con Escudo de Ciberseguridad */}
@@ -230,7 +135,7 @@ export default function DefensatiPage() {
                 <span className="font-semibold text-sky-400">Neuronal Gravity</span>
               </Link>
               <div className="h-4 w-px bg-white/10 hidden sm:block" />
-              <div className="h-9 w-9 rounded-xl bg-linear-to-b from-white/15 to-white/5 border border-white/10 flex items-center justify-center shadow-inner shrink-0">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-b from-white/15 to-white/5 border border-white/10 flex items-center justify-center shadow-inner shrink-0">
                 <ShieldCheck className="w-5 h-5 text-white" />
               </div>
               <div className="flex flex-col">
@@ -238,7 +143,7 @@ export default function DefensatiPage() {
                   DEFENSA TI
                 </span>
                 <span className="text-[10px] text-neutral-400 font-normal mt-0.5">
-                  Blindaje & Ciberseguridad
+                  Seguridad y Limpieza Web
                 </span>
               </div>
             </div>
@@ -246,19 +151,19 @@ export default function DefensatiPage() {
             {/* Navegación Desktop */}
             <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-neutral-300">
               <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
-              <a href="#precios" className="hover:text-sky-400 transition-colors">Precios</a>
-              <a href="#garantia" className="hover:text-emerald-400 transition-colors">Garantía</a>
+              <a href="#limpieza" className="hover:text-rose-400 transition-colors">Limpieza de WordPress</a>
               <a href="#escaner-gratis" className="hover:text-white transition-colors">Escáner gratis</a>
-              <a href="#ejemplos" className="hover:text-white transition-colors">Ejemplos</a>
+              <a href="#quien-soy" className="hover:text-white transition-colors">Quién soy</a>
+              <Link href="/planes" className="hover:text-sky-400 transition-colors">Ver Planes</Link>
             </nav>
 
-            {/* Botón WhatsApp de Contacto Oficial */}
+            {/* Botón WhatsApp de Contacto Directo */}
             <div className="flex items-center gap-2.5">
               <a
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp</span>
@@ -268,43 +173,40 @@ export default function DefensatiPage() {
           </div>
         </header>
 
-        {/* Contenido Principal */}
+        {/* CONTENIDO PRINCIPAL: SOLO ESTAS 5 SECCIONES EN ESTE ORDEN */}
         <main className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-14 space-y-16 sm:space-y-24 flex-1 w-full overflow-x-hidden">
           
-          {/* SECCIÓN 1: HERO (Mobile First, Alto Impacto, WhatsApp con tag [Hero]) */}
+          {/* SECCIÓN 1: HERO CON UN BOTÓN DE WHATSAPP */}
           <DefensatiHero />
 
-          {/* SECCIÓN 2: CÓMO FUNCIONA (3 Pasos Claros: Me escribes -> Te mando lo que encontré -> La limpio y la blindo) */}
+          {/* SECCIÓN 2: CÓMO FUNCIONA (3 PASOS) */}
           <DefensatiHowItWorks />
 
-          {/* SECCIÓN 3: PRECIOS (3 Tarjetas en Soles con WAF opcional dentro de Blindaje y tags WhatsApp) */}
-          <DefensatiPricing targetUrl={report?.url} />
+          {/* SECCIÓN 3: UNA TARJETA GRANDE: LIMPIEZA DE WORDPRESS DESDE S/ 250 CON GARANTÍA DE 30 DÍAS (Debajo texto pequeño) */}
+          <DefensatiSinglePricingCard targetUrl={url} />
 
-          {/* SECCIÓN 4: GARANTÍA (30 Días: Si tu web se vuelve a infectar por la misma causa, la limpio gratis) */}
-          <DefensatiWarranty />
-
-          {/* SECCIÓN 5: ESCÁNER GRATIS (Con Casilla Obligatoria Ley N° 30096 + Botón 'Lo arreglamos por ti' con tag [Escaner]) */}
+          {/* SECCIÓN 4: ESCÁNER GRATIS */}
           <section id="escaner-gratis" className="w-full max-w-3xl mx-auto space-y-6 scroll-mt-24 text-center">
             
-            <div className="space-y-3 p-6 sm:p-7 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-2xl shadow-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-400 text-xs font-semibold">
+            <div className="space-y-4 p-6 sm:p-8 rounded-[32px] bg-gradient-to-b from-[#141828]/90 via-[#0f1220]/90 to-[#0a0d18]/95 border border-sky-500/30 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,113,227,0.18)]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/40 text-[#38bdf8] text-xs font-bold shadow-[0_0_12px_rgba(56,189,248,0.25)]">
                 <Search className="w-3.5 h-3.5" />
-                <span>Auditoría Perimetral Gratuita</span>
+                <span>Revisión Gratuita al Instante</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
                 Prueba el escáner gratuito de tu web
               </h2>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl mx-auto">
-                Analiza en segundos certificados SSL/TLS, cabeceras de transporte HTTP y puertos expuestos.
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl mx-auto font-normal">
+                Escribe tu dirección web. Reviso en segundos si tu certificado de seguridad está caído o si tienes puertos expuestos. 100% gratis y sin contraseñas.
               </p>
 
-              {/* Formulario de Escaneo con Casilla de Consentimiento */}
+              {/* Formulario de Escaneo */}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleScan();
                 }}
-                className="pt-4 max-w-xl mx-auto space-y-3 text-left"
+                className="pt-2 max-w-xl mx-auto space-y-3 text-left"
               >
                 <div className="relative p-1.5 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,113,227,0.15)] flex items-center gap-2 ring-1 ring-white/10 focus-within:ring-[#0071e3]/80 focus-within:border-[#0071e3]/80 transition-all">
                   <div className="pl-3.5 text-neutral-500">
@@ -321,28 +223,28 @@ export default function DefensatiPage() {
                   <button
                     type="submit"
                     disabled={loading || !legalConsent || !url.trim()}
-                    title={!legalConsent ? 'Marca la casilla obligatoria para activar el botón' : 'Iniciar auditoría'}
-                    className={`px-4 sm:px-5 py-2.5 font-medium text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+                    title={!legalConsent ? 'Marca la casilla obligatoria para activar el botón' : 'Iniciar revisión'}
+                    className={`px-5 py-2.5 font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 shrink-0 ${
                       loading || !legalConsent || !url.trim()
                         ? 'bg-neutral-800 text-neutral-500 border border-white/5 cursor-not-allowed opacity-60'
-                        : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/30 cursor-pointer active:scale-[0.98]'
+                        : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/40 cursor-pointer active:scale-95'
                     }`}
                   >
                     {loading ? (
                       <>
                         <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>Auditando...</span>
+                        <span>Revisando...</span>
                       </>
                     ) : (
                       <>
-                        <span>Auditar</span>
+                        <span>Revisar gratis</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </>
                     )}
                   </button>
                 </div>
 
-                {/* Casilla Obligatoria de Declaración Jurada (Ley N° 30096) */}
+                {/* Casilla de Declaración Jurada */}
                 <div
                   className={`p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 ${
                     legalConsent
@@ -350,69 +252,42 @@ export default function DefensatiPage() {
                       : 'bg-[#141416]/90 border-white/10 hover:border-amber-500/40 shadow-lg'
                   }`}
                 >
-                  <label htmlFor="sworn-declaration-defensati-checkbox" className="flex items-start gap-3.5 cursor-pointer select-none">
+                  <label htmlFor="sworn-declaration-checkbox" className="flex items-start gap-3.5 cursor-pointer select-none">
                     <input
-                      id="sworn-declaration-defensati-checkbox"
+                      id="sworn-declaration-checkbox"
                       type="checkbox"
                       checked={legalConsent}
                       onChange={(e) => {
                         setLegalConsent(e.target.checked);
                         if (error) setError(null);
                       }}
-                      className="mt-1 w-4 h-4 rounded border-white/30 bg-black text-[#0071e3] focus:ring-[#0071e3] focus:ring-offset-0 cursor-pointer accent-[#0071e3] shrink-0"
+                      className="mt-1 w-4 h-4 rounded border-white/30 bg-black text-[#0071e3] cursor-pointer accent-[#0071e3] shrink-0"
                     />
-                    <div className="space-y-1.5 flex-1">
-                      <p className="text-xs sm:text-[12.5px] text-neutral-200 leading-snug font-medium whitespace-normal">
-                        “Declaro bajo juramento que soy el titular del dominio que voy a auditar, o que cuento con autorización expresa y por escrito de su propietario, conforme a la{' '}
+                    <div className="space-y-1 flex-1">
+                      <p className="text-xs sm:text-[12.5px] text-neutral-200 leading-snug font-medium">
+                        “Declaro que soy el dueño de esta página web o tengo autorización de su titular para revisarla, según la{' '}
                         <Link
                           href="/terminos#delitos-informaticos"
                           className="text-[#38bdf8] underline hover:text-white font-semibold"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          Ley N° 30096, Delitos Informáticos del Perú
+                          Ley N° 30096 del Perú
                         </Link>
-                        . Entiendo que auditar una web ajena sin permiso puede ser delito.”
+                        .”
                       </p>
-                      
-                      <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
-                        <span
-                          className={`text-[9.5px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider inline-flex items-center gap-1 ${
-                            legalConsent
-                              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                              : 'bg-amber-500/15 text-amber-300 border border-amber-500/25'
-                          }`}
-                        >
-                          {legalConsent ? '✓ Casilla Marcada • Botón Habilitado' : '⚠️ Casilla Requerida para Activar el Botón'}
-                        </span>
-                        <span className="text-[10px] text-neutral-400 font-mono">
-                          (Guardamos dominio, fecha, hora e IP como prueba legal de autorización)
-                        </span>
-                      </div>
+                      <span
+                        className={`text-[9.5px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider inline-flex items-center gap-1 ${
+                          legalConsent
+                            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                            : 'bg-amber-500/15 text-amber-300 border border-amber-500/25'
+                        }`}
+                      >
+                        {legalConsent ? '✓ Casilla Marcada • Botón Habilitado' : '⚠️ Marca la casilla para revisar tu web'}
+                      </span>
                     </div>
                   </label>
                 </div>
               </form>
-
-              {/* Botones de ejemplo rápido */}
-              <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-neutral-400 pt-2">
-                <span>O prueba con un dominio modelo:</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUrl('https://github.com');
-                    setLegalConsent(true);
-                    handleScan('https://github.com', true);
-                  }}
-                  className="text-sky-400 hover:underline font-semibold cursor-pointer"
-                >
-                  github.com
-                </button>
-              </div>
-
-              {/* Comparador de Competencia */}
-              <div className="pt-4">
-                <CompetitorComparisonSection />
-              </div>
 
               {/* Animación del Escáner */}
               {loading && <NeuralScanTakeover targetUrl={url || 'sitio web'} />}
@@ -427,46 +302,39 @@ export default function DefensatiPage() {
 
           </section>
 
-          {/* RESULTADOS DEL ESCÁNER + BOTÓN DESTACADO "LO ARREGLAMOS POR TI" [Escaner] */}
+          {/* RESULTADOS DEL ESCÁNER (Sin jerga técnica + Botón directo a WhatsApp) */}
           {report && (
-            <div ref={resultsRef} className="space-y-8 pt-4 scroll-mt-20">
+            <div ref={resultsRef} className="max-w-4xl mx-auto space-y-6 pt-2 scroll-mt-20">
               
-              {/* Tarjeta superior con datos analizados y descarga de dictamen */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-[#161618] border border-white/10 shadow-2xl backdrop-blur-2xl">
-                <div>
-                  <span className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Sitio Web Analizado</span>
-                  <h3 className="text-xl font-bold text-white break-all">{report.url}</h3>
+              {/* Resumen del diagnóstico */}
+              <div className="p-6 sm:p-8 rounded-[32px] bg-gradient-to-b from-[#141b2b]/95 via-[#0e1320]/95 to-[#090d16]/98 border border-sky-500/30 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div className="space-y-2">
+                  <span className="text-xs uppercase tracking-wider text-sky-400 font-bold">Diagnóstico previo listo</span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white break-all">{report.url}</h3>
+                  <p className="text-xs sm:text-sm text-neutral-300 max-w-xl">
+                    {report.score >= 80 
+                      ? 'Tu web cuenta con una buena base de configuración de seguridad, pero conviene mantenerla vigilada.' 
+                      : 'Tu web presenta puntos débiles o advertencias visibles que facilitan hackeos o caídas.'}
+                  </p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={handlePrint}
-                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 active:scale-[0.98] border border-white/15 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
-                  >
-                    <Download className="w-4 h-4 text-sky-400" />
-                    <span>Descargar PDF</span>
-                  </button>
-                  <button
-                    onClick={copyShareLink}
-                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#0071e3]/30 cursor-pointer"
-                  >
-                    {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Share2 className="w-4 h-4" />}
-                    <span>{copied ? 'Enlace Copiado' : 'Compartir'}</span>
-                  </button>
+                
+                <div className="w-28 shrink-0">
+                  <ScoreCircle score={report.score} grade={report.grade || 'F'} />
                 </div>
               </div>
 
-              {/* BOTÓN PROMINENTE REQUERIDO: "LO ARREGLAMOS POR TI" (WhatsApp con tag [Escaner]) */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-linear-to-r from-emerald-950/40 via-[#121c16] to-[#0d1612] border-2 border-emerald-500/50 shadow-[0_0_40px_rgba(16,185,129,0.2)] text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+              {/* Botón directo en primera persona: "Yo te lo arreglo" */}
+              <div className="p-6 sm:p-8 rounded-[32px] bg-gradient-to-r from-emerald-950/60 via-[#101b14] to-[#0a140f] border-2 border-emerald-400/50 shadow-[0_0_40px_rgba(16,185,129,0.25)] flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
                 <div className="space-y-2">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold">
                     <Wrench className="w-3.5 h-3.5" />
-                    <span>Servicio Llave en Mano</span>
+                    <span>Trato Directo Conmigo</span>
                   </div>
-                  <h4 className="text-xl sm:text-2xl font-semibold text-[#f5f5f7] tracking-tight leading-snug">
-                    ¿Encontraste vulnerabilidades o notas bajas en tu web?
+                  <h4 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                    ¿Quieres que yo mismo limpie y proteja tu página web?
                   </h4>
-                  <p className="text-sm text-[#a1a1a6] leading-relaxed max-w-xl font-normal">
-                    Nos encargamos de parchar las cabeceras, corregir el SSL y blindar el perimetro de tu sitio de inmediato.
+                  <p className="text-xs sm:text-sm text-neutral-300 max-w-xl font-normal">
+                    Escríbeme por WhatsApp. Te digo exactamente qué encontré en tu web y la dejo blindada.
                   </p>
                 </div>
 
@@ -474,143 +342,51 @@ export default function DefensatiPage() {
                   href={DEFENSATI_WHATSAPP_MESSAGES.escaner(cleanDomain, report.score, report.grade)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#30d158] hover:bg-[#28cd41] active:scale-[0.98] text-[#000000] font-semibold text-base sm:text-lg shadow-[0_10px_30px_rgba(48,209,88,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] flex items-center justify-center gap-3 transition-all shrink-0 cursor-pointer"
+                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#25D366] to-emerald-400 text-black font-extrabold text-base shadow-[0_10px_30px_rgba(37,211,102,0.4)] flex items-center justify-center gap-3 transition-all shrink-0 cursor-pointer active:scale-95"
                 >
                   <MessageCircle className="w-5 h-5 fill-current shrink-0" />
-                  <span className="whitespace-nowrap">Lo arreglamos por ti</span>
+                  <span className="whitespace-nowrap">Coordinar conmigo</span>
                 </a>
               </div>
 
-              {/* Selector de Perspectiva (Negocio vs Técnico) */}
-              <div className="flex justify-center py-2">
-                <div className="inline-flex p-1.5 rounded-2xl bg-[#161618] border border-white/15 shadow-2xl">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('business')}
-                    className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${
-                      viewMode === 'business'
-                        ? 'bg-[#0071e3] text-white shadow-xl shadow-[#0071e3]/40 scale-[1.02]'
-                        : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    <Briefcase className="w-4 h-4" />
-                    <span>Visión Ejecutiva</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('tech')}
-                    className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${
-                      viewMode === 'tech'
-                        ? 'bg-[#0071e3] text-white shadow-xl shadow-[#0071e3]/40 scale-[1.02]'
-                        : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    <Terminal className="w-4 h-4" />
-                    <span>Detalle Técnico</span>
-                  </button>
-                </div>
+              {/* Enlace a la auditoría técnica profunda en /escaner */}
+              <div className="text-center pt-2">
+                <Link
+                  href={`/escaner?url=${encodeURIComponent(report.url)}`}
+                  className="inline-flex items-center gap-1.5 text-xs text-sky-400 hover:text-white transition-colors underline font-medium"
+                >
+                  <span>¿Eres programador o webmaster? Ver auditoría técnica profunda con cabeceras y puertos en /escaner</span>
+                  <ExternalLink className="w-3 h-3" />
+                </Link>
               </div>
-
-              {/* Calificación y SSL */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="md:col-span-1 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                  <ScoreCircle score={report.score} grade={report.grade || 'F'} />
-                </div>
-                <div className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                  <SslResults ssl={report.ssl} />
-                </div>
-              </div>
-
-              {/* Localización y Widgets */}
-              <ServerLocationCard 
-                location={report.location} 
-                resolvedIp={report.telemetry?.targetResolvedIp} 
-                targetDomain={report.url}
-              />
-
-              <VerifiedBadgeWidget 
-                domain={report.url} 
-                auditId={auditId || undefined} 
-                grade={report.grade} 
-                score={report.score} 
-                badgeToken={report.badgeToken}
-              />
-
-              <SslAlertWidget 
-                domain={report.url} 
-                daysRemaining={report.ssl?.daysRemaining} 
-              />
-
-              {/* Detalle según modo */}
-              {viewMode === 'business' ? (
-                <BusinessOverview report={report} />
-              ) : (
-                <div className="space-y-6">
-                  {Boolean(report.ports?.length) && (
-                    <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                      <PortResults ports={report.ports || []} />
-                    </div>
-                  )}
-
-                  <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                    <HeaderResults headers={report.headers || []} />
-                  </div>
-
-                  <CookieResults cookies={report.cookies} />
-
-                  <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                    <RemediationList items={report.remediations || []} />
-                  </div>
-
-                  <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                    <TechnicalLogs 
-                      id={auditId || ''} 
-                      telemetry={report.telemetry} 
-                      scannedAt={report.scannedAt || ''} 
-                    />
-                  </div>
-                </div>
-              )}
 
             </div>
           )}
 
-          {/* SECCIÓN 6: CASOS (Ejemplos Ilustrativos, sin frases prohibidas) */}
-          <DefensatiCases />
-
-          {/* Secciones de Telemetría e Infraestructura */}
-          <AppleCyberHud />
-
-          {/* Banner de Apoyo Open Source */}
-          <OpenSourceSupportBanner />
-
-          {/* Hub de Difusión y Ecosistema */}
-          <SocialViralHub targetUrl={report?.url} score={report?.score} />
-          <NeuronalGravityHub />
+          {/* SECCIÓN 5: QUIÉN SOY */}
+          <DefensatiQuienSoy />
 
         </main>
 
-        {/* PIE DE PÁGINA (Contacto, Confianza, RUC, WhatsApp +1, Términos y Libro de Reclamaciones) */}
-        <footer className="border-t border-white/10 py-14 text-xs text-neutral-400 bg-[#000000]/95 backdrop-blur-xl mt-20">
+        {/* PIE DE PÁGINA (Contacto, Confianza, RUC, WhatsApp, Términos y Libro de Reclamaciones) */}
+        <footer className="border-t border-white/10 py-14 text-xs text-neutral-400 bg-black/95 backdrop-blur-xl mt-20">
           <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-center">
             
-            {/* Canales de Contacto */}
+            {/* Canales de Contacto Directo */}
             <div className="flex flex-wrap items-center justify-center gap-3">
-              {/* WhatsApp Oficial */}
               <a
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
               >
                 <MessageCircle className="w-4 h-4 fill-current shrink-0" />
                 <span>WhatsApp: {siteConfig.contact.whatsappFormatted}</span>
               </a>
 
-              {/* Email */}
               <a
                 href="mailto:contacto@neuronalgravity.com"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium transition-all"
               >
                 <span>contacto@neuronalgravity.com</span>
               </a>
@@ -619,17 +395,25 @@ export default function DefensatiPage() {
             {/* Créditos y Legalidad */}
             <div className="space-y-3 text-center max-w-3xl mx-auto">
               <p className="font-semibold text-white text-sm">
-                &copy; 2026 DEFENSA TI &bull; Soluciones Tecnológicas &bull; RUC {siteConfig.business.ruc}
+                &copy; {new Date().getFullYear()} DEFENSA TI &bull; Martín Castillo &bull; RUC {siteConfig.business.ruc}
               </p>
               
               <p className="text-[11px] text-neutral-400">
                 Parte del ecosistema tecnológico <a href="https://neuronalgravity.com" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline font-bold">NeuronalGravity.com</a>
               </p>
 
-              {/* Enlaces Legales Requeridos (Libro de Reclamaciones y Términos) */}
+              {/* Enlaces Legales */}
               <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-neutral-300 pt-2 border-t border-white/10">
+                <Link href="/planes" className="hover:text-sky-400 transition-colors underline font-medium">
+                  Todos los Planes (Monitoreo Mensual)
+                </Link>
+                <span>&bull;</span>
+                <Link href="/escaner" className="hover:text-sky-400 transition-colors underline font-medium">
+                  Escáner Técnico Completo
+                </Link>
+                <span>&bull;</span>
                 <Link href="/terminos" className="hover:text-white transition-colors underline font-medium">
-                  Términos y Política de Privacidad (Perú)
+                  Términos y Privacidad (Perú)
                 </Link>
                 <span>&bull;</span>
                 <Link href="/reclamaciones" className="hover:text-amber-300 transition-colors underline font-bold text-amber-400">
@@ -638,7 +422,7 @@ export default function DefensatiPage() {
               </div>
 
               <p className="text-[10px] text-neutral-500 leading-relaxed pt-2">
-                <strong>Aviso Legal y Descargo:</strong> DEFENSA TI brinda servicios de remediación de software, limpieza y hardening perimetral de servidores y directivas de transporte HTTP según estándares públicos OWASP. El servicio se entrega con comprobante formal bajo RUC 10704877850.
+                <strong>Aviso Legal y Descargo:</strong> DEFENSA TI es un servicio técnico prestado por Martín Castillo bajo RUC 10704877850 para la remediación, desinfección y blindaje de sitios web. Todos los servicios se coordinan con diagnóstico previo y entrega formal.
               </p>
             </div>
 
@@ -646,8 +430,6 @@ export default function DefensatiPage() {
         </footer>
 
       </div>
-
-      <DonationModal />
     </div>
   );
 }
