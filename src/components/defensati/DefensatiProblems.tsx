@@ -10,6 +10,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
+import { trackWhatsAppClick } from '@/lib/analytics';
 
 export default function DefensatiProblems() {
   const problems = [
@@ -108,6 +109,12 @@ export default function DefensatiProblems() {
                   href={p.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackWhatsAppClick({
+                      service: `problema_${idx + 1}`,
+                      placement: `problems_card_${idx + 1}`,
+                    })
+                  }
                   className={`w-full py-3 px-4 rounded-xl border font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer ${p.btnClass}`}
                 >
                   <MessageCircle className="w-4 h-4 fill-current shrink-0" />
@@ -132,6 +139,12 @@ export default function DefensatiProblems() {
             href={DEFENSATI_WHATSAPP_MESSAGES.recuperacionHackeo()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackWhatsAppClick({
+                service: 'rescate_emergencia',
+                placement: 'problems_footer_banner',
+              })
+            }
             className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-xs sm:text-sm shadow-md shadow-[#25D366]/20 transition-all whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer"
           >
             <MessageCircle className="w-4 h-4 fill-current shrink-0" />

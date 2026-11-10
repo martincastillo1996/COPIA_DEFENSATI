@@ -15,6 +15,7 @@ import {
   Wrench
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
+import { trackWhatsAppClick } from '@/lib/analytics';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
 interface Props {
@@ -177,6 +178,13 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackWhatsAppClick({
+              service: planType,
+              placement: 'post_scan_recommendation_card',
+              domain: cleanDomain,
+            })
+          }
           className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-base sm:text-lg shadow-[0_10px_30px_rgba(37,211,102,0.35)] flex items-center justify-center gap-3 transition-all cursor-pointer"
         >
           <MessageCircle className="w-5 h-5 fill-current shrink-0" />

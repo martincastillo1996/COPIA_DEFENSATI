@@ -14,10 +14,12 @@ import {
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
+import { trackDiagnosticRequest, trackWhatsAppClick } from '@/lib/analytics';
 
 export default function DefensatiHero() {
   const scrollToScanner = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    trackDiagnosticRequest({ source: 'hero_primary_cta' });
     const target = document.getElementById('escaner-gratis');
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -61,6 +63,12 @@ export default function DefensatiHero() {
           href={DEFENSATI_WHATSAPP_MESSAGES.recuperacionHackeo()}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackWhatsAppClick({
+              service: 'recuperacion_hackeo',
+              placement: 'hero_secondary_cta',
+            })
+          }
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 active:scale-[0.98] text-rose-300 hover:text-white font-bold text-base border border-rose-500/40 backdrop-blur-xl shadow-[0_10px_25px_rgba(244,63,94,0.15)] transition-all cursor-pointer text-center"
         >
           <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0" />
@@ -75,6 +83,12 @@ export default function DefensatiHero() {
           href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackWhatsAppClick({
+              service: 'general',
+              placement: 'hero_text_link',
+            })
+          }
           className="text-[#25D366] hover:underline font-bold inline-flex items-center gap-1"
         >
           <MessageCircle className="w-3.5 h-3.5 fill-current inline" />

@@ -13,6 +13,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
+import { trackServiceClick, trackWhatsAppClick } from '@/lib/analytics';
 
 interface Props {
   targetUrl?: string;
@@ -110,6 +111,18 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               href={DEFENSATI_WHATSAPP_MESSAGES.precioLimpieza(cleanUrl)}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: 'Limpieza de WordPress',
+                  pricePen: 250,
+                  serviceId: 'limpieza_wordpress',
+                });
+                trackWhatsAppClick({
+                  service: 'limpieza_wordpress',
+                  placement: 'pricing_main_card',
+                  domain: cleanUrl,
+                });
+              }}
               className="w-full py-4 px-8 rounded-xl bg-gradient-to-r from-[#25D366] via-emerald-500 to-[#20ba59] hover:brightness-110 active:scale-[0.98] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 shadow-[0_10px_35px_rgba(37,211,102,0.4)] transition-all cursor-pointer text-center"
             >
               <MessageCircle className="w-5 h-5 fill-current shrink-0" />
@@ -171,6 +184,18 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioBlindaje(cleanUrl)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              trackServiceClick({
+                serviceName: 'Blindaje Esencial',
+                pricePen: 165,
+                serviceId: 'blindaje_esencial',
+              });
+              trackWhatsAppClick({
+                service: 'blindaje_esencial',
+                placement: 'pricing_blindaje_card',
+                domain: cleanUrl,
+              });
+            }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all cursor-pointer"
           >
             <MessageCircle className="w-4 h-4 text-[#38bdf8] shrink-0" />
@@ -226,6 +251,18 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              trackServiceClick({
+                serviceName: 'Proteccion WAF',
+                pricePen: 335,
+                serviceId: 'proteccion_waf',
+              });
+              trackWhatsAppClick({
+                service: 'proteccion_waf',
+                placement: 'pricing_waf_card',
+                domain: cleanUrl,
+              });
+            }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all cursor-pointer"
           >
             <MessageCircle className="w-4 h-4 fill-current shrink-0" />

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MessageCircle, ShieldCheck, CheckCircle2, ArrowRight, Sparkles, Send } from 'lucide-react';
 import { getWhatsAppUrl } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
+import { trackFormSubmit, trackWhatsAppClick } from '@/lib/analytics';
 
 interface Props {
   initialUrl?: string;
@@ -34,6 +35,18 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
       message += ` Detalle adicional: ${note.trim()}.`;
     }
     message += ' ¿Podrías darme detalles para comenzar?';
+
+    trackFormSubmit({
+      formId: 'defensati_quick_contact_form',
+      formName: 'DEFENSA TI Quick Contact',
+      domain: cleanUrl,
+      serviceRequested: service,
+    });
+    trackWhatsAppClick({
+      service: `quick_contact_${service}`,
+      placement: 'quick_contact_form_submit',
+      domain: cleanUrl,
+    });
 
     const url = getWhatsAppUrl(message);
     window.open(url, '_blank', 'noopener,noreferrer');

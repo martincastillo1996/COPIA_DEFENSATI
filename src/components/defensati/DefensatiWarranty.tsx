@@ -1,12 +1,24 @@
 'use client';
 
 import React from 'react';
-import { ShieldCheck, CheckCircle2, RotateCcw, Sparkles } from 'lucide-react';
+import { 
+  ShieldCheck, 
+  CheckCircle2, 
+  RotateCcw, 
+  Sparkles, 
+  FileText, 
+  AlertCircle, 
+  CreditCard,
+  Lock
+} from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 export default function DefensatiWarranty() {
   return (
-    <section id="garantia" className="w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24">
-      <div className="p-7 sm:p-10 rounded-[32px] bg-gradient-to-b from-[#101824]/90 via-[#0d141e]/90 to-[#0a0f16]/95 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative overflow-hidden">
+    <section id="garantia" className="w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24 space-y-6">
+      
+      {/* Tarjeta Principal de Garantía */}
+      <div className="p-7 sm:p-11 rounded-[32px] bg-gradient-to-b from-[#101824]/90 via-[#0d141e]/90 to-[#0a0f16]/95 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative overflow-hidden">
         
         {/* Glow de seguridad verde esmeralda */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -21,31 +33,36 @@ export default function DefensatiWarranty() {
           {/* Textos de Garantía */}
           <div className="space-y-3 flex-1">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs font-medium tracking-tight">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Garantía de Satisfacción DEFENSA TI</span>
+              <Sparkles className="w-3.5 h-3.5 text-[#30d158]" />
+              <span>Garantía de Satisfacción Técnica DEFENSA TI</span>
             </div>
 
-            <h3 className="text-3xl sm:text-4xl font-semibold text-[#f5f5f7] tracking-[-0.03em] leading-snug">
-              Garantía de 30 Días
+            <h3 className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] tracking-tight leading-snug">
+              Garantía por Escrito de 30 Días
             </h3>
 
             <p className="text-lg sm:text-xl font-medium text-[#30d158] leading-snug">
-              “Si tu web se vuelve a infectar en 30 días por la misma causa, la limpio gratis.”
+              “Si tu web se vuelve a infectar dentro de los 30 días por la misma causa, la limpio y la desinfecto gratis.”
             </p>
 
-            <p className="text-sm sm:text-base text-[#a1a1a6] leading-relaxed max-w-2xl font-normal">
-              Trabajamos con total transparencia técnica. Nos aseguramos de erradicar la causa raíz del problema para que puedas operar tu negocio con la certeza de que tu sitio está realmente protegido.
+            <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl font-normal">
+              Trabajamos con total transparencia técnica. Nos aseguramos de erradicar la causa raíz del malware y sellar las puertas traseras para que tu negocio opere con total continuidad y tranquilidad.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2 text-xs sm:text-[13px] text-[#86868b]">
-              <span className="inline-flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2 text-xs sm:text-[13px] text-neutral-400">
+              <span className="inline-flex items-center gap-1.5 text-neutral-200">
                 <CheckCircle2 className="w-4 h-4 text-[#30d158]" />
-                Respaldo formal con RUC 10704877850
+                RUC {siteConfig.business.ruc} a nombre de {siteConfig.business.owner}
               </span>
               <span className="hidden sm:inline">&bull;</span>
-              <span className="inline-flex items-center gap-1.5">
+              <span className="inline-flex items-center gap-1.5 text-neutral-200">
                 <RotateCcw className="w-4 h-4 text-[#30d158]" />
-                Soporte de remediación inmediata
+                Soporte de remediación directa sin bots
+              </span>
+              <span className="hidden sm:inline">&bull;</span>
+              <span className="inline-flex items-center gap-1.5 text-neutral-200">
+                <FileText className="w-4 h-4 text-[#38bdf8]" />
+                Emisión de Factura o Boleta Electrónica
               </span>
             </div>
           </div>
@@ -53,6 +70,64 @@ export default function DefensatiWarranty() {
         </div>
 
       </div>
+
+      {/* Tarjeta de Límites y Condiciones Transparentes (Confianza Comercial) */}
+      <div className="p-6 sm:p-8 rounded-[28px] bg-white/[0.02] border border-white/10 backdrop-blur-xl text-left grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+        
+        {/* Qué cubre */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-[#30d158] font-bold">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>Alcance de la Garantía y Servicios</span>
+          </div>
+          <ul className="space-y-2 text-neutral-300">
+            <li className="flex items-start gap-2">
+              <span className="text-[#30d158]">&bull;</span>
+              <span>Desinfección integral de archivos core de WordPress y base de datos SQL.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#30d158]">&bull;</span>
+              <span>Eliminación comprobable de virus, redirecciones a sitios spam y puertas traseras.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#30d158]">&bull;</span>
+              <span>Fortalecimiento perimetral de cabeceras de transporte (HSTS, CSP, X-Frame) y SSL.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#30d158]">&bull;</span>
+              <span>Asistencia técnica para la reactivación ante tu proveedor de hosting y Google Search Console.</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Qué no cubre (Límites saludables) */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-amber-400 font-bold">
+            <AlertCircle className="w-4 h-4" />
+            <span>Condiciones y Exclusiones Técnicas</span>
+          </div>
+          <ul className="space-y-2 text-neutral-400">
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400">&bull;</span>
+              <span>No cubre instalación posterior de plugins piratas ("nulled") o temas sin licencia oficial.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400">&bull;</span>
+              <span>No cubre filtraciones derivadas de contraseñas débiles o compartidas con terceros tras la entrega.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400">&bull;</span>
+              <span>No cubre caídas generales del datacenter o fallas físicas ajenas a nivel de infraestructura del hosting.</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400">&bull;</span>
+              <span>Medios de pago en Soles: Yape, Plin o Transferencia bancaria (BCP, BBVA, Interbank).</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
     </section>
   );
 }

@@ -49,6 +49,7 @@ import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact'
 import { siteConfig } from '@/config/site';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
+import { trackScanStart, trackScanComplete, trackWhatsAppClick } from '@/lib/analytics';
 
 export default function DefensatiPage() {
   const [url, setUrl] = useState('');
@@ -76,6 +77,8 @@ export default function DefensatiPage() {
     setError(null);
     setReport(null);
     setAuditId(null);
+    const startTime = Date.now();
+    trackScanStart(finalUrl);
 
     try {
       const scanPromise = fetch('/api/scan', {
@@ -93,8 +96,15 @@ export default function DefensatiPage() {
         throw new Error(data.error || 'Error al ejecutar auditoría');
       }
 
-      setReport(data.report || data);
+      const reportData = data.report || data;
+      setReport(reportData);
       setAuditId(data.id || (data.report && data.report.id) || 'audit-local');
+      trackScanComplete({
+        domain: finalUrl,
+        score: reportData.score ?? 0,
+        grade: reportData.grade || 'F',
+        durationMs: Date.now() - startTime,
+      });
 
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -255,6 +265,7 @@ export default function DefensatiPage() {
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick({ service: 'general', placement: 'sticky_header' })}
                 className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 fill-current shrink-0" />
@@ -611,6 +622,7 @@ export default function DefensatiPage() {
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick({ service: 'general', placement: 'footer' })}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
               >
                 <MessageCircle className="w-4 h-4 fill-current shrink-0" />

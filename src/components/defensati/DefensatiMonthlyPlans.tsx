@@ -13,6 +13,7 @@ import {
   MessageCircle 
 } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
+import { trackPlanSelect, trackWhatsAppClick } from '@/lib/analytics';
 
 export default function DefensatiMonthlyPlans() {
   return (
@@ -79,6 +80,17 @@ export default function DefensatiMonthlyPlans() {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioMensual()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              trackPlanSelect({
+                planName: 'Monitoreo Esencial',
+                priceMonthlyPen: 49,
+                planId: 'plan_esencial_49',
+              });
+              trackWhatsAppClick({
+                service: 'monitoreo_esencial',
+                placement: 'monthly_plans_esencial',
+              });
+            }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-sm font-bold border border-white/15 transition-all text-center cursor-pointer"
           >
             <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -132,6 +144,17 @@ export default function DefensatiMonthlyPlans() {
             href={DEFENSATI_WHATSAPP_MESSAGES.precioMensualPro()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              trackPlanSelect({
+                planName: 'Monitoreo Pro',
+                priceMonthlyPen: 99,
+                planId: 'plan_pro_99',
+              });
+              trackWhatsAppClick({
+                service: 'monitoreo_pro',
+                placement: 'monthly_plans_pro',
+              });
+            }}
             className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-bold shadow-lg shadow-[#0071e3]/30 transition-all text-center cursor-pointer"
           >
             <MessageCircle className="w-4 h-4 fill-current shrink-0" />

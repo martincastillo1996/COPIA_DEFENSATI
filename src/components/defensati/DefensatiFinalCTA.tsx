@@ -4,9 +4,11 @@ import React from 'react';
 import { MessageCircle, Search, ShieldCheck, CheckCircle2, Sparkles, Clock, FileText } from 'lucide-react';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
+import { trackWhatsAppClick, trackDiagnosticRequest } from '@/lib/analytics';
 
 export default function DefensatiFinalCTA() {
   const scrollToScan = () => {
+    trackDiagnosticRequest({ source: 'final_cta_scan_button' });
     const el = document.getElementById('escaner-gratis');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -42,6 +44,12 @@ export default function DefensatiFinalCTA() {
             href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackWhatsAppClick({
+                service: 'general',
+                placement: 'final_cta_button',
+              })
+            }
             className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-bold text-base sm:text-lg shadow-[0_12px_35px_rgba(37,211,102,0.35)] flex items-center justify-center gap-3 transition-all cursor-pointer"
           >
             <MessageCircle className="w-5 h-5 fill-current shrink-0" />
