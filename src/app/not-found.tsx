@@ -82,7 +82,7 @@ export default function NotFound() {
 
             <div className="pt-2 border-t border-white/5">
               <a
-                href="https://wa.me/51987010380?text=Hola%20Martin,%20encontr%C3%A9%20un%20enlace%20roto%20(404)%20en%20neuronalgravity.com"
+                href="https://wa.me/17856433991?text=Hola%20Martin,%20encontr%C3%A9%20un%20enlace%20roto%20(404)%20en%20neuronalgravity.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-[#25D366] transition-colors"

@@ -234,7 +234,7 @@ DEFENSA TI está diseñado tanto para auditorías públicas como para la prospec
   4. Auditorías de cumplimiento para e-commerce (PCI-DSS).
 
 * **Línea Directa de Consultoría:** [+1 (785) 643-3991](https://wa.me/17856433991)
-* **Ingeniero Líder:** Martin Castillo &bull; [castillo.karol96@gmail.com](mailto:castillo.karol96@gmail.com)
+* **Ingeniero Líder:** Martin Castillo &bull; [contacto@neuronalgravity.com](mailto:contacto@neuronalgravity.com)
 
 ---
 

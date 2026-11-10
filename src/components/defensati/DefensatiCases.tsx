@@ -411,7 +411,7 @@ export default function DefensatiCases() {
             </div>
 
             <a
-              href={`https://wa.me/51987010380?text=${encodeURIComponent(current.ctaMessage)}`}
+              href={`https://wa.me/17856433991?text=${encodeURIComponent(current.ctaMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full md:w-auto px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all shadow-[0_4px_16px_rgba(37,211,102,0.35)] cursor-pointer shrink-0"

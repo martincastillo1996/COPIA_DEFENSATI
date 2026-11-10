@@ -181,7 +181,7 @@ export default function CasosPage() {
 
                 <div className="pt-4 border-t border-white/5">
                   <a
-                    href={`https://wa.me/51987010380?text=${encodeURIComponent(`Hola Martin, me interesa evaluar una solución similar al caso de ${ind.name} para mi empresa`)}`}
+                    href={`https://wa.me/17856433991?text=${encodeURIComponent(`Hola Martin, me interesa evaluar una solución similar al caso de ${ind.name} para mi empresa`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-xs font-semibold transition-all"

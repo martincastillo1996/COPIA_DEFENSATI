@@ -30,7 +30,7 @@ La seguridad es el núcleo fundamental de este proyecto. Agradecemos la colabora
 Si descubres una posible vulnerabilidad de seguridad, por favor **no abras un issue público**. 
 
 Envía un reporte detallado con los pasos de reproducción a:
-* **Correo de Seguridad:** [castillo.karol96@gmail.com](mailto:castillo.karol96@gmail.com)
+* **Correo de Seguridad:** [contacto@neuronalgravity.com](mailto:contacto@neuronalgravity.com)
 * **Contacto Directo:** Martin Castillo
 
 Responderemos dentro de un plazo de 24 a 48 horas con el plan de remediación correspondiente.

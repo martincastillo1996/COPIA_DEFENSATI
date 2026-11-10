@@ -3,7 +3,7 @@
 **Documento de trabajo para el agente de desarrollo (Antigravity).**
 - **Dueño del proyecto:** Martin Castillo
 - **RUC oficial con negocio:** `10704877850`
-- **WhatsApp oficial de atención:** `+51 987 010 380`
+- **WhatsApp oficial de atención:** `+1 (785) 643-3991`
 - **Horario de atención:** Lunes a Sábado de 9:00 a 20:00 (Hora Perú). Fuera de horario: respuesta garantizada a la mañana siguiente.
 - **Idioma:** Español (Perú / Latinoamérica).
 
@@ -54,6 +54,6 @@ Hacer que un solo producto, **DEFENSA TI**, sea tan claro, creíble y fácil de 
 7. **Garantía por Escrito:** Devolución total si no se mejora la calificación.
 8. **Proceso en 5 Pasos:** URL -> Diagnóstico -> Propuesta de precio fijo -> Blindaje -> Verificación con informe final.
 9. **Preguntas Frecuentes (FAQ):** Respondidas en lenguaje directo y sin tecnicismos.
-10. **Formulario con Casilla Obligatoria:** Nombre, web, país, plan + Casilla *"Declaro ser titular de este sitio web o contar con autorización para que se audite su seguridad"* + Botón de WhatsApp directo al `+51 987 010 380`.
+10. **Formulario con Casilla Obligatoria:** Nombre, web, país, plan + Casilla *"Declaro ser titular de este sitio web o contar con autorización para que se audite su seguridad"* + Botón de WhatsApp directo al `+1 (785) 643-3991`.
 11. **Bloque del Fundador:** Martin Castillo, atención directa y personal.
 12. **Pie de Página:** RUC `10704877850`, enlaces a Términos y Privacidad (Ley 29733), medios de pago Yape/Plin/Transferencia y horario de atención.

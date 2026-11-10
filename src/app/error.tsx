@@ -91,7 +91,7 @@ export default function GlobalError({
 
             <div className="pt-2 border-t border-white/5">
               <a
-                href="https://wa.me/51987010380?text=Hola%20Martin,%20tuve%20un%20error%20en%20el%20sistema%20de%20neuronalgravity.com"
+                href="https://wa.me/17856433991?text=Hola%20Martin,%20tuve%20un%20error%20en%20el%20sistema%20de%20neuronalgravity.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-[#25D366] transition-colors"

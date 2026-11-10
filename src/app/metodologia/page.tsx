@@ -178,7 +178,7 @@ export default function MetodologiaPage() {
           </p>
           <div>
             <a
-              href="https://wa.me/51987010380?text=Hola%20Martin,%20deseo%20evaluar%20un%20caso%20de%20uso%20de%20IA%20para%20mi%20empresa"
+              href="https://wa.me/17856433991?text=Hola%20Martin,%20deseo%20evaluar%20un%20caso%20de%20uso%20de%20IA%20para%20mi%20empresa"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-semibold shadow-xl shadow-[#0071e3]/40 transition-all active:scale-95"

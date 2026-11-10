@@ -146,7 +146,7 @@ export async function POST(req: Request) {
     if (resendApiKey) {
       try {
         const resend = new Resend(resendApiKey);
-        const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || 'castillo.karol96@gmail.com';
+        const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || 'contacto@neuronalgravity.com';
 
         const safeName = escapeHtml(name);
         const safeCompany = escapeHtml(company || 'No especificada');

@@ -51,7 +51,7 @@ export default function SslAlertWidget({ domain, daysRemaining = 0 }: SslAlertWi
 
       // Abrir enlace opcional a WhatsApp para confirmación inmediata
       const cleanPhone = phone.replace(/[^0-9]/g, '');
-      const officialNumber = (siteConfig.contact.whatsappNumber || '51987010380').replace(/[^0-9]/g, '');
+      const officialNumber = (siteConfig.contact.whatsappNumber || '17856433991').replace(/[^0-9]/g, '');
       const msg = encodeURIComponent(`Hola Martín, acabo de activar la alerta preventiva de vencimiento SSL para mi web ${cleanDomain} (WhatsApp: ${cleanPhone}). Confirmo mi suscripción gratuita.`);
       window.open(`https://wa.me/${officialNumber}?text=${msg}`, '_blank');
     } catch (err: unknown) {

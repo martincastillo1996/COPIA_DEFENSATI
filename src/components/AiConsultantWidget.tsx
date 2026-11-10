@@ -109,7 +109,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: 'S/ 65',
       time: 'Inmediato',
       desc: 'Diagnóstico perimetral profundo, membrete legal institucional y receta de código lista para aplicar.',
-      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Dictamen%20T%C3%A9cnico%20gratuito%20de%20DEFENSA%20TI.'
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Dictamen%20T%C3%A9cnico%20gratuito%20de%20DEFENSA%20TI.'
     },
     {
       name: 'Blindaje Llave en Mano',
@@ -117,7 +117,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: '3 a 5 días',
       desc: 'Implementación directa de cabeceras de seguridad, anti-clonación de formularios y endurecimiento de servidor.',
-      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20plan%20Blindaje%20Llave%20en%20Mano%20(S/%20165)%20para%20mi%20sitio%20web.'
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20plan%20Blindaje%20Llave%20en%20Mano%20(S/%20165)%20para%20mi%20sitio%20web.'
     },
     {
       name: 'Blindaje Total WAF + Meta Grado A',
@@ -125,7 +125,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: '5 a 7 días',
       desc: 'Auditoría integral, WAF perimetral activo (Cloudflare), bloqueo anti-bots y Meta Grado A con re-medición incluida.',
-      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20plan%20Blindaje%20Total%20WAF%20(S/%20335)%20para%20mi%20sitio%20web.'
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20plan%20Blindaje%20Total%20WAF%20(S/%20335)%20para%20mi%20sitio%20web.'
     }
   ];
 
@@ -365,7 +365,7 @@ export default function AiConsultantWidget({ report }: Props) {
 
             <div className="flex items-center gap-1">
               <a
-                href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20estoy%20en%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta%20directa."
+                href="https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20estoy%20en%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta%20directa."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-1.5 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] transition-colors"
@@ -460,7 +460,7 @@ export default function AiConsultantWidget({ report }: Props) {
                       {msg.ctaType === 'whatsapp' && (
                         <div className="mt-2.5 pt-2 border-t border-white/10">
                           <a
-                            href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20estuve%20chateando%20con%20el%20asistente%20de%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta."
+                            href="https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20estuve%20chateando%20con%20el%20asistente%20de%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta."
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-[11px] font-bold shadow-md transition-all active:scale-95"

@@ -53,7 +53,7 @@ export default function WhatsAppCta({ url, score, grade }: WhatsAppCtaProps) {
 
 Quisiera coordinar contigo una asesoría para poner a punto las directivas perimetrales y dejar mi sitio protegido.`;
 
-  const whatsappUrl = `https://wa.me/51987010380?text=${encodeURIComponent(message)}`;
+  const whatsappUrl = `https://wa.me/17856433991?text=${encodeURIComponent(message)}`;
 
   return (
     <div className="relative overflow-hidden rounded-3xl bg-linear-to-b from-[#25D366]/15 via-[#25D366]/5 to-transparent border border-[#25D366]/30 p-6 sm:p-8 backdrop-blur-2xl shadow-[0_0_50px_rgba(37,211,102,0.15)] transition-all">
