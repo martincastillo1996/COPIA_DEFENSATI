@@ -72,7 +72,7 @@ export default function DefensatiMonthlyPlans() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Soporte manual incluido:</strong> Hasta 30 minutos al mes para dudas o ajustes básicos.</span>
+                <span><strong>Orientación directa por WhatsApp:</strong> Asistencia y verificación ante alertas de caída o dudas de seguridad (servicios de desarrollo o diseño web adicionales con tarifa preferencial).</span>
               </li>
             </ul>
           </div>
@@ -136,7 +136,7 @@ export default function DefensatiMonthlyPlans() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Soporte manual prioritario:</strong> Hasta 1.5 horas al mes para remediaciones y configuración.</span>
+                <span><strong>Soporte técnico prioritario:</strong> Hasta 40 min al mes de intervención directa para ajustes de seguridad, WAF o incidentes (horas adicionales con 25% de descuento).</span>
               </li>
             </ul>
           </div>
@@ -163,6 +163,17 @@ export default function DefensatiMonthlyPlans() {
           </a>
         </div>
 
+      </div>
+
+      {/* Delimitación de Alcance y Garantía de Rentabilidad */}
+      <div className="p-5 sm:p-6 rounded-2xl bg-[#0a0f18]/80 border border-white/10 text-xs sm:text-sm text-neutral-300 space-y-2">
+        <div className="flex items-center gap-2 text-white font-semibold">
+          <ShieldCheck className="w-4 h-4 text-[#38bdf8]" />
+          <span>Alcance claro y delimitado del servicio mensual</span>
+        </div>
+        <p className="text-xs text-neutral-400 leading-relaxed font-normal">
+          Los planes de monitoreo cubren vigilancia automatizada 24/7, detección temprana de caídas, alerta preventiva de certificados SSL y respuesta ante incidencias de seguridad. <strong className="text-neutral-200">No incluyen</strong> maquetación web, rediseño gráfico, creación de contenidos ni programación a medida ajena a la seguridad. Esta delimitación garantiza que podamos responderte en minutos manteniendo una tarifa accesible y sostenible.
+        </p>
       </div>
 
       {/* Nota de Tranquilidad y Cero Compromisos */}

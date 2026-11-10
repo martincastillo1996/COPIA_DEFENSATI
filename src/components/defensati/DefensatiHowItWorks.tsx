@@ -25,7 +25,7 @@ export default function DefensatiHowItWorks() {
     {
       num: '3',
       title: 'Si quieres, la limpio y la blindo',
-      desc: 'Elimino cualquier virus o malware y fortalezco tu web para que no vuelva a ser hackeada.',
+      desc: 'Elimino virus, inyecciones maliciosas y accesos no autorizados, fortaleciendo el perímetro para minimizar drásticamente el riesgo de reinfección con garantía de 30 días.',
       icon: ShieldCheck,
       iconColor: 'text-[#c084fc]',
       accentBg: 'bg-[#c084fc]/15 border-[#c084fc]/30',

@@ -37,7 +37,7 @@ export default function DefensatiHero() {
       {/* Titular Principal Aprobado */}
       <div className="max-w-4xl mx-auto space-y-4 px-4">
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#f5f5f7] leading-[1.12] sm:leading-[1.1]">
-          Protegemos tu página web de ataques, caídas y virus para que tu negocio nunca deje de vender.
+          Protegemos tu página web contra ataques, caídas e infecciones para proteger tus ventas y la reputación de tu negocio.
         </h1>
 
         {/* Subtítulo Comercial Aprobado */}

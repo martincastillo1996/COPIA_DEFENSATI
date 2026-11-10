@@ -40,6 +40,8 @@ import DefensatiProblems from '@/components/defensati/DefensatiProblems';
 import DefensatiPricing from '@/components/defensati/DefensatiPricing';
 import DefensatiMonthlyPlans from '@/components/defensati/DefensatiMonthlyPlans';
 import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
+import DefensatiScanScope from '@/components/defensati/DefensatiScanScope';
+import DefensatiCases from '@/components/defensati/DefensatiCases';
 import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
 import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
 import DefensatiFinalCTA from '@/components/defensati/DefensatiFinalCTA';
@@ -255,6 +257,7 @@ export default function DefensatiPage() {
               <a href="#servicios" className="hover:text-sky-400 transition-colors">Servicios</a>
               <a href="#planes" className="hover:text-[#30d158] transition-colors">Planes mensuales</a>
               <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
+              <a href="#casos-reales" className="hover:text-white transition-colors">Casos reales</a>
               <a href="#escaner-gratis" className="hover:text-[#38bdf8] transition-colors">Escáner gratis</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
@@ -281,6 +284,7 @@ export default function DefensatiPage() {
             <a href="#servicios" className="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 hover:text-sky-300 whitespace-nowrap font-medium border border-sky-500/20">Servicios</a>
             <a href="#planes" className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 hover:text-emerald-300 whitespace-nowrap font-medium border border-emerald-500/20">Planes</a>
             <a href="#como-funciona" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Cómo funciona</a>
+            <a href="#casos-reales" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Casos reales</a>
             <a href="#escaner-gratis" className="px-3 py-1 rounded-full bg-[#0071e3]/20 text-[#38bdf8] hover:text-white whitespace-nowrap font-medium border border-[#0071e3]/30">Escáner gratis</a>
             <a href="#faq" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">FAQ</a>
           </div>
@@ -446,6 +450,9 @@ export default function DefensatiPage() {
               )}
             </div>
 
+            {/* Explicación de Alcance Técnico: Qué SÍ detecta y qué NO detecta */}
+            <DefensatiScanScope />
+
             {/* Formulario Sencillo de Consulta Directa por WhatsApp */}
             <DefensatiQuickContact initialUrl={url} />
 
@@ -609,6 +616,9 @@ export default function DefensatiPage() {
 
             </div>
           )}
+
+          {/* SECCIÓN 7: CASOS REALES Y CONTEXTO EN EL MERCADO PERUANO */}
+          <DefensatiCases />
 
           {/* SECCIÓN 8: CONFIANZA & GARANTÍA OFICIAL */}
           <DefensatiWarranty />
