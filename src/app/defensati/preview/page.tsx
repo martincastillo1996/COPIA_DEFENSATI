@@ -32,10 +32,8 @@ import RemediationList from '@/components/RemediationList';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
 import AppleCyberHud from '@/components/AppleCyberHud';
-import OpenSourceSupportBanner from '@/components/OpenSourceSupportBanner';
 import SocialViralHub from '@/components/SocialViralHub';
 import NeuronalGravityHub from '@/components/NeuronalGravityHub';
-import DonationModal from '@/components/DonationModal';
 import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
 
 // Componentes Nuevos Específicos para la Versión de Prueba (Preview)
@@ -562,9 +560,6 @@ export default function DefensatiPreviewPage() {
           {/* SECCIÓN 6: CASOS (Ejemplos Ilustrativos, sin frases prohibidas) */}
           <PreviewCases />
 
-          {/* Banner de Apoyo Open Source */}
-          <OpenSourceSupportBanner />
-
           {/* Hub de Difusión y Ecosistema */}
           <SocialViralHub targetUrl={report?.url} score={report?.score} />
           <NeuronalGravityHub />
@@ -627,8 +622,6 @@ export default function DefensatiPreviewPage() {
         </footer>
 
       </div>
-
-      <DonationModal />
     </div>
   );
 }

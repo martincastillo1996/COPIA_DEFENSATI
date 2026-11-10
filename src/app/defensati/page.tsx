@@ -32,10 +32,8 @@ import RemediationList from '@/components/RemediationList';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
 import AppleCyberHud from '@/components/AppleCyberHud';
-import OpenSourceSupportBanner from '@/components/OpenSourceSupportBanner';
 import SocialViralHub from '@/components/SocialViralHub';
 import NeuronalGravityHub from '@/components/NeuronalGravityHub';
-import DonationModal from '@/components/DonationModal';
 import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
 
 // Componentes Oficiales DEFENSA TI
@@ -607,9 +605,6 @@ export default function DefensatiPage() {
           {/* SECCIÓN 6: CASOS (Ejemplos Ilustrativos, sin frases prohibidas) */}
           <DefensatiCases />
 
-          {/* Banner de Apoyo Open Source */}
-          <OpenSourceSupportBanner />
-
           {/* Hub de Difusión y Ecosistema */}
           <SocialViralHub targetUrl={report?.url} score={report?.score} />
           <NeuronalGravityHub />
@@ -672,8 +667,6 @@ export default function DefensatiPage() {
         </footer>
 
       </div>
-
-      <DonationModal />
     </div>
   );
 }
