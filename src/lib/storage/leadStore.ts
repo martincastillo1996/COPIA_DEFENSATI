@@ -5,11 +5,15 @@ export interface LeadRecord {
   id: string;
   name: string;
   company?: string;
+  ruc?: string;
   email: string;
   phone?: string;
+  domain?: string;
   service: string;
   budget?: string;
   details?: string;
+  acceptedTerms?: boolean;
+  acceptedDisclaimer?: boolean;
   createdAt: string;
   userAgent?: string;
   ip?: string;

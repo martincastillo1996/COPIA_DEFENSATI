@@ -91,11 +91,15 @@ export async function POST(req: Request) {
     // 3. Sanitización estricta de todos los campos
     const name = sanitizeText(body.name, 80);
     const company = sanitizeText(body.company, 80);
+    const ruc = sanitizeText(body.ruc || body.taxId, 25);
     const email = sanitizeText(body.email, 100).toLowerCase();
     const phone = sanitizeText(body.phone, 30);
+    const domain = sanitizeText(body.domain || body.targetUrl, 120);
     const service = sanitizeText(body.service, 80);
     const budget = sanitizeText(body.budget, 50);
     const details = sanitizeText(body.details, 1200);
+    const acceptedTerms = Boolean(body.acceptedTerms);
+    const acceptedDisclaimer = Boolean(body.acceptedDisclaimer);
 
     // 4. Validaciones Requeridas y de Formato
     if (!name || !email || !service) {
@@ -119,11 +123,15 @@ export async function POST(req: Request) {
       id: uuidv4(),
       name,
       company: company || '',
+      ruc: ruc || '',
       email,
       phone: phone || '',
+      domain: domain || '',
       service,
       budget: budget || '',
       details: details || '',
+      acceptedTerms,
+      acceptedDisclaimer,
       createdAt: new Date().toISOString(),
       userAgent: sanitizeText(req.headers.get('user-agent'), 250) || undefined,
       ip: clientIp,
@@ -168,10 +176,14 @@ export async function POST(req: Request) {
               <div style="background-color: #161e2e; border: 1px solid #1f2937; border-radius: 8px; padding: 20px; margin: 20px 0;">
                 <p style="margin: 8px 0;"><strong>👤 Nombre:</strong> ${safeName}</p>
                 <p style="margin: 8px 0;"><strong>🏢 Empresa:</strong> ${safeCompany}</p>
+                ${ruc ? `<p style="margin: 8px 0;"><strong>🧾 RUC / DNI:</strong> ${escapeHtml(ruc)}</p>` : ''}
+                ${domain ? `<p style="margin: 8px 0;"><strong>🌐 Dominio / Web:</strong> <a href="${escapeHtml(domain)}" style="color: #38bdf8;">${escapeHtml(domain)}</a></p>` : ''}
                 <p style="margin: 8px 0;"><strong>✉️ Email:</strong> <a href="mailto:${safeEmail}" style="color: #38bdf8;">${safeEmail}</a></p>
                 <p style="margin: 8px 0;"><strong>📱 Teléfono:</strong> ${safePhone}</p>
                 <p style="margin: 8px 0;"><strong>🛠️ Servicio:</strong> <span style="color: #34d399; font-weight: bold;">${safeService}</span></p>
                 <p style="margin: 8px 0;"><strong>💰 Presupuesto Estimado:</strong> ${safeBudget}</p>
+                ${acceptedTerms ? `<p style="margin: 8px 0; color: #34d399; font-size: 12px;">✓ Términos y Privacidad Aceptados</p>` : ''}
+                ${acceptedDisclaimer ? `<p style="margin: 8px 0; color: #34d399; font-size: 12px;">✓ Declaración Ley 30096 / Responsabilidad Compartida Aceptada</p>` : ''}
               </div>
 
               ${safeDetails ? `

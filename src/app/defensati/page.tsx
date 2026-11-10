@@ -643,7 +643,7 @@ export default function DefensatiPage() {
           {/* SECCIÓN 9: CONFIANZA & GARANTÍA OFICIAL */}
           <DefensatiWarranty />
 
-          {/* SECCIÓN 10: FORMULARIO RÁPIDO DE CONSULTA DIRECTA POR WHATSAPP */}
+          {/* SECCIÓN 10: FORMULARIO OFICIAL DE CONTRATACIÓN Y SOLICITUD TÉCNICA */}
           <DefensatiQuickContact initialUrl={url} />
 
           {/* SECCIÓN 11: PREGUNTAS FRECUENTES */}
