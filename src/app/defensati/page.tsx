@@ -151,7 +151,7 @@ export default function DefensatiPage() {
             {/* Navegación Desktop */}
             <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-neutral-300">
               <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
-              <a href="#limpieza" className="hover:text-rose-400 transition-colors">Limpieza de WordPress</a>
+              <a href="#precio" className="hover:text-rose-400 transition-colors">Precio</a>
               <a href="#escaner-gratis" className="hover:text-white transition-colors">Escáner gratis</a>
               <a href="#quien-soy" className="hover:text-white transition-colors">Quién soy</a>
               <Link href="/planes" className="hover:text-sky-400 transition-colors">Ver Planes</Link>
@@ -189,16 +189,14 @@ export default function DefensatiPage() {
           <section id="escaner-gratis" className="w-full max-w-3xl mx-auto space-y-6 scroll-mt-24 text-center">
             
             <div className="space-y-4 p-6 sm:p-8 rounded-[32px] bg-gradient-to-b from-[#141828]/90 via-[#0f1220]/90 to-[#0a0d18]/95 border border-sky-500/30 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,113,227,0.18)]">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/40 text-[#38bdf8] text-xs font-bold shadow-[0_0_12px_rgba(56,189,248,0.25)]">
-                <Search className="w-3.5 h-3.5" />
-                <span>Revisión Gratuita al Instante</span>
+              <div className="border-b border-white/10 pb-3">
+                <span className="text-xs uppercase tracking-widest font-mono text-[#38bdf8] font-bold">
+                  ESCÁNER GRATIS
+                </span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
-                Prueba el escáner gratuito de tu web
+                Mira en segundos si tu web tiene fallas de seguridad básicas.
               </h2>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl mx-auto font-normal">
-                Escribe tu dirección web. Reviso en segundos si tu certificado de seguridad está caído o si tienes puertos expuestos. 100% gratis y sin contraseñas.
-              </p>
 
               {/* Formulario de Escaneo */}
               <form
@@ -345,7 +343,7 @@ export default function DefensatiPage() {
                   className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#25D366] to-emerald-400 text-black font-extrabold text-base shadow-[0_10px_30px_rgba(37,211,102,0.4)] flex items-center justify-center gap-3 transition-all shrink-0 cursor-pointer active:scale-95"
                 >
                   <MessageCircle className="w-5 h-5 fill-current shrink-0" />
-                  <span className="whitespace-nowrap">Coordinar conmigo</span>
+                  <span className="whitespace-nowrap">Quiero que revisen mi web</span>
                 </a>
               </div>
 
