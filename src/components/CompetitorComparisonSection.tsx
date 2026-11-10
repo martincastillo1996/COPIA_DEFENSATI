@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Swords, AlertTriangle, Loader2, Check, ArrowRight } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
+import { siteConfig } from '@/config/site';
 
 export default function CompetitorComparisonSection() {
   const [isOpen, setIsOpen] = useState(false);
@@ -281,7 +282,7 @@ export default function CompetitorComparisonSection() {
 
                 <div className="pt-2">
                   <a
-                    href={`https://wa.me/17856433991?text=${encodeURIComponent(`Hola Martín, realicé la comparativa técnica entre mi web ${myReport.url} (${myReport.score} pts) y mi competidor ${compReport.url} (${compReport.score} pts). Deseo blindar mi sitio para superarlo con Grado A.`)}`}
+                    href={`https://wa.me/${(siteConfig.contact.whatsappNumber || '51987010380').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hola Martín, realicé la comparativa técnica entre mi web ${myReport.url} (${myReport.score} pts) y mi competidor ${compReport.url} (${compReport.score} pts). Deseo blindar mi sitio para superarlo con Grado A.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition-all shadow-md active:scale-95 w-full sm:w-auto"

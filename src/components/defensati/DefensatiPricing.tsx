@@ -23,7 +23,8 @@ export default function DefensatiPricing({ targetUrl }: Props) {
   const cleanUrl = targetUrl ? targetUrl.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
 
   return (
-    <section id="servicios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left">
+    <section id="servicios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left relative">
+      <div id="precios" className="absolute -top-24 pointer-events-none" />
       
       {/* Encabezado de Sección */}
       <div className="space-y-2 border-b border-white/10 pb-5 max-w-4xl">
