@@ -3,11 +3,11 @@
 import { useEffect, useRef } from 'react';
 
 const TOP_DOMAINS = [
-  'google.com', 'cloudflare.com', 'github.com', 'apple.com',
+  'google.com', 'apple.com', 'cloudflare.com', 'github.com',
   'amazon.com', 'microsoft.com', 'openai.com', 'netflix.com',
   'aws.amazon.com', 'vercel.com', 'meta.com', 'spotify.com',
-  'stripe.com', 'docker.com', 'linux.org', 'nasa.gov',
-  'wikipedia.org', 'adobe.com', 'mit.edu', 'oracle.com'
+  'stripe.com', 'docker.com', 'linux.org', 'wikipedia.org',
+  'defensati.com', 'adobe.com', 'mit.edu', 'oracle.com'
 ];
 
 interface DomainNode {
@@ -21,6 +21,7 @@ interface DomainNode {
   radius: number;
   fontSize: number;
   isImportant: boolean;
+  color: string;
   twinklePhase: number;
   twinkleSpeed: number;
 }
@@ -33,9 +34,40 @@ interface BlastWave {
   alpha: number;
 }
 
+interface SynapticPulse {
+  sourceIdx: number;
+  targetIdx: number;
+  progress: number;
+  speed: number;
+  color: string;
+}
+
 interface NeuralProps {
   onSelectDomain?: (domain: string) => void;
   showDomains?: boolean;
+}
+
+function drawRoundedRectPath(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number
+) {
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(x, y, w, h, r);
+  } else {
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+  }
 }
 
 export default function NeuralBackground({ onSelectDomain, showDomains = true }: NeuralProps) {
@@ -77,10 +109,12 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     resize();
     window.addEventListener('resize', resize);
 
-    // Aumento org├ínico de densidad de nodos y constelaciones para mayor riqueza visual
-    const count = isMobile ? (showDomains ? 40 : 55) : (showDomains ? 85 : 110);
+    // Cantidad equilibrada de nodos para gran visibilidad sin saturación
+    const count = isMobile ? (showDomains ? 36 : 48) : (showDomains ? 72 : 95);
     const nodes: DomainNode[] = [];
-    const maxLinkDist = isMobile ? 110 : 165;
+    const maxLinkDist = isMobile ? 120 : 175;
+
+    const palette = ['#38bdf8', '#60a5fa', '#a855f7', '#ffffff', '#38bdf8'];
 
     for (let i = 0; i < count; i++) {
       const domain = TOP_DOMAINS[i % TOP_DOMAINS.length];
@@ -96,18 +130,22 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         vy,
         baseVx: vx,
         baseVy: vy,
-        radius: isImportant ? 3.5 : 2.2,
-        fontSize: isImportant ? (isMobile ? 11 : 13) : (isMobile ? 9 : 11),
+        radius: isImportant ? 3.5 : 2.4,
+        fontSize: isImportant ? (isMobile ? 11 : 12) : (isMobile ? 10 : 11),
         isImportant,
+        color: palette[i % palette.length],
         twinklePhase: Math.random() * Math.PI * 2,
-        twinkleSpeed: 0.015 + Math.random() * 0.025,
+        twinkleSpeed: 0.02 + Math.random() * 0.03,
       });
     }
 
-    const mouse = { x: -2000, y: -2000, radius: isMobile ? 150 : 240 };
+    const mouse = { x: -2000, y: -2000, radius: isMobile ? 160 : 250 };
     const blasts: BlastWave[] = [];
+    const pulses: SynapticPulse[] = [];
 
-    // Control para diferenciar clic limpio de un arrastre involuntario
+    // Generar pulsos sinápticos periódicos
+    let lastPulseTime = 0;
+
     let pointerStartX = 0;
     let pointerStartY = 0;
     let pointerStartTime = 0;
@@ -160,19 +198,17 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
       const deltaY = Math.abs(clientY - pointerStartY);
       const deltaTime = Date.now() - pointerStartTime;
 
-      // Si se movi├│ m├ís de 6px o dur├│ m├ís de 250ms, fue un arrastre -> se ignora
-      if (deltaX > 6 || deltaY > 6 || deltaTime > 250) {
+      if (deltaX > 8 || deltaY > 8 || deltaTime > 250) {
         return;
       }
 
-      // Clic limpio confirmado: comprobar si seleccion├│ un dominio
       const callback = onSelectDomainRef.current;
       if (callback) {
         for (let i = 0; i < nodes.length; i++) {
           const node = nodes[i];
           const dx = clientX - node.x;
           const dy = clientY - node.y;
-          if (Math.sqrt(dx * dx + dy * dy) < 32) {
+          if (Math.sqrt(dx * dx + dy * dy) < 40) {
             callback(node.domain);
             break;
           }
@@ -214,10 +250,42 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchcancel', onTouchEnd);
 
-    const render = () => {
+    const render = (timestamp: number) => {
       ctx.clearRect(0, 0, width, height);
-      ctx.globalCompositeOperation = 'lighter';
 
+      // Despachar nuevo pulso sináptico cada ~400ms
+      if (timestamp - lastPulseTime > 380 && nodes.length > 2) {
+        lastPulseTime = timestamp;
+        const sourceIdx = Math.floor(Math.random() * nodes.length);
+        const sourceNode = nodes[sourceIdx];
+        
+        // Buscar un nodo cercano conectado
+        let bestTargetIdx = -1;
+        let bestDist = maxLinkDist;
+        for (let k = 0; k < nodes.length; k++) {
+          if (k === sourceIdx) continue;
+          const dx = sourceNode.x - nodes[k].x;
+          const dy = sourceNode.y - nodes[k].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < bestDist) {
+            bestDist = d;
+            bestTargetIdx = k;
+          }
+        }
+
+        if (bestTargetIdx !== -1 && pulses.length < 18) {
+          pulses.push({
+            sourceIdx,
+            targetIdx: bestTargetIdx,
+            progress: 0,
+            speed: 0.018 + Math.random() * 0.02,
+            color: sourceNode.color,
+          });
+        }
+      }
+
+      // Ondas expansivas de clic (Big Bang)
+      ctx.globalCompositeOperation = 'lighter';
       for (let b = blasts.length - 1; b >= 0; b--) {
         const blast = blasts[b];
         blast.radius += (blast.maxRadius - blast.radius) * 0.12 + 10;
@@ -225,7 +293,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
 
         ctx.beginPath();
         ctx.arc(blast.x, blast.y, blast.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(56, 189, 248, ${blast.alpha * 0.8})`;
+        ctx.strokeStyle = `rgba(56, 189, 248, ${blast.alpha * 0.85})`;
         ctx.lineWidth = 2.5;
         ctx.stroke();
 
@@ -236,6 +304,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
 
       const total = nodes.length;
 
+      // Actualizar posición de nodos
       for (let i = 0; i < total; i++) {
         const n1 = nodes[i];
 
@@ -249,7 +318,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         const distM = Math.sqrt(dxM * dxM + dyM * dyM);
 
         if (distM < mouse.radius && distM > 10) {
-          const force = (1 - distM / mouse.radius) * 0.05;
+          const force = (1 - distM / mouse.radius) * 0.06;
           n1.x += dxM * force;
           n1.y += dyM * force;
         }
@@ -258,49 +327,13 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         else if (n1.x > width + 80) n1.x = -80;
         if (n1.y < -40) n1.y = height + 40;
         else if (n1.y > height + 40) n1.y = -40;
+      }
 
-        const renderX = Math.round(n1.x);
-        const renderY = Math.round(n1.y);
-
-        if (showDomains) {
-          // Puntos y nombres de dominios flotantes (Para DEFENSA TI)
-          ctx.beginPath();
-          ctx.arc(renderX, renderY, n1.radius, 0, Math.PI * 2);
-          ctx.fillStyle = n1.isImportant ? 'rgba(56, 189, 248, 0.65)' : 'rgba(255, 255, 255, 0.45)';
-          ctx.fill();
-
-          ctx.font = `500 ${n1.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
-          ctx.fillStyle = n1.isImportant ? 'rgba(125, 211, 252, 0.6)' : 'rgba(226, 232, 240, 0.38)';
-          ctx.fillText(n1.domain, renderX + 9, renderY + 4);
-        } else {
-          // Modo Estelar Neuronal (Para la P├ígina Principal - solo nodos iluminados como estrellas)
-          n1.twinklePhase += n1.twinkleSpeed;
-          const starIntensity = 0.55 + 0.45 * Math.sin(n1.twinklePhase);
-          const glowRadius = n1.radius * (2.2 + 1.2 * starIntensity);
-
-          // Halo difuso de luz estelar
-          const halo = ctx.createRadialGradient(renderX, renderY, 0, renderX, renderY, glowRadius);
-          if (n1.isImportant) {
-            halo.addColorStop(0, `rgba(255, 255, 255, ${0.95 * starIntensity})`);
-            halo.addColorStop(0.35, `rgba(56, 189, 248, ${0.75 * starIntensity})`);
-            halo.addColorStop(1, 'rgba(56, 189, 248, 0)');
-          } else {
-            halo.addColorStop(0, `rgba(255, 255, 255, ${0.9 * starIntensity})`);
-            halo.addColorStop(0.35, `rgba(186, 230, 253, ${0.5 * starIntensity})`);
-            halo.addColorStop(1, 'rgba(186, 230, 253, 0)');
-          }
-
-          ctx.beginPath();
-          ctx.arc(renderX, renderY, glowRadius, 0, Math.PI * 2);
-          ctx.fillStyle = halo;
-          ctx.fill();
-
-          // N├║cleo brillante de la estrella
-          ctx.beginPath();
-          ctx.arc(renderX, renderY, n1.radius * (0.8 + 0.2 * starIntensity), 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.fill();
-        }
+      // 1. Dibujar líneas de conexión con alta visibilidad y elegancia
+      for (let i = 0; i < total; i++) {
+        const n1 = nodes[i];
+        const r1x = Math.round(n1.x);
+        const r1y = Math.round(n1.y);
 
         for (let j = i + 1; j < total; j++) {
           const n2 = nodes[j];
@@ -309,32 +342,119 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxLinkDist) {
-            const alpha = (1 - dist / maxLinkDist) * 0.35;
+            const alpha = (1 - dist / maxLinkDist) * 0.45;
             ctx.beginPath();
-            ctx.moveTo(renderX, renderY);
+            ctx.moveTo(r1x, r1y);
             ctx.lineTo(Math.round(n2.x), Math.round(n2.y));
-            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+            ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
+      }
 
-        if (distM < mouse.radius) {
-          const rayAlpha = (1 - distM / mouse.radius) * 0.8;
+      // 2. Dibujar pulsos sinápticos viajando a lo largo de las conexiones
+      for (let p = pulses.length - 1; p >= 0; p--) {
+        const pulse = pulses[p];
+        pulse.progress += pulse.speed;
+
+        if (pulse.progress >= 1) {
+          pulses.splice(p, 1);
+          continue;
+        }
+
+        const sNode = nodes[pulse.sourceIdx];
+        const tNode = nodes[pulse.targetIdx];
+        if (!sNode || !tNode) {
+          pulses.splice(p, 1);
+          continue;
+        }
+
+        const px = sNode.x + (tNode.x - sNode.x) * pulse.progress;
+        const py = sNode.y + (tNode.y - sNode.y) * pulse.progress;
+
+        ctx.beginPath();
+        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = pulse.color;
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      // 3. Dibujar nodos y etiquetas de dominios estilo Apple Dark Glass
+      ctx.globalCompositeOperation = 'source-over';
+
+      const centerX = width / 2;
+      const heroCenterY = Math.min(height * 0.35, 340);
+
+      for (let i = 0; i < total; i++) {
+        const n1 = nodes[i];
+        const renderX = Math.round(n1.x);
+        const renderY = Math.round(n1.y);
+
+        n1.twinklePhase += n1.twinkleSpeed;
+        const pulseRatio = 0.8 + 0.3 * Math.sin(n1.twinklePhase);
+
+        // Si el nodo está exactamente sobre el texto central del hero, se atenúa suavemente
+        const distFromHeroCenter = Math.hypot(renderX - centerX, renderY - heroCenterY);
+        const textOcclusionFactor = Math.min(1, Math.max(0.4, distFromHeroCenter / 260));
+
+        // Halo difuso Apple Pro
+        const haloRadius = n1.radius * 3 * pulseRatio;
+        const halo = ctx.createRadialGradient(renderX, renderY, 0, renderX, renderY, haloRadius);
+        halo.addColorStop(0, n1.isImportant ? `rgba(56, 189, 248, ${0.9 * textOcclusionFactor})` : `rgba(168, 85, 247, ${0.75 * textOcclusionFactor})`);
+        halo.addColorStop(0.5, `rgba(56, 189, 248, ${0.35 * textOcclusionFactor})`);
+        halo.addColorStop(1, 'rgba(56, 189, 248, 0)');
+
+        ctx.beginPath();
+        ctx.arc(renderX, renderY, haloRadius, 0, Math.PI * 2);
+        ctx.fillStyle = halo;
+        ctx.fill();
+
+        // Núcleo brillante
+        ctx.beginPath();
+        ctx.arc(renderX, renderY, n1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+
+        if (showDomains) {
+          // Etiqueta Glass Badge estilo Apple
+          const label = n1.domain;
+          ctx.font = `600 ${n1.fontSize}px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, monospace`;
+          const textMetrics = ctx.measureText(label);
+          const badgeW = textMetrics.width + 14;
+          const badgeH = 20;
+          const badgeX = renderX + 9;
+          const badgeY = renderY - 10;
+
+          // Fondo de cristal translúcido oscuro
           ctx.beginPath();
-          ctx.moveTo(renderX, renderY);
-          ctx.lineTo(Math.round(mouse.x), Math.round(mouse.y));
-          ctx.strokeStyle = `rgba(56, 189, 248, ${rayAlpha})`;
-          ctx.lineWidth = 1.1;
+          drawRoundedRectPath(ctx, badgeX, badgeY, badgeW, badgeH, 10);
+          ctx.fillStyle = n1.isImportant 
+            ? `rgba(10, 17, 34, ${0.82 * textOcclusionFactor})` 
+            : `rgba(6, 10, 20, ${0.74 * textOcclusionFactor})`;
+          ctx.fill();
+
+          // Borde fino de cristal Apple
+          ctx.strokeStyle = n1.isImportant 
+            ? `rgba(56, 189, 248, ${0.5 * textOcclusionFactor})` 
+            : `rgba(255, 255, 255, ${0.18 * textOcclusionFactor})`;
+          ctx.lineWidth = 1;
           ctx.stroke();
+
+          // Texto nítido
+          ctx.fillStyle = n1.isImportant 
+            ? `rgba(125, 211, 252, ${0.95 * textOcclusionFactor})` 
+            : `rgba(241, 245, 249, ${0.85 * textOcclusionFactor})`;
+          ctx.fillText(label, badgeX + 7, badgeY + 14);
         }
       }
 
-      ctx.globalCompositeOperation = 'source-over';
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('mousedown', onPointerDown);
