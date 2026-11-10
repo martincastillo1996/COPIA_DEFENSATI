@@ -89,12 +89,12 @@ export default function AiConsultantWidget({ report }: Props) {
       prompt: '¿Cómo puedo evitar que clonen mis formularios o pasarelas de pago de Yape y tarjetas?'
     },
     {
-      label: '💰 ¿Qué incluye el Pack Todo Incluido (S/ 600 - S/ 850)?',
-      prompt: '¿Qué incluye exactamente el Pack Todo Incluido de Rescate + Blindaje WAF + 3 meses de monitoreo y qué garantía tiene?'
+      label: '🚨 ¿Cómo funciona el Rescate de malware (S/ 380 - S/ 550)?',
+      prompt: 'Mi web fue hackeada o suspendida por el hosting. ¿Cómo funciona el rescate forense y en cuánto tiempo lo entregan?'
     },
     {
-      label: '🚨 ¿Cómo funciona el Rescate de Emergencia (S/ 450 - S/ 650)?',
-      prompt: 'Mi web fue hackeada o suspendida por el hosting. ¿Cómo funciona el rescate de emergencia puntual y en cuánto tiempo lo resuelven?'
+      label: '🛡️ ¿Qué incluye Blindaje + WAF (S/ 450)?',
+      prompt: '¿Qué incluye exactamente el paquete unificado de Blindaje + WAF Cloudflare de S/ 450 y qué garantía tiene?'
     },
     {
       label: '📱 Hablar directo con Martín por WhatsApp',
@@ -112,28 +112,28 @@ export default function AiConsultantWidget({ report }: Props) {
       link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Diagn%C3%B3stico%20Gratuito%20de%20DEFENSA%20TI.'
     },
     {
-      name: 'Pack Rescate + Blindaje WAF (Web Corporativa)',
-      price: 'S/ 600',
+      name: 'Rescate (Sitio Corporativo)',
+      price: 'S/ 380',
       original: '',
-      time: '3 a 5 días',
-      desc: 'Desinfección forense completa, cabeceras estrictas, Cloudflare WAF y 3 meses de monitoreo 24/7 incluidos.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Pack%20Todo%20Incluido%20Web%20Corporativa%20(S/%20600)%20para%20mi%20sitio.'
+      time: '24 a 48h',
+      desc: 'Desinfección forense completa de archivos y base de datos, desbloqueo de hosting y garantía formal de 30 días.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Rescate%20para%20Sitio%20Corporativo%20(S/%20380).'
     },
     {
-      name: 'Pack Rescate + Blindaje WAF (E-commerce / Tienda)',
-      price: 'S/ 850',
+      name: 'Rescate (WooCommerce / Tienda)',
+      price: 'S/ 550',
       original: '',
-      time: '3 a 5 días',
-      desc: 'Saneamiento de checkout, registros DNS SPF/DKIM/DMARC, Cloudflare WAF anti-bots y 3 meses de monitoreo.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Pack%20Todo%20Incluido%20E-commerce%20(S/%20850)%20para%20mi%20tienda.'
+      time: '24 a 48h',
+      desc: 'Desinfección forense integral para tiendas online con saneamiento de checkout y pasarelas de pago.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Rescate%20para%20WooCommerce%20(S/%20550).'
     },
     {
-      name: 'Rescate de Emergencia Puntual',
-      price: 'S/ 450 – S/ 650',
+      name: 'Blindaje + WAF Cloudflare',
+      price: 'S/ 450',
       original: '',
-      time: '24 a 48 horas',
-      desc: 'Intervención forense urgente para sitios caídos o bloqueados por hosting con garantía formal de 30 días.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20necesito%20un%20Rescate%20de%20Emergencia%20Puntual%20(S/%20450%20-%20S/%20650)%20para%20mi%20web.'
+      time: '3 a 5 días',
+      desc: 'Cabeceras estrictas canónicas más Cloudflare WAF perimetral activo anti-bots y mitigación DDoS.',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Blindaje%20+%20WAF%20Cloudflare%20(S/%20450).'
     }
   ];
 

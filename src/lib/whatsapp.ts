@@ -61,66 +61,79 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
     return getWhatsAppUrl(text);
   },
 
-  // Paquete Insignia 1: Rescate + Blindaje WAF Cloudflare + 3 Meses de Monitoreo - Web Corporativa (S/ 600)
-  precioPackCorp: (domain = '') => {
+  // Servicio 1: Rescate / Limpieza de malware (Sitio Corporativo: S/ 380)
+  precioRescateCorporativo: (domain = '') => {
     const text = domain
-      ? `Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600) para mi web corporativa (${domain}).`
-      : 'Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600) para mi web corporativa.';
+      ? `Hola Martín, mi sitio corporativo (${domain}) tiene malware o redirecciones y necesito el Rescate / Limpieza de malware con garantía de 30 días (S/ 380).`
+      : 'Hola Martín, mi sitio corporativo tiene malware o redirecciones y necesito el Rescate / Limpieza de malware con garantía de 30 días (S/ 380).';
     return getWhatsAppUrl(text);
   },
 
-  // Paquete Insignia 2: Rescate + Blindaje WAF Cloudflare + 3 Meses de Monitoreo - E-commerce / Tienda Online (S/ 850)
-  precioPackEcom: (domain = '') => {
+  // Servicio 2: Rescate / Limpieza de malware (WooCommerce / Tienda Online: S/ 550)
+  precioRescateWooCommerce: (domain = '') => {
     const text = domain
-      ? `Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 850) para mi tienda online (${domain}).`
-      : 'Hola Martín, me interesa contratar el Pack Completo: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 850) para mi tienda online.';
+      ? `Hola Martín, mi tienda online (${domain}) presenta infección o fallas de seguridad. Deseo contratar el Rescate de WooCommerce / Tienda Online con garantía (S/ 550).`
+      : 'Hola Martín, mi tienda online presenta infección o fallas de seguridad. Deseo contratar el Rescate de WooCommerce / Tienda Online con garantía (S/ 550).';
     return getWhatsAppUrl(text);
   },
 
-  // Rescate de Emergencia Puntual (S/ 450 - S/ 650)
-  precioRescateEmergencia: (domain = '') => {
+  // Servicio 3: Blindaje + WAF Cloudflare Unificado (S/ 450)
+  precioBlindajeWaf: (domain = '') => {
     const text = domain
-      ? `Hola Martín, tengo una urgencia con mi web (${domain}) por virus, redirecciones o caída. Deseo contratar el Rescate de Emergencia (S/ 450 - S/ 650).`
-      : 'Hola Martín, tengo una urgencia con mi web por virus, redirecciones o caída. Deseo contratar el Rescate de Emergencia (S/ 450 - S/ 650).';
+      ? `Hola Martín, me interesa contratar el paquete unificado de Blindaje + WAF Cloudflare (S/ 450) para blindar mi web (${domain}) contra ataques y bots.`
+      : 'Hola Martín, me interesa contratar el paquete unificado de Blindaje + WAF Cloudflare (S/ 450) para blindar mi página web contra ataques y bots.';
     return getWhatsAppUrl(text);
   },
 
-  // Aliases de compatibilidad retroactiva orientados a los nuevos paquetes
+  // Planes Mensuales: Mantenimiento Básico (S/ 90/mes)
+  precioMensualBasico: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, deseo activar el Mantenimiento Básico de S/ 90/mes para mi web (${domain}) con chequeos 24/7 y alertas a WhatsApp.`
+      : 'Hola Martín, deseo activar el Mantenimiento Básico de S/ 90/mes para mi web con chequeos 24/7 y alertas a WhatsApp.';
+    return getWhatsAppUrl(text);
+  },
+
+  // Planes Mensuales: Mantenimiento Tiendas Online con Soporte Prioritario (S/ 180/mes)
+  precioMensualTiendas: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, quisiera suscribirme al Mantenimiento para Tiendas Online de S/ 180/mes para mi tienda (${domain}) con chequeos cada 5 min y soporte prioritario.`
+      : 'Hola Martín, quisiera suscribirme al Mantenimiento para Tiendas Online de S/ 180/mes para mi tienda con chequeos cada 5 min y soporte prioritario.';
+    return getWhatsAppUrl(text);
+  },
+
+  // Aliases de compatibilidad retroactiva
   precioLimpieza: (domain = '') => {
     const text = domain
-      ? `Hola Martín, mi sitio web (${domain}) presenta infección o malware. Quisiera contratar el rescate y blindaje con garantía (Pack Completo desde S/ 600 o Emergencia S/ 450 - S/ 650).`
-      : 'Hola Martín, mi sitio web presenta infección o malware. Quisiera contratar el rescate y blindaje con garantía (Pack Completo desde S/ 600 o Emergencia S/ 450 - S/ 650).';
+      ? `Hola Martín, mi web (${domain}) presenta malware. Quisiera contratar el Rescate / Limpieza de malware (Corporativo S/ 380 | WooCommerce S/ 550).`
+      : 'Hola Martín, mi web presenta malware. Quisiera contratar el Rescate / Limpieza de malware (Corporativo S/ 380 | WooCommerce S/ 550).';
     return getWhatsAppUrl(text);
   },
 
   precioBlindaje: (domain = '') => {
     const text = domain
-      ? `Hola Martín, deseo blindar mi sitio web (${domain}) con el Pack Llave en Mano: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600).`
-      : 'Hola Martín, deseo blindar mi sitio web con el Pack Llave en Mano: Rescate + Blindaje WAF Cloudflare + 3 meses de monitoreo (S/ 600).';
+      ? `Hola Martín, deseo blindar mi sitio web (${domain}) con el paquete unificado de Blindaje + WAF Cloudflare (S/ 450).`
+      : 'Hola Martín, deseo blindar mi sitio web con el paquete unificado de Blindaje + WAF Cloudflare (S/ 450).';
     return getWhatsAppUrl(text);
   },
 
-  precioBlindajeWaf: (domain = '') => {
-    const text = domain
-      ? `Hola Martín, quiero implementar la Protección WAF Cloudflare con el Pack Completo de blindaje y 3 meses de monitoreo (S/ 600 - S/ 850) en mi web (${domain}).`
-      : 'Hola Martín, quiero implementar la Protección WAF Cloudflare con el Pack Completo de blindaje y 3 meses de monitoreo (S/ 600 - S/ 850) en mi web.';
-    return getWhatsAppUrl(text);
+  precioPackCorp: (domain = '') => {
+    return DEFENSATI_WHATSAPP_MESSAGES.precioRescateCorporativo(domain);
   },
 
-  // Planes Mensuales: Plan Esencial (S/ 49/mes)
+  precioPackEcom: (domain = '') => {
+    return DEFENSATI_WHATSAPP_MESSAGES.precioRescateWooCommerce(domain);
+  },
+
+  precioRescateEmergencia: (domain = '') => {
+    return DEFENSATI_WHATSAPP_MESSAGES.precioRescateCorporativo(domain);
+  },
+
   precioMensual: (domain = '') => {
-    const text = domain
-      ? `Hola Martín, me interesa activar el Plan de Monitoreo Esencial de S/ 49/mes para mi web (${domain}) para recibir alertas de caídas y re-escaneos mensuales.`
-      : 'Hola Martín, me interesa activar el Plan de Monitoreo Esencial de S/ 49/mes para mi página web para recibir alertas de caídas y re-escaneos mensuales.';
-    return getWhatsAppUrl(text);
+    return DEFENSATI_WHATSAPP_MESSAGES.precioMensualBasico(domain);
   },
 
-  // Planes Mensuales: Plan Pro (S/ 99/mes)
   precioMensualPro: (domain = '') => {
-    const text = domain
-      ? `Hola Martín, quisiera suscribirme al Plan de Monitoreo Pro de S/ 99/mes para mi web (${domain}) con chequeos cada 5 min y soporte técnico preventivo.`
-      : 'Hola Martín, quisiera suscribirme al Plan de Monitoreo Pro de S/ 99/mes para mi página web con chequeos cada 5 min y soporte técnico preventivo.';
-    return getWhatsAppUrl(text);
+    return DEFENSATI_WHATSAPP_MESSAGES.precioMensualTiendas(domain);
   },
 
   // Escáner contextual con diagnóstico dinámico

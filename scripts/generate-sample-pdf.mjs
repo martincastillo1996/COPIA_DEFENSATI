@@ -338,11 +338,11 @@ async function generateSamplePdf() {
   );
 
   page1.drawText(
-    'Recomendación Urgente: Se requiere el Pack Todo Incluido: Rescate + Blindaje WAF Cloudflare + 3 Meses Monitoreo',
+    'Recomendación Urgente: Se requiere el paquete Blindaje + WAF Cloudflare (S/ 450 PEN) o',
     { x: 52, y: y - 46, size: 8, font: fontHelvetica, color: textDark }
   );
   page1.drawText(
-    '(S/ 600 - S/ 850 PEN) o Rescate de Emergencia (S/ 450 - S/ 650 PEN) para mitigar riesgos y asegurar Grado A.',
+    'Rescate / Limpieza de malware (S/ 380 - S/ 550 PEN) para mitigar riesgos y asegurar Grado A.',
     { x: 52, y: y - 58, size: 8, font: fontHelvetica, color: textDark }
   );
   page1.drawText(
@@ -467,7 +467,7 @@ async function generateSamplePdf() {
     font: fontHelvetica,
     color: textMuted,
   });
-  page2.drawText('este blindaje llave en mano con el Pack Todo Incluido (desde S/ 600 PEN con 3 meses de monitoreo incluidos).', {
+  page2.drawText('este blindaje llave en mano con el paquete Blindaje + WAF Cloudflare por S/ 450 PEN (meta Grado A incluida).', {
     x: 50,
     y: y2 - 37,
     size: 7.5,

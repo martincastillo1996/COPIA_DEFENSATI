@@ -34,27 +34,27 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
   // Determinar nivel de diagnóstico comercial
   let planType: 'limpieza' | 'blindaje' | 'monitoreo' = 'blindaje';
   let badgeText = 'Vulnerabilidades Detectadas';
-  let title = 'Recomendación: Pack Blindaje WAF Cloudflare + 3 Meses Monitoreo';
-  let priceText = 'S/ 600 – S/ 850 (Pago único)';
+  let title = 'Recomendación: Blindaje + WAF Cloudflare (Unificado)';
+  let priceText = 'S/ 450 (Pago único)';
   let diagnosisText = `Tu sitio presenta ${missingHeadersCount} cabeceras de seguridad ausentes y posibles puntos ciegos perimetrales. Aunque carga en el navegador, no cuenta con barreras defensivas contra ataques automatizados ni bots.`;
-  let solutionText = 'Aplicamos cabeceras estrictas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y 3 meses de monitoreo continuo 24/7 sin alterar tu diseño.';
-  let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y blindaje perimetral`;
+  let solutionText = 'Aplicamos cabeceras estrictas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y optimización DNS anti-suplantación en 3 a 5 días sin alterar tu diseño.';
+  let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y protección perimetral WAF`;
 
   if (score < 60 || grade === 'F' || grade === 'D') {
     planType = 'limpieza';
     badgeText = 'Alerta de Riesgo Alto / Crítico';
-    title = 'Recomendación: Pack Rescate + Blindaje WAF + 3 Meses Monitoreo';
-    priceText = 'Pack S/ 600 - S/ 850 (o Emergencia S/ 450 - S/ 650)';
+    title = 'Recomendación: Rescate / Limpieza de malware';
+    priceText = 'S/ 380 (Corp) | S/ 550 (WooCommerce)';
     diagnosisText = `Tu sitio obtuvo nota baja (${score}/100, Grado ${grade}) con ${missingHeadersCount} fallas defensivas graves. Este estado lo hace un blanco fácil para virus, desvío de clientes a webs de spam o sanción en Google.`;
-    solutionText = 'Desinfectamos los archivos y base de datos con respaldo previo, configuramos Cloudflare WAF y dejamos el sitio blindado con 3 meses de monitoreo y garantía formal de 30 días.';
+    solutionText = 'Desinfectamos los archivos y base de datos con respaldo previo, eliminamos virus o puertas traseras y reactivamos tu hosting con garantía formal de 30 días.';
     primaryIssue = `Puntaje crítico (${score}/100, Grado ${grade}) y vulnerabilidad perimetral`;
   } else if (score >= 85 && (grade === 'A' || grade === 'A+')) {
     planType = 'monitoreo';
     badgeText = 'Configuración Saludable';
-    title = 'Recomendación: Monitoreo Preventivo & Mantenimiento Mensual';
-    priceText = 'S/ 49 / mes (Sin permanencia)';
+    title = 'Recomendación: Mantenimiento Mensual 24/7';
+    priceText = 'S/ 90 / mes (Sin permanencia)';
     diagnosisText = `¡Excelente trabajo! Tu web obtuvo ${score}/100 (Grado ${grade}). Para que este estándar no se degrade con futuras actualizaciones de plugins o caídas de servidor, te conviene mantenerla vigilada.`;
-    solutionText = 'Verificamos caídas cada 15 min, monitoreamos la expiración de tu SSL y te enviamos alertas directas a WhatsApp antes de que cualquier incidente afecte a tus clientes.';
+    solutionText = 'Verificamos caídas cada 15 min, monitoreamos la expiración de tu SSL y te enviamos alertas directas a WhatsApp con soporte técnico incluido.';
     primaryIssue = 'Sitio en buen estado, mantener con monitoreo preventivo';
   }
 

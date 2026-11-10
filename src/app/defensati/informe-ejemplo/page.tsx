@@ -439,21 +439,21 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                   <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-extrabold text-white text-xs">Rescate de Emergencia Puntual</span>
-                      <span className="text-xs font-mono font-black text-rose-400">S/ 450 – S/ 650</span>
+                      <span className="font-extrabold text-white text-xs">Rescate / Limpieza de malware</span>
+                      <span className="text-xs font-mono font-black text-rose-400">S/ 380 – S/ 550</span>
                     </div>
                     <p className="text-[11px] text-neutral-400 leading-relaxed">
-                      Intervención forense urgente en 24 a 48h: eliminación profunda de virus, troyanos o puertas traseras, gestión de desbloqueo con el hosting y <strong>garantía formal de 30 días</strong>.
+                      Desinfección forense en 24 a 48h para sitios corporativos (S/ 380) o tiendas WooCommerce (S/ 550) con respaldo integral, desbloqueo de hosting y <strong>garantía formal de 30 días</strong>.
                     </p>
                   </div>
 
                   <div className="p-4 rounded-xl bg-sky-500/10 border border-sky-500/30 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-extrabold text-white text-xs">Pack Todo Incluido: Rescate + Blindaje WAF + 3M Monitoreo</span>
-                      <span className="text-xs font-mono font-black text-[#38bdf8]">S/ 600 – S/ 850</span>
+                      <span className="font-extrabold text-white text-xs">Blindaje + WAF Cloudflare (Unificado)</span>
+                      <span className="text-xs font-mono font-black text-[#38bdf8]">S/ 450 PEN</span>
                     </div>
                     <p className="text-[11px] text-neutral-300 leading-relaxed">
-                      Solución integral llave en mano: desinfección forense, cabeceras estrictas, Firewall WAF Cloudflare y <strong>3 meses de monitoreo continuo 24/7 incluidos</strong> con garantía de 30 días.
+                      Paquete unificado de prevención: cabeceras estrictas (HSTS, CSP, X-Frame) más Firewall WAF Cloudflare perimetral anti-bots, DDoS y scrapers con <strong>meta Grado A</strong>.
                     </p>
                   </div>
                 </div>

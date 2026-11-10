@@ -160,7 +160,7 @@ export default function TerminosYPrivacidadPage() {
             <section className="space-y-4 text-sm leading-relaxed">
               <h3 className="text-base font-bold text-white">3. Modalidades de Contratación y Plazos Técnicos de Entrega</h3>
               <p>
-                Las tarifas oficiales se expresan en moneda nacional (PEN / Nuevos Soles) e integran los paquetes y servicios oficiales comercializados por DEFENSA TI con sus respectivos alcances y plazos de ejecución:
+                Las tarifas oficiales se expresan en moneda nacional (PEN / Nuevos Soles) e integran los servicios oficiales comercializados por DEFENSA TI con sus respectivos alcances y plazos de ejecución:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-2 text-xs">
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
@@ -172,31 +172,31 @@ export default function TerminosYPrivacidadPage() {
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">2. Pack Todo Incluido (Web Corporativa)</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">S/. 600 PEN</span>
+                    <span className="font-bold text-white text-sm">2. Rescate (Sitio Corporativo)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">S/. 380 PEN</span>
                   </div>
-                  <p className="text-neutral-300">Paquete integral llave en mano: desinfección forense completa, blindaje de cabeceras canónicas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y <strong>3 meses de monitoreo 24/7 incluidos</strong>. <strong>Plazo:</strong> Desinfección en <strong>24 a 48 horas hábiles</strong> y blindaje/WAF en 3 a 5 días hábiles, con garantía por escrito de 30 días.</p>
+                  <p className="text-neutral-300">Desinfección forense completa de archivos y base de datos para webs corporativas, blogs y portafolios (WordPress, Wix o a medida). Retiro de virus, troyanos, backdoors, desbloqueo con el hosting y retiro de pantalla roja de Google en <strong>24 a 48 horas hábiles</strong> con garantía de 30 días.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">3. Pack Todo Incluido (E-commerce)</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#2997ff]/20 text-[#38bdf8] border border-[#2997ff]/30">S/. 850 PEN</span>
+                    <span className="font-bold text-white text-sm">3. Rescate (WooCommerce / Tienda)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">S/. 550 PEN</span>
                   </div>
-                  <p className="text-neutral-300">Paquete especializado para tiendas online (WooCommerce, Shopify, Wix): saneamiento de checkout contra scripts espías (Magecart), endurecimiento DNS anti-suplantación SPF/DKIM/DMARC, Cloudflare WAF anti-bots y <strong>3 meses de monitoreo prioritario 24/7 incluidos</strong> con garantía por escrito de 30 días.</p>
+                  <p className="text-neutral-300">Desinfección forense integral para tiendas online (WooCommerce, Shopify o Wix) con saneamiento de plantillas Liquid/Wix, checkout y pasarelas contra robo de tarjetas (Magecart) en <strong>24 a 48 horas hábiles</strong> con garantía de 30 días.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">4. Rescate de Emergencia Puntual</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">S/. 450 – S/. 650</span>
+                    <span className="font-bold text-white text-sm">4. Blindaje + WAF Cloudflare</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">S/. 450 PEN</span>
                   </div>
-                  <p className="text-neutral-300">Intervención forense urgente para sitios caídos o infectados donde solo se requiere el saneamiento inmediato sin contratar blindaje ni monitoreo extendido. Respaldo previo, eliminación de malware, gestión de desbloqueo con hosting y retiro de pantalla roja de Google en <strong>24 a 48 horas hábiles</strong> con garantía de 30 días.</p>
+                  <p className="text-neutral-300">Paquete unificado de prevención perimetral: cabeceras estrictas canónicas (HSTS, CSP, X-Frame) más Firewall WAF en Cloudflare anti-bots, scrapers y ataques DDoS en <strong>3 a 5 días hábiles</strong> con meta de Grado A (no se comercializan cabeceras por separado).</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 md:col-span-2 lg:col-span-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">5. Monitoreo y mantenimiento mensual</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">S/. 49 y S/. 99 / mes</span>
+                    <span className="font-bold text-white text-sm">5. Mantenimiento mensual 24/7</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">S/. 90 y S/. 180 / mes</span>
                   </div>
-                  <p className="text-neutral-300">Activación en <strong>menos de 24 horas</strong> para sitios previamente blindados o tras vencer los 3 meses incluidos del paquete. Vigilancia automatizada ininterrumpida 24/7 (detección de caídas de web y checkout, alertas preventivas de SSL) con aviso inmediato a WhatsApp; re-escaneos periódicos y soporte directo por escrito.</p>
+                  <p className="text-neutral-300">Activación en <strong>menos de 24 horas</strong>. Vigilancia ininterrumpida 24/7 (Uptime checks, alertas preventivas de SSL y dominio) con aviso inmediato a WhatsApp; re-escaneos periódicos y soporte técnico directo incluido sin permanencia forzosa.</p>
                 </div>
               </div>
 
@@ -224,10 +224,10 @@ export default function TerminosYPrivacidadPage() {
                 </p>
                 <ul className="list-disc pl-5 space-y-1.5 text-neutral-300">
                   <li>
-                    <strong>CMS Auto-alojados (WordPress, WooCommerce, PrestaShop, Magento):</strong> El cliente cuenta con servidor propio o compartido (cPanel, SSH, SFTP). El servicio de rescate abarca desinfección forense de archivos PHP, tablas SQL, retiro de webshells/backdoors y remediación ante la suspensión preventiva impuesta por la empresa de hosting (incluido en el Pack Todo Incluido o Rescate de Emergencia).
+                    <strong>CMS Auto-alojados (WordPress, WooCommerce, PrestaShop, Magento):</strong> El cliente cuenta con servidor propio o compartido (cPanel, SSH, SFTP). El servicio de rescate abarca desinfección forense de archivos PHP, tablas SQL, retiro de webshells/backdoors y remediación ante la suspensión preventiva impuesta por la empresa de hosting (S/ 380 en sitios corporativos | S/ 550 en WooCommerce).
                   </li>
                   <li>
-                    <strong>Plataformas SaaS en la Nube (Shopify, Wix, Squarespace):</strong> Al tratarse de entornos cerrados administrados internacionalmente por Shopify Inc. o Wix.com, la infraestructura de servidor físico y el núcleo del CMS son gestionados por el proveedor. Por consiguiente, <strong>no existen virus de archivos PHP ni acceso a base de datos de servidor</strong>. El servicio de DEFENSA TI en estas plataformas atiende los riesgos reales aplicables a tiendas en la nube dentro del <em>Pack Todo Incluido E-commerce (S/ 850)</em>: (i) <em>Saneamiento de Temas y Apps</em> (detección y remoción de scripts maliciosos insertados en plantillas Liquid o código Wix para robo de tarjetas/Magecart y revocación de apps no autorizadas); (ii) <em>Blindaje Perimetral y DNS</em> (configuración estricta anti-suplantación SPF, DKIM y DMARC en el DNS del dominio para evitar que atacantes envíen correos fraudulentos a nombre de la tienda); (iii) <em>Protección WAF en Cloudflare</em> (para mitigar scrapers de precios/inventario y bots en checkout); y (iv) <em>3 meses de Monitoreo 24/7 incluidos</em> con aviso inmediato a WhatsApp ante caídas de la pasarela o de la tienda.
+                    <strong>Plataformas SaaS en la Nube (Shopify, Wix, Squarespace):</strong> Al tratarse de entornos cerrados administrados internacionalmente por Shopify Inc. o Wix.com, la infraestructura de servidor físico y el núcleo del CMS son gestionados por el proveedor. Por consiguiente, <strong>no existen virus de archivos PHP ni acceso a base de datos de servidor</strong>. El servicio de DEFENSA TI en estas plataformas atiende los riesgos reales aplicables a tiendas en la nube: (i) <em>Saneamiento de Temas y Apps</em> (detección y remoción de scripts maliciosos insertados en plantillas Liquid o código Wix para robo de tarjetas/Magecart y revocación de apps no autorizadas con tarifa de S/ 550); (ii) <em>Blindaje + WAF Cloudflare</em> (S/ 450, que incluye cabeceras compatibles, registros estrictos SPF, DKIM y DMARC en el DNS del dominio para evitar que atacantes envíen correos fraudulentos a nombre de la tienda, y WAF perimetral para mitigar scrapers de precios/inventario y bots en checkout); y (iii) <em>Mantenimiento Mensual</em> (S/ 90 y S/ 180 / mes, con aviso prioritario a WhatsApp ante caídas de la pasarela o de la tienda).
                   </li>
                 </ul>
               </div>
@@ -236,34 +236,34 @@ export default function TerminosYPrivacidadPage() {
             {/* 3.2. Condiciones Específicas del Monitoreo Mensual */}
             <section className="space-y-3 text-sm leading-relaxed p-5 rounded-2xl bg-white/[0.03] border border-white/10">
               <h4 className="text-base font-bold text-white flex items-center gap-2">
-                <span>3.2. Condiciones Específicas del Monitoreo y Mantenimiento Mensual (Planes S/. 49 y S/. 99 PEN)</span>
+                <span>3.2. Condiciones Específicas del Mantenimiento y Monitoreo Mensual (Planes S/. 90 y S/. 180 PEN)</span>
               </h4>
               <p className="text-xs text-neutral-300">
-                Los servicios de monitoreo mensual están estructurados sobre procesos de supervisión automatizada continua para garantizar un precio asequible y una detección inmediata de incidencias. Para asegurar la viabilidad técnica y operativa, el soporte manual de intervención humana está taxativamente acotado:
+                Los servicios de mantenimiento mensual están estructurados sobre procesos de supervisión automatizada continua para garantizar un precio asequible y una detección inmediata de incidencias. Para asegurar la viabilidad técnica y operativa, el soporte manual de intervención humana está taxativamente acotado:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
                 <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">Plan Esencial (S/. 49 PEN / mes)</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Vigilancia Base</span>
+                    <span className="font-bold text-white text-sm">Plan Básico (S/. 90 PEN / mes)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sitios Corporativos</span>
                   </div>
                   <ul className="space-y-1.5 text-neutral-300">
                     <li>• <strong>Qué se monitorea:</strong> Disponibilidad web (Uptime HTTP/HTTPS) y fecha de expiración del certificado SSL/TLS.</li>
                     <li>• <strong>Frecuencia:</strong> Muestreo de disponibilidad cada 15 minutos; alerta preventiva de SSL a los 30 días previos; re-escaneo perimetral mensual.</li>
                     <li>• <strong>Canal de alertas:</strong> Mensaje inmediato a WhatsApp oficial del cliente ante caída confirmada y reporte mensual consolidado.</li>
-                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 30 minutos al mes</strong> de soporte técnico para ajustes menores de configuración perimetral o renovación básica de SSL.</li>
+                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 40 minutos al mes</strong> de soporte técnico para ajustes menores de configuración perimetral o renovación básica de SSL.</li>
                   </ul>
                 </div>
                 <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">Plan Pro (S/. 99 PEN / mes)</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">Supervisión Proactiva</span>
+                    <span className="font-bold text-white text-sm">Plan Tiendas Online (S/. 180 PEN / mes)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">Soporte Prioritario</span>
                   </div>
                   <ul className="space-y-1.5 text-neutral-300">
-                    <li>• <strong>Qué se monitorea:</strong> Disponibilidad en tiempo real, SSL/TLS, integridad de cabeceras y detección perimetral de malware conocido.</li>
+                    <li>• <strong>Qué se monitorea:</strong> Disponibilidad en tiempo real, SSL/TLS, integridad de cabeceras, salud del checkout y detección perimetral de malware.</li>
                     <li>• <strong>Frecuencia:</strong> Muestreo de disponibilidad cada 5 minutos; monitoreo continuo de SSL; re-escaneo perimetral semanal con informe detallado.</li>
                     <li>• <strong>Canal de alertas:</strong> Notificación inmediata y prioritaria a WhatsApp + reporte ejecutivo semanal.</li>
-                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 60 minutos (1 hora) al mes</strong> para optimización de cabeceras, endurecimiento y parches rápidos de seguridad.</li>
+                    <li>• <strong>Límite de soporte manual incluido:</strong> Hasta un <strong>máximo de 90 minutos (1.5 horas) al mes</strong> para optimización de cabeceras, reglas WAF y parches rápidos de seguridad.</li>
                   </ul>
                 </div>
               </div>
@@ -273,7 +273,7 @@ export default function TerminosYPrivacidadPage() {
                   <strong>a) No acumulación de horas:</strong> Los minutos u horas de soporte técnico mensual incluidos caducan al cierre de cada ciclo mensual y en ningún caso son transferibles ni acumulables para meses futuros.
                 </p>
                 <p>
-                  <strong>b) Exclusiones estrictas y cotizaciones independientes:</strong> La cuota mensual no cubre desinfección forense tras hackeos masivos o infecciones sobrevenidas en la web del cliente (cotizado bajo la tarifa de Rescate de Emergencia S/. 450 – S/. 650 o Pack Todo Incluido S/. 600 – S/. 850 PEN), ni desarrollo web a medida, diseño, creación de nuevas funciones, ni fallas derivadas de caídas del datacenter o hosting del cliente.
+                  <strong>b) Exclusiones estrictas y cotizaciones independientes:</strong> La cuota mensual no cubre desinfección forense tras hackeos masivos o infecciones sobrevenidas en la web del cliente (cotizado bajo la tarifa de Rescate de malware de S/. 380 en sitios corporativos o S/. 550 en WooCommerce), ni desarrollo web a medida, diseño, creación de nuevas funciones, ni fallas derivadas de caídas del datacenter o hosting del cliente.
                 </p>
                 <p>
                   <strong>c) Baja voluntaria sin penalizaciones:</strong> El cliente puede cancelar el servicio de monitoreo en cualquier momento antes de la fecha de su siguiente ciclo mensual mediante aviso por WhatsApp o correo electrónico, sin penalizaciones ni cláusulas de permanencia obligatoria.
@@ -289,7 +289,7 @@ export default function TerminosYPrivacidadPage() {
               </h3>
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-neutral-300 leading-relaxed space-y-3">
                 <p>
-                  <strong>Compromiso Técnico Acotado y Tope de Alcance:</strong> En los paquetes contratados que incluyan remediación y blindaje (Pack Todo Incluido Corporativo S/. 600 o E-commerce S/. 850 PEN), nos comprometemos a implementar las directivas perimetrales canónicas (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy y Permissions-Policy) junto con Cloudflare WAF con meta técnica de alcanzar Grado A (90-100 pts) al momento de la entrega formal. Si tras la primera intervención no se alcanza dicho Grado en el re-escaneo oficial, aplicaremos hasta un <strong>máximo de dos (2) ciclos de ajuste técnico y re-medición sin costo adicional</strong> dentro de un <strong>plazo perentorio de catorce (14) días calendario</strong> contados desde el inicio de los trabajos. Vencido dicho plazo o completados los dos ciclos de ajuste, el servicio se considerará plenamente concluido y entregado.
+                  <strong>Compromiso Técnico Acotado y Tope de Alcance:</strong> En el plan contratado de Blindaje + WAF Cloudflare (S/. 450 PEN), nos comprometemos a implementar las directivas perimetrales canónicas (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy y Permissions-Policy) junto con Cloudflare WAF con meta técnica de alcanzar Grado A (90-100 pts) al momento de la entrega formal. Si tras la primera intervención no se alcanza dicho Grado en el re-escaneo oficial, aplicaremos hasta un <strong>máximo de dos (2) ciclos de ajuste técnico y re-medición sin costo adicional</strong> dentro de un <strong>plazo perentorio de catorce (14) días calendario</strong> contados desde el inicio de los trabajos. Vencido dicho plazo o completados los dos ciclos de ajuste, el servicio se considerará plenamente concluido y entregado.
                 </p>
                 <p>
                   <strong>Alcance del servicio:</strong> Nos enfocamos en auditoría de seguridad web, fortalecimiento de configuración perimetral y reducción de riesgo técnico. <strong>Qué no cubre:</strong> No cubre vulnerabilidades en código fuente personalizado, filtraciones por contraseñas débiles de usuarios ni fallos de infraestructura del proveedor de hosting.
@@ -300,7 +300,7 @@ export default function TerminosYPrivacidadPage() {
                 <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 space-y-1.5">
                   <strong className="text-white block font-semibold">Tope Máximo de Responsabilidad Patrimonial (Límite al Valor del Servicio):</strong>
                   <p>
-                    Dado que el servicio es prestado bajo la modalidad de Persona Natural con Negocio (Karol Martín Castillo Rojas &bull; RUC 10704877850), la responsabilidad patrimonial total, acumulada y máxima del prestador frente al cliente por cualquier concepto (contractual, extracontractual, civil o comercial) <strong>queda estrictamente topada y limitada al cien por ciento (100%) del importe efectivamente pagado por el cliente por dicho plan contratado</strong> (ej. S/. 600 o S/. 850 PEN en paquetes todo incluido, S/. 450 – S/. 650 PEN en rescates de emergencia, o el valor de la última mensualidad efectivamente pagada en planes recurrentes de S/. 49 o S/. 99 PEN).
+                    Dado que el servicio es prestado bajo la modalidad de Persona Natural con Negocio (Karol Martín Castillo Rojas &bull; RUC 10704877850), la responsabilidad patrimonial total, acumulada y máxima del prestador frente al cliente por cualquier concepto (contractual, extracontractual, civil o comercial) <strong>queda estrictamente topada y limitada al cien por ciento (100%) del importe efectivamente pagado por el cliente por dicho plan contratado</strong> (ej. S/. 380 o S/. 550 PEN en rescates de malware, S/. 450 PEN en Blindaje + WAF, o el valor de la última mensualidad efectivamente pagada en planes recurrentes de S/. 90 o S/. 180 PEN).
                   </p>
                   <p>
                     Bajo ninguna circunstancia existirá responsabilidad indemnizatoria sobre el patrimonio personal del titular, ni por lucro cesante, daño emergente, pérdida de ventas, retenciones preventivas de pasarelas de pago independientes (Yape, Niubiz, Culqi, etc.) ni reclamaciones de terceros.

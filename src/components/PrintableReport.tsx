@@ -244,15 +244,15 @@ export default function PrintableReport({ report, auditId }: Props) {
 
             <div className="grid grid-cols-2 gap-2 text-[8.5px]">
               <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate de Emergencia Puntual (S/ 450 – S/ 650 PEN)</span>
+                <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate / Limpieza de malware (S/ 380 - S/ 550 PEN)</span>
                 <p className="text-neutral-700 leading-tight mt-0.5">
-                  Intervención forense urgente en 24-48h: respaldo integral previo, eliminación de virus, troyanos o webshells, gestión de desbloqueo con hosting y garantía de 30 días.
+                  Desinfección forense completa de archivos y base de datos con respaldo previo, desbloqueo con el hosting, retiro de pantalla roja y garantía de 30 días.
                 </p>
               </div>
               <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                <span className="font-bold text-neutral-900 block">OPCIÓN 2: Pack Rescate + Blindaje WAF + 3 Meses Monitoreo (S/ 600 - S/ 850 PEN)</span>
+                <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje + WAF Cloudflare Unificado (S/ 450 PEN)</span>
                 <p className="text-neutral-700 leading-tight mt-0.5">
-                  Solución integral llave en mano: desinfección completa, cabeceras estrictas, Cloudflare WAF perimetral y 3 meses de monitoreo 24/7 con garantía de 30 días.
+                  Paquete unificado de prevención: cabeceras estrictas canónicas más Firewall Cloudflare WAF perimetral activo contra bots, DDoS y scrapers.
                 </p>
               </div>
             </div>

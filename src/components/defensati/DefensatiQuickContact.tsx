@@ -55,11 +55,11 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
 
   const servicesList = [
     { id: 'diagnostico', label: '1. Diagnóstico preliminar gratuito (S/ 0 • Entrega < 2h)' },
-    { id: 'pack-corp', label: '2. Pack Completo: Rescate + Blindaje WAF + 3 meses monitoreo - Web Corporativa (S/ 600 • Llave en mano)' },
-    { id: 'pack-ecom', label: '3. Pack Completo: Rescate + Blindaje WAF + 3 meses monitoreo - E-commerce / Tienda Online (S/ 850 • Llave en mano)' },
-    { id: 'rescate-emergencia', label: '4. Rescate de Emergencia Puntual (S/ 450 - S/ 650 • Intervención urgente 24-48h)' },
-    { id: 'monitoreo-esencial', label: '5. Monitoreo mensual Plan Esencial (S/ 49 PEN / mes • Vigilancia 24/7)' },
-    { id: 'monitoreo-pro', label: '6. Monitoreo mensual Plan Pro (S/ 99 PEN / mes • Vigilancia continua y soporte)' },
+    { id: 'rescate-corp', label: '2. Rescate / Limpieza de malware - Sitio Corporativo (S/ 380 • 24-48h con garantía)' },
+    { id: 'rescate-woocommerce', label: '3. Rescate / Limpieza de malware - WooCommerce / Tienda Online (S/ 550 • 24-48h con garantía)' },
+    { id: 'blindaje-waf', label: '4. Blindaje + WAF Cloudflare - Paquete Unificado (S/ 450 • 3 a 5 días hábiles)' },
+    { id: 'mantenimiento-basico', label: '5. Mantenimiento Básico - Sitios Corporativos (S/ 90 PEN / mes • Vigilancia 24/7)' },
+    { id: 'mantenimiento-tiendas', label: '6. Mantenimiento Tiendas Online con Soporte Prioritario (S/ 180 PEN / mes • 24/7)' },
   ];
 
   const isFormValid = Boolean(
