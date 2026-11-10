@@ -173,18 +173,33 @@ export default function DefensatiPage() {
   const cleanDomain = report?.url ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
 
   return (
-    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#060814] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
-      {/* Fondo interactivo y luces ambientales (Opacado ~15% para máxima legibilidad sin invadir el texto) */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-50">
-        <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-[#000000]/30 via-[#000000]/55 to-[#000000]/80" />
+      {/* Fondo interactivo 3D de Red Neuronal de Dominios Webs */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <NeuralBackground 
+          onSelectDomain={(selectedDomain) => {
+            setUrl(`https://${selectedDomain}`);
+            const inputEl = document.getElementById('url-scan-input-defensati');
+            if (inputEl) {
+              inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              setTimeout(() => inputEl.focus(), 300);
+            }
+          }}
+        />
+        {/* Sutil viñeta periférica para balancear contraste y legibilidad con las tarjetas */}
+        <div className="absolute inset-0 bg-radial from-transparent via-[#060814]/25 to-[#060814]/80 pointer-events-none" />
       </div>
 
-      <div className="pointer-events-none fixed inset-0 z-0 flex justify-center">
+      {/* Luces cósmicas de alta gama Apple Pro */}
+      <div className="pointer-events-none fixed inset-0 z-0 flex justify-center overflow-hidden">
         <div 
-          className="absolute rounded-full bg-linear-to-b from-[#0071e3]/30 via-[#1d4ed8]/18 to-transparent"
-          style={{ top: '-80px', height: '520px', width: '900px', filter: 'blur(140px)' }} 
+          className="absolute rounded-full bg-linear-to-b from-[#0071e3]/22 via-[#7928ca]/14 to-transparent"
+          style={{ top: '-70px', height: '580px', width: '980px', filter: 'blur(140px)' }} 
+        />
+        <div 
+          className="absolute rounded-full bg-sky-500/10"
+          style={{ top: '35%', right: '-8%', height: '420px', width: '420px', filter: 'blur(160px)' }} 
         />
       </div>
 

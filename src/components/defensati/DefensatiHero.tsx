@@ -80,6 +80,12 @@ export default function DefensatiHero() {
           RUC {siteConfig.business.ruc}
         </span>
       </div>
+
+      {/* Indicador interactivo de la red neuronal 3D */}
+      <div className="mt-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/25 text-[#7dd3fc] text-xs font-mono backdrop-blur-xl shadow-[0_0_15px_rgba(56,189,248,0.15)]">
+        <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
+        <span>Red neuronal 3D en tiempo real &bull; Clic en cualquier dominio para autocompletar</span>
+      </div>
     </section>
   );
 }
