@@ -256,6 +256,9 @@ export default function TerminosYPrivacidadPage() {
                   <strong>Compromiso Técnico Acotado y Tope de Alcance:</strong> En los planes contratados que incluyan remediación técnica (Blindaje Llave en Mano y Blindaje Total WAF), nos comprometemos a implementar las directivas perimetrales canónicas (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy y Permissions-Policy) con meta técnica de alcanzar Grado A (90-100 pts) al momento de la entrega formal. Si tras la primera intervención no se alcanza dicho Grado en el re-escaneo oficial, aplicaremos hasta un <strong>máximo de dos (2) ciclos de ajuste técnico y re-medición sin costo adicional</strong> dentro de un <strong>plazo perentorio de catorce (14) días calendario</strong> contados desde el inicio de los trabajos. Vencido dicho plazo o completados los dos ciclos de ajuste, el servicio se considerará plenamente concluido y entregado.
                 </p>
                 <p>
+                  <strong>Alcance del servicio:</strong> Nos enfocamos en auditoría de seguridad web, fortalecimiento de configuración perimetral y reducción de riesgo técnico. <strong>Qué no cubre:</strong> No cubre vulnerabilidades en código fuente personalizado, filtraciones por contraseñas débiles de usuarios ni fallos de infraestructura del proveedor de hosting.
+                </p>
+                <p>
                   <strong>Exclusión de Código y Sistemas Ajenos:</strong> El servicio perimetral no incluye reprogramación de la lógica de negocio del cliente, reparación de bases de datos corruptas, remediación de plugins incompatibles de terceros ni solución a deficiencias de infraestructura atribuibles al proveedor de hosting del cliente.
                 </p>
                 <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 space-y-1.5">

@@ -352,11 +352,6 @@ export default function PreviewPricing({ targetUrl }: Props) {
         </div>
       </div>
 
-      {/* Aclaración de Alcance y Qué NO cubre el servicio */}
-      <div className="p-4 sm:p-5 rounded-[24px] bg-white/[0.03] border border-white/10 text-center max-w-3xl mx-auto text-xs text-[#a1a1a6] leading-relaxed backdrop-blur-xl">
-        <strong className="text-[#f5f5f7]">Alcance del servicio:</strong> Nos enfocamos en auditoría de seguridad web, fortalecimiento de configuración perimetral y reducción de riesgo técnico. <span className="text-neutral-300 font-medium">Qué no cubre:</span> No cubre vulnerabilidades en código fuente personalizado, filtraciones por contraseñas débiles de usuarios ni fallos de infraestructura del proveedor de hosting.
-      </div>
-
     </section>
   );
 }
