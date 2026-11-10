@@ -108,7 +108,7 @@ export default function AiConsultantWidget({ report }: Props) {
       price: 'GRATIS',
       original: 'S/ 65',
       time: 'Inmediato',
-      desc: 'Diagnóstico perimetral profundo, membrete legal institucional y receta de código lista para aplicar.',
+      desc: 'Diagnóstico perimetral profundo, membrete formal con RUC y receta de código lista para aplicar.',
       link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Dictamen%20T%C3%A9cnico%20gratuito%20de%20DEFENSA%20TI.'
     },
     {

@@ -46,7 +46,7 @@ export default function DefensatiHero() {
 
         {/* Subtítulo Comercial Estilo Apple */}
         <p className="text-base sm:text-xl text-[#86868b] font-normal leading-relaxed max-w-2xl mx-auto pt-3">
-          Atención técnica directa para WordPress, WooCommerce, Shopify, Wix y sitios de negocio. Diagnóstico previo sin costo, desinfección profunda con garantía de 30 días por escrito y comprobante formal con RUC.
+          Atención técnica directa sin intermediarios: yo mismo reviso tu web (WordPress, WooCommerce, Shopify o Wix). Diagnóstico previo sin costo, desinfección profunda con garantía de 30 días por escrito y comprobante formal con RUC.
         </p>
       </div>
 
@@ -102,6 +102,11 @@ export default function DefensatiHero() {
 
       {/* Micro-garantías Visuales de Confianza */}
       <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs sm:text-[13px] text-neutral-400 px-4 font-normal">
+        <span className="inline-flex items-center gap-1.5 text-neutral-200 font-semibold">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          Yo mismo reviso tu web
+        </span>
+        <span className="hidden sm:inline text-neutral-600">&bull;</span>
         <span className="inline-flex items-center gap-1.5 text-neutral-300">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           Diagnóstico preliminar en &lt; 2h

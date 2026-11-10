@@ -150,7 +150,7 @@ const jsonLd = {
           name: '¿Tienen acceso a mis datos bancarios o información confidencial de mis clientes?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Nunca. La intervención técnica se ejecuta estrictamente a nivel de archivos de servidor y base de datos técnica del CMS. Jamás solicitamos pasarelas de pago. Podemos firmar un Acuerdo de Confidencialidad (NDA) previo.',
+            text: 'Nunca. La intervención técnica se ejecuta estrictamente a nivel de archivos de servidor y base de datos técnica del CMS. Jamás solicitamos pasarelas de pago ni datos sensibles. Sin intermediarios ni juniors: yo mismo reviso tu web personalmente con total reserva.',
           },
         },
         {

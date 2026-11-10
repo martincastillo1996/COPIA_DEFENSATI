@@ -145,8 +145,8 @@ export default function LeadQuoteSection() {
                   <Shield className="w-3.5 h-3.5" />
                 </div>
                 <div>
-                  <strong className="text-white">Soberanía de Datos & Acuerdo NDA:</strong>
-                  <p className="text-neutral-400 mt-0.5">Tus catálogos, facturas y bases de datos nunca se usan para entrenar IA pública de terceros.</p>
+                  <strong className="text-white">Privacidad Absoluta &amp; Trato Directo:</strong>
+                  <p className="text-neutral-400 mt-0.5">Tus catálogos, facturas y accesos se manejan con total reserva. Sin intermediarios: yo mismo reviso tu web.</p>
                 </div>
               </div>
 

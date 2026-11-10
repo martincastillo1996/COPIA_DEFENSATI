@@ -26,7 +26,7 @@ const FAQS: FAQItem[] = [
   {
     id: 'privacidad-datos',
     question: '¿Tienen acceso a mis datos bancarios o información confidencial de mis clientes?',
-    answer: 'Nunca. La intervención técnica se ejecuta estrictamente a nivel de archivos de servidor (cPanel, SSH, SFTP) y base de datos técnica del CMS. Jamás solicitamos ni manipulamos pasarelas de pago ni datos sensibles de tarjetas. Si tu empresa lo requiere, firmamos un Acuerdo de Confidencialidad (NDA) previo.',
+    answer: 'Nunca. La intervención técnica se ejecuta estrictamente a nivel de archivos de servidor (cPanel, SSH, SFTP) y base de datos técnica del CMS. Jamás solicitamos ni manipulamos pasarelas de pago ni datos de tarjetas de tus clientes. Sin intermediarios ni juniors: yo mismo reviso tu web personalmente con total reserva y ética profesional.',
     icon: Lock,
   },
   {

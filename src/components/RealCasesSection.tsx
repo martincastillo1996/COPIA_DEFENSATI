@@ -277,7 +277,7 @@ export default function RealCasesSection() {
           </h3>
 
           <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-            Nada de informes teóricos de 80 páginas. Te entregamos un <strong>Dictamen Técnico Ejecutivo de 2 páginas</strong> con membrete institucional, RUC 10704877850, telemetría de 6 cabeceras críticas, diagnóstico de SSL, sondeo de puertos y <strong>la receta de código lista para copiar y pegar</strong> (Nginx, Apache o Cloudflare).
+            Nada de informes teóricos de 80 páginas. Te entregamos un <strong>Dictamen Técnico Ejecutivo de 2 páginas</strong> con membrete oficial de DEFENSA TI, RUC 10704877850, telemetría de 6 cabeceras críticas, diagnóstico de SSL, sondeo de puertos y <strong>la receta de código lista para copiar y pegar</strong> (Nginx, Apache o Cloudflare).
           </p>
 
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs text-neutral-400 pt-1">

@@ -464,9 +464,9 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 Garantía formal por escrito de 30 días
               </span>
-              <span className="flex items-center gap-1.5 text-neutral-300">
-                <Lock className="w-4 h-4 text-[#38bdf8] shrink-0" />
-                Acuerdo de Confidencialidad (NDA) disponible
+              <span className="flex items-center gap-1.5 text-neutral-200 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-[#38bdf8] shrink-0" />
+                Yo mismo reviso tu web (sin intermediarios)
               </span>
             </div>
 

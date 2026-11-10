@@ -55,9 +55,9 @@ export default function DefensatiWarranty() {
                 RUC {siteConfig.business.ruc} a nombre de {siteConfig.business.owner}
               </span>
               <span className="hidden sm:inline">&bull;</span>
-              <span className="inline-flex items-center gap-1.5 text-neutral-200">
+              <span className="inline-flex items-center gap-1.5 text-neutral-200 font-medium">
                 <RotateCcw className="w-4 h-4 text-[#30d158]" />
-                Soporte de remediación directa sin bots
+                Yo mismo reviso tu web (sin intermediarios)
               </span>
               <span className="hidden sm:inline">&bull;</span>
               <span className="inline-flex items-center gap-1.5 text-neutral-200">

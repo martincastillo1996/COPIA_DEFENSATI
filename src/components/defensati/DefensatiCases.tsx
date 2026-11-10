@@ -37,7 +37,7 @@ export default function DefensatiCases() {
       evidence: {
         ticketId: 'DEF-2024-WOO-08',
         serviceDate: 'Agosto 2024 • Tiempo de remediación: 6.5 horas',
-        confidentiality: 'Registro técnico custodiado bajo Acuerdo de Confidencialidad (NDA bilateral) conforme a la Ley N° 29733 de Protección de Datos Personales del Perú.',
+        confidentiality: 'Atención directa del fundador: yo mismo reviso tu web personalmente con estricta reserva conforme a la Ley N° 29733 de Protección de Datos Personales del Perú.',
         attackVector: 'Inyección de malware polimórfico en wp-blog-header.php e index.php a través de exploit en pasarela de pagos desactualizada (CVE-2023-4583 analizado). Script condicional que redirigía a apuestas solo a visitantes móviles provenientes de Google.',
         validationSource: 'Notificación de suspensión por cola de spam (Postfix RFC 5321) emitida por cPanel. Reactivación formal aprobada por soporte de hosting tras verificación de 0 malware en ClamAV y VirusTotal.'
       },
@@ -69,14 +69,14 @@ export default function DefensatiCases() {
       evidence: {
         ticketId: 'DEF-2024-CORP-11',
         serviceDate: 'Noviembre 2024 • Tiempo de saneamiento: 8 horas (aprobación GSC en 14h)',
-        confidentiality: 'Identidad y dominio corporativo protegidos bajo NDA bilateral formal conforme a la Ley N° 29733 de Protección de Datos Personales del Perú.',
+        confidentiality: 'Sin intermediarios ni juniors: yo mismo reviso tu web y resguardo tus accesos conforme a la Ley N° 29733 del Perú.',
         attackVector: 'Subida no autenticada de archivos en carpeta /wp-content/uploads/ mediante vulnerabilidad en plugin de formularios de contacto sin actualizar. Inyección de páginas de phishing suplantando acceso a entidad bancaria.',
         validationSource: 'Notificación oficial de alerta «Sitio web engañoso / Social Engineering» en Google Search Console. Aprobación formal de reconsideración por Google Trust & Safety y deslistado verificado en Spamhaus ZEN.'
       },
       found: [
         'Pantalla roja de Google («Deceptive site ahead / Sitio engañoso») por inyección de enlaces de phishing en /wp-content/uploads/.',
         'Vulnerabilidad en plugin de formularios de contacto desactualizado (exploit de subida de archivos arbitraria).',
-        'Correos corporativos institucionales rebotando o cayendo a SPAM por inclusión de la IP del servidor en listas negras (Spamhaus ZEN).',
+        'Correos corporativos rebotando o cayendo a SPAM por inclusión de la IP del servidor en listas negras (Spamhaus ZEN).',
         'Ausencia de cabeceras de seguridad estrictas HSTS, Content-Security-Policy y X-Frame-Options.'
       ],
       remedied: [
@@ -86,8 +86,8 @@ export default function DefensatiCases() {
         'Elaboración y tramitación de informe técnico de reconsideración ante Google Search Console, aprobada en 14 horas.',
         'Gestión técnica de deslistado en listas negras de reputación de correo (Spamhaus y DNSBL).'
       ],
-      result: 'Eliminación del bloqueo de Google al 100%, restablecimiento del flujo de cotizaciones institucionales y reputación comercial recuperada.',
-      warrantyApplied: 'Acuerdo de Confidencialidad (NDA) firmado previo y garantía técnica de 30 días.',
+      result: 'Eliminación del bloqueo de Google al 100%, restablecimiento del flujo de cotizaciones y reputación comercial recuperada.',
+      warrantyApplied: 'Atención técnica directa por Martín Castillo (yo mismo reviso tu web) y garantía de 30 días.',
       ctaMessage: 'Hola Martín, mi página web tiene advertencia de Google o problemas de reputación similar al caso corporativo en San Isidro (DEF-2024-CORP-11).'
     },
     distributor: {
@@ -101,7 +101,7 @@ export default function DefensatiCases() {
       evidence: {
         ticketId: 'DEF-2025-IND-02',
         serviceDate: 'Febrero 2025 • Tiempo de hardening: 4 horas de configuración perimetral',
-        confidentiality: 'Identidad, infraestructura y reportes de seguridad resguardados bajo Acuerdo de Confidencialidad (NDA bilateral y Ley N° 29733 del Perú).',
+        confidentiality: 'Trato directo y personal: yo mismo reviso tu web y configuro el blindaje con total reserva y ética profesional.',
         attackVector: 'Ataques distribuidos de fuerza bruta masiva sobre /wp-login.php y xmlrpc.php (más de 140,000 peticiones POST/hora desde redes de bots en Europa del Este y Asia). Puertos 22 (SSH) y 3306 (MySQL) expuestos a la red pública.',
         validationSource: 'Registros de acceso Nginx, telemetría de agotamiento de procesos PHP-FPM y posterior mitigación al 100% verificada en el panel de analítica de Cloudflare WAF.'
       },
@@ -347,7 +347,7 @@ export default function DefensatiCases() {
             </div>
 
             <p className="text-[11px] text-neutral-400 pt-2 border-t border-white/5 font-mono">
-              🔒 <strong>Cláusula de Confidencialidad:</strong> {current.evidence.confidentiality}
+              🔒 <strong>Privacidad y Trato Directo:</strong> {current.evidence.confidentiality}
             </p>
           </div>
 
@@ -431,7 +431,7 @@ export default function DefensatiCases() {
               ¿Quieres ver qué entregamos antes de contratar?
             </span>
             <span className="text-xs text-[#86868b] block">
-              Revisa el Dictamen Técnico de 2 páginas con membrete institucional, telemetría y recetas de código.
+              Revisa el Dictamen Técnico de 2 páginas con membrete formal, telemetría y recetas de código.
             </span>
           </div>
 
