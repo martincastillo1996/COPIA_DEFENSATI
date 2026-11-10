@@ -187,10 +187,10 @@ export default function DefensatiPage() {
   const cleanDomain = report?.url ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
 
   return (
-    <div className="relative min-h-screen bg-[#070a14] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
-      {/* Fondo interactivo de Red Neuronal de Dominios Webs con alta visibilidad */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      {/* Fondo interactivo y luces ambientales (El fondo clásico original de DEFENSA TI) */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-50">
         <NeuralBackground 
           onSelectDomain={(selectedDomain) => {
             setUrl(`https://${selectedDomain}`);
@@ -201,21 +201,21 @@ export default function DefensatiPage() {
             }
           }}
         />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#070a14]/15 to-[#070a14]/70 pointer-events-none" />
+        <div className="absolute inset-0 bg-radial from-[#000000]/30 via-[#000000]/55 to-[#000000]/80" />
       </div>
 
       {/* Luces cósmicas Apple Pro de fondo */}
       <div className="pointer-events-none fixed inset-0 z-0 flex justify-center overflow-hidden">
         <div 
-          className="absolute rounded-full bg-gradient-to-b from-[#0071e3]/30 via-[#7928ca]/20 to-transparent"
+          className="absolute rounded-full bg-gradient-to-b from-[#0071e3]/20 via-[#7928ca]/15 to-transparent"
           style={{ top: '-80px', height: '640px', width: '1050px', filter: 'blur(140px)' }} 
         />
         <div 
-          className="absolute rounded-full bg-[#38bdf8]/15"
+          className="absolute rounded-full bg-[#38bdf8]/10"
           style={{ top: '35%', right: '-8%', height: '520px', width: '520px', filter: 'blur(160px)' }} 
         />
         <div 
-          className="absolute rounded-full bg-[#7928ca]/15"
+          className="absolute rounded-full bg-[#7928ca]/10"
           style={{ top: '65%', left: '-8%', height: '540px', width: '540px', filter: 'blur(170px)' }} 
         />
       </div>
