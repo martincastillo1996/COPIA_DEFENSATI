@@ -107,7 +107,6 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     let height = window.innerHeight;
     let isMobile = width < 768;
 
-    // Cap devicePixelRatio to 2 to prevent GPU throttling on retina displays
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
@@ -128,16 +127,17 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     resize();
     window.addEventListener('resize', resize);
 
-    // ==========================================
-    // 1. GENERACIÓN DE NODOS EN ESPACIO 3D
-    // ==========================================
-    const nodeCount = isMobile ? 38 : (showDomains ? 72 : 84);
+    // ========================================================
+    // 1. GENERACIÓN DE NODOS EN TODA LA PANTALLA (CON CENTRO DESPEJADO)
+    // ========================================================
+    // Abarca todo el ancho y alto del monitor para no aglutinarse en el centro
+    const nodeCount = isMobile ? 36 : (showDomains ? 64 : 76);
     const nodes: Node3D[] = [];
 
-    // Nube esférica volumétrica 3D amplia y luminosa
-    const sphereRadiusX = isMobile ? 280 : 480;
-    const sphereRadiusY = isMobile ? 250 : 400;
-    const sphereRadiusZ = isMobile ? 300 : 480;
+    // Dimensiones que cubren la pantalla completa
+    const spreadX = isMobile ? Math.max(width * 0.48, 300) : Math.max(width * 0.58, 640);
+    const spreadY = isMobile ? Math.max(height * 0.50, 360) : Math.max(height * 0.56, 440);
+    const spreadZ = isMobile ? 320 : 500;
 
     for (let i = 0; i < nodeCount; i++) {
       const def = WEB_DOMAINS[i % WEB_DOMAINS.length];
@@ -145,28 +145,28 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
       const phi = Math.acos(1 - (2 * (i + 0.5)) / nodeCount);
       const theta = Math.PI * (1 + Math.sqrt(5)) * (i + 0.5);
 
-      const radialJitter = 0.75 + Math.random() * 0.45;
-      const x = Math.sin(phi) * Math.cos(theta) * sphereRadiusX * radialJitter;
-      const y = Math.cos(phi) * sphereRadiusY * radialJitter;
-      const z = Math.sin(phi) * Math.sin(theta) * sphereRadiusZ * radialJitter;
+      // Despejar el centro: los nodos se ubican en la periferia y bordes de la pantalla (rFactor >= 0.55)
+      const rFactor = 0.60 + Math.random() * 0.50;
+      const x = Math.sin(phi) * Math.cos(theta) * spreadX * rFactor;
+      const y = Math.cos(phi) * spreadY * rFactor;
+      const z = Math.sin(phi) * Math.sin(theta) * spreadZ * rFactor;
 
-      // Colores Neón Vibrantes
-      let color = '#38bdf8'; // Cyan
+      let color = '#38bdf8';
       let glowColor = 'rgba(56, 189, 248, 0.65)';
 
       if (def.category === 'cms') {
-        color = '#c084fc'; // Violeta neón
+        color = '#c084fc';
         glowColor = 'rgba(192, 132, 252, 0.65)';
       } else if (def.category === 'cloud') {
-        color = '#60a5fa'; // Azul zafiro
+        color = '#60a5fa';
         glowColor = 'rgba(96, 165, 250, 0.6)';
       } else if (def.category === 'tech') {
-        color = '#34d399'; // Esmeralda / Menta
+        color = '#34d399';
         glowColor = 'rgba(52, 211, 153, 0.6)';
       }
 
       if (def.domain === 'defensati.com') {
-        color = '#00f0ff'; // Super Cyan Eléctrico
+        color = '#00f0ff';
         glowColor = 'rgba(0, 240, 255, 0.9)';
       }
 
@@ -183,7 +183,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         vx: 0,
         vy: 0,
         vz: 0,
-        radius: def.priority ? 4.2 : 2.8,
+        radius: def.priority ? 3.8 : 2.5,
         color,
         glowColor,
         pulsePhase: Math.random() * Math.PI * 2,
@@ -199,7 +199,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     }
 
     // ==========================================
-    // 2. PRE-CÁLCULO DE SINAPSIS (VECINOS MÁS CERCANOS 3D)
+    // 2. PRE-CÁLCULO DE SINAPSIS
     // ==========================================
     const maxNeighbors = isMobile ? 2 : 3;
     for (let i = 0; i < nodes.length; i++) {
@@ -221,9 +221,9 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     }
 
     // ==========================================
-    // 3. IMPULSOS ELÉCTRICOS SINÁPTICOS (FOTONES)
+    // 3. IMPULSOS ELÉCTRICOS (FOTONES)
     // ==========================================
-    const impulseCount = isMobile ? 22 : 46;
+    const impulseCount = isMobile ? 18 : 36;
     const impulses: SynapseImpulse[] = [];
 
     for (let i = 0; i < impulseCount; i++) {
@@ -239,9 +239,9 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         from,
         to,
         progress: Math.random(),
-        speed: 0.008 + Math.random() * 0.015,
+        speed: 0.007 + Math.random() * 0.012,
         color,
-        size: 2.8 + Math.random() * 1.6,
+        size: 2.5 + Math.random() * 1.5,
       });
     }
 
@@ -279,10 +279,10 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < 360) {
-          const force = (1 - dist / 360) * 24;
+          const force = (1 - dist / 360) * 22;
           n.vx += (dx / (dist || 1)) * force;
           n.vy += (dy / (dist || 1)) * force;
-          n.vz += (Math.random() - 0.5) * force * 1.8;
+          n.vz += (Math.random() - 0.5) * force * 1.6;
         }
       }
     };
@@ -339,8 +339,8 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      targetRotY = ((e.clientX / width) - 0.5) * 0.85;
-      targetRotX = -((e.clientY / height) - 0.5) * 0.5;
+      targetRotY = ((e.clientX / width) - 0.5) * 0.75;
+      targetRotX = -((e.clientY / height) - 0.5) * 0.45;
     };
 
     const onMouseLeave = () => {
@@ -354,8 +354,8 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
       if (e.touches.length > 0) {
         mouseX = e.touches[0].clientX;
         mouseY = e.touches[0].clientY;
-        targetRotY = ((mouseX / width) - 0.5) * 0.85;
-        targetRotX = -((mouseY / height) - 0.5) * 0.5;
+        targetRotY = ((mouseX / width) - 0.5) * 0.75;
+        targetRotX = -((mouseY / height) - 0.5) * 0.45;
       }
     };
 
@@ -391,51 +391,56 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
 
       ctx.clearRect(0, 0, width, height);
 
-      // ========================================================
-      // 0. NEBULOSAS CÓSMICAS DE FONDO (ADIÓS A LA OSCURIDAD PARCA)
-      // ========================================================
+      // Centro de proyección de pantalla
       const cx = width / 2;
-      const cy = height * 0.45;
+      const cy = isMobile ? height * 0.36 : height * 0.40;
 
-      // Nebulosa 1: Azul eléctrico central
-      const g1 = ctx.createRadialGradient(cx, cy * 0.85, 0, cx, cy * 0.85, Math.max(width, height) * 0.6);
-      g1.addColorStop(0, 'rgba(0, 113, 227, 0.22)');
-      g1.addColorStop(0.5, 'rgba(56, 189, 248, 0.08)');
-      g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = g1;
+      // Elipse del área de lectura central del Hero (Para no entorpecer el texto)
+      const readZoneRx = isMobile ? 210 : 420;
+      const readZoneRy = isMobile ? 180 : 210;
+
+      // ========================================================
+      // 0. NEBULOSAS CÓSMICAS EN TODA LA PANTALLA
+      // ========================================================
+      // Nebulosa lateral izquierda (azul eléctrico)
+      const gLeft = ctx.createRadialGradient(width * 0.15, height * 0.45, 0, width * 0.15, height * 0.45, Math.max(width, height) * 0.5);
+      gLeft.addColorStop(0, 'rgba(0, 113, 227, 0.22)');
+      gLeft.addColorStop(0.5, 'rgba(56, 189, 248, 0.06)');
+      gLeft.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = gLeft;
       ctx.fillRect(0, 0, width, height);
 
-      // Nebulosa 2: Violeta cósmico superior derecho
-      const g2 = ctx.createRadialGradient(width * 0.82, height * 0.32, 0, width * 0.82, height * 0.32, Math.max(width, height) * 0.48);
-      g2.addColorStop(0, 'rgba(147, 51, 234, 0.18)');
-      g2.addColorStop(0.6, 'rgba(192, 132, 252, 0.05)');
-      g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = g2;
+      // Nebulosa lateral derecha (violeta neón)
+      const gRight = ctx.createRadialGradient(width * 0.85, height * 0.40, 0, width * 0.85, height * 0.40, Math.max(width, height) * 0.5);
+      gRight.addColorStop(0, 'rgba(147, 51, 234, 0.18)');
+      gRight.addColorStop(0.5, 'rgba(192, 132, 252, 0.05)');
+      gRight.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = gRight;
       ctx.fillRect(0, 0, width, height);
 
-      // Nebulosa 3: Menta / Cian inferior izquierdo
-      const g3 = ctx.createRadialGradient(width * 0.18, height * 0.72, 0, width * 0.18, height * 0.72, Math.max(width, height) * 0.44);
-      g3.addColorStop(0, 'rgba(16, 185, 129, 0.15)');
-      g3.addColorStop(0.5, 'rgba(56, 189, 248, 0.05)');
-      g3.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = g3;
+      // Nebulosa superior / inferior
+      const gBottom = ctx.createRadialGradient(cx, height * 0.85, 0, cx, height * 0.85, Math.max(width, height) * 0.45);
+      gBottom.addColorStop(0, 'rgba(16, 185, 129, 0.14)');
+      gBottom.addColorStop(0.5, 'rgba(56, 189, 248, 0.04)');
+      gBottom.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = gBottom;
       ctx.fillRect(0, 0, width, height);
 
-      // Rotación continua + Lerp de inclinación
-      autoRotY += 0.14 * dt;
-      curRotY += (targetRotY - curRotY) * 0.05;
-      curRotX += (targetRotX - curRotX) * 0.05;
+      // Rotación suave continua
+      autoRotY += 0.10 * dt;
+      curRotY += (targetRotY - curRotY) * 0.04;
+      curRotX += (targetRotX - curRotX) * 0.04;
 
       const totalAngleY = autoRotY + curRotY;
-      const totalAngleX = curRotX + Math.sin(now * 0.0006) * 0.09;
+      const totalAngleX = curRotX + Math.sin(now * 0.0006) * 0.07;
 
       const cosY = Math.cos(totalAngleY);
       const sinY = Math.sin(totalAngleY);
       const cosX = Math.cos(totalAngleX);
       const sinX = Math.sin(totalAngleX);
 
-      const fov = isMobile ? 400 : 540;
-      const camZ = isMobile ? 620 : 700;
+      const fov = isMobile ? 420 : 560;
+      const camZ = isMobile ? 600 : 680;
 
       // Actualizar y proyectar todos los nodos a 3D
       for (let i = 0; i < nodes.length; i++) {
@@ -467,15 +472,15 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         n.screenX = cx + x1 * scale;
         n.screenY = cy + y2 * scale;
 
-        const depthNorm = (z2 + sphereRadiusZ) / (sphereRadiusZ * 2);
-        n.depthAlpha = Math.max(0.24, Math.min(1.0, 0.28 + depthNorm * 0.72));
+        const depthNorm = (z2 + spreadZ) / (spreadZ * 2);
+        n.depthAlpha = Math.max(0.20, Math.min(1.0, 0.25 + depthNorm * 0.75));
         n.visible = true;
       }
 
       // ==========================================
-      // A. DIBUJAR SINAPSIS NEURONALES (AXONES 3D VIBRANTES)
+      // A. DIBUJAR SINAPSIS NEURONALES (CON ATENUACIÓN EN ZONA DE TEXTO)
       // ==========================================
-      ctx.lineWidth = 1.3;
+      ctx.lineWidth = 1.1;
       for (let i = 0; i < nodes.length; i++) {
         const n1 = nodes[i];
         if (!n1.visible) continue;
@@ -486,8 +491,18 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
           const n2 = nodes[j];
           if (!n2.visible) continue;
 
-          const linkAlpha = Math.min(n1.depthAlpha, n2.depthAlpha) * 0.55;
-          if (linkAlpha < 0.04) continue;
+          // Punto medio de la línea para calcular si cruza la zona de texto
+          const midX = (n1.screenX + n2.screenX) / 2;
+          const midY = (n1.screenY + n2.screenY) / 2;
+          const dxM = (midX - cx) / readZoneRx;
+          const dyM = (midY - cy) / readZoneRy;
+          const distMidSq = dxM * dxM + dyM * dyM;
+
+          // Si la línea cruza directamente detrás del texto, se atenúa al 20% para no ser invasiva
+          const textClashFactor = distMidSq < 1.0 ? 0.22 : (distMidSq < 1.4 ? 0.55 : 1.0);
+          const linkAlpha = Math.min(n1.depthAlpha, n2.depthAlpha) * 0.50 * textClashFactor;
+
+          if (linkAlpha < 0.03) continue;
 
           ctx.beginPath();
           ctx.moveTo(n1.screenX, n1.screenY);
@@ -498,7 +513,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
       }
 
       // ==========================================
-      // B. IMPULSOS ELÉCTRICOS (COMETAS SINÁPTICOS CON ESTELA)
+      // B. IMPULSOS ELÉCTRICOS (FOTONES)
       // ==========================================
       for (let i = 0; i < impulses.length; i++) {
         const imp = impulses[i];
@@ -523,10 +538,17 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         const curX = nFrom.screenX + (nTo.screenX - nFrom.screenX) * p;
         const curY = nFrom.screenY + (nTo.screenY - nFrom.screenY) * p;
         const curScale = nFrom.scale + (nTo.scale - nFrom.scale) * p;
-        const impAlpha = Math.min(nFrom.depthAlpha, nTo.depthAlpha) * 0.95;
 
-        // Estela del cometa
-        const tailP = Math.max(0, p - 0.16);
+        // Atenuación en el área de texto
+        const dxP = (curX - cx) / readZoneRx;
+        const dyP = (curY - cy) / readZoneRy;
+        const pDistSq = dxP * dxP + dyP * dyP;
+        const pTextFactor = pDistSq < 1.0 ? 0.25 : 1.0;
+
+        const impAlpha = Math.min(nFrom.depthAlpha, nTo.depthAlpha) * 0.90 * pTextFactor;
+
+        // Estela
+        const tailP = Math.max(0, p - 0.14);
         const tailX = nFrom.screenX + (nTo.screenX - nFrom.screenX) * tailP;
         const tailY = nFrom.screenY + (nTo.screenY - nFrom.screenY) * tailP;
 
@@ -534,13 +556,13 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         ctx.moveTo(tailX, tailY);
         ctx.lineTo(curX, curY);
         ctx.strokeStyle = imp.color;
-        ctx.lineWidth = Math.max(1.8, imp.size * curScale * 0.85);
-        ctx.globalAlpha = impAlpha * 0.75;
+        ctx.lineWidth = Math.max(1.5, imp.size * curScale * 0.8);
+        ctx.globalAlpha = impAlpha * 0.7;
         ctx.stroke();
 
-        // Cabeza brillante del fotón
+        // Cabeza
         ctx.beginPath();
-        ctx.arc(curX, curY, Math.max(2.2, imp.size * curScale), 0, Math.PI * 2);
+        ctx.arc(curX, curY, Math.max(2.0, imp.size * curScale), 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
         ctx.globalAlpha = impAlpha;
         ctx.fill();
@@ -557,8 +579,8 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
 
         ctx.beginPath();
         ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(56, 189, 248, ${sw.alpha * 0.75})`;
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = `rgba(56, 189, 248, ${sw.alpha * 0.7})`;
+        ctx.lineWidth = 2.0;
         ctx.stroke();
 
         if (sw.alpha < 0.015 || sw.radius >= sw.maxRadius) {
@@ -567,7 +589,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
       }
 
       // ==========================================
-      // D. DIBUJAR NODOS Y DOMINIOS (ORDENADOS POR PROFUNDIDAD Z)
+      // D. DIBUJAR NODOS Y ETIQUETAS DE DOMINIOS
       // ==========================================
       const sortedIndices: number[] = [];
       for (let i = 0; i < nodes.length; i++) {
@@ -578,21 +600,31 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
       for (let idx = 0; idx < sortedIndices.length; idx++) {
         const n = nodes[sortedIndices[idx]];
 
+        // Distancia a la zona de lectura de las letras
+        const dxRead = (n.screenX - cx) / readZoneRx;
+        const dyRead = (n.screenY - cy) / readZoneRy;
+        const distReadSq = dxRead * dxRead + dyRead * dyRead;
+        const isInsideReadZone = distReadSq < 1.0;
+
         n.pulsePhase += n.pulseSpeed;
         const pulse = 0.86 + 0.28 * Math.sin(n.pulsePhase);
-        const nodeRadius = Math.max(2.0, n.radius * n.scale * pulse);
+        const nodeRadius = Math.max(1.8, n.radius * n.scale * pulse);
 
         const dxM = mouseX - n.screenX;
         const dyM = mouseY - n.screenY;
         const isHovered = (dxM * dxM + dyM * dyM) < 1000;
 
-        const effectiveAlpha = isHovered ? 1.0 : n.depthAlpha;
+        // Si está justo detrás de las letras, atenuar para no chocar ni hacer engorrosa la lectura
+        let effectiveAlpha = isHovered ? 1.0 : n.depthAlpha;
+        if (isInsideReadZone && !isHovered) {
+          effectiveAlpha *= 0.20; // 80% más suave detrás del texto
+        }
 
-        // 1. Halo difuso brillante (Glow Neón)
-        const glowRadius = nodeRadius * (isHovered ? 5.0 : 3.6);
+        // 1. Halo difuso
+        const glowRadius = nodeRadius * (isHovered ? 4.5 : 3.2);
         const halo = ctx.createRadialGradient(n.screenX, n.screenY, 0, n.screenX, n.screenY, glowRadius);
         halo.addColorStop(0, n.glowColor);
-        halo.addColorStop(0.5, n.glowColor.replace(/[\d.]+\)$/, `${0.28 * effectiveAlpha})`));
+        halo.addColorStop(0.5, n.glowColor.replace(/[\d.]+\)$/, `${0.25 * effectiveAlpha})`));
         halo.addColorStop(1, 'rgba(0,0,0,0)');
 
         ctx.beginPath();
@@ -604,13 +636,17 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
         ctx.beginPath();
         ctx.arc(n.screenX, n.screenY, nodeRadius, 0, Math.PI * 2);
         ctx.fillStyle = isHovered ? '#ffffff' : n.color;
-        ctx.globalAlpha = Math.min(1.0, effectiveAlpha * 1.3);
+        ctx.globalAlpha = Math.min(1.0, effectiveAlpha * 1.25);
         ctx.fill();
         ctx.globalAlpha = 1.0;
 
         // 3. Etiqueta del Dominio Web
-        if (showDomains && (effectiveAlpha > 0.28 || isHovered)) {
-          const fontSize = Math.max(9.5, Math.round((n.priority ? 12.5 : 10.5) * n.scale * (isHovered ? 1.15 : 1.0)));
+        // REGLA CRÍTICA: NO mostrar el badge si está dentro de la zona de texto para que NO sea engorroso con las letras,
+        // pero SÍ mostrarlo en TODA la periferia de la pantalla (laterales, arriba, abajo y esquinas) o si se hace hover.
+        const canShowBadge = showDomains && (!isInsideReadZone || isHovered) && (effectiveAlpha > 0.26 || isHovered);
+
+        if (canShowBadge) {
+          const fontSize = Math.max(9.5, Math.round((n.priority ? 12 : 10) * n.scale * (isHovered ? 1.15 : 1.0)));
           ctx.font = `${n.priority ? '700' : '600'} ${fontSize}px ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace`;
 
           const textWidth = ctx.measureText(n.domain).width;
@@ -622,7 +658,7 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
           // Fondo Glass Dark Apple Pro
           ctx.fillStyle = isHovered 
             ? 'rgba(12, 20, 42, 0.95)' 
-            : `rgba(8, 14, 30, ${0.82 * effectiveAlpha})`;
+            : `rgba(8, 14, 30, ${0.75 * effectiveAlpha})`;
           
           ctx.beginPath();
           const ctxWithRoundRect = ctx as CanvasRenderingContext2D & {
@@ -635,25 +671,23 @@ export default function NeuralBackground({ onSelectDomain, showDomains = true }:
           }
           ctx.fill();
 
-          // Borde neón iluminado
+          // Borde neón sutil
           ctx.strokeStyle = isHovered 
             ? '#38bdf8' 
-            : (n.priority ? `rgba(56, 189, 248, ${0.65 * effectiveAlpha})` : `rgba(255, 255, 255, ${0.2 * effectiveAlpha})`);
-          ctx.lineWidth = n.priority ? 1.3 : 1;
+            : (n.priority ? `rgba(56, 189, 248, ${0.55 * effectiveAlpha})` : `rgba(255, 255, 255, ${0.16 * effectiveAlpha})`);
+          ctx.lineWidth = n.priority ? 1.2 : 1;
           ctx.stroke();
 
-          // Texto legible de alta definición
+          // Texto nítido
           ctx.fillStyle = isHovered 
             ? '#ffffff' 
             : (n.priority ? '#7dd3fc' : `rgba(248, 250, 252, ${Math.min(1, effectiveAlpha * 1.15)})`);
           ctx.fillText(n.domain, pillX + padX, pillY + textHeight - 4);
-        } else if (!showDomains) {
-          if (n.priority) {
-            ctx.beginPath();
-            ctx.arc(n.screenX, n.screenY, nodeRadius * 0.6, 0, Math.PI * 2);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-          }
+        } else if (!showDomains && n.priority) {
+          ctx.beginPath();
+          ctx.arc(n.screenX, n.screenY, nodeRadius * 0.6, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
         }
       }
 
