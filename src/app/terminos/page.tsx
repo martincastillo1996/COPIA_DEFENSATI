@@ -71,7 +71,7 @@ export default function TerminosYPrivacidadPage() {
               <strong>Titular y Prestador:</strong> Karol Martin Castillo Rojas (Persona Natural con Negocio) &bull; <strong>RUC:</strong> 10704877850 &bull; Domicilio: Lima, República del Perú.
             </p>
             <p>
-              <strong>Contacto Oficial y Ejercicio de Derechos:</strong> Correo: <a href="mailto:castillo.karol96@gmail.com" className="text-[#38bdf8] underline">castillo.karol96@gmail.com</a> &bull; WhatsApp Oficial: <a href="https://wa.me/17856433991" className="text-emerald-400 underline">+1 (785) 643-3991</a>.
+              <strong>Contacto Oficial y Ejercicio de Derechos:</strong> Correo Institucional: <a href="mailto:contacto@neuronalgravity.com" className="text-[#38bdf8] underline">contacto@neuronalgravity.com</a> &bull; WhatsApp Oficial: <a href="https://wa.me/51987010380" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">+51 987 010 380</a>.
             </p>
             <p className="text-[11px] text-neutral-400">
               * Vigente a partir de 2026. Documento unificado de observancia obligatoria para contrataciones y uso en todo el territorio nacional peruano.
@@ -357,10 +357,21 @@ export default function TerminosYPrivacidadPage() {
 
             {/* 2. Banco de Datos Personales */}
             <section className="space-y-3 text-sm leading-relaxed">
-              <h3 className="text-base font-bold text-white">2. Banco de Datos Personales</h3>
+              <h3 className="text-base font-bold text-white">2. Banco de Datos Personales y Registro ANPDP</h3>
               <p>
-                Los datos personales recopilados a través del sitio web, chats o formularios se incorporan en el banco de datos denominado <strong>&ldquo;Clientes y Contactos Comerciales DEFENSA TI&rdquo;</strong>, de titularidad de Karol Martin Castillo Rojas, encontrándose en proceso formal de inscripción y registro ante la Autoridad Nacional de Protección de Datos Personales (ANPDP) del Ministerio de Justicia y Derechos Humanos (MINJUS).
+                Los datos personales recopilados a través del sitio web, chats o formularios se incorporan en el banco de datos denominado <strong>&ldquo;Clientes y Contactos Comerciales DEFENSA TI&rdquo;</strong>, de titularidad de <strong>Karol Martin Castillo Rojas</strong> (RUC 10704877850).
               </p>
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-neutral-300 space-y-2">
+                <p>
+                  <strong>Estado Registral ante la Autoridad:</strong> En cumplimiento de la Ley N° 29733 y del Reglamento aprobado por el <strong>Decreto Supremo N° 016-2024-JUS</strong>, el titular ha formulado el trámite de inscripción ante el Registro Nacional de Protección de Datos Personales (RNPDP) de la Autoridad Nacional de Protección de Datos Personales (ANPDP) del Ministerio de Justicia y Derechos Humanos (MINJUS), encontrándose dicho registro en proceso administrativo formal de asignación de código definitivo.
+                </p>
+                <p>
+                  <strong>Finalidad Exclusiva:</strong> Los datos se tratan estrictamente para: (i) emisión de informes perimetrales y cotizaciones solicitadas; (ii) prestación de servicios de remediación de software y blindaje WAF; (iii) emisión y remisión de comprobantes de pago electrónicos oficiales (Factura o Boleta de Venta electrónica con RUC conforme a SUNAT); y (iv) atención de consultas posventa y soporte técnico.
+                </p>
+                <p>
+                  <strong>Medidas de Seguridad Aplicadas:</strong> Conforme a la Directiva de Seguridad de la ANPDP, se aplican medidas organizativas y técnicas de nivel medio/alto: cifrado de comunicaciones en tránsito mediante protocolo TLS 1.3, servidores con cortafuegos perimetral, política de acceso restringido bajo necesidad de servicio y exclusión estricta de captura o almacenamiento de credenciales administrativas o contraseñas bancarias de clientes.
+                </p>
+              </div>
             </section>
 
             {/* 3. Datos que Recopilamos y Datos Técnicos */}
@@ -392,24 +403,32 @@ export default function TerminosYPrivacidadPage() {
                 <span>4. Terceros Encargados del Tratamiento y Transferencia Transfronteriza</span>
               </h3>
               <p>
-                DEFENSA TI no comercializa ni vende datos personales. Para la operatividad técnica de la plataforma, determinados datos son procesados por terceros bajo estándares estrictos de seguridad perimetral, implicando un <strong>flujo transfronterizo de datos</strong> con las siguientes entidades:
+                DEFENSA TI no comercializa, cede ni vende datos personales bajo ninguna circunstancia. Para la operatividad técnica de la plataforma, el escaneo perimetral determinista y la entrega de servicios, determinados datos técnicos (direcciones IP, nombres de dominio y registros de conexión) son procesados por proveedores tecnológicos especializados, configurando un <strong>flujo transfronterizo de datos</strong> conforme a la arquitectura real del sistema:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                  <strong className="text-white block">Vercel Inc. (EE. UU.)</strong>
-                  <span className="text-neutral-400">Infraestructura de hosting, CDN perimetral y entrega de la aplicación web.</span>
+                  <strong className="text-white block">Cloudflare Inc. (EE. UU.)</strong>
+                  <span className="text-neutral-400">Proxy inverso, cortafuegos perimetral (WAF), mitigación DDoS y cifrado de transporte TLS 1.3 para el tráfico de la web.</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
                   <strong className="text-white block">DigitalOcean LLC (EE. UU.)</strong>
-                  <span className="text-neutral-400">Servidores para ejecución del motor de auditoría perimetral y proxies.</span>
+                  <span className="text-neutral-400">Servidor en la nube (Droplet VPS con certificación SOC 2 / ISO 27001) para la ejecución del motor de auditoría perimetral y base de datos local en Lima.</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                  <strong className="text-white block">Meta Platforms Inc. / WhatsApp (EE. UU.)</strong>
-                  <span className="text-neutral-400">Canal cifrado de mensajería para coordinación de soporte y entrega.</span>
+                  <strong className="text-white block">Vercel Inc. (EE. UU.)</strong>
+                  <span className="text-neutral-400">Infraestructura de despliegue continuo en la red Edge y redundancia de disponibilidad web.</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                  <strong className="text-white block">Culqi / Compañía Incubadora (Perú)</strong>
-                  <span className="text-neutral-400">Procesamiento seguro y certificado de pagos con tarjeta de crédito/débito.</span>
+                  <strong className="text-white block">Meta Platforms Inc. / WhatsApp LLC (EE. UU.)</strong>
+                  <span className="text-neutral-400">Canal cifrado de extremo a extremo para mensajería directa, coordinación de soporte técnico y envío de dictámenes al número +51 987 010 380.</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                  <strong className="text-white block">Google LLC (EE. UU.)</strong>
+                  <span className="text-neutral-400">Servicios de telemetría y analítica web (Google Analytics 4 / Google Search Console) bajo Cláusulas Contractuales Tipo (SCC).</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                  <strong className="text-white block">Culqi / Compañía Incubadora (Perú - Tratamiento Nacional)</strong>
+                  <span className="text-neutral-400">Pasarela regulada en el Perú (PCI-DSS Nivel 1) para pagos con tarjeta. No constituye flujo transfronterizo al procesarse en territorio peruano.</span>
                 </div>
               </div>
             </section>
@@ -433,7 +452,7 @@ export default function TerminosYPrivacidadPage() {
               </p>
               <ul className="list-disc pl-5 space-y-1.5 text-neutral-300">
                 <li>
-                  Enviando una solicitud al correo oficial: <strong>castillo.karol96@gmail.com</strong> indicando en el asunto &ldquo;Ejercicio de Derechos ARCO&rdquo; y adjuntando copia simple de su DNI/RUC.
+                  Enviando una solicitud al correo oficial: <strong>contacto@neuronalgravity.com</strong> indicando en el asunto &ldquo;Ejercicio de Derechos ARCO&rdquo; y adjuntando copia simple de su DNI/RUC.
                 </li>
                 <li>
                   <strong>Plazos de Respuesta según D.S. 016-2024-JUS:</strong> Acceso (20 días hábiles); Rectificación, Cancelación u Oposición (10 días hábiles).

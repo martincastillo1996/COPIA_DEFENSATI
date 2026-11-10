@@ -67,7 +67,7 @@ export default function LibroReclamacionesPage() {
     );
 
     // Enviar respaldo automático abriendo mailto institucional
-    const mailtoUrl = `mailto:castillo.karol96@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+    const mailtoUrl = `mailto:contacto@neuronalgravity.com?subject=${mailSubject}&body=${mailBody}`;
 
     setTimeout(() => {
       setLoading(false);
@@ -129,7 +129,7 @@ export default function LibroReclamacionesPage() {
             </div>
             <div>
               <span className="text-neutral-500 block text-[11px]">Correo Institucional de Atención:</span>
-              <span className="text-sky-400">castillo.karol96@gmail.com</span>
+              <span className="text-sky-400">contacto@neuronalgravity.com</span>
             </div>
           </div>
 
@@ -152,7 +152,7 @@ export default function LibroReclamacionesPage() {
               {claimId}
             </div>
             <p className="text-xs text-neutral-400 max-w-lg mx-auto leading-relaxed">
-              Hemos enviado la copia de la Hoja de Reclamación a <strong className="text-white">{formData.email}</strong> y a nuestro equipo de atención legal (<strong className="text-white">castillo.karol96@gmail.com</strong>). Nos pondremos en contacto dentro del plazo de 15 días hábiles.
+              Hemos enviado la copia de la Hoja de Reclamación a <strong className="text-white">{formData.email}</strong> y a nuestro equipo de atención legal (<strong className="text-white">contacto@neuronalgravity.com</strong>). Nos pondremos en contacto dentro del plazo de 15 días hábiles.
             </p>
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
@@ -162,7 +162,7 @@ export default function LibroReclamacionesPage() {
                 Volver a DEFENSA TI
               </Link>
               <a
-                href={`https://wa.me/17856433991?text=${encodeURIComponent(`Hola Martín, he presentado la reclamación código ${claimId} en el Libro Virtual. Confirmo la recepción.`)}`}
+                href={`https://wa.me/51987010380?text=${encodeURIComponent(`Hola Martín, he presentado la reclamación código ${claimId} en el Libro Virtual. Confirmo la recepción.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold transition-all shadow-lg shadow-emerald-500/20"
