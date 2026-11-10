@@ -9,6 +9,7 @@ import {
   AlertTriangle,
   ExternalLink,
   FileText,
+  Download,
   ChevronDown,
   ChevronUp,
   TrendingUp,
@@ -344,14 +345,26 @@ export default function PreviewCases() {
               <span className="text-sm text-neutral-300 text-center sm:text-left font-normal">
                 Puedes explorar un informe técnico de muestra completo y descargable en PDF.
               </span>
-              <Link
-                href="/defensati/informe-ejemplo"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sky-400 font-bold text-sm transition-all"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Ver Informe Modelo (Ejemplo)</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-2.5">
+                <a
+                  href="/informe-ejemplo-defensati.pdf"
+                  target="_blank"
+                  download="informe-ejemplo-defensati.pdf"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-xs sm:text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+                >
+                  <Download className="w-4 h-4 text-sky-200" />
+                  <span>Descargar PDF</span>
+                </a>
+
+                <Link
+                  href="/defensati/informe-ejemplo"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sky-400 font-bold text-xs sm:text-sm transition-all"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Ver en Pantalla</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
 
           </div>

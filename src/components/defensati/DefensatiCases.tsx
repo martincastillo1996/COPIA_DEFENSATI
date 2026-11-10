@@ -17,7 +17,8 @@ import {
   Server,
   Lock,
   ArrowRight,
-  Fingerprint
+  Fingerprint,
+  Download
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 
@@ -424,18 +425,38 @@ export default function DefensatiCases() {
         </div>
 
         {/* Acceso al Informe Completo de Muestra */}
-        <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs sm:text-sm text-[#86868b] text-center sm:text-left font-normal">
-            ¿Quieres ver cómo entregamos un informe técnico real con telemetría de sockets, cabeceras y dictamen?
-          </span>
-          <Link
-            href="/defensati/informe-ejemplo"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#2997ff] font-semibold text-xs sm:text-sm transition-all shrink-0"
-          >
-            <FileText className="w-4 h-4" />
-            <span>Ver informe técnico de ejemplo</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </Link>
+        <div className="pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center md:text-left">
+            <span className="text-xs sm:text-sm text-[#f5f5f7] font-medium block">
+              ¿Quieres ver qué entregamos antes de contratar?
+            </span>
+            <span className="text-xs text-[#86868b] block">
+              Revisa el Dictamen Técnico de 2 páginas con membrete institucional, telemetría y recetas de código.
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2.5 shrink-0">
+            {/* Botón 1: Descargar PDF Directo */}
+            <a
+              href="/informe-ejemplo-defensati.pdf"
+              target="_blank"
+              download="informe-ejemplo-defensati.pdf"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white font-semibold text-xs sm:text-sm transition-all shadow-[0_4px_16px_rgba(0,113,227,0.35)] active:scale-95 cursor-pointer"
+            >
+              <Download className="w-4 h-4 text-sky-200" />
+              <span>Descargar PDF de Ejemplo</span>
+            </a>
+
+            {/* Botón 2: Ver en el Navegador */}
+            <Link
+              href="/defensati/informe-ejemplo"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-[#2997ff]" />
+              <span>Ver en Pantalla</span>
+              <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
+            </Link>
+          </div>
         </div>
 
       </div>

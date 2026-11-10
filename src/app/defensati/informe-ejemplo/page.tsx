@@ -19,10 +19,13 @@ import {
   Terminal,
   Lock,
   Server,
-  AlertTriangle
+  AlertTriangle,
+  Download,
+  ExternalLink
 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 import AuditEngineExplanation from '@/components/AuditEngineExplanation';
 import HeaderResults from '@/components/HeaderResults';
@@ -133,15 +136,27 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
           </Link>
 
           <div className="flex items-center gap-2.5 sm:gap-3">
-            {/* Botón Imprimir PDF */}
-            <button
-              onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-bold text-white transition-all shadow-md active:scale-95 cursor-pointer"
+            {/* Botón Descargar PDF Directo */}
+            <a
+              href="/informe-ejemplo-defensati.pdf"
+              target="_blank"
+              download="informe-ejemplo-defensati.pdf"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-xs font-bold text-white transition-all shadow-md shadow-blue-500/25 active:scale-95 cursor-pointer"
             >
-              <Printer className="w-3.5 h-3.5 text-[#38bdf8]" />
+              <Download className="w-3.5 h-3.5 text-sky-200" />
               <span className="hidden sm:inline">Descargar PDF (2 Páginas)</span>
               <span className="sm:hidden">PDF</span>
-            </button>
+            </a>
+
+            {/* Botón Abrir PDF en pestaña */}
+            <a
+              href="/informe-ejemplo-defensati.pdf"
+              target="_blank"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-semibold text-white transition-all cursor-pointer"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-[#38bdf8]" />
+              <span>Abrir PDF</span>
+            </a>
 
             <HeaderWhatsAppButton
               message="Hola Martín, vi el informe de muestra (Negocio + Dev) en DEFENSA TI y deseo solicitar la auditoría para mi web."
@@ -165,14 +180,25 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             Te entregamos exactamente lo que necesitas: <strong>Página 1 para la Gerencia</strong> (impacto comercial, ventas y pasarelas sin tecnicismos) y <strong>Página 2 para tu Programador</strong> (receta de código lista para copiar y pegar para corregirlo en minutos).
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-2.5">
-            <button
-              onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95 cursor-pointer"
+          <div className="pt-2 flex flex-wrap items-center gap-3">
+            <a
+              href="/informe-ejemplo-defensati.pdf"
+              target="_blank"
+              download="informe-ejemplo-defensati.pdf"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95 cursor-pointer"
             >
-              <Printer className="w-4 h-4" />
-              <span>Imprimir / Guardar en PDF de 2 Páginas</span>
-            </button>
+              <Download className="w-4 h-4" />
+              <span>Descargar PDF Oficial de Ejemplo</span>
+            </a>
+
+            <a
+              href="/informe-ejemplo-defensati.pdf"
+              target="_blank"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+            >
+              <ExternalLink className="w-4 h-4 text-[#38bdf8]" />
+              <span>Abrir PDF en Pantalla Completa</span>
+            </a>
           </div>
         </div>
 
@@ -590,27 +616,37 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             durationMs={840}
           />
 
-          {/* Botones de Acción: WhatsApp en Verde Oficial */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10">
-            <Link
-              href="/defensati"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs sm:text-sm font-bold transition-all shadow-lg shadow-blue-500/25 text-center flex items-center justify-center gap-2"
-            >
-              <span>Escanear y Obtener Dictamen Gratis</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
+          {/* Botones de Acción: Descargar PDF + Escaneo + WhatsApp */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t border-white/10">
             <a
-              href={`${siteConfig.contact.whatsappLink}?text=${encodeURIComponent('Hola Martín, revisé el informe de ejemplo de DEFENSA TI (Negocio + Dev) y quiero consultar sobre la auditoría y blindaje para mi empresa.')}`}
+              href="/informe-ejemplo-defensati.pdf"
               target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/30 active:scale-95 cursor-pointer"
+              download="informe-ejemplo-defensati.pdf"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs sm:text-sm font-bold transition-all shadow-lg shadow-blue-500/25 text-center flex items-center justify-center gap-2 cursor-pointer active:scale-95"
             >
-              <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-              </svg>
-              <span>Consultar por WhatsApp</span>
+              <Download className="w-4 h-4 text-sky-200" />
+              <span>Descargar PDF de Ejemplo (2 Páginas)</span>
             </a>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <Link
+                href="/defensati"
+                className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2"
+              >
+                <span>Escanear mi Web</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <a
+                href={`${siteConfig.contact.whatsappLink}?text=${encodeURIComponent('Hola Martín, revisé el informe de ejemplo de DEFENSA TI (Negocio + Dev) y quiero consultar sobre la auditoría y blindaje para mi empresa.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-black text-xs sm:text-sm font-extrabold transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/30 active:scale-95 cursor-pointer"
+              >
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
+                <span>Consultar por WhatsApp</span>
+              </a>
+            </div>
           </div>
 
           </div>

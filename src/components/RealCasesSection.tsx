@@ -10,6 +10,7 @@ import {
   CheckCircle2, 
   AlertTriangle, 
   Eye,
+  Download,
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
@@ -297,15 +298,25 @@ export default function RealCasesSection() {
           </div>
         </div>
 
-        {/* Botón de acción hacia el informe ejemplo */}
-        <div className="w-full md:w-auto shrink-0 flex justify-center">
+        {/* Botones de acción hacia el informe ejemplo */}
+        <div className="w-full md:w-auto shrink-0 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="/informe-ejemplo-defensati.pdf"
+            target="_blank"
+            download="informe-ejemplo-defensati.pdf"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-xs sm:text-sm transition-all shadow-[0_10px_30px_rgba(0,113,227,0.35)] active:scale-95 text-center whitespace-nowrap cursor-pointer"
+          >
+            <Download className="w-4 h-4 text-sky-200" />
+            <span>Descargar PDF de Ejemplo</span>
+          </a>
+
           <Link
             href="/defensati/informe-ejemplo"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-xs sm:text-sm transition-all shadow-[0_10px_30px_rgba(0,113,227,0.35)] active:scale-95 text-center whitespace-nowrap"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm transition-all active:scale-95 text-center whitespace-nowrap cursor-pointer"
           >
-            <Eye className="w-4 h-4" />
-            <span>Ver Informe de Ejemplo Interactivo</span>
-            <ArrowRight className="w-4 h-4" />
+            <Eye className="w-4 h-4 text-[#38bdf8]" />
+            <span>Ver Online</span>
+            <ArrowRight className="w-4 h-4 text-neutral-400" />
           </Link>
         </div>
 
