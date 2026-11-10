@@ -1,92 +1,75 @@
 'use client';
 
 import React from 'react';
-import { MessageSquare, Search, ShieldCheck, Sparkles } from 'lucide-react';
+import { MessageCircle, Search, ShieldCheck } from 'lucide-react';
 
 export default function DefensatiHowItWorks() {
   const steps = [
     {
-      step: '01',
-      title: 'Me escribes por WhatsApp',
-      desc: 'Nos pasas el link de tu web y nos cuentas qué está pasando (redirecciones sospechosas, hackeo visible o prevención).',
-      icon: MessageSquare,
-      color: 'from-emerald-500/20 to-teal-500/10',
-      iconColor: 'text-emerald-400',
-      borderColor: 'border-emerald-500/30',
-      badge: 'Paso 1',
+      num: '1',
+      title: 'Me escribes con el link de tu web',
+      desc: 'Me mandas el enlace por WhatsApp y me cuentas brevemente qué le ocurre a tu sitio.',
+      icon: MessageCircle,
+      iconColor: 'text-[#30d158]',
+      accentBg: 'bg-[#30d158]/15 border-[#30d158]/30',
     },
     {
-      step: '02',
-      title: 'Te mando lo que encontré en tu web',
-      desc: 'Revisamos tu sitio y te mostramos el diagnóstico con los puntos vulnerables o archivos infectados antes de que pagues.',
+      num: '2',
+      title: 'Reviso y te muestro qué encontré, gratis',
+      desc: 'Analizo tu página y te comparto el diagnóstico exacto de fallas o infección antes de que pagues.',
       icon: Search,
-      color: 'from-sky-500/20 to-blue-500/10',
-      iconColor: 'text-sky-400',
-      borderColor: 'border-sky-500/30',
-      badge: 'Paso 2',
+      iconColor: 'text-[#38bdf8]',
+      accentBg: 'bg-[#38bdf8]/15 border-[#38bdf8]/30',
     },
     {
-      step: '03',
-      title: 'La limpio y la blindo',
-      desc: 'Eliminamos el malware por completo y aplicamos las directivas de blindaje perimetral para que no te vuelvan a entrar.',
+      num: '3',
+      title: 'Si quieres, la limpio y la blindo',
+      desc: 'Elimino cualquier virus o malware y fortalezco tu web para que no vuelva a ser hackeada.',
       icon: ShieldCheck,
-      color: 'from-purple-500/20 to-indigo-500/10',
-      iconColor: 'text-purple-400',
-      borderColor: 'border-purple-500/30',
-      badge: 'Paso 3',
+      iconColor: 'text-[#c084fc]',
+      accentBg: 'bg-[#c084fc]/15 border-[#c084fc]/30',
     },
   ];
 
   return (
-    <section id="como-funciona" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24">
-      <div className="p-6 sm:p-10 rounded-[32px] bg-[#121214]/80 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl space-y-8 text-left relative overflow-hidden">
+    <section id="como-funciona" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24 text-left">
+      <div className="p-7 sm:p-12 rounded-[32px] bg-[#0c101c]/85 border border-white/12 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] space-y-8">
         
-        {/* Cabecera */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs font-medium tracking-tight">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Cómo funciona</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-[#f5f5f7] tracking-[-0.03em] leading-snug">
-              Solución en 3 pasos simples
-            </h2>
-          </div>
-          <span className="text-xs text-[#86868b] font-mono">
-            Sin burocracia &bull; Directo al grano
+        {/* Cabecera Simple y Directa */}
+        <div className="space-y-2 border-b border-white/10 pb-5">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#38bdf8] font-bold">
+            CÓMO FUNCIONA
           </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            Solución en 3 pasos simples
+          </h2>
         </div>
 
-        {/* 3 Pasos (Mobile first: apilados verticalmente con amplio espacio de lectura) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {steps.map((item, idx) => {
+        {/* 3 Pasos: Gran Legibilidad, Letra Clara y Alto Contraste */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {steps.map((item) => {
             const Icon = item.icon;
             return (
               <div
-                key={idx}
-                className="p-6 sm:p-7 rounded-[24px] bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden backdrop-blur-xl"
+                key={item.num}
+                className="p-6 sm:p-8 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-start space-y-4"
               >
-                {/* Glow suave */}
-                <div className={`absolute top-0 right-0 w-24 h-24 bg-linear-to-br ${item.color} rounded-full blur-2xl pointer-events-none`} />
-
-                <div className="space-y-3 relative z-10">
-                  <div className="flex items-center justify-between">
-                    <div className={`w-11 h-11 rounded-2xl bg-white/5 border ${item.borderColor} flex items-center justify-center ${item.iconColor} shadow-inner`}>
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-xs font-mono font-medium text-[#2997ff] bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                      {item.badge}
-                    </span>
+                <div className="flex items-center justify-between">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${item.accentBg} ${item.iconColor}`}>
+                    <Icon className="w-6 h-6" />
                   </div>
-
-                  <h3 className="text-lg sm:text-xl font-semibold text-[#f5f5f7] leading-snug pt-1 tracking-tight">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm text-[#a1a1a6] leading-relaxed font-normal">
-                    {item.desc}
-                  </p>
+                  <span className="text-3xl sm:text-4xl font-black text-white/25 font-mono">
+                    0{item.num}
+                  </span>
                 </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug tracking-tight">
+                  {item.title}
+                </h3>
+
+                <p className="text-base sm:text-lg text-neutral-200 leading-relaxed font-normal">
+                  {item.desc}
+                </p>
               </div>
             );
           })}
