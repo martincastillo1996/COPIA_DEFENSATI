@@ -29,8 +29,14 @@ export default function BusinessOverview({ report }: Props) {
   const hasClickjackingRisk = missingHeaders.some(h => h.header.toLowerCase().includes('frame'));
   const hasDowngradeRisk = missingHeaders.some(h => h.header.toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
-    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
   );
+  const openAdminPortsList = (report.ports || []).filter(
+    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
+  );
+  const openAdminPortsNames = openAdminPortsList
+    .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port})`)
+    .join(', ');
 
   // Semáforo estricto de colores (Verde | Amarillo | Rojo)
   const sslStatus: 'green' | 'yellow' | 'red' = !report.ssl?.valid
@@ -268,7 +274,7 @@ export default function BusinessOverview({ report }: Props) {
                     <strong className="text-white block">3. Accesos y Bases de Datos:</strong>
                     <span className="text-neutral-300">
                       {dbStatus === 'green' && 'Tus bases de datos y accesos privados están debidamente ocultos y protegidos de miradas públicas.'}
-                      {dbStatus === 'red' && 'Hay puertos de gestión o base de datos abiertos a todo internet. Cualquier atacante puede intentar ataques de fuerza bruta.'}
+                      {dbStatus === 'red' && `Peligro Crítico: Se detectaron puertos de gestión o base de datos expuestos (${openAdminPortsNames || 'MySQL / FTP'}). Riesgo de ataques de fuerza bruta y filtración de información confidencial.`}
                     </span>
                   </div>
                 </div>

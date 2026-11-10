@@ -5,6 +5,7 @@ import { CANONICAL_PORTS, CanonicalPortItem } from '@/config/ports';
 export interface PortCheckResult {
   port: number;
   service: string;
+  shortName?: string;
   isOpen: boolean;
   risk: 'BAJO' | 'MEDIO' | 'ALTO' | 'CRÍTICO';
   description: string;
@@ -12,12 +13,21 @@ export interface PortCheckResult {
 
 export { CANONICAL_PORTS };
 
-// Puertos autorizados para inspección activa de sockets de transporte web (80, 443, 8080).
-// Puertos sensibles de infraestructura (21, 22, 3306) se inspeccionan con política no invasiva
-// para no activar alertas de port-scanning en proveedores de hosting ni violar términos de uso.
-const ACTIVELY_PROBED_PORTS = new Set([80, 443, 8080]);
+/**
+ * Matriz de Sondeo Perimetral Controlado (Defensa TI Engine v1.2.5).
+ * 
+ * PROTECCIÓN ANTI-PORT-SCANNING MASIVO:
+ * 1. ZERO-WILDCARD: Solo se inspecciona esta lista cerrada de 6 puertos empresariales canónicos.
+ *    Bajo ninguna circunstancia se ejecutan escaneos de rangos amplios (ej. 1-65535).
+ * 2. SONDEO NON-INVASIVE LIGERO: Solo abre un socket TCP mínimo para verificar estado SYN/ACK.
+ *    No se envían payloads, comandos ni intentos de fuerza bruta; el socket se destruye
+ *    inmediatamente al responder o dar timeout.
+ * 3. THROTTLING PERIMETRAL: Sondeo secuencial con espaciado de seguridad (35ms) para no saturar
+ *    la red ni activar alertas falsas de IDS/IPS (Fail2ban, ModSecurity, Cloudflare) en el destino.
+ */
+const ACTIVELY_PROBED_PORTS = new Set([80, 443, 8080, 21, 22, 3306]);
 
-function checkPort(host: string, port: number, timeout = 600): Promise<boolean> {
+function checkPort(host: string, port: number, timeout = 650): Promise<boolean> {
   return new Promise((resolve) => {
     const socket = new net.Socket();
 
@@ -42,8 +52,12 @@ function checkPort(host: string, port: number, timeout = 600): Promise<boolean> 
   });
 }
 
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function scanPerimetralPorts(host: string): Promise<PortCheckResult[]> {
-  // 1. Blindaje perimetral: No abrir sockets hacia localhost o redes privadas
+  // 1. Blindaje perimetral: Bloqueo estricto contra hosts privados o loopback (Anti-SSRF)
   if (isPrivateOrLocalHost(host)) {
     return CANONICAL_PORTS.map((item) => ({
       ...item,
@@ -53,37 +67,93 @@ export async function scanPerimetralPorts(host: string): Promise<PortCheckResult
     }));
   }
 
-  const checks = CANONICAL_PORTS.map(async (item) => {
-    // 2. Seguridad Perimetral Activa: Solo sondear puertos web legítimos (80, 8080).
-    // Para puertos sensibles como MySQL (3306), SSH (22) y FTP (21), no abrir sockets
-    // arbitrarios hacia terceros para evitar que la IP del servidor sea reportada por port scanning.
+  const isGitPlatform = host.includes('github.com') || host.includes('gitlab.com');
+  const results: PortCheckResult[] = [];
+
+  // 2. Inspección secuencial no invasiva con espaciado para evitar bloqueos por IDS
+  for (const item of CANONICAL_PORTS) {
     if (!ACTIVELY_PROBED_PORTS.has(item.port)) {
-      return {
+      results.push({
         ...item,
         isOpen: false,
         risk: 'BAJO' as const,
-        description: 'Puerto protegido o no expuesto públicamente en el perímetro web.',
-      };
+        description: 'Puerto protegido o cerrado perimetralmente.',
+      });
+      continue;
     }
 
     const isOpen = await checkPort(host, item.port);
 
-    if (item.port === 80 && isOpen) {
-      return {
+    if (isOpen) {
+      if (item.port === 443) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'BAJO' as const,
+          description: 'Canal seguro HTTPS activo (Cifrado estándar para pagos y navegación).',
+        });
+      } else if (item.port === 80) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'MEDIO' as const,
+          description: 'Servicio HTTP en texto plano activo sin canal seguro garantizado.',
+        });
+      } else if (item.port === 22 && isGitPlatform) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'BAJO' as const,
+          description: 'Gestión de repositorios Git remotos mediante llave SSH pública autorizada.',
+        });
+      } else if (item.port === 22) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'ALTO' as const,
+          description: 'Terminal de administración SSH expuesta a internet público (riesgo de fuerza bruta).',
+        });
+      } else if (item.port === 21) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Protocolo FTP en texto plano expuesto a internet público (riesgo de fuga de contraseñas).',
+        });
+      } else if (item.port === 3306) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Motor de base de datos MySQL accesible directamente desde internet sin firewall.',
+        });
+      } else if (item.port === 8080) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'MEDIO' as const,
+          description: 'Puerto alternativo de backend o desarrollo expuesto sin filtrado perimetral.',
+        });
+      } else {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: item.risk,
+          description: item.description,
+        });
+      }
+    } else {
+      results.push({
         ...item,
-        isOpen,
-        risk: 'MEDIO' as const,
-        description: 'Servicio HTTP en texto plano activo sin canal seguro garantizado.',
-      };
+        isOpen: false,
+        risk: 'BAJO' as const,
+        description: 'Puerto cerrado o protegido correctamente tras firewall perimetral.',
+      });
     }
 
-    return {
-      ...item,
-      isOpen,
-      risk: isOpen ? item.risk : ('BAJO' as const),
-      description: isOpen ? item.description : 'Puerto cerrado o filtrado correctamente.',
-    };
-  });
+    // Pausa técnica ligera (35ms) entre sockets para no activar alertas de flood en el destino
+    await delay(35);
+  }
 
-  return Promise.all(checks);
+  return results;
 }

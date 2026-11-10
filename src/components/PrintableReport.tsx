@@ -35,8 +35,18 @@ export default function PrintableReport({ report, auditId }: Props) {
   const missingHeaders = (report.headers || []).filter(h => !h.present);
   const hasDowngradeRisk = missingHeaders.some(h => (h.header || h.name || '').toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
-    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
   );
+  const openAdminPortsList = (report.ports || []).filter(
+    p => p.isOpen && [21, 22, 3306, 5432, 8080].includes(p.port)
+  );
+  const openAdminPortsNames = openAdminPortsList
+    .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port})`)
+    .join(', ');
+
+  const resolvedIp = report.telemetry?.targetResolvedIp && report.telemetry.targetResolvedIp !== '[PROTEGIDA POR SEGURIDAD]'
+    ? report.telemetry.targetResolvedIp
+    : (report.location?.ip || 'Detectada vía DNS (Anti-SSRF OK)');
 
   const displayUrl = report.url.includes('demo') || report.url.includes('ejemplo') || report.url.includes('textil')
     ? 'https://ejemplo-empresa-demo.pe (EMPRESA FICTICIA DE MUESTRA)'
@@ -135,7 +145,7 @@ export default function PrintableReport({ report, auditId }: Props) {
               </span>
               <span className="text-sm font-bold font-mono text-neutral-900 block">{displayUrl}</span>
               <div className="text-[9px] text-neutral-600 font-mono mt-0.5">
-                <span>IP Servidor: <strong>[PROTEGIDA POR SEGURIDAD]</strong> &bull; Verificación DNS Segura Anti-SSRF (OK)</span>
+                <span>IP Servidor: <strong>{resolvedIp}</strong> &bull; Verificación DNS Segura Anti-SSRF (OK)</span>
               </div>
             </div>
             <div className="text-right border-l border-neutral-300 pl-4 space-y-0.5">
@@ -200,7 +210,7 @@ export default function PrintableReport({ report, auditId }: Props) {
                   <span className="text-neutral-700 leading-tight">
                     {!hasOpenAdminPorts
                       ? 'Protegido: Tus bases de datos y accesos privados (MySQL, SSH, FTP) están debidamente ocultos y cerrados a miradas públicas.'
-                      : 'Crítico: Hay puertos de gestión o base de datos abiertos a internet público. Riesgo de ataques de fuerza bruta.'}
+                      : `Crítico: Detectado ${openAdminPortsNames || 'puertos sensibles'} expuesto(s) a internet público. Riesgo inminente de captura de credenciales y fuga de datos.`}
                   </span>
                 </div>
                 <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${!hasOpenAdminPorts ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'}`}>

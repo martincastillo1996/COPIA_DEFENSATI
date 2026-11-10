@@ -328,6 +328,16 @@ export async function POST(req: Request) {
       }
     }
 
+    // Penalización perimetral: Si puertos críticos de base de datos o administración (MySQL 3306 o FTP 21)
+    // están expuestos al mundo exterior, la calificación se limita estrictamente a Grado D/F.
+    const hasExposedCriticalPorts = adjustedPorts.some(
+      (p) => p.isOpen && [21, 3306].includes(p.port)
+    );
+    if (hasExposedCriticalPorts) {
+      score = Math.min(score, 38);
+      grade = 'D';
+    }
+
     // 7. Remediaciones
     let remediations: RemediationItem[] = [];
     try {
