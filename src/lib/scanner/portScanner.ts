@@ -25,7 +25,7 @@ export { CANONICAL_PORTS };
  * 3. THROTTLING PERIMETRAL: Sondeo secuencial con espaciado de seguridad (35ms) para no saturar
  *    la red ni activar alertas falsas de IDS/IPS (Fail2ban, ModSecurity, Cloudflare) en el destino.
  */
-const ACTIVELY_PROBED_PORTS = new Set([80, 443, 8080, 21, 22, 3306, 5432, 1433, 6379, 3389, 445, 2083]);
+const ACTIVELY_PROBED_PORTS = new Set([80, 443, 8080, 21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017]);
 
 function checkPort(host: string, port: number, timeout = 650): Promise<boolean> {
   return new Promise((resolve) => {
@@ -162,12 +162,12 @@ export async function scanPerimetralPorts(host: string): Promise<PortCheckResult
           risk: 'CRÍTICO' as const,
           description: 'Compartición de archivos SMB expuesta a internet (Vulnerabilidad crítica tipo WannaCry).',
         });
-      } else if (item.port === 2083) {
+      } else if (item.port === 27017) {
         results.push({
           ...item,
           isOpen: true,
-          risk: 'MEDIO' as const,
-          description: 'Panel de administración cPanel SSL accesible directamente desde el exterior.',
+          risk: 'CRÍTICO' as const,
+          description: 'Base de datos NoSQL MongoDB expuesta directamente desde internet sin firewall.',
         });
       } else if (item.port === 8080) {
         results.push({

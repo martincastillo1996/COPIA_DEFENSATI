@@ -337,7 +337,7 @@ export async function POST(req: Request) {
     // Penalización perimetral: Si puertos críticos de base de datos o administración (MySQL, Postgres, MSSQL, Redis, RDP, SMB o FTP)
     // están expuestos al mundo exterior, la calificación se limita estrictamente a Grado D/F.
     const hasExposedCriticalPorts = adjustedPorts.some(
-      (p) => p.isOpen && [21, 3306, 5432, 1433, 6379, 3389, 445].includes(p.port)
+      (p) => p.isOpen && [21, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)
     );
     if (hasExposedCriticalPorts) {
       score = Math.min(score, 35);

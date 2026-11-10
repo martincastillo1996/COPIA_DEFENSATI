@@ -24,5 +24,5 @@ export const CANONICAL_PORTS: CanonicalPortItem[] = [
   { port: 6379, service: 'Redis (In-Memory)', shortName: 'Redis', risk: 'CRÍTICO', description: 'Almacén de sesiones y tokens en memoria accesible sin contraseña.' },
   { port: 3389, service: 'RDP Escritorio Remoto', shortName: 'RDP', risk: 'CRÍTICO', description: 'Acceso a escritorio Windows expuesto a ataques de Ransomware.' },
   { port: 445, service: 'SMB / NetBIOS', shortName: 'SMB', risk: 'CRÍTICO', description: 'Compartición de archivos Windows vulnerable a gusanos y malware.' },
-  { port: 2083, service: 'cPanel Administración', shortName: 'cPanel', risk: 'MEDIO', description: 'Panel de control de hosting accesible públicamente.' },
+  { port: 27017, service: 'MongoDB Database', shortName: 'MongoDB', risk: 'CRÍTICO', description: 'Base de datos NoSQL MongoDB expuesta directamente sin firewall perimetral.' },
 ];
