@@ -32,7 +32,7 @@ const FAQS: FAQItem[] = [
   {
     id: 'por-que-hosting-suspende',
     question: '¿Por qué mi proveedor de hosting suspendió mi web y no la repara por mí?',
-    answer: 'Los proveedores de hosting brindan espacio en servidores compartidos o VPS, pero sus contratos estipulan que el mantenimiento del CMS y código es 100% responsabilidad del cliente. Cuando un sitio envía spam o aloja malware, el hosting lo suspende para evitar que infecte a otros clientes del servidor. Nosotros desinfectamos el código para que el hosting reactive tu cuenta de inmediato.',
+    answer: 'Los proveedores de hosting brindan espacio en servidores compartidos o VPS, pero bajo el principio de responsabilidad compartida de sus contratos (ToS/AUP), el mantenimiento y la seguridad del CMS, plugins y código corresponden al cliente. Cuando un sitio envía spam o aloja malware, el hosting lo suspende de forma preventiva para proteger la reputación de la IP del servidor. Nosotros desinfectamos el código y gestionamos el desbloqueo para que el hosting reactive tu cuenta.',
     icon: Server,
   },
   {
