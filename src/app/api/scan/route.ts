@@ -5,6 +5,7 @@ import { calculateSecurityScore } from '@/lib/scanner/scoreEngine';
 import { generateRemediation, RemediationItem } from '@/lib/ai/remediation';
 import { saveReport, AuditReportRecord } from '@/lib/storage/reportStore';
 import { scanPerimetralPorts } from '@/lib/scanner/portScanner';
+import { scanSensitiveFiles } from '@/lib/scanner/sensitiveFilesScanner';
 import { lookupServerLocation } from '@/lib/scanner/geoScanner';
 import { v4 as uuidv4 } from 'uuid';
 import { isPrivateOrLocalHost, verifyDnsResolution } from '@/lib/security/ssrfValidator';
@@ -255,7 +256,7 @@ export async function POST(req: Request) {
     }
 
     // 3. Ejecución concurrente asíncrona de inspección perimetral
-    const [rawSslResult, portResults, serverLocation, headerResult] = await Promise.all([
+    const [rawSslResult, portResults, serverLocation, headerResult, sensitiveFilesResult] = await Promise.all([
       scanSsl(hostname).catch((err) => ({
         valid: false,
         protocol: 'Error',
@@ -273,6 +274,11 @@ export async function POST(req: Request) {
         missingHeaders: [],
         score: 0,
         grade: 'F' as const,
+      })),
+      scanSensitiveFiles(parsedUrl).catch(() => ({
+        hasExposedFiles: false,
+        criticalCount: 0,
+        findings: [],
       })),
     ]);
 
@@ -328,14 +334,20 @@ export async function POST(req: Request) {
       }
     }
 
-    // Penalización perimetral: Si puertos críticos de base de datos o administración (MySQL 3306 o FTP 21)
+    // Penalización perimetral: Si puertos críticos de base de datos o administración (MySQL, Postgres, MSSQL, Redis, RDP, SMB o FTP)
     // están expuestos al mundo exterior, la calificación se limita estrictamente a Grado D/F.
     const hasExposedCriticalPorts = adjustedPorts.some(
-      (p) => p.isOpen && [21, 3306].includes(p.port)
+      (p) => p.isOpen && [21, 3306, 5432, 1433, 6379, 3389, 445].includes(p.port)
     );
     if (hasExposedCriticalPorts) {
-      score = Math.min(score, 38);
+      score = Math.min(score, 35);
       grade = 'D';
+    }
+
+    // Penalización crítica por fuga de archivos sensibles (.env, .git, backups)
+    if (sensitiveFilesResult.criticalCount > 0) {
+      score = Math.min(score, 25);
+      grade = 'F';
     }
 
     // 7. Remediaciones
@@ -344,7 +356,7 @@ export async function POST(req: Request) {
       const missingHeaders = headersList.filter((h) =>
         h.status === 'fail' || h.status === 'missing' || h.present === false
       );
-      if (missingHeaders.length > 0 || !sslResult.valid) {
+      if (missingHeaders.length > 0 || !sslResult.valid || sensitiveFilesResult.hasExposedFiles) {
         remediations = await generateRemediation(target.origin, missingHeaders, isHyperscale);
       }
     } catch {
@@ -367,6 +379,7 @@ export async function POST(req: Request) {
       headers: headersList,
       isHyperscale,
       ports: adjustedPorts,
+      sensitiveFiles: sensitiveFilesResult,
       remediations,
       location: serverLocation,
       cookies: !Array.isArray(headerResult) && headerResult && 'cookies' in headerResult ? headerResult.cookies : undefined,

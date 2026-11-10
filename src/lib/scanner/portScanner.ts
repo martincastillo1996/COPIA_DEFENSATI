@@ -25,7 +25,7 @@ export { CANONICAL_PORTS };
  * 3. THROTTLING PERIMETRAL: Sondeo secuencial con espaciado de seguridad (35ms) para no saturar
  *    la red ni activar alertas falsas de IDS/IPS (Fail2ban, ModSecurity, Cloudflare) en el destino.
  */
-const ACTIVELY_PROBED_PORTS = new Set([80, 443, 8080, 21, 22, 3306]);
+const ACTIVELY_PROBED_PORTS = new Set([80, 443, 8080, 21, 22, 3306, 5432, 1433, 6379, 3389, 445, 2083]);
 
 function checkPort(host: string, port: number, timeout = 650): Promise<boolean> {
   return new Promise((resolve) => {
@@ -126,6 +126,48 @@ export async function scanPerimetralPorts(host: string): Promise<PortCheckResult
           isOpen: true,
           risk: 'CRÍTICO' as const,
           description: 'Motor de base de datos MySQL accesible directamente desde internet sin firewall.',
+        });
+      } else if (item.port === 5432) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Base de datos PostgreSQL expuesta directamente sin firewall perimetral.',
+        });
+      } else if (item.port === 1433) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Base de datos Microsoft SQL Server expuesta a la red pública (riesgo de volcado de datos).',
+        });
+      } else if (item.port === 6379) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Almacén en memoria Redis accesible directamente desde internet sin clave de paso.',
+        });
+      } else if (item.port === 3389) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Escritorio Remoto Windows (RDP) expuesto a internet público (Vector #1 de Ransomware).',
+        });
+      } else if (item.port === 445) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'CRÍTICO' as const,
+          description: 'Compartición de archivos SMB expuesta a internet (Vulnerabilidad crítica tipo WannaCry).',
+        });
+      } else if (item.port === 2083) {
+        results.push({
+          ...item,
+          isOpen: true,
+          risk: 'MEDIO' as const,
+          description: 'Panel de administración cPanel SSL accesible directamente desde el exterior.',
         });
       } else if (item.port === 8080) {
         results.push({

@@ -19,4 +19,10 @@ export const CANONICAL_PORTS: CanonicalPortItem[] = [
   { port: 21, service: 'FTP', shortName: 'FTP', risk: 'CRÍTICO', description: 'Protocolo de transferencia sin cifrar expuesto a la red pública.' },
   { port: 22, service: 'SSH', shortName: 'SSH', risk: 'ALTO', description: 'Gestión de terminal remota expuesta a ataques de fuerza bruta.' },
   { port: 3306, service: 'MySQL Database', shortName: 'MySQL', risk: 'CRÍTICO', description: 'Motor de base de datos accesible de forma directa desde Internet.' },
+  { port: 5432, service: 'PostgreSQL Database', shortName: 'PostgreSQL', risk: 'CRÍTICO', description: 'Base de datos PostgreSQL expuesta sin firewall perimetral.' },
+  { port: 1433, service: 'Microsoft SQL Server', shortName: 'MSSQL', risk: 'CRÍTICO', description: 'Base de datos corporativa MSSQL expuesta a la red pública.' },
+  { port: 6379, service: 'Redis (In-Memory)', shortName: 'Redis', risk: 'CRÍTICO', description: 'Almacén de sesiones y tokens en memoria accesible sin contraseña.' },
+  { port: 3389, service: 'RDP Escritorio Remoto', shortName: 'RDP', risk: 'CRÍTICO', description: 'Acceso a escritorio Windows expuesto a ataques de Ransomware.' },
+  { port: 445, service: 'SMB / NetBIOS', shortName: 'SMB', risk: 'CRÍTICO', description: 'Compartición de archivos Windows vulnerable a gusanos y malware.' },
+  { port: 2083, service: 'cPanel Administración', shortName: 'cPanel', risk: 'MEDIO', description: 'Panel de control de hosting accesible públicamente.' },
 ];

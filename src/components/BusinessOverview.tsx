@@ -29,10 +29,10 @@ export default function BusinessOverview({ report }: Props) {
   const hasClickjackingRisk = missingHeaders.some(h => h.header.toLowerCase().includes('frame'));
   const hasDowngradeRisk = missingHeaders.some(h => h.header.toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
-    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445].includes(p.port)
   );
   const openAdminPortsList = (report.ports || []).filter(
-    p => p.isOpen && [21, 22, 3306, 5432].includes(p.port)
+    p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445].includes(p.port)
   );
   const openAdminPortsNames = openAdminPortsList
     .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port})`)
@@ -99,6 +99,21 @@ export default function BusinessOverview({ report }: Props) {
   return (
     <div className="space-y-6 animate-in fade-in-50 duration-300">
       
+      {/* Banner de Alerta Máxima por Fuga de Archivos Sensibles */}
+      {report.sensitiveFiles?.hasExposedFiles && (
+        <div className="p-5 rounded-2xl bg-rose-950/40 border border-rose-500/50 text-rose-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl animate-pulse">
+          <AlertTriangle className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <span className="font-bold text-white text-base">⚠️ Fuga Crítica de Archivos Confidenciales Detectada</span>
+            <p className="text-rose-100 leading-relaxed">
+              Se detectaron archivos de configuración o código fuente expuestos a internet público: {' '}
+              <strong>{report.sensitiveFiles.findings.map(f => f.name).join(', ')}</strong>.
+              Cualquier atacante puede extraer contraseñas de bases de datos o secretos de producción.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Banner de Explicación de Caso Especial (Google, Cloudflare, etc.) */}
       {isGoogleOrGiant && (
         <div className="p-5 rounded-2xl bg-[#0f172a] border border-blue-500/30 text-blue-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl">

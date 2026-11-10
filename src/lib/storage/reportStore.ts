@@ -4,6 +4,7 @@ import { SslCheckResult } from '@/lib/scanner/sslScanner';
 import { RemediationItem } from '@/lib/ai/remediation';
 import { ServerGeoLocation } from '@/lib/scanner/geoScanner';
 import { CookieScanResult } from '@/lib/scanner/cookieScanner';
+import { SensitiveFilesResult } from '@/lib/scanner/sensitiveFilesScanner';
 
 export interface AuditTelemetry {
   durationMs: number;
@@ -20,6 +21,7 @@ export interface AuditReportRecord {
   ssl?: SslCheckResult;
   headers?: HeaderCheckItem[];
   ports?: PortCheckResult[];
+  sensitiveFiles?: SensitiveFilesResult;
   remediations?: RemediationItem[];
   telemetry?: AuditTelemetry;
   location?: ServerGeoLocation | null;
