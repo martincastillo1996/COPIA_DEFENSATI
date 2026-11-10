@@ -41,7 +41,7 @@ export default function DefensatiHero() {
       {/* Titular Principal Estilo Apple Pro */}
       <div className="max-w-4xl mx-auto space-y-4 px-4">
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.035em] text-[#f5f5f7] leading-[1.08]">
-          Protegemos tu página web de ataques, caídas y virus para que tu negocio nunca deje de vender.
+          Protegemos tu página web para reducir riesgos, prevenir ataques y mantener tu negocio operativo.
         </h1>
 
         {/* Subtítulo Comercial Estilo Apple */}

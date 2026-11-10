@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'DEFENSA TI | Blindaje y Ciberseguridad Web',
     description:
-      'Protegemos tu página web de ataques, caídas y virus. Diagnóstico previo sin costo y garantía formal por escrito.',
+      'Protegemos tu página web para reducir riesgos, prevenir ataques y mantener tu negocio operativo. Diagnóstico previo sin costo y garantía formal por escrito.',
     images: ['https://neuronalgravity.com/martin-castillo-preview.jpg'],
   },
   robots: {
