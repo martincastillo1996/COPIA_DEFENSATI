@@ -95,6 +95,7 @@ export async function POST(req: Request) {
     const email = sanitizeText(body.email, 100).toLowerCase();
     const phone = sanitizeText(body.phone, 30);
     const domain = sanitizeText(body.domain || body.targetUrl, 120);
+    const platform = sanitizeText(body.platform, 80);
     const service = sanitizeText(body.service, 80);
     const budget = sanitizeText(body.budget, 50);
     const details = sanitizeText(body.details, 1200);
@@ -178,6 +179,7 @@ export async function POST(req: Request) {
                 <p style="margin: 8px 0;"><strong>🏢 Empresa:</strong> ${safeCompany}</p>
                 ${ruc ? `<p style="margin: 8px 0;"><strong>🧾 RUC / DNI:</strong> ${escapeHtml(ruc)}</p>` : ''}
                 ${domain ? `<p style="margin: 8px 0;"><strong>🌐 Dominio / Web:</strong> <a href="${escapeHtml(domain)}" style="color: #38bdf8;">${escapeHtml(domain)}</a></p>` : ''}
+                ${platform ? `<p style="margin: 8px 0;"><strong>💻 Plataforma:</strong> <span style="color: #93c5fd;">${escapeHtml(platform)}</span></p>` : ''}
                 <p style="margin: 8px 0;"><strong>✉️ Email:</strong> <a href="mailto:${safeEmail}" style="color: #38bdf8;">${safeEmail}</a></p>
                 <p style="margin: 8px 0;"><strong>📱 Teléfono:</strong> ${safePhone}</p>
                 <p style="margin: 8px 0;"><strong>🛠️ Servicio:</strong> <span style="color: #34d399; font-weight: bold;">${safeService}</span></p>

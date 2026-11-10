@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, ShieldAlert, Lock, RotateCcw, Server, FileText, CheckCircle2, Clock } from 'lucide-react';
+import { ChevronDown, HelpCircle, ShieldAlert, ShieldCheck, Lock, RotateCcw, Server, FileText, CheckCircle2, Clock } from 'lucide-react';
 
 interface FAQItem {
   id: string;
@@ -14,8 +14,14 @@ const FAQS: FAQItem[] = [
   {
     id: 'tiempo-entrega',
     question: '¿Cuáles son los plazos de entrega y el horario de atención técnica?',
-    answer: 'Atendemos consultas y soporte de Lunes a Sábado de 9:00 a 20:00 (Hora Perú, UTC-5). Los plazos de ejecución técnica por servicio son:\n\n• Diagnóstico gratuito preliminar: menos de 2 horas tras indicar tu dominio.\n• Limpieza de WordPress infectado: habitual de 24 a 48 horas hábiles tras recibir los accesos (hasta 2 a 4 días hábiles en desinfecciones complejas de múltiples bases de datos o red multisitio).\n• Blindaje de sitios web: de 3 a 5 días hábiles.\n• Protección Firewall WAF: de 5 a 7 días hábiles (incluye calibración fina de falsos positivos y meta Grado A).\n• Monitoreo mensual: activación en menos de 24 horas con vigilancia automatizada 24/7 y aviso inmediato a WhatsApp.',
+    answer: 'Atendemos consultas y soporte de Lunes a Sábado de 9:00 a 20:00 (Hora Perú, UTC-5). Los plazos de ejecución técnica por servicio son:\n\n• Diagnóstico gratuito preliminar: menos de 2 horas tras indicar tu dominio.\n• Limpieza de WordPress infectado o saneamiento de temas en Shopify/Wix: habitual de 24 a 48 horas hábiles tras recibir los accesos (hasta 2 a 4 días hábiles en desinfecciones complejas de múltiples bases de datos o red multisitio).\n• Blindaje de sitios web: de 3 a 5 días hábiles.\n• Protección Firewall WAF: de 5 a 7 días hábiles (incluye calibración fina de falsos positivos y meta Grado A).\n• Monitoreo mensual: activación en menos de 24 horas con vigilancia automatizada 24/7 y aviso inmediato a WhatsApp.',
     icon: Clock,
+  },
+  {
+    id: 'shopify-wix-compatibilidad',
+    question: '¿Atienden tiendas en Shopify o sitios en Wix? ¿Cómo funciona la seguridad y qué precios tienen?',
+    answer: '¡Sí, con total cobertura técnica! Atendemos tiendas en Shopify, sitios en Wix, WordPress/WooCommerce y webs a medida. La diferencia radica en su arquitectura:\n\n• En WordPress (servidor propio): Existen virus de archivos PHP y malware en base de datos; para ellos aplica la Limpieza y Desinfección Profunda (desde S/ 250).\n• En Shopify y Wix (SaaS en la nube): La infraestructura la gestiona la plataforma, por lo que no existen virus de servidor. Sin embargo, enfrentan riesgos reales: scripts espías inyectados en temas Liquid o código Wix (robo de tarjetas / Magecart), aplicaciones rogue y phishing por correo sin SPF/DMARC.\n\nPara Shopify y Wix aplicamos los mismos precios transparentes:\n1. Diagnóstico gratuito: S/ 0 (audita certificados SSL, cabeceras HTTP y DNS).\n2. Saneamiento de temas y auditoría de apps: desde S/ 250 (remoción de código espía y revocación de accesos rogue con garantía de 30 días).\n3. Blindaje perimetral y DNS: S/ 165 (cabeceras compatibles, DNSSEC y configuración rigurosa SPF, DKIM y DMARC anti-suplantación de marca por correo).\n4. Protección WAF en Cloudflare: desde S/ 335 (bloqueo de scrapers de inventario/precios y bots de checkout).\n5. Monitoreo mensual: S/ 49 o S/ 99 / mes (vigilancia ininterrumpida 24/7 con aviso inmediato a WhatsApp si la tienda o checkout se caen).',
+    icon: ShieldCheck,
   },
   {
     id: 'privacidad-datos',

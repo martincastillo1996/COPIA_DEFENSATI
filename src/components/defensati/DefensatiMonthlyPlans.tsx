@@ -117,7 +117,7 @@ export default function DefensatiMonthlyPlans() {
               </div>
               <p className="text-xs text-[#86868b] mt-1 font-normal">S/ 3.30 al día para blindar tu negocio transaccional.</p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-3 font-normal">
-                Para tiendas WooCommerce, e-commerce activos y empresas con facturación constante en internet.
+                Para tiendas en Shopify, WooCommerce, Wix y negocios con facturación constante en internet.
               </p>
             </div>
 

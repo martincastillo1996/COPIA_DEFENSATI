@@ -46,7 +46,7 @@ export default function DefensatiHero() {
 
         {/* Subtítulo Comercial Estilo Apple */}
         <p className="text-base sm:text-xl text-[#86868b] font-normal leading-relaxed max-w-2xl mx-auto pt-3">
-          Atención técnica directa para WordPress, WooCommerce y sitios de negocio. Diagnóstico previo sin costo, desinfección profunda con garantía de 30 días por escrito y comprobante formal con RUC.
+          Atención técnica directa para WordPress, WooCommerce, Shopify, Wix y sitios de negocio. Diagnóstico previo sin costo, desinfección profunda con garantía de 30 días por escrito y comprobante formal con RUC.
         </p>
       </div>
 
@@ -125,11 +125,13 @@ export default function DefensatiHero() {
 
       {/* Compatibilidad Técnica de Confianza Estilo Apple */}
       <div className="mt-8 pt-6 border-t border-white/10 max-w-3xl mx-auto px-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-neutral-400">
-        <span className="text-[#86868b] text-[12px] font-medium mr-1">Plataformas:</span>
+        <span className="text-[#86868b] text-[12px] font-medium mr-1">Plataformas compatibles:</span>
         <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f5f5f7]">WordPress</span>
         <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f5f5f7]">WooCommerce</span>
+        <span className="px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-300 font-medium">Shopify</span>
+        <span className="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-300 font-medium">Wix</span>
         <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f5f5f7]">cPanel / Plesk</span>
-        <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f5f5f7]">Cloudflare</span>
+        <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f5f5f7]">Cloudflare WAF</span>
         <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[#f5f5f7]">Nginx / Apache</span>
       </div>
     </section>

@@ -28,7 +28,7 @@ export default function DefensatiProblems() {
     {
       title: 'Redirecciones a páginas dudosas o spam',
       desc: 'Cuando un usuario hace clic en tu web o en tus productos, es enviado a páginas de apuestas, farmacias piratas o sitios fraudulentos.',
-      solution: 'Rastreamos la inyección en bases de datos y archivos PHP del CMS para erradicar las redirecciones forzadas de raíz.',
+      solution: 'Rastreamos la inyección en bases de datos y archivos PHP de WordPress, así como scripts maliciosos insertados en temas de Shopify y Wix para erradicar las redirecciones forzadas de raíz.',
       icon: TrendingDown,
       color: 'text-amber-400',
       badge: 'Fuga de Ventas',

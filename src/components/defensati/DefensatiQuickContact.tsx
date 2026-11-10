@@ -17,7 +17,8 @@ import {
   Phone, 
   Globe, 
   Receipt,
-  User
+  User,
+  Layers
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { getWhatsAppUrl } from '@/lib/whatsapp';
@@ -35,6 +36,7 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [targetUrl, setTargetUrl] = useState(initialUrl);
+  const [platform, setPlatform] = useState('wordpress');
   const [service, setService] = useState('diagnostico');
   const [note, setNote] = useState('');
   const [acceptedDisclaimer, setAcceptedDisclaimer] = useState(false);
@@ -43,11 +45,19 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
   const [submitted, setSubmitted] = useState(false);
   const [contractId, setContractId] = useState('');
 
+  const platformsList = [
+    { id: 'wordpress', label: 'WordPress / WooCommerce' },
+    { id: 'shopify', label: 'Shopify' },
+    { id: 'wix', label: 'Wix' },
+    { id: 'prestashop', label: 'PrestaShop / Magento' },
+    { id: 'custom', label: 'Desarrollo a medida / HTML / Otro' },
+  ];
+
   const servicesList = [
     { id: 'diagnostico', label: '1. Diagnóstico preliminar gratuito (S/ 0 • Entrega < 2h)' },
-    { id: 'limpieza', label: '2. Limpieza de WordPress infectado (Desde S/ 250 • 24-48h con garantía de 30 días)' },
-    { id: 'blindaje', label: '3. Blindaje de sitios web (S/ 165 • 3 a 5 días hábiles)' },
-    { id: 'waf', label: '4. Protección mediante Firewall WAF (Desde S/ 335 • 5 a 7 días hábiles)' },
+    { id: 'limpieza', label: '2. Limpieza de virus o Saneamiento en Shopify / Wix (Desde S/ 250 • 24-48h con garantía)' },
+    { id: 'blindaje', label: '3. Blindaje de sitios web y anti-suplantación DNS (S/ 165 • 3 a 5 días hábiles)' },
+    { id: 'waf', label: '4. Protección mediante Firewall WAF en Cloudflare (Desde S/ 335 • 5 a 7 días hábiles)' },
     { id: 'monitoreo-esencial', label: '5. Monitoreo mensual Plan Esencial (S/ 49 PEN / mes • 24/7)' },
     { id: 'monitoreo-pro', label: '6. Monitoreo mensual Plan Pro (S/ 99 PEN / mes • 24/7)' },
   ];
@@ -74,6 +84,7 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
     const cleanEmail = email.trim();
     const cleanPhone = phone.trim();
     const selectedService = servicesList.find((s) => s.id === service) || servicesList[0];
+    const selectedPlatform = platformsList.find((p) => p.id === platform) || platformsList[0];
     const generatedId = `DFT-${Date.now().toString().slice(-6)}`;
     setContractId(generatedId);
 
@@ -89,6 +100,7 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
           email: cleanEmail,
           phone: cleanPhone,
           targetUrl: cleanUrl,
+          platform: selectedPlatform.label,
           service: selectedService.label,
           details: note.trim() || 'Solicitud generada desde formulario oficial de contratación',
           acceptedTerms: true,
@@ -120,6 +132,7 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
 • *Empresa / Razón Social:* ${cleanCompany || 'Persona Natural con Negocio'}
 • *RUC / DNI:* ${cleanRuc}
 • *Web a intervenir:* ${cleanUrl}
+• *Plataforma:* ${selectedPlatform.label}
 • *Correo para informe / factura:* ${cleanEmail}
 • *Teléfono / WhatsApp:* ${cleanPhone}
 • *Servicio solicitado:* ${selectedService.label}
@@ -322,24 +335,45 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
               </div>
             </div>
 
-            {/* Fila 4: Selector de Servicio Oficial */}
-            <div className="space-y-1.5">
-              <label htmlFor="contract-service" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Servicio oficial a solicitar o contratar <span className="text-rose-400">*</span></span>
-              </label>
-              <select
-                id="contract-service"
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
-              >
-                {servicesList.map((s) => (
-                  <option key={s.id} value={s.id} className="bg-[#141416] text-white">
-                    {s.label}
-                  </option>
-                ))}
-              </select>
+            {/* Fila 4: Plataforma Web y Selector de Servicio Oficial */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label htmlFor="contract-platform" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>Plataforma o CMS de tu web <span className="text-rose-400">*</span></span>
+                </label>
+                <select
+                  id="contract-platform"
+                  value={platform}
+                  onChange={(e) => setPlatform(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
+                >
+                  {platformsList.map((p) => (
+                    <option key={p.id} value={p.id} className="bg-[#141416] text-white">
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label htmlFor="contract-service" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Servicio oficial a solicitar <span className="text-rose-400">*</span></span>
+                </label>
+                <select
+                  id="contract-service"
+                  value={service}
+                  onChange={(e) => setService(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
+                >
+                  {servicesList.map((s) => (
+                    <option key={s.id} value={s.id} className="bg-[#141416] text-white">
+                      {s.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Fila 5: Detalles o Síntomas */}

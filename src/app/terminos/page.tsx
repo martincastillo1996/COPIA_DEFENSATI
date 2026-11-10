@@ -172,31 +172,31 @@ export default function TerminosYPrivacidadPage() {
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-white text-sm">2. Limpieza de WordPress infectados</span>
+                    <span className="font-bold text-white text-sm">2. Limpieza de virus y saneamiento web</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">Desde S/. 250</span>
                   </div>
-                  <p className="text-neutral-300">Desinfección forense profunda de archivos y base de datos, retiro de backdoors y recuperación de acceso administrativo. <strong>Plazo de entrega:</strong> Habitual de <strong>24 a 48 horas hábiles</strong> tras recibir los accesos válidos (hasta 2 a 4 días hábiles en casos de alta complejidad o múltiples bases de datos), con garantía de 30 días.</p>
+                  <p className="text-neutral-300">Desinfección forense profunda de archivos y base de datos para WordPress (retiro de webshells, spam y recuperación de hosting). Para tiendas en Shopify y sitios en Wix: Detección y saneamiento de inyecciones de scripts maliciosos en temas Liquid/Wix (skimmers de tarjetas / Magecart), auditoría de aplicaciones de terceros y revocación de accesos rogue. <strong>Plazo de entrega:</strong> Habitual de <strong>24 a 48 horas hábiles</strong> tras recibir los accesos válidos (hasta 2 a 4 días hábiles en casos de alta complejidad), con garantía de 30 días.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-white text-sm">3. Blindaje de sitios web</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">S/. 165 PEN</span>
                   </div>
-                  <p className="text-neutral-300">Auditoría previa y fortalecimiento perimetral de cabeceras canónicas (HSTS, CSP, X-Frame), endurecimiento de accesos y ocultamiento de versiones en <strong>3 a 5 días hábiles</strong>.</p>
+                  <p className="text-neutral-300">Auditoría previa y fortalecimiento perimetral de cabeceras canónicas (HSTS, CSP, X-Frame), endurecimiento de accesos y ocultamiento de versiones en <strong>3 a 5 días hábiles</strong>. Compatible con WordPress, WooCommerce, Shopify, Wix y desarrollos a medida. En tiendas Shopify y Wix incluye además configuración rigurosa de registros SPF, DKIM y DMARC en el DNS del dominio para evitar suplantación de identidad por correo y proteger la reputación de la marca.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-white text-sm">4. Protección mediante WAF</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">Desde S/. 335</span>
                   </div>
-                  <p className="text-neutral-300">Blindaje de cabeceras + configuración profesional de Firewall de Aplicaciones Web (Cloudflare) contra bots y ataques DDoS en <strong>5 a 7 días hábiles</strong> (incluye fase de calibración y meta Grado A).</p>
+                  <p className="text-neutral-300">Blindaje de cabeceras + configuración profesional de Firewall de Aplicaciones Web (Cloudflare) contra bots fraudulentos, scrapers de precios/inventario y ataques DDoS en <strong>5 a 7 días hábiles</strong> (incluye fase de calibración y meta Grado A). 100% compatible con Shopify, Wix, WooCommerce y WordPress.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 md:col-span-2 lg:col-span-2">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-white text-sm">5. Monitoreo y mantenimiento mensual</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">S/. 49 y S/. 99 / mes</span>
                   </div>
-                  <p className="text-neutral-300">Activación en <strong>menos de 24 horas</strong>. Vigilancia automatizada ininterrumpida 24/7 con aviso inmediato a WhatsApp ante caídas y alertas de SSL; re-escaneos periódicos e intervención técnica directa con límite estricto de soporte manual por escrito.</p>
+                  <p className="text-neutral-300">Activación en <strong>menos de 24 horas</strong>. Vigilancia automatizada ininterrumpida 24/7 (detección de caídas de web y checkout, alertas preventivas de SSL y dominio) con aviso inmediato a WhatsApp; re-escaneos periódicos e intervención técnica directa con límite estricto de soporte manual por escrito. Compatible con cualquier plataforma.</p>
                 </div>
               </div>
 
@@ -213,12 +213,30 @@ export default function TerminosYPrivacidadPage() {
                   <strong>Inicio del Cómputo de Plazos:</strong> Todo plazo de ejecución técnica comienza a computarse a partir de la entrega efectiva por parte del cliente de las credenciales y accesos técnicos requeridos (cPanel, SSH, SFTP, CMS o Cloudflare) y su validación como operativos por nuestro equipo.
                 </p>
               </div>
+              {/* 3.1. Diferenciación Técnica y Alcance según la Plataforma (WordPress vs. Shopify y Wix) */}
+              <div className="p-4 rounded-xl bg-sky-950/20 border border-sky-500/25 text-xs text-neutral-300 space-y-2">
+                <div className="flex items-center gap-2 text-white font-semibold text-xs">
+                  <ShieldCheck className="w-4 h-4 text-sky-400" />
+                  <span>3.1. Alcance Técnico según Arquitectura de Plataforma (WordPress vs. Shopify y Wix):</span>
+                </div>
+                <p>
+                  Para garantizar total transparencia técnica y delimitar las responsabilidades de cada parte, los servicios de DEFENSA TI se estructuran según la naturaleza del software del cliente:
+                </p>
+                <ul className="list-disc pl-5 space-y-1.5 text-neutral-300">
+                  <li>
+                    <strong>CMS Auto-alojados (WordPress, WooCommerce, PrestaShop, Magento):</strong> El cliente cuenta con servidor propio o compartido (cPanel, SSH, SFTP). El servicio de limpieza abarca desinfección forense de archivos PHP, tablas SQL, retiro de webshells/backdoors y remediación ante la suspensión preventiva impuesta por la empresa de hosting (desde S/ 250).
+                  </li>
+                  <li>
+                    <strong>Plataformas SaaS en la Nube (Shopify, Wix, Squarespace):</strong> Al tratarse de entornos cerrados administrados internacionalmente por Shopify Inc. o Wix.com, la infraestructura de servidor físico y el núcleo del CMS son gestionados por el proveedor. Por consiguiente, <strong>no existen virus de archivos PHP ni acceso a base de datos de servidor</strong>. El servicio de DEFENSA TI en estas plataformas atiende los riesgos reales aplicables a tiendas en la nube: (i) <em>Saneamiento de Temas y Apps</em> (detección y remoción de scripts maliciosos insertados en plantillas Liquid o código Wix para robo de tarjetas/Magecart y revocación de apps no autorizadas con cotización desde S/ 250); (ii) <em>Blindaje Perimetral y DNS</em> (S/ 165, que incluye configuración estricta anti-suplantación SPF, DKIM y DMARC en el DNS del dominio para evitar que atacantes envíen correos fraudulentos a nombre de la tienda); (iii) <em>Protección WAF en Cloudflare</em> (desde S/ 335, para mitigar scrapers de precios/inventario y bots en checkout); y (iv) <em>Monitoreo Mensual</em> (S/ 49 y S/ 99 / mes, con aviso inmediato a WhatsApp ante caídas de la pasarela o de la tienda).
+                  </li>
+                </ul>
+              </div>
             </section>
 
-            {/* 3.1. Condiciones Específicas del Monitoreo Mensual */}
+            {/* 3.2. Condiciones Específicas del Monitoreo Mensual */}
             <section className="space-y-3 text-sm leading-relaxed p-5 rounded-2xl bg-white/[0.03] border border-white/10">
               <h4 className="text-base font-bold text-white flex items-center gap-2">
-                <span>3.1. Condiciones Específicas del Monitoreo y Mantenimiento Mensual (Planes S/. 49 y S/. 99 PEN)</span>
+                <span>3.2. Condiciones Específicas del Monitoreo y Mantenimiento Mensual (Planes S/. 49 y S/. 99 PEN)</span>
               </h4>
               <p className="text-xs text-neutral-300">
                 Los servicios de monitoreo mensual están estructurados sobre procesos de supervisión automatizada continua para garantizar un precio asequible y una detección inmediata de incidencias. Para asegurar la viabilidad técnica y operativa, el soporte manual de intervención humana está taxativamente acotado:
@@ -304,7 +322,7 @@ export default function TerminosYPrivacidadPage() {
                   </p>
                   <ul className="list-disc pl-5 space-y-1 text-neutral-400">
                     <li>Mantener intactas y no remover las cabeceras defensivas inyectadas durante actualizaciones o nuevos despliegues futuros de su web.</li>
-                    <li>Actualizar permanentemente su CMS (WordPress, Shopify, Magento, etc.), plugins, temas y librerías frente a vulnerabilidades de día cero (zero-day).</li>
+                    <li>En CMS auto-alojados (WordPress, WooCommerce, Magento): Mantener actualizados permanentemente el núcleo del CMS, plugins, módulos y temas frente a vulnerabilidades conocidas. En plataformas SaaS administradas (Shopify, Wix): Auditar periódicamente las aplicaciones de terceros conectadas a la tienda, desinstalar apps obsoletas o no utilizadas, revocar accesos de ex-colaboradores y mantener activado obligatoriamente el doble factor de autenticación (2FA) para todo el personal.</li>
                     <li>Renovar oportunamente sus certificados SSL/TLS y gestionar contraseñas seguras y doble factor de autenticación (2FA) para sus administradores.</li>
                     <li>Monitorear caídas o fallas de configuración de su proveedor de hosting o servidor privado.</li>
                   </ul>

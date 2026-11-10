@@ -50,7 +50,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
           {/* Badge superior */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
             <span className="text-xs uppercase tracking-widest font-mono text-[#ff453a] font-semibold px-3.5 py-1 rounded-full bg-rose-500/15 border border-rose-500/25">
-              RESCATE URGENTE &bull; WORDPRESS &amp; WOOCOMMERCE
+              RESCATE URGENTE &bull; WORDPRESS, WOOCOMMERCE, SHOPIFY &amp; WIX
             </span>
             <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
@@ -66,15 +66,26 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               </div>
               <div>
                 <h3 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-tight leading-tight">
-                  Limpieza y Desinfección de WordPress:{' '}
+                  Limpieza y Saneamiento Web:{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-rose-300">
                     desde S/ 250
                   </span>
                 </h3>
                 <p className="text-sm sm:text-base text-[#86868b] mt-1 font-normal">
-                  Para sitios que sufren virus, redirecciones a sitios de apuestas, penalización en Google o suspensión de hosting.
+                  Para WordPress y tiendas infectadas con virus, spam o suspensión de hosting; y para Shopify o Wix con scripts maliciosos en temas (Magecart/carding) o apps fraudulentas.
                 </p>
               </div>
+            </div>
+
+            {/* Aclaración Técnica Especial para Shopify y Wix */}
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-xs sm:text-[13px] text-neutral-300 space-y-1">
+              <span className="font-semibold text-white flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+                ¿Tienes tu tienda en Shopify o tu sitio en Wix?
+              </span>
+              <p className="text-neutral-400 leading-relaxed font-normal">
+                Al ser plataformas SaaS en la nube no sufren virus de archivos PHP en servidor, pero sí sufren inyecciones de scripts espías en temas Liquid/Wix (robo de datos/tarjetas), apps rogue o robo de cuentas. Realizamos saneamiento forense de tema, auditoría de permisos de apps y blindaje perimetral desde <strong className="text-white">S/ 250</strong> con garantía de 30 días.
+              </p>
             </div>
 
             {/* Garantía Destacada */}
@@ -163,7 +174,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 S/ 165 <span className="text-xs text-[#86868b] font-normal font-sans">pago único por sitio</span>
               </p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
-                Fortalecimiento técnico para páginas sanas que desean prevenir intrusiones antes de ser atacadas.
+                Fortalecimiento técnico preventivo. Compatible con WordPress, WooCommerce, Shopify, Wix y webs a medida por el mismo precio exacto (S/ 165). En Shopify y Wix incluye cabeceras compatibles, DNSSEC y configuración estricta SPF/DKIM/DMARC anti-suplantación.
               </p>
             </div>
 
@@ -236,7 +247,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 Desde S/ 335 <span className="text-xs text-[#86868b] font-normal font-sans">implementación técnica</span>
               </p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
-                Incluye todo el Blindaje Esencial más la configuración profesional de un Firewall perimetral en Cloudflare.
+                Incluye todo el Blindaje Esencial más la configuración profesional de un Firewall perimetral en Cloudflare. 100% compatible con Shopify, Wix, WooCommerce y WordPress contra bots, scrapers y ataques DDoS.
               </p>
             </div>
 

@@ -77,7 +77,7 @@ export default function DefensatiScanScope() {
               <ul className="space-y-2 text-xs sm:text-[13px] text-neutral-200 leading-relaxed">
                 <li className="flex items-start gap-2">
                   <span className="text-amber-400 font-bold shrink-0">&bull;</span>
-                  <span><strong>Virus en archivos PHP:</strong> Webshells o backdoors dentro de <code>/wp-content/</code> o <code>public_html</code>.</span>
+                  <span><strong>Virus en archivos PHP o scripts en temas:</strong> Webshells en <code>/wp-content/</code> o inyecciones de código espía en plantillas Liquid (Shopify) o scripts de Wix.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-amber-400 font-bold shrink-0">&bull;</span>
@@ -85,7 +85,7 @@ export default function DefensatiScanScope() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-amber-400 font-bold shrink-0">&bull;</span>
-                  <span><strong>Plugins vulnerables o piratas:</strong> Código alterado que solo corre dentro de tu hosting.</span>
+                  <span><strong>Plugins o aplicaciones de terceros vulnerables:</strong> Plugins desactualizados en WordPress o apps rogue con permisos abusivos en Shopify y Wix.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-amber-400 font-bold shrink-0">&bull;</span>
