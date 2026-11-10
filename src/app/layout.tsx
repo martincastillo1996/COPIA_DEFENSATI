@@ -4,6 +4,7 @@ import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nContext";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
+import AiConsultantWidget from "@/components/AiConsultantWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <CookieConsentBanner />
           <FloatingWhatsAppButton />
+          <AiConsultantWidget />
         </I18nProvider>
       </body>
     </html>

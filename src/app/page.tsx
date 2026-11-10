@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import NeuralBackground from '@/components/NeuralBackground';
 import NeuronalGravityBrandLogo from '@/components/NeuronalGravityBrandLogo';
-import AiConsultantWidget from '@/components/AiConsultantWidget';
 import FounderProfileCard from '@/components/FounderProfileCard';
 import { 
   ShieldCheck, 
@@ -245,9 +244,6 @@ export default function NeuronalGravityHubHome() {
           </div>
         </div>
       </footer>
-
-      {/* Orbe Flotante de Consulta */}
-      <AiConsultantWidget />
     </div>
   );
 }

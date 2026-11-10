@@ -11,7 +11,6 @@ import {
   Search,
   MessageSquare,
   Send,
-  Coffee,
   CheckCheck,
   Bot
 } from 'lucide-react';
@@ -67,10 +66,10 @@ export default function AiConsultantWidget({ report }: Props) {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Mensaje inicial contextual identificado claramente como Neuronality AI
+  // Mensaje inicial contextual DEFENSA TI
   const initialGreeting = report?.url 
-    ? `¡Hola! 👋 Soy Neuronality AI, el asistente oficial de DEFENSA TI y Neuronal Gravity. Veo que estás analizando ${report.url} con puntaje ${report.score ?? 0}/100 (Grado ${report.grade || 'F'}). ¿Tienes alguna duda sobre cómo blindarla o corregir las cabeceras? ¡Hablemos!`
-    : `¡Hola! 👋 Soy Neuronality AI, el asistente inteligente de DEFENSA TI y Neuronal Gravity. ¿Tienes alguna pregunta sobre la seguridad de tu página web, pasarelas de pago o cómo blindar tu plataforma? ¡Hablemos!`;
+    ? `¡Hola! 👋 Soy el asesor de inteligencia artificial de DEFENSA TI. Veo que estás analizando ${report.url} con puntaje ${report.score ?? 0}/100 (Grado ${report.grade || 'F'}). ¿Tienes alguna duda sobre cómo desinfectarla o blindarla con WAF Cloudflare? ¡Pregúntame o coordinemos por WhatsApp!`
+    : `¡Hola! 👋 Soy el asesor de inteligencia artificial de DEFENSA TI. Te ayudo a resolver dudas sobre la seguridad de tu página web (WordPress, WooCommerce, Shopify o Wix), desinfección de malware y blindaje con WAF Cloudflare. ¿En qué puedo orientarte hoy?`;
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -85,16 +84,16 @@ export default function AiConsultantWidget({ report }: Props) {
       prompt: '¿Por qué mi página web sale como No segura o con advertencias de navegador?'
     },
     {
-      label: '💳 ¿Cómo proteger mis pagos (Yape/Niubiz)?',
-      prompt: '¿Cómo puedo evitar que clonen mis formularios o pasarelas de pago de Yape y tarjetas?'
-    },
-    {
       label: '🚨 ¿Cómo funciona el Rescate de malware (S/ 380 - S/ 550)?',
       prompt: 'Mi web fue hackeada o suspendida por el hosting. ¿Cómo funciona el rescate forense y en cuánto tiempo lo entregan?'
     },
     {
-      label: '🛡️ ¿Qué incluye Blindaje + WAF (S/ 450)?',
+      label: '🔒 ¿Qué incluye Blindaje + WAF (S/ 450)?',
       prompt: '¿Qué incluye exactamente el paquete unificado de Blindaje + WAF Cloudflare de S/ 450 y qué garantía tiene?'
+    },
+    {
+      label: '🛍️ ¿Atienden tiendas Shopify, WooCommerce o Wix?',
+      prompt: 'Tengo una tienda en Shopify / WooCommerce / Wix. ¿Cómo protegen mi pasarela y qué servicio aplica?'
     },
     {
       label: '📱 Hablar directo con Martín por WhatsApp',
@@ -134,6 +133,14 @@ export default function AiConsultantWidget({ report }: Props) {
       time: '3 a 5 días',
       desc: 'Cabeceras estrictas canónicas más Cloudflare WAF perimetral activo anti-bots y mitigación DDoS.',
       link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Blindaje%20+%20WAF%20Cloudflare%20(S/%20450).'
+    },
+    {
+      name: 'Mantenimiento Mensual',
+      price: 'Desde S/ 90 / mes',
+      original: '',
+      time: 'Continuo 24/7',
+      desc: 'Vigilancia 24/7 sin permanencia forzosa: Básico (S/ 90/mes) o Tiendas Online con soporte prioritario (S/ 180/mes).',
+      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Mantenimiento%20Mensual%20de%20DEFENSA%20TI.'
     }
   ];
 
@@ -251,32 +258,26 @@ export default function AiConsultantWidget({ report }: Props) {
     router.push(`/defensati${targetQuery}#url-scan-input`);
   };
 
-  const handleOpenDonation = () => {
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('open-donation-modal'));
-    }
-  };
-
   return (
     <div className="fixed bottom-22 right-5 sm:bottom-24 sm:right-6 z-50 select-none font-sans">
       
-      {/* 1. PROACTIVE PREVIEW BUBBLE (IDÉNTICO AL EJEMPLO PROPORCIONADO) */}
+      {/* 1. PROACTIVE PREVIEW BUBBLE DEFENSA TI */}
       {!isOpen && !bubbleDismissed && (
-        <div className="mb-3 w-[calc(100vw-2.5rem)] sm:w-84 rounded-3xl bg-[#0f121a]/95 border border-white/15 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in slide-in-from-bottom-3 duration-300">
+        <div className="mb-3 w-[calc(100vw-2.5rem)] sm:w-92 rounded-3xl bg-[#0f121a]/95 border border-white/15 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in slide-in-from-bottom-3 duration-300">
           
-          {/* Fila superior: Texto + Avatares superpuestos */}
+          {/* Fila superior: Texto + Estado en línea */}
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-0.5">
               <h4 className="text-sm font-bold text-white tracking-tight leading-snug">
-                ¿Tienes alguna pregunta?
+                ¿Tienes dudas sobre tu web?
               </h4>
               <p className="text-sm font-extrabold text-[#38bdf8] leading-tight">
-                ¡Hablemos!
+                ¡Hablemos de seguridad!
               </p>
               <div className="flex items-center gap-1.5 pt-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-[11px] font-semibold text-emerald-400 tracking-wide">
-                  Estamos en línea
+                  Asesor DEFENSA TI en línea
                 </span>
               </div>
             </div>
@@ -292,7 +293,7 @@ export default function AiConsultantWidget({ report }: Props) {
             </button>
           </div>
 
-          {/* Fila inferior: Botones de píldora estilo Astra / Crisp */}
+          {/* Fila inferior: Botones sin truncamiento */}
           <div className="grid grid-cols-2 gap-2 mt-3 pt-2.5 border-t border-white/10">
             <button
               type="button"
@@ -300,10 +301,10 @@ export default function AiConsultantWidget({ report }: Props) {
                 setIsOpen(true);
                 setView('chat');
               }}
-              className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm"
+              className="px-3 py-2 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm whitespace-nowrap"
             >
-              <MessageSquare className="w-3.5 h-3.5 text-[#38bdf8]" />
-              <span className="truncate">Chatea con Neuronality AI</span>
+              <MessageSquare className="w-3.5 h-3.5 text-white" />
+              <span>Consultar con IA</span>
             </button>
 
             <button
@@ -312,10 +313,10 @@ export default function AiConsultantWidget({ report }: Props) {
                 setIsOpen(true);
                 setView('plans');
               }}
-              className="px-3 py-2 rounded-xl bg-[#0071e3]/20 hover:bg-[#0071e3]/30 border border-[#0071e3]/40 text-[#38bdf8] text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm"
+              className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-neutral-200 hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm whitespace-nowrap"
             >
-              <Search className="w-3.5 h-3.5" />
-              <span className="truncate">Ver Soluciones</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
+              <span>Ver Servicios</span>
             </button>
           </div>
         </div>
@@ -477,19 +478,6 @@ export default function AiConsultantWidget({ report }: Props) {
                             </svg>
                             <span>Abrir WhatsApp (+1 785 643-3991)</span>
                           </a>
-                        </div>
-                      )}
-
-                      {msg.ctaType === 'donate' && (
-                        <div className="mt-2.5 pt-2 border-t border-white/10">
-                          <button
-                            type="button"
-                            onClick={handleOpenDonation}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-[11px] font-bold shadow-md transition-all active:scale-95 cursor-pointer"
-                          >
-                            <Coffee className="w-3.5 h-3.5" />
-                            <span>Abrir Modal de Donación (Yape/Culqi)</span>
-                          </button>
                         </div>
                       )}
                     </div>
