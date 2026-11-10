@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { saveLead } from '@/lib/storage/leadStore';
 import { v4 as uuidv4 } from 'uuid';
+import { verifyTurnstileToken } from '@/lib/security/turnstileValidator';
 
 // Rate Limiter per IP (5 envíos por cada 10 minutos para evitar spam y saturación)
 const contactRateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -86,6 +87,17 @@ export async function POST(req: Request) {
         success: true,
         message: 'Solicitud recibida correctamente.',
       });
+    }
+
+    // 2.1 Validación Cloudflare Turnstile Anti-Bot
+    if (body.turnstileToken) {
+      const turnstileCheck = await verifyTurnstileToken(body.turnstileToken, clientIp);
+      if (!turnstileCheck.success) {
+        return NextResponse.json(
+          { error: 'Verificación humana de Cloudflare Turnstile fallida o expirada.' },
+          { status: 403 }
+        );
+      }
     }
 
     // 3. Sanitización estricta de todos los campos

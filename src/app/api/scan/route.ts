@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { isPrivateOrLocalHost, verifyDnsResolution } from '@/lib/security/ssrfValidator';
 import { saveAuditConsent, AuditConsentRecord } from '@/lib/storage/auditConsentStore';
 import { signBadge } from '@/lib/security/badgeSigner';
+import { verifyTurnstileToken } from '@/lib/security/turnstileValidator';
 
 // Caché en Memoria de Escaneos por Dominio (TTL de 2 horas para soportar picos masivos)
 const DOMAIN_SCAN_CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 horas
@@ -137,7 +138,21 @@ export async function POST(req: Request) {
       );
     }
 
-    const { url, force, legalConsentAccepted } = await req.json();
+    const { url, force, legalConsentAccepted, turnstileToken } = await req.json();
+
+    // 0.1 Validación de Seguridad Cloudflare Turnstile Anti-Bot
+    if (turnstileToken) {
+      const turnstileCheck = await verifyTurnstileToken(turnstileToken, clientIp);
+      if (!turnstileCheck.success) {
+        return NextResponse.json(
+          {
+            error:
+              'Verificación humana de Cloudflare Turnstile fallida o expirada. Por favor completa la verificación e intenta de nuevo.',
+          },
+          { status: 403 }
+        );
+      }
+    }
 
     if (!url) {
       return NextResponse.json(

@@ -46,6 +46,7 @@ import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
 import DefensatiFinalCTA from '@/components/defensati/DefensatiFinalCTA';
 import DefensatiScanRecommendation from '@/components/defensati/DefensatiScanRecommendation';
 import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact';
+import TurnstileWidget, { TurnstileWidgetRef } from '@/components/TurnstileWidget';
 
 import { siteConfig } from '@/config/site';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -61,6 +62,8 @@ export default function DefensatiPage() {
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [legalConsent, setLegalConsent] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileWidgetRef>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const handleScan = useCallback(async (targetUrl?: string, overrideConsent?: boolean) => {
@@ -84,7 +87,11 @@ export default function DefensatiPage() {
       const scanPromise = fetch('/api/scan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: finalUrl, legalConsentAccepted: true }),
+        body: JSON.stringify({
+          url: finalUrl,
+          legalConsentAccepted: true,
+          turnstileToken,
+        }),
       });
 
       const minDelayPromise = new Promise((resolve) => setTimeout(resolve, 3200));
@@ -114,8 +121,14 @@ export default function DefensatiPage() {
       setError(msg);
     } finally {
       setLoading(false);
+      try {
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
+      } catch {
+        // Ignorar si no está montado
+      }
     }
-  }, [url, legalConsent]);
+  }, [url, legalConsent, turnstileToken]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -403,6 +416,20 @@ export default function DefensatiPage() {
                       </div>
                     </div>
                   </label>
+                </div>
+
+                {/* Widget Oficial Cloudflare Turnstile Anti-Bot */}
+                <div className="pt-1 flex flex-col items-center justify-center">
+                  <TurnstileWidget
+                    ref={turnstileRef}
+                    action="scan"
+                    theme="dark"
+                    onVerify={(token) => {
+                      setTurnstileToken(token);
+                      if (error) setError(null);
+                    }}
+                    onExpire={() => setTurnstileToken(null)}
+                  />
                 </div>
               </form>
 
