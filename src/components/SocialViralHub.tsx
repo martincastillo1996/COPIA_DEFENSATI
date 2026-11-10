@@ -10,12 +10,13 @@ interface Props {
 
 export default function SocialViralHub({ targetUrl, score }: Props) {
   const [copied, setCopied] = useState(false);
-  const [appUrl, setAppUrl] = useState('https://defensati.com');
+  const [appUrl, setAppUrl] = useState('https://neuronalgravity.com/defensati');
 
   useEffect(() => {
     queueMicrotask(() => {
       if (typeof window !== 'undefined') {
-        setAppUrl(window.location.origin);
+        const origin = window.location.origin;
+        setAppUrl(`${origin}/defensati`);
       }
     });
   }, []);
