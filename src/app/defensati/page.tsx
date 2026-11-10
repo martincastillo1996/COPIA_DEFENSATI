@@ -244,12 +244,15 @@ export default function DefensatiPage() {
 
             {/* Navegación Desktop */}
             <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-neutral-300">
+              <a href="#escaner-gratis" className="text-[#38bdf8] font-bold hover:text-white transition-colors flex items-center gap-1.5">
+                <Search className="w-3.5 h-3.5" />
+                <span>Escáner gratis</span>
+              </a>
               <a href="#problemas" className="hover:text-white transition-colors">Problemas</a>
               <a href="#servicios" className="hover:text-sky-400 transition-colors">Servicios</a>
               <a href="#planes" className="hover:text-[#30d158] transition-colors">Planes mensuales</a>
               <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
               <a href="#casos-reales" className="hover:text-white transition-colors">Casos reales</a>
-              <a href="#escaner-gratis" className="hover:text-[#38bdf8] transition-colors">Escáner gratis</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
 
@@ -271,12 +274,12 @@ export default function DefensatiPage() {
 
           {/* Navegación Rápida Móvil (Barra horizontal de acceso con un toque) */}
           <div className="lg:hidden border-t border-white/10 bg-black/60 px-4 py-2 flex items-center gap-2 overflow-x-auto text-xs no-scrollbar">
+            <a href="#escaner-gratis" className="px-3.5 py-1 rounded-full bg-[#0071e3] text-white whitespace-nowrap font-bold shadow-sm shadow-[#0071e3]/30">Escáner gratis</a>
             <a href="#problemas" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Problemas</a>
             <a href="#servicios" className="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 hover:text-sky-300 whitespace-nowrap font-medium border border-sky-500/20">Servicios</a>
             <a href="#planes" className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 hover:text-emerald-300 whitespace-nowrap font-medium border border-emerald-500/20">Planes</a>
             <a href="#como-funciona" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Cómo funciona</a>
             <a href="#casos-reales" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Casos reales</a>
-            <a href="#escaner-gratis" className="px-3 py-1 rounded-full bg-[#0071e3]/20 text-[#38bdf8] hover:text-white whitespace-nowrap font-medium border border-[#0071e3]/30">Escáner gratis</a>
             <a href="#faq" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">FAQ</a>
           </div>
         </header>
@@ -287,32 +290,28 @@ export default function DefensatiPage() {
           {/* SECCIÓN 1: HERO COMERCIAL */}
           <DefensatiHero />
 
-          {/* SECCIÓN 2: PROBLEMAS QUE SOLUCIONAMOS */}
-          <DefensatiProblems />
-
-          {/* SECCIÓN 3: SERVICIOS OFICIALES */}
-          <DefensatiPricing targetUrl={report?.url} />
-
-          {/* SECCIÓN 4: PLANES MENSUALES (Monitoreo & Tranquilidad) */}
-          <DefensatiMonthlyPlans />
-
-          {/* SECCIÓN 5: CÓMO TRABAJAMOS (3 Pasos Simples) */}
-          <DefensatiHowItWorks />
-
-          {/* SECCIÓN 6: ESCÁNER GRATUITO (Con Declaración Jurada Ley N° 30096) */}
-          <section id="escaner-gratis" className="w-full max-w-3xl mx-auto space-y-6 scroll-mt-24 text-center">
+          {/* SECCIÓN 2: ESCÁNER GRATUITO GIGANTE (PROMINENTE, LEAD MAGNET PRINCIPAL) */}
+          <section id="escaner-gratis" className="w-full max-w-4xl xl:max-w-5xl mx-auto space-y-8 scroll-mt-24 text-center">
             
-            <div className="space-y-3 p-6 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)]">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
-                <Search className="w-3.5 h-3.5" />
-                <span>Auditoría Perimetral Gratuita</span>
+            <div className="relative space-y-6 sm:space-y-8 p-8 sm:p-14 lg:p-16 rounded-[36px] sm:rounded-[48px] bg-[#121316]/90 border-2 border-white/15 backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.85),0_0_80px_rgba(0,113,227,0.18),inset_0_1px_0_rgba(255,255,255,0.2)] overflow-hidden">
+              
+              {/* Resplandor cósmico ambiental superior */}
+              <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-[#0071e3]/25 via-[#38bdf8]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 space-y-4">
+                <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-[#0071e3]/15 border border-[#0071e3]/30 text-[#38bdf8] text-xs sm:text-sm font-bold tracking-wide shadow-[0_0_20px_rgba(0,113,227,0.25)]">
+                  <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
+                  <span>AUDITORÍA PERIMETRAL EN VIVO • 100% GRATUITA</span>
+                </div>
+                
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#f5f5f7] tracking-[-0.035em] leading-[1.1] max-w-3xl mx-auto">
+                  Prueba el escáner gratuito de tu web
+                </h2>
+                
+                <p className="text-base sm:text-lg lg:text-xl text-[#a1a1a6] font-normal leading-relaxed max-w-2xl mx-auto pt-1">
+                  Analiza al instante certificados SSL/TLS, cabeceras HTTP de transporte, puertos expuestos y blindaje sin costo ni contraseñas.
+                </p>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
-                Prueba el escáner gratuito de tu web
-              </h2>
-              <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed max-w-xl mx-auto font-normal">
-                Analiza en segundos certificados SSL/TLS, cabeceras de transporte HTTP y puertos expuestos.
-              </p>
 
               {/* Formulario de Escaneo con Casilla de Consentimiento */}
               <form
@@ -320,11 +319,11 @@ export default function DefensatiPage() {
                   e.preventDefault();
                   handleScan();
                 }}
-                className="pt-4 max-w-xl mx-auto space-y-3 text-left"
+                className="relative z-10 pt-2 sm:pt-4 max-w-2xl xl:max-w-3xl mx-auto space-y-4 text-left"
               >
-                <div className="relative p-1.5 rounded-full bg-white/[0.05] border border-white/15 backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,113,227,0.15)] flex items-center gap-2 ring-1 ring-white/10 focus-within:ring-2 focus-within:ring-[#0071e3] transition-all">
-                  <div className="pl-4 text-neutral-400">
-                    <Search className="w-4 h-4" />
+                <div className="relative p-2 sm:p-2.5 rounded-full bg-black/60 border-2 border-white/20 backdrop-blur-3xl shadow-[0_12px_40px_rgba(0,113,227,0.25)] flex items-center gap-2 sm:gap-3 ring-2 ring-white/5 focus-within:ring-4 focus-within:ring-[#0071e3]/40 focus-within:border-[#0071e3] transition-all">
+                  <div className="pl-4 sm:pl-5 text-[#38bdf8] shrink-0">
+                    <Search className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <input
                     id="url-scan-input-defensati"
@@ -332,27 +331,27 @@ export default function DefensatiPage() {
                     placeholder="https://tudominio.com"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    className="w-full bg-transparent border-none py-2.5 text-[16px] sm:text-sm text-[#f5f5f7] placeholder-neutral-500 focus:outline-none font-normal"
+                    className="w-full bg-transparent border-none py-3 sm:py-4 px-1 text-base sm:text-xl text-[#f5f5f7] placeholder-neutral-500 focus:outline-none font-medium"
                   />
                   <button
                     type="submit"
                     disabled={loading || !legalConsent || !url.trim()}
                     title={!legalConsent ? 'Marca la casilla obligatoria para activar el botón' : 'Iniciar auditoría'}
-                    className={`px-5 sm:px-6 py-2.5 font-semibold text-xs rounded-full transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+                    className={`px-6 sm:px-10 py-3.5 sm:py-4 font-bold text-sm sm:text-base rounded-full transition-all flex items-center justify-center gap-2 shrink-0 ${
                       loading || !legalConsent || !url.trim()
-                        ? 'bg-neutral-800 text-neutral-500 border border-white/5 cursor-not-allowed opacity-60'
-                        : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/30 cursor-pointer active:scale-[0.98]'
+                        ? 'bg-neutral-800 text-neutral-500 border border-white/10 cursor-not-allowed opacity-60'
+                        : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-[0_4px_25px_rgba(0,113,227,0.5)] cursor-pointer active:scale-[0.98]'
                     }`}
                   >
                     {loading ? (
                       <>
-                        <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         <span>Auditando...</span>
                       </>
                     ) : (
                       <>
                         <span>Auditar</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                       </>
                     )}
                   </button>
@@ -360,10 +359,10 @@ export default function DefensatiPage() {
 
                 {/* Casilla Obligatoria de Declaración Jurada (Ley N° 30096) */}
                 <div
-                  className={`p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 ${
+                  className={`p-4 sm:p-5 rounded-2xl border text-left transition-all duration-300 ${
                     legalConsent
-                      ? 'bg-emerald-950/20 border-emerald-500/40 shadow-[0_0_25px_rgba(16,185,129,0.12)]'
-                      : 'bg-[#141416]/90 border-white/10 hover:border-amber-500/40 shadow-lg'
+                      ? 'bg-emerald-950/25 border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.15)]'
+                      : 'bg-[#141416]/95 border-white/15 hover:border-amber-500/50 shadow-xl'
                   }`}
                 >
                   <label htmlFor="sworn-declaration-defensati-checkbox" className="flex items-start gap-3.5 cursor-pointer select-none">
@@ -375,10 +374,10 @@ export default function DefensatiPage() {
                         setLegalConsent(e.target.checked);
                         if (error) setError(null);
                       }}
-                      className="mt-1 w-4 h-4 rounded border-white/30 bg-black text-[#0071e3] focus:ring-[#0071e3] focus:ring-offset-0 cursor-pointer accent-[#0071e3] shrink-0"
+                      className="mt-1 w-5 h-5 rounded-md border-white/30 bg-black text-[#0071e3] focus:ring-[#0071e3] focus:ring-offset-0 cursor-pointer accent-[#0071e3] shrink-0"
                     />
-                    <div className="space-y-1.5 flex-1">
-                      <p className="text-xs sm:text-[12.5px] text-neutral-200 leading-snug font-medium whitespace-normal">
+                    <div className="space-y-2 flex-1">
+                      <p className="text-xs sm:text-[13.5px] text-neutral-200 leading-snug font-medium whitespace-normal">
                         “Declaro bajo juramento que soy el titular del dominio que voy a auditar, o que cuento con autorización expresa y por escrito de su propietario, conforme a la{' '}
                         <Link
                           href="/terminos#delitos-informaticos"
@@ -392,15 +391,15 @@ export default function DefensatiPage() {
                       
                       <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
                         <span
-                          className={`text-[9.5px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider inline-flex items-center gap-1 ${
+                          className={`text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-full font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${
                             legalConsent
                               ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                              : 'bg-amber-500/15 text-amber-300 border border-amber-500/25'
+                              : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
                           }`}
                         >
                           {legalConsent ? '✓ Casilla Marcada • Botón Habilitado' : '⚠️ Casilla Requerida para Activar el Botón'}
                         </span>
-                        <span className="text-[10px] text-neutral-400 font-mono">
+                        <span className="text-[10px] sm:text-[11px] text-neutral-400 font-mono">
                           (Guardamos dominio, fecha, hora e IP como prueba legal de autorización)
                         </span>
                       </div>
@@ -410,23 +409,43 @@ export default function DefensatiPage() {
               </form>
 
               {/* Botones de ejemplo rápido */}
-              <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-neutral-400 pt-2">
-                <span>O prueba con un dominio modelo:</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUrl('https://github.com');
-                    setLegalConsent(true);
-                    handleScan('https://github.com', true);
-                  }}
-                  className="text-sky-400 hover:underline font-semibold cursor-pointer"
-                >
-                  github.com
-                </button>
+              <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-neutral-300 pt-3">
+                <span className="text-neutral-400">O prueba con un dominio modelo:</span>
+                {['github.com', 'apple.com', 'autonoma.pe'].map((demoDomain) => (
+                  <button
+                    key={demoDomain}
+                    type="button"
+                    onClick={() => {
+                      const demoUrl = `https://${demoDomain}`;
+                      setUrl(demoUrl);
+                      setLegalConsent(true);
+                      handleScan(demoUrl, true);
+                    }}
+                    className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 text-sky-400 hover:text-sky-300 font-semibold text-xs sm:text-sm transition-all cursor-pointer shadow-sm"
+                  >
+                    {demoDomain}
+                  </button>
+                ))}
+              </div>
+
+              {/* Micro-garantías visuales de confianza técnica */}
+              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-white/10 text-xs sm:text-sm text-neutral-300 text-left sm:text-center">
+                <div className="flex items-center sm:justify-center gap-2 p-2.5 rounded-xl bg-white/[0.03]">
+                  <span className="text-emerald-400 text-base">⚡</span>
+                  <span>Análisis perimetral 100% pasivo</span>
+                </div>
+                <div className="flex items-center sm:justify-center gap-2 p-2.5 rounded-xl bg-white/[0.03]">
+                  <span className="text-[#38bdf8] text-base">🔒</span>
+                  <span>Cero contraseñas requeridas</span>
+                </div>
+                <div className="flex items-center sm:justify-center gap-2 p-2.5 rounded-xl bg-white/[0.03]">
+                  <span className="text-purple-400 text-base">📋</span>
+                  <span>Dictamen técnico en PDF</span>
+                </div>
               </div>
 
               {/* Comparador de Competencia */}
-              <div className="pt-4">
+              <div className="relative z-10 pt-2">
                 <CompetitorComparisonSection />
               </div>
 
@@ -434,18 +453,12 @@ export default function DefensatiPage() {
               {loading && <NeuralScanTakeover targetUrl={url || 'sitio web'} />}
 
               {error && (
-                <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center justify-center gap-2">
+                <div className="relative z-10 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center justify-center gap-2">
                   <AlertTriangle className="w-4 h-4 shrink-0" />
                   <span>{error}</span>
                 </div>
               )}
             </div>
-
-            {/* Explicación de Alcance Técnico: Qué SÍ detecta y qué NO detecta */}
-            <DefensatiScanScope />
-
-            {/* Formulario Sencillo de Consulta Directa por WhatsApp */}
-            <DefensatiQuickContact initialUrl={url} />
 
           </section>
 
@@ -608,16 +621,34 @@ export default function DefensatiPage() {
             </div>
           )}
 
-          {/* SECCIÓN 7: CASOS REALES Y CONTEXTO EN EL MERCADO PERUANO */}
+          {/* SECCIÓN 3: ALCANCE TÉCNICO (Qué SÍ detecta y qué NO detecta) */}
+          <DefensatiScanScope />
+
+          {/* SECCIÓN 4: PROBLEMAS QUE SOLUCIONAMOS */}
+          <DefensatiProblems />
+
+          {/* SECCIÓN 5: SERVICIOS OFICIALES */}
+          <DefensatiPricing targetUrl={report?.url} />
+
+          {/* SECCIÓN 6: PLANES MENSUALES (Monitoreo & Tranquilidad) */}
+          <DefensatiMonthlyPlans />
+
+          {/* SECCIÓN 7: CÓMO TRABAJAMOS (3 Pasos Simples) */}
+          <DefensatiHowItWorks />
+
+          {/* SECCIÓN 8: CASOS REALES Y CONTEXTO EN EL MERCADO PERUANO */}
           <DefensatiCases />
 
-          {/* SECCIÓN 8: CONFIANZA & GARANTÍA OFICIAL */}
+          {/* SECCIÓN 9: CONFIANZA & GARANTÍA OFICIAL */}
           <DefensatiWarranty />
 
-          {/* SECCIÓN 9: PREGUNTAS FRECUENTES */}
+          {/* SECCIÓN 10: FORMULARIO RÁPIDO DE CONSULTA DIRECTA POR WHATSAPP */}
+          <DefensatiQuickContact initialUrl={url} />
+
+          {/* SECCIÓN 11: PREGUNTAS FRECUENTES */}
           <DefensatiFAQ />
 
-          {/* SECCIÓN 10: CTA FINAL DE CONVERSIÓN */}
+          {/* SECCIÓN 12: CTA FINAL DE CONVERSIÓN */}
           <DefensatiFinalCTA />
 
         </main>

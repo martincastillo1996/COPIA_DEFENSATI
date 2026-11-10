@@ -23,6 +23,10 @@ export default function DefensatiHero() {
     const target = document.getElementById('escaner-gratis');
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        const inputEl = document.getElementById('url-scan-input-defensati');
+        if (inputEl) inputEl.focus();
+      }, 400);
     }
   };
 

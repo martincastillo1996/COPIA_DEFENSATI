@@ -7,7 +7,7 @@ export default function DefensatiScanScope() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-[24px] sm:rounded-[28px] bg-[#161618]/70 border border-white/10 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] overflow-hidden transition-all text-left">
+    <div className="w-full max-w-4xl xl:max-w-5xl mx-auto rounded-[24px] sm:rounded-[28px] bg-[#161618]/70 border border-white/10 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] overflow-hidden transition-all text-left">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
