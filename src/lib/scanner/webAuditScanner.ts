@@ -51,11 +51,22 @@ export interface MalwareScanResult {
   remediation?: string;
 }
 
+export interface CommercialImpactResult {
+  hasActiveMarketing: boolean;
+  marketingPlatforms: string[];
+  hasPaymentGateway: boolean;
+  paymentGateways: string[];
+  estimatedMonthlyAdWastePercent: number;
+  anpdpMaxPenaltySoles: number;
+  summaryText: string;
+}
+
 export interface WebAuditResult {
   waf: WafCheckResult;
   cms: CmsCheckResult;
   mixedContent: MixedContentResult;
   malware: MalwareScanResult;
+  commercial?: CommercialImpactResult;
 }
 
 const WAF_SIGNATURES: Array<{
@@ -327,10 +338,69 @@ export async function scanWebAudit(targetUrl: string): Promise<WebAuditResult> {
       : undefined,
   };
 
+  // ==========================================
+  // 5. DETECCIÓN COMERCIAL: PÍXELES DE PAUTA & PASARELAS DE PAGO
+  // ==========================================
+  const marketingPlatforms: string[] = [];
+  if (lowerHtml.includes('fbevents.js') || lowerHtml.includes('connect.facebook.net') || lowerHtml.includes('fbq(')) {
+    marketingPlatforms.push('Meta Pixel (Facebook/Instagram Ads)');
+  }
+  if (lowerHtml.includes('googletagmanager.com/gtag') || lowerHtml.includes('googleadservices.com') || lowerHtml.includes('google_conversion')) {
+    marketingPlatforms.push('Google Ads / Conversion Tag');
+  }
+  if (lowerHtml.includes('analytics.tiktok.com') || lowerHtml.includes('ttq.load')) {
+    marketingPlatforms.push('TikTok Pixel');
+  }
+
+  const paymentGateways: string[] = [];
+  if (lowerHtml.includes('checkout.culqi.com') || lowerHtml.includes('js.culqi.com') || lowerHtml.includes('culqi')) {
+    paymentGateways.push('Culqi Perú');
+  }
+  if (lowerHtml.includes('static-content.vnforapps.com') || lowerHtml.includes('niubiz.com.pe') || lowerHtml.includes('niubiz')) {
+    paymentGateways.push('Niubiz (VisaNet)');
+  }
+  if (lowerHtml.includes('sdk.mercadopago.com') || lowerHtml.includes('mercadopago.js') || lowerHtml.includes('mercadopago')) {
+    paymentGateways.push('Mercado Pago');
+  }
+  if (lowerHtml.includes('static.micuentaweb.pe') || lowerHtml.includes('izipay')) {
+    paymentGateways.push('Izipay');
+  }
+  if (lowerHtml.includes('js.stripe.com') || lowerHtml.includes('checkout.stripe.com')) {
+    paymentGateways.push('Stripe');
+  }
+  if (lowerHtml.includes('paypal.com/sdk') || lowerHtml.includes('paypalobjects.com')) {
+    paymentGateways.push('PayPal');
+  }
+
+  const hasActiveMarketing = marketingPlatforms.length > 0;
+  const hasPaymentGateway = paymentGateways.length > 0;
+  const estimatedMonthlyAdWastePercent = hasActiveMarketing ? 22 : 0;
+  const anpdpMaxPenaltySoles = 257500; // 50 UIT (Ley N° 29733)
+
+  let summaryText = 'Análisis comercial perimetral completado.';
+  if (hasActiveMarketing && hasPaymentGateway) {
+    summaryText = `Inversión activa en pauta (${marketingPlatforms.join(', ')}) y pasarela de cobro (${paymentGateways.join(', ')}). Alertas de seguridad provocan fuga de hasta 22% en ventas pagadas y contingencias legales de hasta 50 UIT (S/ 257,500).`;
+  } else if (hasActiveMarketing) {
+    summaryText = `Inversión activa en pauta publicitaria (${marketingPlatforms.join(', ')}). Alertas de seguridad o falta de HTTPS provocan rebote de prospectos pagados (~22%).`;
+  } else if (hasPaymentGateway) {
+    summaryText = `Pasarela de cobro en línea activa (${paymentGateways.join(', ')}). Sin cabeceras HSTS/CSP, el sitio expone transacciones y arriesga sanciones de la Ley N° 29733.`;
+  }
+
+  const commercialResult: CommercialImpactResult = {
+    hasActiveMarketing,
+    marketingPlatforms,
+    hasPaymentGateway,
+    paymentGateways,
+    estimatedMonthlyAdWastePercent,
+    anpdpMaxPenaltySoles,
+    summaryText,
+  };
+
   return {
     waf: wafResult,
     cms: cmsResult,
     mixedContent: mixedResult,
     malware: malwareResult,
+    commercial: commercialResult,
   };
 }

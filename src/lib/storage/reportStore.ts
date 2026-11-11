@@ -11,6 +11,7 @@ import {
   CmsCheckResult,
   MixedContentResult,
   MalwareScanResult,
+  CommercialImpactResult,
 } from '@/lib/scanner/webAuditScanner';
 
 export interface AuditTelemetry {
@@ -34,6 +35,7 @@ export interface AuditReportRecord {
   cms?: CmsCheckResult;
   mixedContent?: MixedContentResult;
   malware?: MalwareScanResult;
+  commercial?: CommercialImpactResult;
   remediations?: RemediationItem[];
   telemetry?: AuditTelemetry;
   location?: ServerGeoLocation | null;

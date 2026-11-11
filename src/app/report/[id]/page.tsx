@@ -41,6 +41,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
+  const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
 
   // Cargar el reporte automáticamente al entrar a la página
   useEffect(() => {
@@ -90,16 +91,20 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePrint = () => {
+  const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
+    setPdfViewMode(mode);
     if (report?.url) {
       try {
         const cleanHost = new URL(report.url).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
-        document.title = `Dictamen-DEFENSA-TI-${cleanHost}`;
+        const suffix = mode === 'management' ? 'Gerencia' : mode === 'dev' ? 'Dev' : 'Completo';
+        document.title = `Dictamen-DEFENSA-TI-${cleanHost}-${suffix}`;
       } catch {
         // Ignorar si la URL no es válida
       }
     }
-    window.print();
+    setTimeout(() => {
+      window.print();
+    }, 60);
   };
 
   // 1. Estado de Carga
@@ -146,7 +151,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
         <NeuralBackground />
         <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/40 to-[#000000]/80" />
       </div>
-      <PrintableReport report={report} auditId={auditId} />
+      <PrintableReport report={report} auditId={auditId} pdfViewMode={pdfViewMode} />
 
       <div className="relative z-10 print:hidden flex flex-col min-h-screen">
         <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#000000]/65 backdrop-blur-2xl">
@@ -176,21 +181,64 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               <span className="text-xs uppercase tracking-wider text-neutral-400">Auditoría compartida</span>
               <h2 className="text-lg font-semibold text-white">{report.url}</h2>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5">
               <button
                 onClick={copyShareLink}
-                className="px-4 py-2 rounded-xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 border border-[#0071e3]/30 text-[#2997ff] text-xs font-medium flex items-center gap-2"
+                className="px-3.5 py-2 rounded-xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 border border-[#0071e3]/30 text-[#2997ff] text-xs font-medium flex items-center gap-2 cursor-pointer transition-all"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
-                {copied ? '¡Copiado!' : 'Compartir'}
+                <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
               </button>
+
+              {/* Selector de Vista del PDF: Gerencia vs Dev vs Completo */}
+              <div className="inline-flex items-center p-1 rounded-xl bg-black/50 border border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setPdfViewMode('management')}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    pdfViewMode === 'management'
+                      ? 'bg-[#0071e3] text-white shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                  title="PDF de 1 página para el Gerente o Finanzas con pérdidas en Soles y ROI"
+                >
+                  💼 Gerencia
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPdfViewMode('dev')}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    pdfViewMode === 'dev'
+                      ? 'bg-[#0071e3] text-white shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                  title="PDF de 1 página técnica para Desarrolladores / Sysadmin con RFC y código"
+                >
+                  🛠️ Dev
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPdfViewMode('both')}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    pdfViewMode === 'both'
+                      ? 'bg-[#0071e3] text-white shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                  title="PDF completo de 2 páginas con ambas vistas"
+                >
+                  Ambas
+                </button>
+              </div>
+
               <button
-                onClick={handlePrint}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-xs font-semibold flex items-center gap-2 group transition-all cursor-pointer"
+                onClick={() => handlePrint(pdfViewMode)}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] text-white text-xs font-semibold flex items-center gap-2 group transition-all shadow-md cursor-pointer"
                 title="Descargar dictamen forense en formato PDF con membrete oficial"
               >
-                <Download className="w-3.5 h-3.5 text-[#38bdf8] group-hover:translate-y-0.5 transition-transform" />
-                <span>Descargar Dictamen PDF</span>
+                <Download className="w-3.5 h-3.5 text-white group-hover:translate-y-0.5 transition-transform" />
+                <span>
+                  Descargar PDF ({pdfViewMode === 'management' ? 'Gerencia' : pdfViewMode === 'dev' ? 'Dev' : 'Completo'})
+                </span>
               </button>
             </div>
           </div>

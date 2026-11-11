@@ -7,9 +7,10 @@ import { ShieldCheck, CheckCircle2, AlertTriangle, Building2, Code2, Lock } from
 interface Props {
   report: AuditReportRecord;
   auditId: string;
+  pdfViewMode?: 'both' | 'management' | 'dev';
 }
 
-export default function PrintableReport({ report, auditId }: Props) {
+export default function PrintableReport({ report, auditId, pdfViewMode = 'both' }: Props) {
   if (!report) return null;
 
   const scannedDate = new Date(report.scannedAt || '1970-01-01T00:00:00.000Z');
@@ -58,6 +59,7 @@ export default function PrintableReport({ report, auditId }: Props) {
       {/* ========================================================================= */}
       {/* PÁGINA 1: DICTAMEN EJECUTIVO (PARA GERENCIA / DUEÑO DE NEGOCIO) */}
       {/* ========================================================================= */}
+      {pdfViewMode !== 'dev' && (
       <div className="relative p-7 min-h-screen flex flex-col justify-between overflow-hidden">
         
         {/* Marca de Agua ENCIMA EN TODOS LADOS (Página 1: z-50 overlay superior visible) */}
@@ -121,7 +123,11 @@ export default function PrintableReport({ report, auditId }: Props) {
                 </p>
                 <div className="inline-flex items-center gap-1.5 mt-0.5 px-2 py-0.5 rounded bg-neutral-900 text-white font-mono text-[8.5px] font-bold">
                   <Building2 className="w-3 h-3 text-emerald-400" />
-                  <span>PARTE 1 DE 2: DICTAMEN EJECUTIVO COMERCIAL (PARA EL DUEÑO O GERENCIA)</span>
+                  <span>
+                    {pdfViewMode === 'management'
+                      ? 'DICTAMEN EJECUTIVO COMERCIAL (PARA EL DUEÑO O GERENCIA)'
+                      : 'PARTE 1 DE 2: DICTAMEN EJECUTIVO COMERCIAL (PARA EL DUEÑO O GERENCIA)'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -251,6 +257,29 @@ export default function PrintableReport({ report, auditId }: Props) {
                   {report.waf?.hasWaf && !report.sensitiveFiles?.hasExposedFiles && !report.malware?.isInfectedOrSuspicious ? '🟢 Óptimo' : '🔴 Crítico'}
                 </span>
               </div>
+
+              {/* 6. Impacto Comercial, Pauta Digital y Pasarelas de Pago */}
+              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${report.commercial?.hasActiveMarketing || report.commercial?.hasPaymentGateway ? 'bg-amber-50/70 border-amber-300' : 'bg-neutral-50 border-neutral-200'}`}>
+                <div>
+                  <strong className="text-neutral-900 block font-bold">6. Retorno de Inversión (ROI) y Pasarelas de Pago:</strong>
+                  <span className="text-neutral-700 leading-tight block">
+                    {report.commercial?.summaryText || 'Evaluación comercial estándar conforme a métricas de conversión digital.'}
+                  </span>
+                  {Boolean(report.commercial?.hasActiveMarketing) && (
+                    <span className="text-[8px] text-amber-900 font-semibold block mt-0.5">
+                      ⚡ Pauta activa: {report.commercial!.marketingPlatforms.join(', ')} &bull; Pérdida estimada por rebote de seguridad: ~{report.commercial!.estimatedMonthlyAdWastePercent}% de tus clics pagados.
+                    </span>
+                  )}
+                  {Boolean(report.commercial?.hasPaymentGateway) && (
+                    <span className="text-[8px] text-rose-900 font-semibold block mt-0.5">
+                      💳 Pasarela de cobro: {report.commercial!.paymentGateways.join(', ')} &bull; Contingencia regulatoria ANPDP Ley N° 29733: hasta S/ {report.commercial!.anpdpMaxPenaltySoles.toLocaleString('es-PE')} (50 UIT).
+                    </span>
+                  )}
+                </div>
+                <span className="px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 bg-blue-100 text-blue-900 border border-blue-200">
+                  💼 Gerencia
+                </span>
+              </div>
             </div>
           </div>
 
@@ -293,7 +322,7 @@ export default function PrintableReport({ report, auditId }: Props) {
               Transparencia Tecnológica: ¿Cómo se generó este dictamen de ejemplo?
             </strong>
             <p className="text-neutral-800">
-              &bull; <strong>Motor de Red (Determinista):</strong> DEFENSA TI Network Probe Engine v{report.telemetry?.engineVersion || '1.2.0'} (Sondeo TCP de sockets, TLS X.509 y RFC 9110). Datos 100% matemáticos y auditables.
+              &bull; <strong>Motor de Red (Determinista):</strong> DEFENSA TI Network Probe Engine v{report.telemetry?.engineVersion || '1.4.0'} (Sondeo TCP de sockets, TLS X.509 y RFC 9110). Datos 100% matemáticos y auditables.
             </p>
             <p className="text-neutral-800">
               &bull; <strong>Motor de IA (Consultivo):</strong> Neuronality AI Defense Core ({report.telemetry?.aiModel || 'Google Gemini 1.5 Flash'}). <em>La IA no inventa calificaciones ni vulnerabilidades</em>; traduce la telemetría a impacto comercial en Soles y redacta las recetas de código.
@@ -306,25 +335,36 @@ export default function PrintableReport({ report, auditId }: Props) {
           <div>
             <span className="font-bold text-neutral-900 block text-[9.5px]">NEURONAL GRAVITY &bull; DEFENSA TI</span>
             <span>Auditor Responsable: Karol Martín Castillo Rojas &bull; RUC 10704877850</span>
-            <span className="block text-neutral-500">Página 1 de 2 &bull; Dictamen Ejecutivo de Ejemplo</span>
+            <span className="block text-neutral-500">
+              {pdfViewMode === 'management' ? 'Página 1 de 1 • Dictamen Ejecutivo para Gerencia' : 'Página 1 de 2 • Dictamen Ejecutivo de Ejemplo'}
+            </span>
           </div>
           <div className="text-center border border-neutral-300 bg-neutral-50 px-3 py-1 rounded">
             <span className="font-mono text-[8px] font-bold text-neutral-900 block">[FIRMA DIGITAL VERIFICADA]</span>
             <span className="text-[7.5px] text-neutral-600 block">DOCUMENTO DE MUESTRA DIDÁCTICA</span>
           </div>
           <div className="text-right">
-            <span className="block font-bold text-neutral-900">Pasa a la Página 2 para la Receta de Código TI &rarr;</span>
+            {pdfViewMode === 'both' ? (
+              <span className="block font-bold text-neutral-900">Pasa a la Página 2 para la Receta de Código TI &rarr;</span>
+            ) : (
+              <span className="block font-bold text-neutral-900">Dictamen Ejecutivo para Gerencia y Finanzas</span>
+            )}
             <span className="text-neutral-500">https://neuronalgravity.com</span>
           </div>
         </div>
       </div>
+      )}
 
       {/* ========================================================================= */}
       {/* PÁGINA 2: DIRECTIVAS DE CÓDIGO Y TELEMETRÍA (PARA EL DESARROLLADOR / DEV) */}
       {/* ========================================================================= */}
+      {pdfViewMode !== 'management' && (
       <div 
         className="relative p-7 min-h-screen flex flex-col justify-between overflow-hidden"
-        style={{ pageBreakBefore: 'always', breakBefore: 'page' }}
+        style={{
+          pageBreakBefore: pdfViewMode === 'both' ? 'always' : 'auto',
+          breakBefore: pdfViewMode === 'both' ? 'page' : 'auto',
+        }}
       >
         {/* Marca de Agua ENCIMA EN TODOS LADOS (Página 2: z-50 overlay superior visible) */}
         <div className="absolute inset-0 pointer-events-none select-none z-50 overflow-hidden flex flex-col justify-around py-4 opacity-[0.22] print:opacity-[0.25]">
@@ -387,7 +427,11 @@ export default function PrintableReport({ report, auditId }: Props) {
                 </p>
                 <div className="inline-flex items-center gap-1.5 mt-0.5 px-2 py-0.5 rounded bg-neutral-900 text-white font-mono text-[8.5px] font-bold">
                   <Code2 className="w-3 h-3 text-sky-400" />
-                  <span>PARTE 2 DE 2: GUÍA TÉCNICA Y RECETA DE CÓDIGO (PARA EL PROGRAMADOR / SYSADMIN)</span>
+                  <span>
+                    {pdfViewMode === 'dev'
+                      ? 'FICHA TÉCNICA Y GUÍA DEV (PARA EL PROGRAMADOR / SYSADMIN)'
+                      : 'PARTE 2 DE 2: GUÍA TÉCNICA Y RECETA DE CÓDIGO (PARA EL PROGRAMADOR / SYSADMIN)'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -550,18 +594,23 @@ export default function PrintableReport({ report, auditId }: Props) {
           <div>
             <span className="font-bold text-neutral-900 block text-[9.5px]">NEURONAL GRAVITY &bull; RUC 10704877850</span>
             <span>Auditor Responsable: Karol Martín Castillo Rojas &bull; Ciberdefensa Perimetral</span>
-            <span className="block text-neutral-500">Página 2 de 2 &bull; Ficha Técnica y Receta Dev</span>
+            <span className="block text-neutral-500">
+              {pdfViewMode === 'dev' ? 'Página 1 de 1 • Ficha Técnica y Receta Dev' : 'Página 2 de 2 • Ficha Técnica y Receta Dev'}
+            </span>
           </div>
           <div className="text-center border border-neutral-300 bg-neutral-50 px-3 py-1 rounded">
             <span className="font-mono text-[8px] font-bold text-neutral-900 block">[FIRMA DIGITAL VERIFICADA]</span>
             <span className="text-[7.5px] text-neutral-600 block">SELLO OFICIAL DE AUDITORÍA TI</span>
           </div>
           <div className="text-right">
-            <span className="block font-bold text-emerald-800">Dictamen Técnico Completo (Negocio + Dev)</span>
+            <span className="block font-bold text-emerald-800">
+              {pdfViewMode === 'dev' ? 'Guía Técnica Dev Verificada' : 'Dictamen Técnico Completo (Negocio + Dev)'}
+            </span>
             <span className="text-neutral-500">https://neuronalgravity.com</span>
           </div>
         </div>
       </div>
+      )}
 
     </div>
   );

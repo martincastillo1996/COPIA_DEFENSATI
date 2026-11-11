@@ -330,6 +330,7 @@ export async function POST(req: Request) {
           indicators: [],
           description: 'No se detectaron firmas visibles de infección.',
         },
+        commercial: undefined,
       })),
     ]);
 
@@ -470,6 +471,7 @@ export async function POST(req: Request) {
       cms: webAuditResult.cms,
       mixedContent: webAuditResult.mixedContent,
       malware: webAuditResult.malware,
+      commercial: webAuditResult.commercial,
       remediations,
       location: serverLocation,
       cookies: !Array.isArray(headerResult) && headerResult && 'cookies' in headerResult ? headerResult.cookies : undefined,
