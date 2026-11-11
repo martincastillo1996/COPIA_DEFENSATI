@@ -180,4 +180,54 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
     const text = `Hola Martín, acabo de escanear mi web ${domain ? `(${domain})` : ''}${scoreText} en DEFENSA TI y quiero que me ayuden a corregir las fallas encontradas.`;
     return getWhatsAppUrl(text);
   },
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // SERVICIOS COMPLEMENTARIOS & UPSELLS ESPECIALIZADOS
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  // 1. Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) - S/ 190
+  upsellCorreoSpam: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, mis correos con dominio (${domain}) están cayendo en spam o temo suplantación de identidad. Deseo contratar el Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) por S/ 190.`
+      : 'Hola Martín, mis correos corporativos caen en spam o temo suplantación. Deseo contratar el Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) por S/ 190.';
+    return getWhatsAppUrl(text);
+  },
+
+  // 2. Migración Limpia y Segura de Hosting - S/ 290 (Corp) / S/ 450 (Ecom)
+  upsellMigracionHosting: (domain = '', tipo: 'corp' | 'ecom' = 'corp') => {
+    const precio = tipo === 'corp' ? 'S/ 290' : 'S/ 450';
+    const tipoStr = tipo === 'corp' ? 'sitio web' : 'tienda online / e-commerce';
+    const text = domain
+      ? `Hola Martín, necesito migrar mi ${tipoStr} (${domain}) a un hosting/servidor más rápido y seguro sin caídas (${precio}). ¿Cómo coordinamos el respaldo y traslado?`
+      : `Hola Martín, necesito migrar mi ${tipoStr} a un servidor más rápido y seguro sin caídas (${precio}). ¿Cómo coordinamos el respaldo y traslado?`;
+    return getWhatsAppUrl(text);
+  },
+
+  // 3. Optimización de Velocidad Web (WPO) + Core Web Vitals - S/ 320 (Corp) / S/ 480 (Ecom)
+  upsellVelocidadWpo: (domain = '', tipo: 'corp' | 'ecom' = 'corp') => {
+    const precio = tipo === 'corp' ? 'S/ 320' : 'S/ 480';
+    const tipoStr = tipo === 'corp' ? 'sitio web' : 'tienda e-commerce';
+    const text = domain
+      ? `Hola Martín, mi ${tipoStr} (${domain}) carga lenta en celulares y pierde visitas. Me interesa el servicio de Optimización de Velocidad Web (WPO) + Core Web Vitals (${precio}).`
+      : `Hola Martín, mi ${tipoStr} carga lenta en celulares y pierde visitas. Me interesa el servicio de Optimización de Velocidad Web (WPO) + Core Web Vitals (${precio}).`;
+    return getWhatsAppUrl(text);
+  },
+
+  // 4. Adecuación Legal Web (Ley N° 29733 - ANPDP Perú) - S/ 350 (Básico) / S/ 500 (Integral)
+  upsellLegalAnpdp: (domain = '', tipo: 'basico' | 'integral' = 'basico') => {
+    const precio = tipo === 'basico' ? 'S/ 350' : 'S/ 500';
+    const tipoStr = tipo === 'basico' ? 'Plan Esencial (Banner cookies + Políticas)' : 'Plan Integral (Registro de Banco de Datos MINJUS)';
+    const text = domain
+      ? `Hola Martín, deseo adecuar mi web (${domain}) a la Ley N° 29733 de Protección de Datos Personales (${tipoStr} - ${precio}) para evitar sanciones de la ANPDP.`
+      : `Hola Martín, deseo adecuar mi web a la Ley N° 29733 de Protección de Datos Personales (${tipoStr} - ${precio}) para evitar sanciones de la ANPDP.`;
+    return getWhatsAppUrl(text);
+  },
+
+  // 5. Auditoría Técnica de Pasarelas de Pago & Checkout - S/ 420
+  upsellPasarelaPago: (domain = '') => {
+    const text = domain
+      ? `Hola Martín, tengo una pasarela de pago en mi web (${domain}) y necesito una Auditoría Técnica de Checkout & Pasarelas (S/ 420) para blindar los cobros contra scripts espías y fraude.`
+      : 'Hola Martín, tengo una pasarela de pago en mi web y necesito una Auditoría Técnica de Checkout & Pasarelas (S/ 420) para blindar los cobros contra scripts espías y fraude.';
+    return getWhatsAppUrl(text);
+  },
 };

@@ -10,7 +10,14 @@ import {
   Globe, 
   Flame, 
   Radio,
-  ChevronDown
+  ChevronDown,
+  MailCheck,
+  Server,
+  Zap,
+  Scale,
+  CreditCard,
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -28,6 +35,16 @@ export default function DefensatiPricing({ targetUrl }: Props) {
   const [showRescueDetails, setShowRescueDetails] = useState(false);
   const [showWafDetails, setShowWafDetails] = useState(false);
   const [showMonthlyDetails, setShowMonthlyDetails] = useState(false);
+
+  // Estados para selectores de servicios complementarios / upsells
+  const [selectedMigrationType, setSelectedMigrationType] = useState<'corp' | 'ecom'>('corp');
+  const [selectedWpoType, setSelectedWpoType] = useState<'corp' | 'ecom'>('corp');
+  const [selectedLegalType, setSelectedLegalType] = useState<'basico' | 'integral'>('basico');
+  const [showUpsellDetails, setShowUpsellDetails] = useState<Record<string, boolean>>({});
+
+  const toggleUpsellDetail = (id: string) => {
+    setShowUpsellDetails(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   return (
     <section id="servicios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left relative">
@@ -414,6 +431,504 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               <span>Tiendas (S/ 180/m)</span>
             </a>
           </div>
+        </div>
+
+      </div>
+
+      {/* 3. SERVICIOS COMPLEMENTARIOS & UPSELLS ESPECIALIZADOS */}
+      <div className="space-y-6 pt-4">
+        
+        {/* Cabecera de Upsells */}
+        <div className="space-y-2 border-b border-white/10 pb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-xs font-mono uppercase tracking-widest text-[#38bdf8] font-semibold">
+            <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
+            SERVICIOS COMPLEMENTARIOS &bull; UPSELLS DE ALTO VALOR
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-bold text-[#f5f5f7] tracking-tight">
+            Soluciones puntuales para problemas críticos de tu negocio
+          </h3>
+          <p className="text-xs sm:text-sm text-[#86868b] max-w-3xl leading-relaxed">
+            Puedes contratarlos de forma independiente o como add-on junto a tu blindaje o rescate. Todos incluyen atención directa de Martín Castillo y Factura o Boleta con RUC 10704877850.
+          </p>
+        </div>
+
+        {/* Grid de 5 Servicios Complementarios */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          {/* Card 1: Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) */}
+          <div className="p-6 rounded-[28px] bg-[#141416]/85 border border-white/10 hover:border-sky-400/40 transition-all flex flex-col justify-between space-y-5 backdrop-blur-2xl shadow-xl relative group">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
+                  <MailCheck className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-sky-300 font-semibold px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20">
+                  Anti-Spam &bull; 24-48h
+                </span>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-bold text-white tracking-tight leading-snug">
+                  Blindaje de Correo &amp; Anti-Spam
+                </h4>
+                <div className="text-2xl font-black text-white font-mono mt-1">
+                  S/ 190 <span className="text-[11px] text-[#86868b] font-normal font-sans">pago único</span>
+                </div>
+                <p className="text-xs text-[#86868b] mt-2 leading-relaxed">
+                  Evita que tus cotizaciones caigan en la carpeta de Spam de Gmail o Outlook y bloquea que terceros envíen correos falsos a nombre de tu empresa (spoofing).
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => toggleUpsellDetail('correo')}
+                  className="inline-flex items-center gap-1.5 text-xs text-sky-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <span>{showUpsellDetails['correo'] ? 'Ocultar alcance' : '¿Qué incluye este servicio?'}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showUpsellDetails['correo'] ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showUpsellDetails['correo'] && (
+                  <ul className="space-y-1.5 pt-2 text-xs text-neutral-300 border-t border-white/5 mt-2 animate-in fade-in-50">
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Configuración estricta de registros SPF (-all).</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Generación e instalación de llaves criptográficas DKIM de 2048-bit.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Directiva DMARC con monitoreo y aislamiento de envíos no autorizados.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Pruebas de entregabilidad en Google Postmaster y Microsoft SNDS.</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.upsellCorreoSpam(cleanUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: 'Blindaje de Correo & Anti-Spam',
+                  pricePen: 190,
+                  serviceId: 'upsell_correo_spam',
+                });
+                trackWhatsAppClick({
+                  service: 'upsell_correo_spam',
+                  placement: 'pricing_upsell_card',
+                  domain: cleanUrl,
+                });
+              }}
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/30 text-sky-200 text-xs font-bold transition-all cursor-pointer active:scale-95"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+              <span>Contratar Blindaje de Correo (S/ 190)</span>
+            </a>
+          </div>
+
+          {/* Card 2: Migración Limpia y Segura de Hosting */}
+          <div className="p-6 rounded-[28px] bg-[#141416]/85 border border-white/10 hover:border-emerald-400/40 transition-all flex flex-col justify-between space-y-5 backdrop-blur-2xl shadow-xl relative group">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+                  <Server className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                  Zero-Downtime &bull; 2-3 días
+                </span>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-bold text-white tracking-tight leading-snug">
+                  Migración Limpia y Segura de Hosting
+                </h4>
+
+                {/* Selector Corp vs Ecom */}
+                <div className="inline-flex p-0.5 rounded-xl bg-white/[0.06] border border-white/10 mt-2 text-[11px]">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMigrationType('corp')}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      selectedMigrationType === 'corp' ? 'bg-emerald-500 text-white' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    Sitio Web (S/ 290)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMigrationType('ecom')}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      selectedMigrationType === 'ecom' ? 'bg-emerald-500 text-white' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    Tienda Online (S/ 450)
+                  </button>
+                </div>
+
+                <div className="text-2xl font-black text-white font-mono mt-2">
+                  {selectedMigrationType === 'corp' ? 'S/ 290' : 'S/ 450'}{' '}
+                  <span className="text-[11px] text-[#86868b] font-normal font-sans">pago único</span>
+                </div>
+                <p className="text-xs text-[#86868b] mt-1.5 leading-relaxed">
+                  ¿Hosting compartido lento, saturado o infectado? Trasladamos tu web a un servidor rápido y blindado sin que tus clientes noten ninguna interrupción.
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => toggleUpsellDetail('migracion')}
+                  className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <span>{showUpsellDetails['migracion'] ? 'Ocultar alcance' : '¿Qué incluye la migración?'}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showUpsellDetails['migracion'] ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showUpsellDetails['migracion'] && (
+                  <ul className="space-y-1.5 pt-2 text-xs text-neutral-300 border-t border-white/5 mt-2 animate-in fade-in-50">
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Copia de seguridad forense completa previa al traslado.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Saneamiento y descarte de archivos temporales pesados o infectados.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Reconfiguración de DNS con propagación sin pérdida de correos.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Verificación de pasarelas, certificados SSL y base de datos activa.</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.upsellMigracionHosting(cleanUrl, selectedMigrationType)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: `Migracion Hosting (${selectedMigrationType})`,
+                  pricePen: selectedMigrationType === 'corp' ? 290 : 450,
+                  serviceId: `upsell_migracion_${selectedMigrationType}`,
+                });
+                trackWhatsAppClick({
+                  service: `upsell_migracion_${selectedMigrationType}`,
+                  placement: 'pricing_upsell_card',
+                  domain: cleanUrl,
+                });
+              }}
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/30 text-emerald-200 text-xs font-bold transition-all cursor-pointer active:scale-95"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+              <span>Pedir Migración ({selectedMigrationType === 'corp' ? 'S/ 290' : 'S/ 450'})</span>
+            </a>
+          </div>
+
+          {/* Card 3: Optimización de Velocidad Web (WPO) + Core Web Vitals */}
+          <div className="p-6 rounded-[28px] bg-[#141416]/85 border border-white/10 hover:border-amber-400/40 transition-all flex flex-col justify-between space-y-5 backdrop-blur-2xl shadow-xl relative group">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                  <Zap className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
+                  Aceleración Móvil &bull; 3-5 días
+                </span>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-bold text-white tracking-tight leading-snug">
+                  Optimización de Velocidad (WPO)
+                </h4>
+
+                {/* Selector Corp vs Ecom */}
+                <div className="inline-flex p-0.5 rounded-xl bg-white/[0.06] border border-white/10 mt-2 text-[11px]">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedWpoType('corp')}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      selectedWpoType === 'corp' ? 'bg-amber-500 text-black' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    Sitio Web (S/ 320)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedWpoType('ecom')}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      selectedWpoType === 'ecom' ? 'bg-amber-500 text-black' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    Tienda Online (S/ 480)
+                  </button>
+                </div>
+
+                <div className="text-2xl font-black text-white font-mono mt-2">
+                  {selectedWpoType === 'corp' ? 'S/ 320' : 'S/ 480'}{' '}
+                  <span className="text-[11px] text-[#86868b] font-normal font-sans">pago único</span>
+                </div>
+                <p className="text-xs text-[#86868b] mt-1.5 leading-relaxed">
+                  El 53% de clientes abandona un sitio móvil que tarda más de 3 segundos. Aceleramos tu carga para maximizar ventas y mejorar tu posicionamiento en Google.
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => toggleUpsellDetail('wpo')}
+                  className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <span>{showUpsellDetails['wpo'] ? 'Ocultar alcance' : '¿Qué incluye la aceleración?'}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showUpsellDetails['wpo'] ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showUpsellDetails['wpo'] && (
+                  <ul className="space-y-1.5 pt-2 text-xs text-neutral-300 border-t border-white/5 mt-2 animate-in fade-in-50">
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Caché Edge perimetral en Cloudflare y compresión avanzada Brotli.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Optimización de imágenes con conversión automática a WebP/AVIF.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Eliminación de scripts bloqueantes y optimización de CSS crítico.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Cumplimiento de Core Web Vitals (LCP, CLS e INP) para Google.</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.upsellVelocidadWpo(cleanUrl, selectedWpoType)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: `Optimizacion WPO (${selectedWpoType})`,
+                  pricePen: selectedWpoType === 'corp' ? 320 : 480,
+                  serviceId: `upsell_wpo_${selectedWpoType}`,
+                });
+                trackWhatsAppClick({
+                  service: `upsell_wpo_${selectedWpoType}`,
+                  placement: 'pricing_upsell_card',
+                  domain: cleanUrl,
+                });
+              }}
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/30 text-amber-200 text-xs font-bold transition-all cursor-pointer active:scale-95"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+              <span>Optimizar Velocidad ({selectedWpoType === 'corp' ? 'S/ 320' : 'S/ 480'})</span>
+            </a>
+          </div>
+
+          {/* Card 4: Adecuación Legal Web (Ley N° 29733 - ANPDP Perú) */}
+          <div className="p-6 rounded-[28px] bg-[#141416]/85 border border-white/10 hover:border-purple-400/40 transition-all flex flex-col justify-between space-y-5 backdrop-blur-2xl shadow-xl relative group">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-purple-400">
+                  <Scale className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 font-semibold px-2.5 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20">
+                  Evita Multas MINJUS &bull; 3-5 días
+                </span>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-bold text-white tracking-tight leading-snug">
+                  Adecuación Legal Web (Ley 29733)
+                </h4>
+
+                {/* Selector Básico vs Integral */}
+                <div className="inline-flex p-0.5 rounded-xl bg-white/[0.06] border border-white/10 mt-2 text-[11px]">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedLegalType('basico')}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      selectedLegalType === 'basico' ? 'bg-purple-600 text-white' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    Esencial (S/ 350)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedLegalType('integral')}
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      selectedLegalType === 'integral' ? 'bg-purple-600 text-white' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    Integral + Banco (S/ 500)
+                  </button>
+                </div>
+
+                <div className="text-2xl font-black text-white font-mono mt-2">
+                  {selectedLegalType === 'basico' ? 'S/ 350' : 'S/ 500'}{' '}
+                  <span className="text-[11px] text-[#86868b] font-normal font-sans">pago único</span>
+                </div>
+                <p className="text-xs text-[#86868b] mt-1.5 leading-relaxed">
+                  Blindaje legal técnico frente a multas de hasta 50 UIT de la Autoridad Nacional de Protección de Datos Personales (ANPDP - Ministerio de Justicia).
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => toggleUpsellDetail('legal')}
+                  className="inline-flex items-center gap-1.5 text-xs text-purple-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <span>{showUpsellDetails['legal'] ? 'Ocultar alcance' : '¿Qué incluye la adecuación?'}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showUpsellDetails['legal'] ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showUpsellDetails['legal'] && (
+                  <ul className="space-y-1.5 pt-2 text-xs text-neutral-300 border-t border-white/5 mt-2 animate-in fade-in-50">
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Banner de cookies interactivo con bloqueo condicional de scripts.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Redacción de Política de Privacidad y Términos a medida según tu rubro.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Cláusulas de consentimiento obligatorio en formularios y checkout.</span>
+                    </li>
+                    {selectedLegalType === 'integral' && (
+                      <li className="flex items-start gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-purple-400 shrink-0 mt-0.5" />
+                        <span><strong>Plan Integral:</strong> Expediente y guía para el Registro del Banco de Datos Personales en el MINJUS.</span>
+                      </li>
+                    )}
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.upsellLegalAnpdp(cleanUrl, selectedLegalType)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: `Adecuacion Legal (${selectedLegalType})`,
+                  pricePen: selectedLegalType === 'basico' ? 350 : 500,
+                  serviceId: `upsell_legal_${selectedLegalType}`,
+                });
+                trackWhatsAppClick({
+                  service: `upsell_legal_${selectedLegalType}`,
+                  placement: 'pricing_upsell_card',
+                  domain: cleanUrl,
+                });
+              }}
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-400/30 text-purple-200 text-xs font-bold transition-all cursor-pointer active:scale-95"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+              <span>Adecuar a Ley 29733 ({selectedLegalType === 'basico' ? 'S/ 350' : 'S/ 500'})</span>
+            </a>
+          </div>
+
+          {/* Card 5: Auditoría Técnica de Pasarelas de Pago & Checkout */}
+          <div className="p-6 rounded-[28px] bg-[#141416]/85 border border-white/10 hover:border-rose-400/40 transition-all flex flex-col justify-between space-y-5 backdrop-blur-2xl shadow-xl relative group md:col-span-2 lg:col-span-1">
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-400/30 flex items-center justify-center text-rose-400">
+                  <CreditCard className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-rose-300 font-semibold px-2.5 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/20">
+                  Antifraude &bull; 48-72h
+                </span>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-bold text-white tracking-tight leading-snug">
+                  Auditoría de Pasarelas &amp; Checkout
+                </h4>
+                <div className="text-2xl font-black text-white font-mono mt-1">
+                  S/ 420 <span className="text-[11px] text-[#86868b] font-normal font-sans">pago único</span>
+                </div>
+                <p className="text-xs text-[#86868b] mt-2 leading-relaxed">
+                  Blindaje del checkout para tiendas con Niubiz, Culqi, Izipay, MercadoPago o Stripe. Evita robo de tarjetas (Magecart) y manipulación de precios.
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => toggleUpsellDetail('pasarela')}
+                  className="inline-flex items-center gap-1.5 text-xs text-rose-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <span>{showUpsellDetails['pasarela'] ? 'Ocultar alcance' : '¿Qué incluye la auditoría?'}</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showUpsellDetails['pasarela'] ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showUpsellDetails['pasarela'] && (
+                  <ul className="space-y-1.5 pt-2 text-xs text-neutral-300 border-t border-white/5 mt-2 animate-in fade-in-50">
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Análisis forense de scripts JavaScript inyectados en la pantalla de pago.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Blindaje de Webhooks de pago para evitar confirmaciones falsas de cobro.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Validación estricta de TLS 1.3 y cabeceras CSP restrictivas en el checkout.</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Informe formal de certificación transaccional firmado por Martín Castillo.</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            <a
+              href={DEFENSATI_WHATSAPP_MESSAGES.upsellPasarelaPago(cleanUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackServiceClick({
+                  serviceName: 'Auditoria Pasarelas de Pago',
+                  pricePen: 420,
+                  serviceId: 'upsell_pasarela_pago',
+                });
+                trackWhatsAppClick({
+                  service: 'upsell_pasarela_pago',
+                  placement: 'pricing_upsell_card',
+                  domain: cleanUrl,
+                });
+              }}
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-400/30 text-rose-200 text-xs font-bold transition-all cursor-pointer active:scale-95"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+              <span>Auditar Pasarela de Pago (S/ 420)</span>
+            </a>
+          </div>
+
         </div>
 
       </div>

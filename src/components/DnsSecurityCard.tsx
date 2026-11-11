@@ -1,16 +1,21 @@
 'use client';
 
 import { DnsSecurityResult } from '@/lib/scanner/dnsScanner';
-import { MailCheck, MailWarning, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { MailCheck, MailWarning, ShieldAlert, ShieldCheck, ArrowRight } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 
 interface DnsSecurityCardProps {
   dnsSecurity?: DnsSecurityResult;
+  domain?: string;
 }
 
-export default function DnsSecurityCard({ dnsSecurity }: DnsSecurityCardProps) {
+export default function DnsSecurityCard({ dnsSecurity, domain = '' }: DnsSecurityCardProps) {
   if (!dnsSecurity) return null;
 
   const { dmarc, spf } = dnsSecurity;
+  const hasDnsRisk = dmarc.risk !== 'BAJO' || spf.risk !== 'BAJO';
+  const cleanDomain = domain.replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
 
   return (
     <div className="bg-neutral-900/80 border border-white/10 rounded-2xl p-5 backdrop-blur-xl space-y-4">
@@ -101,6 +106,30 @@ export default function DnsSecurityCard({ dnsSecurity }: DnsSecurityCardProps) {
           )}
         </div>
       </div>
+
+      {/* Alerta de Conversión para Upsell de Blindaje de Correo & Anti-Spam */}
+      {hasDnsRisk && (
+        <div className="p-3.5 rounded-xl bg-sky-950/30 border border-sky-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="space-y-0.5">
+            <span className="font-bold text-sky-200 block">
+              ⚠️ Riesgo de caída en Spam o suplantación de identidad (Phishing)
+            </span>
+            <span className="text-neutral-300 text-[11px]">
+              Tus correos corporativos no están plenamente blindados ante filtros de Google y Microsoft.
+            </span>
+          </div>
+          <a
+            href={DEFENSATI_WHATSAPP_MESSAGES.upsellCorreoSpam(cleanDomain)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs shrink-0 transition-all cursor-pointer shadow-md shadow-sky-500/20 active:scale-95"
+          >
+            <WhatsAppIcon className="w-3.5 h-3.5 fill-current" />
+            <span>Blindar Correo (S/ 190)</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      )}
     </div>
   );
 }

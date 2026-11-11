@@ -368,7 +368,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
               {Boolean(report.dnsSecurity) && (
                 <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                  <DnsSecurityCard dnsSecurity={report.dnsSecurity} />
+                  <DnsSecurityCard dnsSecurity={report.dnsSecurity} domain={report.url} />
                 </div>
               )}
 

@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Scale, ExternalLink } from 'lucide-react';
-import { siteConfig } from '@/config/site';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 
 interface AnpdpComplianceCardProps {
   domain: string;
@@ -30,11 +31,6 @@ export default function AnpdpComplianceCard({
 
   const totalPassed = [isTransportCompliant, isDataStorageCompliant, isSessionCompliant].filter(Boolean).length;
   const complianceStatus = isHyperscale || totalPassed === 3 ? 'optimo' : totalPassed === 2 ? 'observacion' : 'critico';
-
-  const whatsappNumber = (siteConfig.contact.whatsappNumber || '17856433991').replace(/[^0-9]/g, '');
-  const whatsappMsg = encodeURIComponent(
-    `Hola Martín, estuve revisando la ficha de cumplimiento Ley N° 29733 para mi web ${cleanDomain} en DEFENSA TI. Quisiera asesoría para asegurar el cumplimiento ante la ANPDP y evitar multas.`
-  );
 
   return (
     <div className="p-6 sm:p-7 rounded-3xl bg-[#12141c] border border-white/10 shadow-2xl space-y-5 text-left">
@@ -156,12 +152,13 @@ export default function AnpdpComplianceCard({
         </div>
 
         <a
-          href={`https://wa.me/${whatsappNumber}?text=${whatsappMsg}`}
+          href={DEFENSATI_WHATSAPP_MESSAGES.upsellLegalAnpdp(cleanDomain, 'basico')}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 text-xs font-semibold shrink-0 transition-all cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-200 text-xs font-bold shrink-0 transition-all cursor-pointer shadow-md shadow-purple-500/10 active:scale-95"
         >
-          <span>Consultar Blindaje ANPDP</span>
+          <WhatsAppIcon className="w-3.5 h-3.5 fill-current" />
+          <span>Adecuar a Ley 29733 (desde S/ 350)</span>
           <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>

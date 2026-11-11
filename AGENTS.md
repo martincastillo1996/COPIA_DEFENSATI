@@ -46,4 +46,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
      4. **Mantenimiento mensual:** Vigilancia continua 24/7 sin permanencia forzosa:
         - Mantenimiento Básico (sitios corporativos): S/ 90/mes (uptime cada 15 min, alerta SSL, reporte mensual y soporte de 40 min).
         - Mantenimiento Tiendas Online (soporte prioritario): S/ 180/mes (uptime cada 5 min, alerta prioritaria a WhatsApp, re-escaneos semanales y soporte prioritario de 90 min).
+     5. **Servicios Complementarios & Upsells Inmediatos (Alta Demanda):**
+        - **Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC):** S/ 190 (pago único). Evita caída en spam de Gmail/Outlook y suplantación de identidad.
+        - **Migración Limpia y Segura de Hosting (Zero-Downtime):** S/ 290 (web corporativa) / S/ 450 (tienda e-commerce). Respaldo, traslado sin caída y saneamiento perimetral.
+        - **Optimización de Velocidad Web (WPO) + Core Web Vitals:** S/ 320 (web corporativa) / S/ 480 (tienda e-commerce). Caché Edge Cloudflare, compresión Brotli y aceleración móvil.
+        - **Adecuación Legal Web (Ley N° 29733 - ANPDP Perú):** S/ 350 (básica) / S/ 500 (integral). Banner de cookies activo, políticas a medida y cláusulas de consentimiento para evitar multas del MINJUS.
+        - **Auditoría Técnica de Pasarelas de Pago:** S/ 420 (pago único). Revisión forense de checkout, Niubiz, Culqi, Izipay, MercadoPago o Stripe contra Magecart y manipulación de datos.
 
