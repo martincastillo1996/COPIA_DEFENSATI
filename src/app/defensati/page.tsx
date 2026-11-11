@@ -631,6 +631,7 @@ export default function DefensatiPage() {
                 cms={report.cms}
                 mixedContent={report.mixedContent}
                 malware={report.malware}
+                commercial={report.commercial}
               />
 
               {/* Detalle según modo */}

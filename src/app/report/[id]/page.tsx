@@ -310,6 +310,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             cms={report.cms}
             mixedContent={report.mixedContent}
             malware={report.malware}
+            commercial={report.commercial}
           />
 
           {/* Contenido Condicional según Perspectiva */}
