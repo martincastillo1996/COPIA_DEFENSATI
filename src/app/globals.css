@@ -134,3 +134,11 @@ h1, h2, h3 {
   animation: spinOrbit 3.5s linear infinite !important;
   transform-origin: center center;
 }
+
+/* Oculta la barra de desplazamiento en carruseles horizontales */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

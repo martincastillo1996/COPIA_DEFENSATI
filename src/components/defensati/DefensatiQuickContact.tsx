@@ -64,7 +64,6 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
 
   const isFormValid = Boolean(
     name.trim() &&
-    ruc.trim() &&
     email.trim() &&
     phone.trim() &&
     targetUrl.trim() &&
@@ -130,7 +129,7 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
 • *N° Solicitud:* ${generatedId}
 • *Contacto:* ${clientName}
 • *Empresa / Razón Social:* ${cleanCompany || 'Persona Natural con Negocio'}
-• *RUC / DNI:* ${cleanRuc}
+• *RUC / DNI:* ${cleanRuc || 'Por confirmar'}
 • *Web a intervenir:* ${cleanUrl}
 • *Plataforma:* ${selectedPlatform.label}
 • *Correo para informe / factura:* ${cleanEmail}
@@ -162,7 +161,7 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
               <FileCheck className="w-3.5 h-3.5" />
-              <span>SOLICITUD Y CONTRATACIÓN FORMAL</span>
+              <span>SOLICITA TU SERVICIO</span>
             </span>
             <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
               <Receipt className="w-3.5 h-3.5 text-emerald-400" />
@@ -171,10 +170,10 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-snug pt-1">
-            Formulario de Solicitud de Servicio y Contratación
+            Solicita tu servicio en un minuto
           </h3>
           <p className="text-sm sm:text-base text-[#86868b] font-normal leading-relaxed">
-            Ingresa los datos de tu empresa o negocio para emitir tu comprobante formal electrónico, delimitar las responsabilidades legales y abrir tu canal técnico prioritario por WhatsApp.
+            Déjanos tus datos y seguimos por WhatsApp. No pagas nada hasta acordar el servicio.
           </p>
         </div>
 
@@ -197,7 +196,7 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
 
             <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-1.5 text-xs text-neutral-300 font-mono">
               <p>• <strong>Solicitante:</strong> {name} {company ? `(${company})` : ''}</p>
-              <p>• <strong>RUC / DNI:</strong> {ruc}</p>
+              <p>• <strong>RUC / DNI:</strong> {ruc.trim() || 'Por confirmar'}</p>
               <p>• <strong>Web a intervenir:</strong> {targetUrl}</p>
               <p>• <strong>Correo:</strong> {email} &bull; <strong>Teléfono:</strong> {phone}</p>
               <p>• <strong>Servicio:</strong> {servicesList.find((s) => s.id === service)?.label}</p>
@@ -250,40 +249,6 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="contract-company" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Empresa o Razón Social (Opcional)</span>
-                </label>
-                <input
-                  id="contract-company"
-                  type="text"
-                  placeholder="Ej. Distribuidora Lima S.A.C."
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-            </div>
-
-            {/* Fila 2: RUC/DNI y Correo Electrónico */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label htmlFor="contract-ruc" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Receipt className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>RUC o DNI para Factura / Boleta <span className="text-rose-400">*</span></span>
-                </label>
-                <input
-                  id="contract-ruc"
-                  type="text"
-                  required
-                  placeholder="Ej. 20601234567 o 45678912"
-                  value={ruc}
-                  onChange={(e) => setRuc(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-
-              <div className="space-y-1.5">
                 <label htmlFor="contract-email" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
                   <Mail className="w-3.5 h-3.5 text-[#38bdf8]" />
                   <span>Correo para informe técnico y factura <span className="text-rose-400">*</span></span>
@@ -298,6 +263,15 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
                   className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
                 />
               </div>
+
+              
+            </div>
+
+            {/* Fila 2: RUC/DNI y Correo Electrónico */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+
+              
             </div>
 
             {/* Fila 3: Teléfono y Dirección Web */}
@@ -337,24 +311,7 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
 
             {/* Fila 4: Plataforma Web y Selector de Servicio Oficial */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label htmlFor="contract-platform" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Plataforma o CMS de tu web <span className="text-rose-400">*</span></span>
-                </label>
-                <select
-                  id="contract-platform"
-                  value={platform}
-                  onChange={(e) => setPlatform(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
-                >
-                  {platformsList.map((p) => (
-                    <option key={p.id} value={p.id} className="bg-[#141416] text-white">
-                      {p.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              
 
               <div className="space-y-1.5">
                 <label htmlFor="contract-service" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
@@ -377,7 +334,65 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
             </div>
 
             {/* Fila 5: Detalles o Síntomas */}
-            <div className="space-y-1.5">
+            
+
+            {/* Datos opcionales, plegados para que el formulario sea corto */}
+            <details className="rounded-2xl bg-white/[0.03] border border-white/10 group">
+              <summary className="cursor-pointer select-none px-4 py-3 text-sm font-semibold text-[#f5f5f7] flex items-center justify-between gap-3 list-none [&::-webkit-details-marker]:hidden">
+                <span>Datos opcionales: factura, plataforma y detalles</span>
+                <span className="text-[#38bdf8] text-xs font-medium group-open:hidden">Agregar</span>
+                <span className="text-[#38bdf8] text-xs font-medium hidden group-open:inline">Ocultar</span>
+              </summary>
+              <div className="px-4 pb-4 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                <label htmlFor="contract-company" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
+                  <Building className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>Empresa o Razón Social (Opcional)</span>
+                </label>
+                <input
+                  id="contract-company"
+                  type="text"
+                  placeholder="Ej. Distribuidora Lima S.A.C."
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
+                />
+              </div>
+                  <div className="space-y-1.5">
+                <label htmlFor="contract-ruc" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
+                  <Receipt className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>RUC o DNI para Factura / Boleta <span className="text-neutral-500">(opcional, puedes darlo después)</span></span>
+                </label>
+                <input
+                  id="contract-ruc"
+                  type="text"
+                  placeholder="Ej. 20601234567 o 45678912"
+                  value={ruc}
+                  onChange={(e) => setRuc(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
+                />
+              </div>
+                </div>
+                <div className="space-y-1.5">
+                <label htmlFor="contract-platform" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>Plataforma de tu web</span>
+                </label>
+                <select
+                  id="contract-platform"
+                  value={platform}
+                  onChange={(e) => setPlatform(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
+                >
+                  {platformsList.map((p) => (
+                    <option key={p.id} value={p.id} className="bg-[#141416] text-white">
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+                <div className="space-y-1.5">
               <label htmlFor="contract-note" className="text-xs font-medium text-neutral-300">
                 Detalles de la situación técnica o síntomas (Opcional)
               </label>
@@ -390,6 +405,8 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
                 className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal resize-none"
               />
             </div>
+              </div>
+            </details>
 
             {/* ============================================================== */}
             {/* CASILLAS LEGALES OBLIGATORIAS (Ley 30096 + Ley 29733)           */}
@@ -449,7 +466,7 @@ Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pas
                 <span>
                   {loading 
                     ? 'Procesando solicitud formal...' 
-                    : 'Formalizar Solicitud y Coordinar por WhatsApp (+1 785 643-3991)'}
+                    : 'Enviar solicitud y seguir por WhatsApp'}
                 </span>
               </button>
             </div>

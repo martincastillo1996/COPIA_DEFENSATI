@@ -263,7 +263,7 @@ export default function AiConsultantWidget({ report }: Props) {
       
       {/* 1. PROACTIVE PREVIEW BUBBLE DEFENSA TI */}
       {!isOpen && !bubbleDismissed && (
-        <div className="mb-3 w-[calc(100vw-2.5rem)] sm:w-92 rounded-3xl bg-[#0f121a]/95 border border-white/15 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in slide-in-from-bottom-3 duration-300">
+        <div className="hidden sm:block mb-3 sm:w-92 rounded-3xl bg-[#0f121a]/95 border border-white/15 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in slide-in-from-bottom-3 duration-300">
           
           {/* Fila superior: Texto + Estado en línea */}
           <div className="flex items-start justify-between gap-3">
@@ -277,7 +277,7 @@ export default function AiConsultantWidget({ report }: Props) {
               <div className="flex items-center gap-1.5 pt-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-[11px] font-semibold text-emerald-400 tracking-wide">
-                  Asesor DEFENSA TI en línea
+                  Asistente IA de DEFENSA TI disponible
                 </span>
               </div>
             </div>

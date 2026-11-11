@@ -12,34 +12,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/soluciones`,
+      url: `${baseUrl}/defensati`,
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/metodologia`,
+      url: `${baseUrl}/defensati/informe-ejemplo`,
       lastModified,
       changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/casos`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/liderazgo`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/defensati`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.6,
     },
   ];
 }

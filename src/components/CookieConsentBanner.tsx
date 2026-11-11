@@ -31,11 +31,16 @@ export default function CookieConsentBanner() {
   return (
     <aside 
       aria-label="Consentimiento de Cookies y Privacidad"
-      className="fixed bottom-6 right-6 left-6 sm:left-auto sm:max-w-md z-50 animate-in fade-in-50 slide-in-from-bottom-5 duration-500"
+      className="fixed bottom-0 inset-x-0 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-md z-50 animate-in fade-in-50 slide-in-from-bottom-5 duration-500"
     >
-      <div className="p-5 rounded-3xl bg-[#161618]/95 border border-white/15 shadow-2xl backdrop-blur-2xl text-[#f5f5f7] space-y-4">
-        
-        <div className="flex items-start justify-between gap-3">
+      <div className="p-3 sm:p-5 rounded-t-2xl sm:rounded-3xl bg-[#161618]/95 border border-white/15 shadow-2xl backdrop-blur-2xl text-[#f5f5f7] space-y-2 sm:space-y-4">
+
+        {/* Móvil: una sola línea para no tapar el titular ni los botones */}
+        <p className="sm:hidden text-[11px] text-neutral-300 leading-snug">
+          Usamos cookies esenciales y analíticas (Ley N° 29733).
+        </p>
+
+        <div className="hidden sm:flex items-start justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-2xl bg-[#0071e3]/15 border border-[#0071e3]/30 flex items-center justify-center text-[#2997ff]">
               <Cookie className="w-4 h-4" />
@@ -56,11 +61,11 @@ export default function CookieConsentBanner() {
           </button>
         </div>
 
-        <p className="text-xs text-neutral-300 leading-relaxed">
+        <p className="hidden sm:block text-xs text-neutral-300 leading-relaxed">
           Utilizamos cookies esenciales y analíticas técnicas no intrusivas para garantizar la seguridad perimetral, la persistencia de reportes sin base de datos y cumplir con el estándar nacional de protección de datos personales.
         </p>
 
-        <div className="flex items-center gap-2 pt-1">
+        <div className="flex items-center gap-2 sm:pt-1">
           <button
             type="button"
             onClick={handleAccept}
@@ -78,7 +83,7 @@ export default function CookieConsentBanner() {
           </button>
         </div>
 
-        <div className="text-[10px] text-neutral-500 flex items-center gap-1.5 pt-1 border-t border-white/5">
+        <div className="hidden sm:flex text-[10px] text-neutral-500 items-center gap-1.5 pt-1 border-t border-white/5">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
           <span>Datos cifrados de extremo a extremo sin venta a terceros</span>
         </div>

@@ -32,7 +32,6 @@ import CompetitorComparisonSection from '@/components/CompetitorComparisonSectio
 import WebAuditCard from '@/components/WebAuditCard';
 import PdfLeadModal from '@/components/PdfLeadModal';
 import RoiLossCalculator from '@/components/RoiLossCalculator';
-import RecentScansTicker from '@/components/RecentScansTicker';
 import SocialViralHub from '@/components/SocialViralHub';
 import SecurityBenchmarkBar from '@/components/SecurityBenchmarkBar';
 import AnpdpComplianceCard from '@/components/AnpdpComplianceCard';
@@ -44,13 +43,12 @@ import { isHyperscalePlatform } from '@/lib/hyperscalers';
 // Componentes Oficiales DEFENSA TI
 import DefensatiHero from '@/components/defensati/DefensatiHero';
 import DefensatiProblems from '@/components/defensati/DefensatiProblems';
-import DefensatiPricing from '@/components/defensati/DefensatiPricing';
+import DefensatiPlans from '@/components/defensati/DefensatiPlans';
 import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
 import DefensatiScanScope from '@/components/defensati/DefensatiScanScope';
-import DefensatiCases from '@/components/defensati/DefensatiCases';
+import DefensatiRealData from '@/components/defensati/DefensatiRealData';
 import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
 import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
-import DefensatiFinalCTA from '@/components/defensati/DefensatiFinalCTA';
 import DefensatiScanRecommendation from '@/components/defensati/DefensatiScanRecommendation';
 import DefensatiVideoAuditCard from '@/components/defensati/DefensatiVideoAuditCard';
 import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact';
@@ -83,7 +81,7 @@ export default function DefensatiPage() {
 
     const hasConsent = overrideConsent ?? legalConsent;
     if (!hasConsent) {
-      setError('Debes marcar la casilla obligatoria de declaración jurada bajo la Ley N° 30096 para poder auditar el dominio.');
+      setError('Marca la casilla para confirmar que la web es tuya o que tienes permiso de su dueño.');
       return;
     }
 
@@ -223,7 +221,7 @@ export default function DefensatiPage() {
     <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
       
       {/* Fondo estético y luces ambientales (El fondo clásico original de DEFENSA TI con +15% de visibilidad) */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-95">
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
         <NeuralBackground />
         <div className="absolute inset-0 bg-radial from-black/10 via-black/35 to-black/65" />
       </div>
@@ -280,10 +278,9 @@ export default function DefensatiPage() {
                 <span>Escáner gratis</span>
               </a>
               <a href="#problemas" className="hover:text-white transition-colors">Problemas</a>
-              <a href="#servicios" className="hover:text-sky-400 transition-colors">Servicios</a>
-              <a href="#planes" className="hover:text-[#30d158] transition-colors">Planes mensuales</a>
+              <a href="#servicios" className="hover:text-sky-400 transition-colors">Precios</a>
               <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
-              <a href="#casos-reales" className="hover:text-white transition-colors">Casos reales</a>
+              <a href="#datos-reales" className="hover:text-white transition-colors">Datos reales</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
 
@@ -307,10 +304,9 @@ export default function DefensatiPage() {
           <div className="lg:hidden border-t border-white/10 bg-black/60 px-4 py-2 flex items-center gap-2 overflow-x-auto text-xs no-scrollbar">
             <a href="#escaner-gratis" className="px-3.5 py-1 rounded-full bg-[#0071e3] text-white whitespace-nowrap font-bold shadow-sm shadow-[#0071e3]/30">Escáner gratis</a>
             <a href="#problemas" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Problemas</a>
-            <a href="#servicios" className="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 hover:text-sky-300 whitespace-nowrap font-medium border border-sky-500/20">Servicios</a>
-            <a href="#planes" className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 hover:text-emerald-300 whitespace-nowrap font-medium border border-emerald-500/20">Planes</a>
+            <a href="#servicios" className="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 hover:text-sky-300 whitespace-nowrap font-medium border border-sky-500/20">Precios</a>
             <a href="#como-funciona" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Cómo funciona</a>
-            <a href="#casos-reales" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Casos reales</a>
+            <a href="#datos-reales" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Datos reales</a>
             <a href="#faq" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">FAQ</a>
           </div>
         </header>
@@ -409,15 +405,15 @@ export default function DefensatiPage() {
                     />
                     <div className="space-y-2 flex-1">
                       <p className="text-xs sm:text-[13.5px] text-neutral-200 leading-snug font-medium whitespace-normal">
-                        “Declaro bajo juramento que soy el titular del dominio que voy a auditar, o que cuento con autorización expresa y por escrito de su propietario, conforme a la{' '}
+                        Confirmo que esta web es mía o que tengo permiso de su dueño para revisarla, conforme a la{' '}
                         <Link
                           href="/terminos#delitos-informaticos"
                           className="text-[#38bdf8] underline hover:text-white font-semibold"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          Ley N° 30096, Delitos Informáticos del Perú
+                          Ley N° 30096
                         </Link>
-                        . Entiendo que auditar una web ajena sin permiso puede ser delito.”
+                        . El análisis es pasivo: no toca ni modifica tu sitio.
                       </p>
                       
                       <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
@@ -428,10 +424,10 @@ export default function DefensatiPage() {
                               : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
                           }`}
                         >
-                          {legalConsent ? '✓ Casilla Marcada • Botón Habilitado' : '⚠️ Casilla Requerida para Activar el Botón'}
+                          {legalConsent ? '✓ Listo, ya puedes auditar' : 'Marca la casilla para activar el botón'}
                         </span>
                         <span className="text-[10px] sm:text-[11px] text-neutral-400 font-mono">
-                          (Guardamos dominio, fecha, hora e IP como prueba legal de autorización)
+                          Registramos dominio, fecha, hora e IP de esta confirmación.
                         </span>
                       </div>
                     </div>
@@ -455,32 +451,13 @@ export default function DefensatiPage() {
 
               {/* Botones de 1-clic para auditorías de prueba representativas */}
               <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 text-xs text-neutral-300 pt-3">
-                <span className="text-neutral-400 text-xs font-medium">O prueba un caso típico:</span>
-                {[
-                  { label: '🛒 Tienda WooCommerce', domain: 'tienda-demo.pe' },
-                  { label: '🏢 Web Corporativa', domain: 'corporativo-demo.pe' },
-                  { label: '⚡ bcp.com.pe', domain: 'bcp.com.pe' },
-                  { label: '🐙 github.com', domain: 'github.com' },
-                ].map((demo) => (
-                  <button
-                    key={demo.domain}
-                    type="button"
-                    onClick={() => {
-                      const demoUrl = `https://${demo.domain}`;
-                      setUrl(demoUrl);
-                      setLegalConsent(true);
-                      handleScan(demoUrl, true);
-                    }}
-                    className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 text-sky-400 hover:text-sky-300 font-semibold text-xs transition-all cursor-pointer shadow-sm"
-                  >
-                    {demo.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Ticker de auditorías recientes en vivo */}
-              <div className="relative z-10 pt-2">
-                <RecentScansTicker />
+                <span className="text-neutral-400 text-xs font-medium">¿Quieres ver primero qué recibes?</span>
+                <Link
+                  href="/defensati/informe-ejemplo"
+                  className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 text-sky-400 hover:text-sky-300 font-semibold text-xs transition-all cursor-pointer shadow-sm"
+                >
+                  Ver informe de ejemplo
+                </Link>
               </div>
 
               {/* Micro-garantías visuales de confianza técnica */}
@@ -796,25 +773,22 @@ export default function DefensatiPage() {
           <DefensatiProblems />
 
           {/* SECCIÓN 5: SERVICIOS OFICIALES */}
-          <DefensatiPricing targetUrl={report?.url} />
+          <DefensatiPlans targetUrl={report?.url} />
 
           {/* SECCIÓN 6: CÓMO TRABAJAMOS (3 Pasos Simples) */}
           <DefensatiHowItWorks />
 
-          {/* SECCIÓN 8: CASOS REALES Y CONTEXTO EN EL MERCADO PERUANO */}
-          <DefensatiCases />
+          {/* SECCIÓN 8: DATOS REALES CON FUENTE VERIFICABLE */}
+          <DefensatiRealData />
 
           {/* SECCIÓN 9: CONFIANZA & GARANTÍA OFICIAL */}
           <DefensatiWarranty />
 
-          {/* SECCIÓN 10: FORMULARIO OFICIAL DE CONTRATACIÓN Y SOLICITUD TÉCNICA */}
-          <DefensatiQuickContact initialUrl={url} />
-
-          {/* SECCIÓN 11: PREGUNTAS FRECUENTES */}
+          {/* SECCIÓN 10: PREGUNTAS FRECUENTES */}
           <DefensatiFAQ />
 
-          {/* SECCIÓN 12: CTA FINAL DE CONVERSIÓN */}
-          <DefensatiFinalCTA />
+          {/* SECCIÓN 11: FORMULARIO DE CONTRATACIÓN (cierre de la página) */}
+          <DefensatiQuickContact initialUrl={url} />
 
         </main>
 
