@@ -110,21 +110,21 @@ export default function DefensatiHero() {
           <span>Diagnóstico gratuito de tu web</span>
         </a>
 
-        {/* CTA 2 Secundario: Recuperación de páginas hackeadas */}
+        {/* CTA 2 Secundario: Desinfección y limpieza de páginas infectadas */}
         <a
           href={DEFENSATI_WHATSAPP_MESSAGES.recuperacionHackeo()}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() =>
             trackWhatsAppClick({
-              service: 'recuperacion_hackeo',
+              service: 'desinfeccion_malware',
               placement: 'hero_secondary_cta',
             })
           }
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-rose-500/15 hover:bg-rose-500/25 active:scale-[0.98] text-rose-300 hover:text-white font-semibold text-base border border-rose-500/30 backdrop-blur-xl shadow-[0_4px_20px_rgba(244,63,94,0.15)] transition-all cursor-pointer text-center"
         >
           <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0" />
-          <span>Recuperar página hackeada</span>
+          <span>Desinfectar web con virus / malware</span>
         </a>
       </div>
 

@@ -29,11 +29,11 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
     return getWhatsAppUrl(text);
   },
 
-  // CTA Secundario: Recuperación de páginas hackeadas / Emergencia
+  // CTA Secundario: Desinfección y limpieza de páginas infectadas / Emergencia
   recuperacionHackeo: (domain = '') => {
     const text = domain
-      ? `🚨 Hola Martín, ¡urgente! Mi página web (${domain}) fue hackeada o tiene problemas de seguridad. Necesito ayuda para limpiarla y recuperarla cuanto antes.`
-      : '🚨 Hola Martín, ¡urgente! Mi página web fue hackeada o tiene problemas de seguridad. Necesito ayuda para limpiarla y recuperarla cuanto antes.';
+      ? `🚨 Hola Martín, ¡urgente! Mi página web (${domain}) tiene virus o sospecha de infección por malware/spam. Necesito ayuda técnica para desinfectarla y limpiarla cuanto antes.`
+      : '🚨 Hola Martín, ¡urgente! Mi página web tiene virus o sospecha de infección por malware/spam. Necesito ayuda técnica para desinfectarla y limpiarla cuanto antes.';
     return getWhatsAppUrl(text);
   },
 
