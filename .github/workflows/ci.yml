@@ -32,3 +32,9 @@ jobs:
 
       - name: Run Anti-SSRF & Redirect Security Tests
         run: npm run test:ssrf
+
+      - name: Run Score Engine Tests
+        run: npm run test:score
+
+      - name: Production Build
+        run: npm run build

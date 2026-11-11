@@ -27,7 +27,7 @@ function loadConsentsFromDisk(): AuditConsentRecord[] {
       }
     }
   } catch {
-    // Fallback silencioso en entornos de solo lectura (ej. Vercel Lambda)
+    // Fallback silencioso en entornos de solo lectura
   }
   return [];
 }

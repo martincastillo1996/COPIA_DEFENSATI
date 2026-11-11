@@ -48,6 +48,26 @@ export const HYPERSCALER_DOMAINS = [
  */
 export function isHyperscalePlatform(rawUrlOrDomain?: string | null): boolean {
   if (!rawUrlOrDomain) return false;
-  const clean = rawUrlOrDomain.toLowerCase().replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
-  return HYPERSCALER_DOMAINS.some((giant) => clean.includes(giant));
+  const host = rawUrlOrDomain
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//i, '')
+    .replace(/[/?#].*$/, '')
+    .replace(/:\d+$/, '');
+  if (!host) return false;
+
+  // Coincidencia por etiquetas de dominio, nunca por subcadena: "relax.com.pe" contiene
+  // "x.com" pero no es x.com, y "google.com.mitienda.pe" no es Google.
+  return HYPERSCALER_DOMAINS.some((giant) => {
+    if (giant.endsWith('.')) {
+      // Marca con cualquier TLD: google.com, www.google.es, amazon.com.mx
+      const brand = giant.slice(0, -1);
+      const labels = host.split('.');
+      const idx = labels.lastIndexOf(brand);
+      if (idx === -1) return false;
+      const tld = labels.slice(idx + 1);
+      return tld.length >= 1 && tld.length <= 2 && tld.every((l) => /^[a-z]{2,3}$/.test(l));
+    }
+    return host === giant || host.endsWith('.' + giant);
+  });
 }

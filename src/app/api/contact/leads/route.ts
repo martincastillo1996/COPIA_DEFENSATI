@@ -6,6 +6,8 @@ import crypto from 'crypto';
 const failedAttemptsMap = new Map<string, { count: number; blockedUntil: number }>();
 
 function getClientIp(req: Request): string {
+  const cfIp = req.headers.get('cf-connecting-ip');
+  if (cfIp) return cfIp.trim();
   const forwarded = req.headers.get('x-forwarded-for');
   if (forwarded) return forwarded.split(',')[0].trim();
   const realIp = req.headers.get('x-real-ip');
@@ -60,7 +62,7 @@ export async function GET(req: Request) {
     );
   }
 
-  // 3. Extracción de token de autorización (Preferencia por Header Bearer o x-admin-token)
+  // 3. Extracción de token de autorización (solo cabeceras: nunca por query string, que queda en logs)
   const authHeader = req.headers.get('authorization') || '';
   let providedToken = '';
 
@@ -68,10 +70,6 @@ export async function GET(req: Request) {
     providedToken = authHeader.slice(7).trim();
   } else if (req.headers.get('x-admin-token')) {
     providedToken = req.headers.get('x-admin-token')!.trim();
-  } else {
-    // Soporte residual temporal para query string con validación segura
-    const { searchParams } = new URL(req.url);
-    providedToken = searchParams.get('token') || '';
   }
 
   // 4. Comparación de tiempo constante (Anti-Timing Attack)
@@ -87,8 +85,11 @@ export async function GET(req: Request) {
   failedAttemptsMap.delete(clientIp);
 
   const leads = getAllLeads();
-  return NextResponse.json({
-    total: leads.length,
-    leads,
-  });
+  return NextResponse.json(
+    {
+      total: leads.length,
+      leads,
+    },
+    { headers: { 'Cache-Control': 'no-store' } }
+  );
 }

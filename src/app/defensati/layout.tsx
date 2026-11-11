@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'DEFENSA TI | Blindaje Web, Desinfección de WordPress y Ciberseguridad en Perú',
@@ -195,8 +194,6 @@ export default function DefensatiLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
-
   return (
     <>
       {/* Datos estructurados JSON-LD */}
@@ -204,26 +201,6 @@ export default function DefensatiLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      {/* Script condicional Google Analytics 4 (solo se inyecta si NEXT_PUBLIC_GA_ID está definido) */}
-      {gaId && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gaId}', {
-                page_path: window.location.pathname,
-              });
-            `}
-          </Script>
-        </>
-      )}
 
       {children}
     </>

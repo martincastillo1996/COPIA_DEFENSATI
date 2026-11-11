@@ -1,0 +1,35 @@
+{
+  "cliente": "Empresa Ejemplo SAC",
+  "dominio": "empresa-ejemplo.pe",
+  "servicio": "Rescate / Limpieza de malware (Sitio Corporativo) - S/ 380",
+  "fechaIntervencion": "2026-11-09",
+  "fechaEntrega": "2026-11-11",
+  "responsable": "Martín Castillo - DEFENSA TI",
+  "resumen": "El sitio redirigía a los visitantes móviles hacia páginas de apuestas y el hosting lo había suspendido. Se desinfectó por completo, se levantó la suspensión y se dejó operativo y verificado.",
+  "encontrado": [
+    "Webshell PHP ofuscada en /wp-content/uploads/2026/03/cache.php con acceso remoto al servidor.",
+    "Código de redirección maliciosa inyectado en el archivo functions.php del tema activo.",
+    "Dos usuarios administradores no autorizados en la base de datos (tabla wp_users).",
+    "Cabeceras de seguridad ausentes: HSTS, Content-Security-Policy y X-Frame-Options."
+  ],
+  "corregido": [
+    "Eliminación de la webshell y de 14 archivos infectados; núcleo de WordPress reinstalado desde la fuente oficial.",
+    "Limpieza del código inyectado en el tema y verificación de integridad de todos los plugins.",
+    "Eliminación de los administradores no autorizados y cambio de todas las contraseñas y claves secretas (salts).",
+    "Gestión del levantamiento de la suspensión con el proveedor de hosting."
+  ],
+  "pendiente": [
+    "Renovar la licencia vencida del plugin de formularios para poder actualizarlo (depende del cliente).",
+    "Activar la verificación en dos pasos para los usuarios administradores."
+  ],
+  "respaldos": [
+    "Copia integral de archivos del sitio previa a la intervención (2026-11-09, 1.2 GB).",
+    "Volcado completo de la base de datos MySQL previo a la intervención (2026-11-09, 48 MB).",
+    "Ambos respaldos se conservan por 30 días y se entregan al cliente a solicitud."
+  ],
+  "responsabilidad": [],
+  "garantias": {
+    "incluye": [],
+    "excluye": []
+  }
+}

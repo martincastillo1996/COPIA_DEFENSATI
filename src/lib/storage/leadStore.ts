@@ -21,6 +21,7 @@ export interface LeadRecord {
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
+const MAX_LEADS = 5000;
 
 function loadLeadsFromDisk(): LeadRecord[] {
   try {
@@ -32,7 +33,7 @@ function loadLeadsFromDisk(): LeadRecord[] {
       }
     }
   } catch {
-    // Fallback silencioso en entornos de solo lectura (ej. Vercel Lambda)
+    // Fallback silencioso en entornos de solo lectura 
   }
   return [];
 }
@@ -42,7 +43,17 @@ function persistLeadsToDisk(leads: LeadRecord[]): void {
     if (!fs.existsSync(DATA_DIR)) {
       fs.mkdirSync(DATA_DIR, { recursive: true });
     }
-    fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
+    // Respaldo diario: la primera escritura de cada dia conserva una copia del archivo previo
+    const backupDir = path.join(DATA_DIR, 'backups');
+    const backupFile = path.join(backupDir, `leads-${new Date().toISOString().slice(0, 10)}.json`);
+    if (fs.existsSync(LEADS_FILE) && !fs.existsSync(backupFile)) {
+      fs.mkdirSync(backupDir, { recursive: true });
+      fs.copyFileSync(LEADS_FILE, backupFile);
+    }
+    // Escritura atomica para no dejar un JSON truncado si el proceso se corta
+    const tmp = `${LEADS_FILE}.${process.pid}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify(leads, null, 2), 'utf-8');
+    fs.renameSync(tmp, LEADS_FILE);
   } catch {
     // Fallback silencioso en entornos donde el FS sea de solo lectura
   }
@@ -61,7 +72,7 @@ export const leadsStore = globalForLeads.__leadsStore;
 export function saveLead(lead: LeadRecord): void {
   // 1. Guardar en memoria activa
   leadsStore.unshift(lead);
-  if (leadsStore.length > 500) {
+  if (leadsStore.length > MAX_LEADS) {
     leadsStore.pop();
   }
 

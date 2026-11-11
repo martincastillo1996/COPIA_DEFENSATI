@@ -451,10 +451,6 @@ export default function TerminosYPrivacidadPage() {
                   <span className="text-neutral-400">Servidor en la nube (Droplet VPS con certificación SOC 2 / ISO 27001) para la ejecución del motor de auditoría perimetral y base de datos local en Lima.</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                  <strong className="text-white block">Vercel Inc. (EE. UU.)</strong>
-                  <span className="text-neutral-400">Infraestructura de despliegue continuo en la red Edge y redundancia de disponibilidad web.</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
                   <strong className="text-white block">Meta Platforms Inc. / WhatsApp LLC (EE. UU.)</strong>
                   <span className="text-neutral-400">Canal cifrado de extremo a extremo para mensajería directa, coordinación de soporte técnico y envío de dictámenes al número oficial +1 (785) 643-3991.</span>
                 </div>

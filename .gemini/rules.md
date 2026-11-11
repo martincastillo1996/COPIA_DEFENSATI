@@ -5,7 +5,7 @@
 - **Consultar Dudas Antes de Gastar Tokens:** Si hay más de una forma de resolver un requerimiento (diseño, velocidad, arquitectura), detente y haz preguntas de opción múltiple con gráficos/bocetos previos.
 
 ## 2. Regla de Oro de Despliegue (Local vs. Producción)
-- **Cero Push Directo a Producción:** Ningún cambio se sube a GitHub ni a Vercel sin que Martín lo haya revisado y aprobado en su navegador local (`http://localhost:3000`).
+- **Cero Push Directo a Producción:** Ningún cambio se sube a GitHub ni a producción sin que Martín lo haya revisado y aprobado en su navegador local (`http://localhost:3000`).
 - **Confirmación Explícita:** Solo se ejecuta `git push origin main` cuando Martín escriba explícitamente **"go"**, **"subelo"** o **"publicalo"**.
 
 ## 3. Estándar de Diseño y Calidad Visual (Apple Aesthetic)
@@ -36,14 +36,12 @@
 - **Formato de Aprobación Tipo Pop-up:** La consulta de aprobación final o confirmación de despliegue DEBE emitirse siempre a través de la tarjeta interactiva de selección (herramienta `ask_question`), para que Martín pueda revisar las opciones y dar el **"Go"** con un solo clic como un pop-up.
 - **Cero Modificaciones Visuales Sorpresa:** Ningún cambio visual se consolida ni se prepara para producción sin la confirmación y visto bueno explícito de Martín sobre el resultado visible.
 
-## 8. Infraestructura de Producción Oficial: Servidor DigitalOcean & Vercel Simultáneos (ESTRICTO)
-- **Despliegues Simultáneos Obligatorios:** Los cambios deben verse y mantenerse actualizados al mismo tiempo en ambos entornos:
-  1. **Entorno Principal en DigitalOcean:** `https://neuronalgravity.com` (Droplet `ubuntu-s-1vcpu-1gb-nyc3`, IP `159.203.80.121` con Cloudflare).
-  2. **Entorno Vercel:** `https://security-score-seven.vercel.app` (se actualiza automáticamente vía GitHub push a `main`).
+## 8. Infraestructura de Producción Oficial: Servidor DigitalOcean (ESTRICTO)
+- **Entorno único de producción:** `https://neuronalgravity.com` en DigitalOcean (Droplet `ubuntu-s-1vcpu-1gb-nyc3`, IP `159.203.80.121` con Cloudflare). Vercel ya no se usa.
 - **Procedimiento de Despliegue en DigitalOcean:**
   Para actualizar `neuronalgravity.com` tras cada `git push`, el comando en la Web Console de DigitalOcean se ejecuta en la carpeta activa del proyecto:
   ```bash
   cd /var/www/app
   git pull origin main && npm install && npm run build && pm2 restart all
   ```
-- **Transparencia y Cero Relleno:** Responder siempre de forma concisa, en español claro, directo al grano y asegurando que ambos sitios reflejen exactamente la misma versión. Cero respuestas para rellenar o inventar cambios de DNS innecesarios.
+- **Transparencia y Cero Relleno:** Responder siempre de forma concisa, en español claro, directo al grano y asegurando que producción refleje exactamente la versión aprobada. Cero respuestas para rellenar o inventar cambios de DNS innecesarios.

@@ -91,7 +91,6 @@ function isAllowedDomain(urlOrHost: string | null): boolean {
     hostname = hostname.toLowerCase();
 
     if (hostname === 'neuronalgravity.com' || hostname.endsWith('.neuronalgravity.com')) return true;
-    if (hostname === 'security-score-seven.vercel.app' || hostname.endsWith('.vercel.app')) return true;
     if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
     return false;
   } catch {

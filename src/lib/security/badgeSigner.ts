@@ -1,7 +1,38 @@
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 
-// Secreto para firma de sellos (usa variable de entorno o fallback consistente en runtime)
-const BADGE_SECRET = process.env.BADGE_SECRET || process.env.NEXTAUTH_SECRET || 'defensati-verified-badge-hmac-key-2026';
+/**
+ * Secreto HMAC para la firma de sellos.
+ * 1. BADGE_SECRET (o NEXTAUTH_SECRET) desde variables de entorno.
+ * 2. Si no existe, se genera uno aleatorio y se guarda en data/.badge-secret (fuera de git)
+ *    para que sea estable entre reinicios. Nunca se usa una clave escrita en el código.
+ */
+function resolveBadgeSecret(): string {
+  const fromEnv = (process.env.BADGE_SECRET || process.env.NEXTAUTH_SECRET || '').trim();
+  if (fromEnv.length >= 16) return fromEnv;
+
+  const secretFile = path.join(process.cwd(), 'data', '.badge-secret');
+  try {
+    if (fs.existsSync(secretFile)) {
+      const stored = fs.readFileSync(secretFile, 'utf-8').trim();
+      if (stored.length >= 32) return stored;
+    }
+  } catch {
+    // Se intenta generar uno nuevo a continuación
+  }
+
+  const generated = crypto.randomBytes(32).toString('hex');
+  try {
+    fs.mkdirSync(path.dirname(secretFile), { recursive: true });
+    fs.writeFileSync(secretFile, generated, { encoding: 'utf-8', mode: 0o600 });
+  } catch {
+    console.warn('[badgeSigner] BADGE_SECRET no definido y data/ no es escribible: los sellos emitidos dejaran de validar al reiniciar el proceso.');
+  }
+  return generated;
+}
+
+const BADGE_SECRET = resolveBadgeSecret();
 
 /**
  * Dominios de clientes con blindaje perimetral activo o dominios corporativos oficiales.
@@ -11,7 +42,6 @@ export const VERIFIED_CLIENT_DOMAINS = new Set<string>([
   'www.neuronalgravity.com',
   'defensati.com',
   'www.defensati.com',
-  'security-score-seven.vercel.app',
 ]);
 
 /**

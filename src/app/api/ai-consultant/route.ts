@@ -103,7 +103,6 @@ function isAllowedDomain(urlOrHost: string | null): boolean {
 
     // Comprobación estricta de nombres de host autorizados y subdominios canónicos
     if (hostname === 'neuronalgravity.com' || hostname.endsWith('.neuronalgravity.com')) return true;
-    if (hostname === 'security-score-seven.vercel.app' || hostname.endsWith('.vercel.app')) return true;
     if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
     return false;
   } catch {

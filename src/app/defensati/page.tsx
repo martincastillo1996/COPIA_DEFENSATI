@@ -55,6 +55,7 @@ import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact'
 import TurnstileWidget, { TurnstileWidgetRef } from '@/components/TurnstileWidget';
 
 import { siteConfig } from '@/config/site';
+import { SERVICE_PAGES } from '@/config/servicePages';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 import { trackScanStart, trackScanComplete, trackWhatsAppClick } from '@/lib/analytics';
@@ -824,6 +825,19 @@ export default function DefensatiPage() {
                 <span>Horario: {siteConfig.contact.hours}</span>
               </div>
             </div>
+
+            {/* Enlaces a páginas de servicio */}
+            <nav aria-label="Servicios de DEFENSA TI" className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
+              {SERVICE_PAGES.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/defensati/servicios/${s.slug}`}
+                  className="inline-block rounded-full bg-white/5 hover:bg-[#0071e3]/20 border border-white/10 hover:border-[#38bdf8]/50 px-3.5 py-2 text-xs font-medium text-neutral-200 hover:text-white transition-all leading-snug"
+                >
+                  {s.shortName}
+                </Link>
+              ))}
+            </nav>
 
             {/* Créditos y Legalidad */}
             <div className="space-y-3 text-center max-w-3xl mx-auto">

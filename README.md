@@ -25,7 +25,7 @@
 
 <br/>
 
-[🌐 Probar en Producción](https://security-score-seven.vercel.app) &bull; [📖 Documentación](#-características-principales) &bull; [⚡ API Quickstart](#-api-quickstart-curl) &bull; [💬 WhatsApp Directo (+1 785 643-3991)](https://wa.me/17856433991)
+[🌐 Probar en Producción](https://neuronalgravity.com/defensati) &bull; [📖 Documentación](#-características-principales) &bull; [⚡ API Quickstart](#-api-quickstart-curl) &bull; [💬 WhatsApp Directo (+1 785 643-3991)](https://wa.me/17856433991)
 
 ---
 
@@ -159,7 +159,7 @@ Abre en tu navegador [http://localhost:3000](http://localhost:3000).
 Puedes consumir el motor de auditoría perimetral de forma programática:
 
 ```bash
-curl -X POST https://security-score-seven.vercel.app/api/scan \
+curl -X POST https://neuronalgravity.com/api/scan \
   -H "Content-Type: application/json" \
   -d '{"url": "https://autonoma.pe"}'
 ```

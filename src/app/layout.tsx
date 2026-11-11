@@ -5,6 +5,7 @@ import { I18nProvider } from "@/lib/i18n/I18nContext";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import AiConsultantWidget from "@/components/AiConsultantWidget";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <FloatingWhatsAppButton />
           <AiConsultantWidget />
         </I18nProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );

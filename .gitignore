@@ -57,3 +57,6 @@ dist
 /data/
 data/
 *.leads.json
+
+# Informes de entrega a clientes (contienen datos de clientes)
+/informes/

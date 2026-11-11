@@ -9,7 +9,11 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "test:ssrf": "npx tsx scripts/test-ssrf.mjs"
+    "test:ssrf": "npx tsx scripts/test-ssrf.mjs",
+    "test:score": "npx tsx scripts/test-score.mjs",
+    "test": "npm run test:ssrf && npm run test:score",
+    "monitor": "node scripts/monitor.mjs",
+    "informe:entrega": "node scripts/generate-delivery-report.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
