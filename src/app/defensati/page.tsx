@@ -45,7 +45,6 @@ import { isHyperscalePlatform } from '@/lib/hyperscalers';
 import DefensatiHero from '@/components/defensati/DefensatiHero';
 import DefensatiProblems from '@/components/defensati/DefensatiProblems';
 import DefensatiPricing from '@/components/defensati/DefensatiPricing';
-import DefensatiMonthlyPlans from '@/components/defensati/DefensatiMonthlyPlans';
 import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
 import DefensatiScanScope from '@/components/defensati/DefensatiScanScope';
 import DefensatiCases from '@/components/defensati/DefensatiCases';
@@ -779,10 +778,7 @@ export default function DefensatiPage() {
           {/* SECCIÓN 5: SERVICIOS OFICIALES */}
           <DefensatiPricing targetUrl={report?.url} />
 
-          {/* SECCIÓN 6: PLANES MENSUALES (Monitoreo & Tranquilidad) */}
-          <DefensatiMonthlyPlans />
-
-          {/* SECCIÓN 7: CÓMO TRABAJAMOS (3 Pasos Simples) */}
+          {/* SECCIÓN 6: CÓMO TRABAJAMOS (3 Pasos Simples) */}
           <DefensatiHowItWorks />
 
           {/* SECCIÓN 8: CASOS REALES Y CONTEXTO EN EL MERCADO PERUANO */}

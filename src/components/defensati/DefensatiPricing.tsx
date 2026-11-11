@@ -2,18 +2,15 @@
 
 import React, { useState } from 'react';
 import { 
-  ShieldAlert, 
   ShieldCheck, 
   Check, 
-  ArrowRight,
   Shield, 
-  Lock, 
-  Clock,
-  Sparkles,
-  ShoppingBag,
-  Globe,
-  Flame,
-  Radio
+  Clock, 
+  ShoppingBag, 
+  Globe, 
+  Flame, 
+  Radio,
+  ChevronDown
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -26,6 +23,11 @@ interface Props {
 export default function DefensatiPricing({ targetUrl }: Props) {
   const cleanUrl = targetUrl ? targetUrl.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
   const [selectedRescueType, setSelectedRescueType] = useState<'corp' | 'ecom'>('corp');
+  
+  // Estados para desplegables interactivos
+  const [showRescueDetails, setShowRescueDetails] = useState(false);
+  const [showWafDetails, setShowWafDetails] = useState(false);
+  const [showMonthlyDetails, setShowMonthlyDetails] = useState(false);
 
   return (
     <section id="servicios" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left relative">
@@ -40,12 +42,12 @@ export default function DefensatiPricing({ targetUrl }: Props) {
           Soluciones claras con precio transparente en Soles
         </h2>
         <p className="text-base sm:text-lg text-[#86868b] font-normal">
-          Sin costos ocultos ni contratos forzosos. Te mostramos qué encontramos antes de que pagues.
+          Sin costos ocultos ni mensualidades forzosas. Te mostramos qué encontramos antes de que pagues.
         </p>
       </div>
 
       {/* 1. TARJETA HERO PRINCIPAL: RESCATE / LIMPIEZA DE MALWARE */}
-      <div className="p-7 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-gradient-to-b from-[#1a131b]/85 via-[#161618]/90 to-[#101012] border-2 border-rose-500/35 hover:border-rose-500/55 shadow-[0_30px_70px_rgba(244,63,94,0.18),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl relative overflow-hidden transition-all">
+      <div className="p-7 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-gradient-to-b from-[#1a131b]/85 via-[#161618]/90 to-[#101012] border-2 border-rose-500/35 hover:border-rose-500/55 shadow-[0_30px_70px_rgba(244,63,94,0.18),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl relative overflow-hidden transition-all">
         
         {/* Glow sutil de emergencia */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -60,7 +62,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
             </span>
             <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
               <Clock className="w-3.5 h-3.5 text-neutral-400" />
-              Diagnóstico en &lt; 2h &bull; Entrega en 24-48h hábiles (casos críticos &lt; 24h)
+              Diagnóstico en &lt; 2h &bull; Entrega en 24-48h hábiles
             </span>
           </div>
 
@@ -129,36 +131,50 @@ export default function DefensatiPricing({ targetUrl }: Props) {
               </span>
             </div>
 
-            {/* Prestaciones Reales */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Diagnóstico previo sin costo:</strong> Confirmamos el tipo de infección antes de que abones un solo sol.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Copia de seguridad forense:</strong> Respaldamos tus archivos y base de datos antes de intervenir.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Desinfección profunda:</strong> Eliminación de virus, troyanos, puertas traseras (backdoors) y webshells.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Recuperación y reactivación:</strong> Gestión de desbloqueo con el hosting y retiro de pantalla roja de Google.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Yo mismo reviso tu web:</strong> Intervención técnica directa de Martín Castillo, sin intermediarios.</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Comprobante formal con RUC:</strong> Emisión de Factura o Boleta con RUC 10704877850 para deducción fiscal.</span>
-              </div>
+            {/* Botón Desplegable Interactivo para Ver Qué Incluye */}
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => setShowRescueDetails(prev => !prev)}
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer"
+              >
+                <span>{showRescueDetails ? 'Ocultar alcance de la desinfección' : '¿Qué incluye la desinfección forense?'}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showRescueDetails ? 'rotate-180 text-rose-400' : ''}`} />
+              </button>
+
+              {/* Contenido Desplegable */}
+              {showRescueDetails && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 animate-in fade-in-50 duration-200">
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 p-2.5 rounded-xl bg-black/40 border border-white/5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Diagnóstico previo sin costo:</strong> Confirmamos el tipo de infección antes de que abones un solo sol.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 p-2.5 rounded-xl bg-black/40 border border-white/5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Copia de seguridad forense:</strong> Respaldamos tus archivos y base de datos antes de intervenir.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 p-2.5 rounded-xl bg-black/40 border border-white/5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Desinfección profunda:</strong> Eliminación de virus, troyanos, puertas traseras (backdoors) y webshells.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 p-2.5 rounded-xl bg-black/40 border border-white/5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Recuperación y reactivación:</strong> Gestión de desbloqueo con el hosting y retiro de pantalla roja de Google.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 p-2.5 rounded-xl bg-black/40 border border-white/5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Yo mismo reviso tu web:</strong> Intervención técnica directa de Martín Castillo, sin intermediarios.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-200 p-2.5 rounded-xl bg-black/40 border border-white/5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span><strong>Comprobante formal con RUC:</strong> Emisión de Factura o Boleta con RUC 10704877850 para deducción fiscal.</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Botón de Conversión Inmediata Apple Pill */}
-            <div className="pt-3">
+            <div className="pt-2">
               <a
                 href={
                   selectedRescueType === 'corp'
@@ -195,7 +211,7 @@ export default function DefensatiPricing({ targetUrl }: Props) {
         </div>
       </div>
 
-      {/* 2. OPCIONES ADICIONALES: BLINDAJE + WAF (UNIFICADO) & MANTENIMIENTO MENSUAL */}
+      {/* 2. SERVICIOS COMPLEMENTARIOS: BLINDAJE WAF Y MANTENIMIENTO MENSUAL */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
         
         {/* Tarjeta 1: Blindaje + WAF Cloudflare (Paquete Unificado S/ 450) */}
@@ -224,36 +240,50 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 S/ 450 <span className="text-xs text-[#86868b] font-normal font-sans">pago único por sitio</span>
               </p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
-                Nadie compra solo cabeceras por separado. Unificamos el blindaje perimetral de cabeceras canónicas con el Firewall Cloudflare WAF activo contra ataques, bots y scrapers.
+                Unificamos el blindaje perimetral de cabeceras canónicas con el Firewall Cloudflare WAF activo contra ataques, bots y scrapers.
               </p>
             </div>
 
-            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Cabeceras estrictas (HSTS precarga, CSP, X-Frame, Referrer-Policy).</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Ocultamiento de versiones de servidor y CMS para despistar robots atacantes.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Configuración perimetral de Firewall WAF en Cloudflare anti-bots y scrapers.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Protección anti-DDoS capa 7 y filtros anti-fuerza bruta en logins y checkout.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Endurecimiento DNS con registros SPF, DKIM y DMARC anti-suplantación.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-[#2997ff] shrink-0 mt-0.5" />
-                <span>Re-medición técnica independiente con meta de Grado A.</span>
-              </li>
-            </ul>
+            {/* Desplegable de Directivas Incluidas */}
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => setShowWafDetails(prev => !prev)}
+                className="inline-flex items-center gap-2 text-xs text-[#38bdf8] hover:text-white px-3.5 py-2 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 transition-colors cursor-pointer"
+              >
+                <span>{showWafDetails ? 'Ocultar directivas y reglas' : '¿Qué reglas perimetrales incluye?'}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showWafDetails ? 'rotate-180 text-sky-400' : ''}`} />
+              </button>
+
+              {showWafDetails && (
+                <ul className="space-y-2 pt-3 text-xs text-neutral-200 animate-in fade-in-50 duration-200">
+                  <li className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#2997ff] shrink-0 mt-0.5" />
+                    <span>Cabeceras estrictas (HSTS precarga, CSP, X-Frame, Referrer-Policy).</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#2997ff] shrink-0 mt-0.5" />
+                    <span>Ocultamiento de versiones de servidor y CMS para despistar bots.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#2997ff] shrink-0 mt-0.5" />
+                    <span>Configuración perimetral de Firewall WAF en Cloudflare anti-scrapers.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#2997ff] shrink-0 mt-0.5" />
+                    <span>Protección anti-DDoS capa 7 y filtros anti-fuerza bruta en logins.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#2997ff] shrink-0 mt-0.5" />
+                    <span>Endurecimiento DNS con registros SPF, DKIM y DMARC anti-suplantación.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-[#2997ff] shrink-0 mt-0.5" />
+                    <span>Re-medición técnica independiente con meta de Grado A.</span>
+                  </li>
+                </ul>
+              )}
+            </div>
           </div>
 
           <a
@@ -302,31 +332,41 @@ export default function DefensatiPricing({ targetUrl }: Props) {
                 Mantenimiento Mensual 24/7
               </h4>
               <p className="text-3xl sm:text-4xl font-bold text-[#f5f5f7] font-mono mt-1">
-                S/ 90 <span className="text-base text-neutral-400 font-sans font-normal">Básico</span> &bull; S/ 180 <span className="text-base text-neutral-400 font-sans font-normal">Tiendas / mes</span>
+                S/ 90 <span className="text-sm text-neutral-400 font-sans font-normal">Básico</span> &bull; S/ 180 <span className="text-sm text-neutral-400 font-sans font-normal">Tiendas / mes</span>
               </p>
               <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed mt-2 font-normal">
                 Vigilancia continua para detectar caídas antes que tus clientes y soporte técnico mensual incluido. Cero permanencia forzosa: cancelas cuando quieras.
               </p>
             </div>
 
-            <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs sm:text-sm text-neutral-200">
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Plan Básico (S/ 90/mes):</strong> Uptime cada 15 min, alerta SSL 30 días, aviso inmediato a WhatsApp y hasta 40 min de soporte.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Tiendas Online (S/ 180/mes):</strong> Uptime cada 5 min, monitoreo de checkout, re-escaneo semanal y soporte prioritario de 90 min (1.5h).</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Detección perimetral de malware, inyecciones de código y listas negras.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>Soporte técnico directo sin juniors ni intermediarios por WhatsApp.</span>
-              </li>
-            </ul>
+            {/* Desplegable de Comparación de Planes Mensuales */}
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => setShowMonthlyDetails(prev => !prev)}
+                className="inline-flex items-center gap-2 text-xs text-emerald-400 hover:text-white px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition-colors cursor-pointer"
+              >
+                <span>{showMonthlyDetails ? 'Ocultar detalle de planes' : '¿Qué incluye cada plan mensual?'}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showMonthlyDetails ? 'rotate-180 text-emerald-400' : ''}`} />
+              </button>
+
+              {showMonthlyDetails && (
+                <div className="space-y-2.5 pt-3 text-xs text-neutral-200 animate-in fade-in-50 duration-200">
+                  <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                    <strong className="text-emerald-300 block">Plan Básico (S/ 90/mes):</strong>
+                    <p className="text-neutral-400 text-[11px]">
+                      Uptime cada 15 min, alerta SSL con 30 días de anticipación, informe mensual a WhatsApp y hasta 40 min de soporte directo.
+                    </p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                    <strong className="text-sky-300 block">Tiendas Online (S/ 180/mes):</strong>
+                    <p className="text-neutral-400 text-[11px]">
+                      Uptime cada 5 min, monitoreo de pasarelas/checkout, re-escaneos semanales de puertos y soporte prioritario de 90 min (1.5h).
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
