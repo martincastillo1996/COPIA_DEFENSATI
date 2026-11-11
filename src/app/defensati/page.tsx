@@ -583,7 +583,25 @@ export default function DefensatiPage() {
               </div>
 
               {/* BOTÓN PROMINENTE & RECOMENDACIÓN COMERCIAL DINÁMICA POST-ESCÁNER */}
-              <DefensatiScanRecommendation report={report} cleanDomain={cleanDomain} />
+              <DefensatiScanRecommendation 
+                report={report} 
+                cleanDomain={cleanDomain}
+                onNavigateToSection={(section) => {
+                  if (section === 'headers' || section === 'ports') {
+                    setViewMode('tech');
+                  }
+                  setTimeout(() => {
+                    const el = document.getElementById(`section-${section}`);
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      el.classList.add('ring-4', 'ring-[#0071e3]', 'shadow-[0_0_40px_rgba(0,113,227,0.5)]', 'transition-all');
+                      setTimeout(() => {
+                        el.classList.remove('ring-4', 'ring-[#0071e3]', 'shadow-[0_0_40px_rgba(0,113,227,0.5)]');
+                      }, 2200);
+                    }
+                  }, 150);
+                }}
+              />
 
               {/* Selector de Perspectiva (Negocio vs Técnico) */}
               <div className="flex justify-center py-2">
@@ -620,7 +638,7 @@ export default function DefensatiPage() {
                 <div className="md:col-span-1 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
                   <ScoreCircle score={report.score} grade={report.grade || 'F'} />
                 </div>
-                <div className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                <div id="section-ssl" className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
                   <SslResults ssl={report.ssl} />
                 </div>
               </div>
@@ -661,12 +679,12 @@ export default function DefensatiPage() {
               ) : (
                 <div className="space-y-6">
                   {Boolean(report.ports?.length) && (
-                    <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                    <div id="section-ports" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
                       <PortResults ports={report.ports || []} />
                     </div>
                   )}
 
-                  <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                  <div id="section-headers" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
                     <HeaderResults headers={report.headers || []} />
                   </div>
 

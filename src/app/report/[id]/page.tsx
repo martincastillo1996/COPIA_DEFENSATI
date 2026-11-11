@@ -287,7 +287,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             <div className="md:col-span-1 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
               <ScoreCircle score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
             </div>
-            <div className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+            <div id="section-ssl" className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
               <SslResults ssl={report.ssl} />
             </div>
           </div>
@@ -328,7 +328,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           ) : (
             <div className="space-y-6">
               {Boolean(report.ports?.length) && (
-                <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                <div id="section-ports" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
                   <PortResults ports={report.ports || []} />
                 </div>
               )}
@@ -339,7 +339,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                 </div>
               )}
 
-              <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+              <div id="section-headers" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
                 <HeaderResults headers={report.headers || []} />
               </div>
 

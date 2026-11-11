@@ -22,9 +22,10 @@ import { isHyperscalePlatform } from '@/lib/hyperscalers';
 interface Props {
   report: AuditReportRecord;
   cleanDomain: string;
+  onNavigateToSection?: (section: 'ssl' | 'headers' | 'ports') => void;
 }
 
-export default function DefensatiScanRecommendation({ report, cleanDomain }: Props) {
+export default function DefensatiScanRecommendation({ report, cleanDomain, onNavigateToSection }: Props) {
   const score = report.score ?? 0;
   const grade = report.grade || 'F';
   const sslDays = report.ssl?.daysRemaining;
@@ -125,10 +126,26 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
         </p>
       </div>
 
-      {/* Resumen de hallazgos técnicos en lenguaje para negocio */}
+      {/* Resumen de hallazgos técnicos en lenguaje para negocio (Con enlaces a detalles) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
-        <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-          <span className="text-[11px] uppercase font-mono text-neutral-400">Certificado SSL/TLS</span>
+        {/* 1. Tarjeta Certificado SSL/TLS */}
+        <button
+          type="button"
+          onClick={() => {
+            if (onNavigateToSection) {
+              onNavigateToSection('ssl');
+            } else {
+              const el = document.getElementById('section-ssl');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }}
+          className="p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-sky-400/50 space-y-1 text-left transition-all active:scale-[0.98] cursor-pointer group"
+          title="Ver detalle del certificado SSL/TLS y días restantes"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] uppercase font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">Certificado SSL/TLS</span>
+            <span className="text-[10px] text-sky-400 font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
+          </div>
           <p className="text-sm font-bold text-white flex items-center gap-1.5">
             {hasSslIssue ? (
               <span className="text-rose-400 flex items-center gap-1">
@@ -142,10 +159,26 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
               </span>
             )}
           </p>
-        </div>
+        </button>
 
-        <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-          <span className="text-[11px] uppercase font-mono text-neutral-400">Cabeceras OWASP</span>
+        {/* 2. Tarjeta Cabeceras OWASP */}
+        <button
+          type="button"
+          onClick={() => {
+            if (onNavigateToSection) {
+              onNavigateToSection('headers');
+            } else {
+              const el = document.getElementById('section-headers');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }}
+          className="p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-sky-400/50 space-y-1 text-left transition-all active:scale-[0.98] cursor-pointer group"
+          title="Ver detalle de las 6 directivas de cabeceras OWASP"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] uppercase font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">Cabeceras OWASP</span>
+            <span className="text-[10px] text-sky-400 font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
+          </div>
           <p className="text-sm font-bold text-white flex items-center gap-1.5">
             {missingHeadersCount > 0 ? (
               <span className="text-amber-400 flex items-center gap-1">
@@ -159,10 +192,26 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
               </span>
             )}
           </p>
-        </div>
+        </button>
 
-        <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-          <span className="text-[11px] uppercase font-mono text-neutral-400">Puertos de Servidor</span>
+        {/* 3. Tarjeta Puertos de Servidor */}
+        <button
+          type="button"
+          onClick={() => {
+            if (onNavigateToSection) {
+              onNavigateToSection('ports');
+            } else {
+              const el = document.getElementById('section-ports');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }}
+          className="p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-sky-400/50 space-y-1 text-left transition-all active:scale-[0.98] cursor-pointer group"
+          title="Ver sondeo de sockets y puertos de red expuestos"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] uppercase font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">Puertos de Servidor</span>
+            <span className="text-[10px] text-sky-400 font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
+          </div>
           <p className="text-sm font-bold text-white flex items-center gap-1.5">
             {openPortsCount > 2 ? (
               <span className="text-amber-400 flex items-center gap-1">
@@ -176,7 +225,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
               </span>
             )}
           </p>
-        </div>
+        </button>
       </div>
 
       {/* Solución técnica propuesta */}
