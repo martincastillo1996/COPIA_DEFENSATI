@@ -22,7 +22,6 @@ import PrintableReport from '@/components/PrintableReport';
 import ScoreCircle from '@/components/ScoreCircle';
 import SslResults from '@/components/SslResults';
 import ServerLocationCard from '@/components/ServerLocationCard';
-import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
 import SslAlertWidget from '@/components/SslAlertWidget';
 import BusinessOverview from '@/components/BusinessOverview';
 import PortResults from '@/components/PortResults';
@@ -630,14 +629,6 @@ export default function DefensatiPage() {
                 location={report.location} 
                 resolvedIp={report.telemetry?.targetResolvedIp} 
                 targetDomain={report.url}
-              />
-
-              <VerifiedBadgeWidget 
-                domain={report.url} 
-                auditId={auditId || undefined} 
-                grade={report.grade} 
-                score={report.score} 
-                badgeToken={report.badgeToken}
               />
 
               <SslAlertWidget 

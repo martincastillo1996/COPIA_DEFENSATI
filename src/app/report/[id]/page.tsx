@@ -24,7 +24,6 @@ import BusinessOverview from '@/components/BusinessOverview';
 import ServerLocationCard from '@/components/ServerLocationCard';
 import AiConsultantWidget from '@/components/AiConsultantWidget';
 import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
-import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
 import SslAlertWidget from '@/components/SslAlertWidget';
 import DnsSecurityCard from '@/components/DnsSecurityCard';
 import WebAuditCard from '@/components/WebAuditCard';
@@ -296,15 +295,6 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           <ServerLocationCard 
             location={report.location} 
             resolvedIp={report.telemetry?.targetResolvedIp} 
-          />
-
-          {/* Sello Oficial de Seguridad Verificada (Visible solo en Grado A) */}
-          <VerifiedBadgeWidget 
-            domain={report.url} 
-            auditId={auditId} 
-            grade={report.grade} 
-            score={report.score} 
-            badgeToken={report.badgeToken}
           />
 
           {/* Alerta Preventiva de Vencimiento SSL en WhatsApp */}
