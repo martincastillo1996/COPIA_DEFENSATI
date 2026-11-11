@@ -716,7 +716,7 @@ export default function DefensatiPage() {
                   )}
 
                   <div id="section-headers" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
-                    <HeaderResults headers={report.headers || []} />
+                    <HeaderResults headers={report.headers || []} domain={report.url} />
                   </div>
 
                   <CookieResults cookies={report.cookies} />

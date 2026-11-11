@@ -371,7 +371,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               )}
 
               <div id="section-headers" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
-                <HeaderResults headers={report.headers || []} />
+                <HeaderResults headers={report.headers || []} domain={report.url} />
               </div>
 
               <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
