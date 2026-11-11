@@ -29,6 +29,15 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
     return getWhatsAppUrl(text);
   },
 
+  // Video-Diagnóstico personalizado en 2 minutos (Loom / WhatsApp)
+  videoDiagnostico: (domain = '', score?: number, grade?: string) => {
+    const scoreStr = typeof score === 'number' ? ` y obtuvo nota ${score}/100 (Grado ${grade || 'F'})` : '';
+    const text = domain
+      ? `Hola Martín, acabo de escanear mi web (${domain})${scoreStr} en DEFENSA TI. No entiendo mucho de términos técnicos: ¿podrías grabarme un video corto de 2 minutos explicándome en simple qué fallas tiene y cómo corregirlas?`
+      : 'Hola Martín, acabo de escanear mi web en DEFENSA TI. No entiendo mucho de tecnicismos: ¿podrías grabarme un video corto de 2 minutos explicándome qué fallas tiene y cómo corregirlas?';
+    return getWhatsAppUrl(text);
+  },
+
   // CTA Secundario: Desinfección y limpieza de páginas infectadas / Emergencia
   recuperacionHackeo: (domain = '') => {
     const text = domain

@@ -52,6 +52,7 @@ import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
 import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
 import DefensatiFinalCTA from '@/components/defensati/DefensatiFinalCTA';
 import DefensatiScanRecommendation from '@/components/defensati/DefensatiScanRecommendation';
+import DefensatiVideoAuditCard from '@/components/defensati/DefensatiVideoAuditCard';
 import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact';
 import TurnstileWidget, { TurnstileWidgetRef } from '@/components/TurnstileWidget';
 
@@ -626,6 +627,13 @@ export default function DefensatiPage() {
                     }
                   }, 150);
                 }}
+              />
+
+              {/* OFERTA IRRESISTIBLE: VIDEO-DIAGNÓSTICO PERSONALIZADO DE 2 MINUTOS */}
+              <DefensatiVideoAuditCard 
+                domain={cleanDomain} 
+                score={report.score} 
+                grade={report.grade} 
               />
 
               {/* Selector de Perspectiva (Negocio vs Técnico) */}

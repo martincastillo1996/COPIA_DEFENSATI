@@ -20,6 +20,7 @@ import PrintableReport from '@/components/PrintableReport';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralBackground from '@/components/NeuralBackground';
 import WhatsAppCta from '@/components/WhatsAppCta';
+import DefensatiVideoAuditCard from '@/components/defensati/DefensatiVideoAuditCard';
 import BusinessOverview from '@/components/BusinessOverview';
 import ServerLocationCard from '@/components/ServerLocationCard';
 import AiConsultantWidget from '@/components/AiConsultantWidget';
@@ -391,6 +392,13 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
           {/* Comunidad y Redes Virales */}
           <SocialViralHub targetUrl={report.url} score={report.score} />
+
+          {/* Oferta Irresistible: Video-Diagnóstico de 2 min */}
+          <DefensatiVideoAuditCard 
+            domain={report.url} 
+            score={report.score} 
+            grade={report.grade} 
+          />
 
           {/* Llamado a la Acción Comercial de Blindaje Inmediato */}
           <WhatsAppCta url={report.url} score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
