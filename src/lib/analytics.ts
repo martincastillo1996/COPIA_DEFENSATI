@@ -42,7 +42,6 @@ export function trackEvent(eventName: string, params: Record<string, unknown> = 
 
   // 3. Log de desarrollo para auditoría y verificación
   if (process.env.NODE_ENV === 'development') {
-    // eslint-disable-next-line no-console
     console.log(`📊 [Analytics Event] ${eventName}:`, eventPayload);
   }
 }

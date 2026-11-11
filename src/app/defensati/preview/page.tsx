@@ -13,7 +13,6 @@ import {
   Briefcase, 
   Terminal, 
   Wrench,
-  ChevronDown,
   Clock
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';

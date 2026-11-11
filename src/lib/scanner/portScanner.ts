@@ -1,6 +1,6 @@
 import * as net from 'net';
 import { isPrivateOrLocalHost } from '@/lib/security/ssrfValidator';
-import { CANONICAL_PORTS, CanonicalPortItem } from '@/config/ports';
+import { CANONICAL_PORTS } from '@/config/ports';
 
 export interface PortCheckResult {
   port: number;

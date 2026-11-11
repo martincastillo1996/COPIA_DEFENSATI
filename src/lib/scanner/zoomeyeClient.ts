@@ -4,6 +4,26 @@
  * basados en la inteligencia de Knownsec ZoomEye sin tocar directamente el servidor objetivo.
  */
 
+export interface ZoomEyeRawMatch {
+  ip: string;
+  port?: number;
+  protocol?: string;
+  app?: string[];
+  raw_data?: string;
+  timestamp?: string;
+  update_time?: string;
+  portinfo?: {
+    port?: number;
+    service?: string;
+    app?: string[];
+    banner?: string;
+  };
+  geoinfo?: {
+    country?: { names?: Record<string, string> };
+    city?: { names?: Record<string, string> };
+  };
+}
+
 export interface ZoomEyeSearchResult {
   total: number;
   matches: Array<{
@@ -112,9 +132,9 @@ export async function searchZoomEye(
         success: true,
         data: {
           total: json.total || 0,
-          matches: (json.matches || []).map((m: any) => ({
+          matches: ((json.matches as ZoomEyeRawMatch[]) || []).map((m: ZoomEyeRawMatch) => ({
             ip: m.ip,
-            port: m.portinfo?.port || m.port,
+            port: m.portinfo?.port || m.port || 80,
             protocol: m.portinfo?.service || m.protocol,
             service: m.portinfo?.service,
             app: m.portinfo?.app || m.app,
@@ -131,10 +151,11 @@ export async function searchZoomEye(
       success: false,
       error: json.message || `Error ${json.code || res.status} devuelto por ZoomEye.`,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Error de conexión con ZoomEye API.';
     return {
       success: false,
-      error: error.message || 'Error de conexión con ZoomEye API.',
+      error: message,
     };
   }
 }

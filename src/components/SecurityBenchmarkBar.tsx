@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { BarChart3, TrendingUp, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { BarChart3, TrendingUp } from 'lucide-react';
 
 interface SecurityBenchmarkBarProps {
   score: number;
@@ -19,7 +19,6 @@ export default function SecurityBenchmarkBar({
   const defensatiTarget = 98;
 
   // Determinar texto explicativo según posición
-  const isBelowAverage = score <= peruvianAverage;
   const isAverageToGood = score > peruvianAverage && score < 85;
   const isElite = score >= 85;
 

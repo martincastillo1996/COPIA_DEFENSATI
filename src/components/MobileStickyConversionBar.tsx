@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Download, ShieldCheck, ArrowRight, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Download } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackWhatsAppClick } from '@/lib/analytics';

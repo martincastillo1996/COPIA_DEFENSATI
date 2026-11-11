@@ -11,8 +11,6 @@ import {
   ChevronUp, 
   Layers,
   Sparkles,
-  Lock,
-  ArrowRight,
   Building2,
   Info
 } from 'lucide-react';

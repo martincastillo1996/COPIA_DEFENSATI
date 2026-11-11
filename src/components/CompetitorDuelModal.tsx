@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Swords, X, ArrowRight, Loader2, CheckCircle2, ShieldAlert, Sparkles, ExternalLink } from 'lucide-react';
+import { Swords, X, ArrowRight, Loader2, CheckCircle2, ShieldAlert, ExternalLink } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 
 interface CompetitorDuelModalProps {

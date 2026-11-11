@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Scale, ShieldCheck, AlertTriangle, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Scale, ExternalLink } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 
 interface AnpdpComplianceCardProps {

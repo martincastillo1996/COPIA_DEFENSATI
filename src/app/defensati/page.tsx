@@ -12,8 +12,6 @@ import {
   Check, 
   Briefcase, 
   Terminal, 
-  Wrench,
-  ChevronDown,
   Clock
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';

@@ -7,9 +7,7 @@ import {
   RotateCcw, 
   Sparkles, 
   FileText, 
-  AlertCircle, 
-  CreditCard,
-  Lock
+  AlertCircle
 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 
@@ -109,7 +107,7 @@ export default function DefensatiWarranty() {
           <ul className="space-y-2 text-neutral-400">
             <li className="flex items-start gap-2">
               <span className="text-amber-400">&bull;</span>
-              <span>No cubre instalación posterior de plugins piratas ("nulled") o temas sin licencia oficial.</span>
+              <span>No cubre instalación posterior de plugins piratas (&ldquo;nulled&rdquo;) o temas sin licencia oficial.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-amber-400">&bull;</span>
