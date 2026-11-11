@@ -32,6 +32,7 @@ import RemediationList from '@/components/RemediationList';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
 import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
+import WebAuditCard from '@/components/WebAuditCard';
 
 // Componentes Oficiales DEFENSA TI
 import DefensatiHero from '@/components/defensati/DefensatiHero';
@@ -61,6 +62,7 @@ export default function DefensatiPage() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
+  const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
   const [legalConsent, setLegalConsent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
@@ -185,16 +187,20 @@ export default function DefensatiPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePrint = () => {
+  const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
+    setPdfViewMode(mode);
     if (report?.url) {
       try {
         const cleanHost = new URL(report.url).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
-        document.title = `Dictamen-DEFENSA-TI-${cleanHost}`;
+        const suffix = mode === 'management' ? 'Gerencia' : mode === 'dev' ? 'Dev' : 'Completo';
+        document.title = `Dictamen-DEFENSA-TI-${cleanHost}-${suffix}`;
       } catch {
         // Ignorar
       }
     }
-    window.print();
+    setTimeout(() => {
+      window.print();
+    }, 60);
   };
 
   const cleanDomain = report?.url ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
@@ -225,7 +231,7 @@ export default function DefensatiPage() {
       </div>
 
       {/* Reporte Impreso Oficial */}
-      {report && auditId && <PrintableReport report={report} auditId={auditId} />}
+      {report && auditId && <PrintableReport report={report} auditId={auditId} pdfViewMode={pdfViewMode} />}
 
       <div className="relative z-10 print:hidden flex flex-col min-h-screen">
         
@@ -497,20 +503,61 @@ export default function DefensatiPage() {
                   <span className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Sitio Web Analizado</span>
                   <h3 className="text-xl font-bold text-white break-all">{report.url}</h3>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {/* Selector de Vista del PDF: Gerencia vs Dev vs Completo */}
+                  <div className="inline-flex items-center p-1 rounded-xl bg-black/50 border border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => setPdfViewMode('management')}
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                        pdfViewMode === 'management'
+                          ? 'bg-[#0071e3] text-white shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title="PDF de 1 página para el Gerente o Finanzas con pérdidas en Soles y ROI"
+                    >
+                      💼 Gerencia
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPdfViewMode('dev')}
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                        pdfViewMode === 'dev'
+                          ? 'bg-[#0071e3] text-white shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title="PDF de 1 página técnica para Desarrolladores / Sysadmin con RFC y código"
+                    >
+                      🛠️ Dev
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPdfViewMode('both')}
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                        pdfViewMode === 'both'
+                          ? 'bg-[#0071e3] text-white shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title="PDF completo de 2 páginas con ambas vistas"
+                    >
+                      Ambas
+                    </button>
+                  </div>
+
                   <button
-                    onClick={handlePrint}
-                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 active:scale-[0.98] border border-white/15 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                    onClick={() => handlePrint(pdfViewMode)}
+                    className="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] active:scale-[0.98] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                    title="Descargar dictamen forense en formato PDF con membrete oficial"
                   >
-                    <Download className="w-4 h-4 text-sky-400" />
-                    <span>Descargar PDF</span>
+                    <Download className="w-4 h-4 text-white" />
+                    <span>Descargar PDF ({pdfViewMode === 'management' ? 'Gerencia' : pdfViewMode === 'dev' ? 'Dev' : 'Completo'})</span>
                   </button>
                   <button
                     onClick={copyShareLink}
-                    className="flex-1 sm:flex-initial px-5 py-2.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#0071e3]/30 cursor-pointer"
+                    className="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 active:scale-[0.98] border border-white/15 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                   >
                     {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Share2 className="w-4 h-4" />}
-                    <span>{copied ? 'Enlace Copiado' : 'Compartir'}</span>
+                    <span>{copied ? 'Copiado' : 'Compartir'}</span>
                   </button>
                 </div>
               </div>
@@ -576,6 +623,14 @@ export default function DefensatiPage() {
               <SslAlertWidget 
                 domain={report.url} 
                 daysRemaining={report.ssl?.daysRemaining} 
+              />
+
+              {/* Diagnóstico Perimetral Avanzado: WAF, CMS, Mixed Content y Malware */}
+              <WebAuditCard
+                waf={report.waf}
+                cms={report.cms}
+                mixedContent={report.mixedContent}
+                malware={report.malware}
               />
 
               {/* Detalle según modo */}
