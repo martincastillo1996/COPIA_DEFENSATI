@@ -8,6 +8,7 @@ import { scanPerimetralPorts } from '@/lib/scanner/portScanner';
 import { scanSensitiveFiles } from '@/lib/scanner/sensitiveFilesScanner';
 import { scanDnsSecurity } from '@/lib/scanner/dnsScanner';
 import { lookupServerLocation } from '@/lib/scanner/geoScanner';
+import { scanWebAudit } from '@/lib/scanner/webAuditScanner';
 import { v4 as uuidv4 } from 'uuid';
 import { isPrivateOrLocalHost, verifyDnsResolution } from '@/lib/security/ssrfValidator';
 import { saveAuditConsent, AuditConsentRecord } from '@/lib/storage/auditConsentStore';
@@ -272,7 +273,7 @@ export async function POST(req: Request) {
     }
 
     // 3. Ejecución concurrente asíncrona de inspección perimetral
-    const [rawSslResult, portResults, serverLocation, headerResult, sensitiveFilesResult, dnsSecurityResult] = await Promise.all([
+    const [rawSslResult, portResults, serverLocation, headerResult, sensitiveFilesResult, dnsSecurityResult, webAuditResult] = await Promise.all([
       scanSsl(hostname).catch((err) => ({
         valid: false,
         protocol: 'Error',
@@ -300,6 +301,35 @@ export async function POST(req: Request) {
         dmarc: { present: false, policy: 'missing' as const, risk: 'CRÍTICO' as const, description: 'No se pudo verificar DMARC.' },
         spf: { present: false, strict: false, risk: 'ALTO' as const, description: 'No se pudo verificar SPF.' },
         scoreBonus: 0,
+      })),
+      scanWebAudit(parsedUrl).catch(() => ({
+        waf: {
+          hasWaf: false,
+          isOriginExposed: true,
+          details: 'Servidor de origen sin WAF detectable.',
+          remediation: 'Implementar Cloudflare WAF para blindar el origen.',
+        },
+        cms: {
+          detected: false,
+          isEcommerce: false,
+          detectedPlugins: [],
+          risk: 'BAJO' as const,
+          description: 'No se pudo determinar CMS.',
+          versionExposed: false,
+        },
+        mixedContent: {
+          hasMixedContent: false,
+          count: 0,
+          items: [],
+          risk: 'BAJO' as const,
+          description: 'Sin contenido mixto detectable.',
+        },
+        malware: {
+          isInfectedOrSuspicious: false,
+          threatLevel: 'LIMPIO' as const,
+          indicators: [],
+          description: 'No se detectaron firmas visibles de infección.',
+        },
       })),
     ]);
 
@@ -371,13 +401,47 @@ export async function POST(req: Request) {
       grade = 'F';
     }
 
+    // Penalización por infección de malware o inyecciones detectadas en el DOM
+    if (webAuditResult.malware.isInfectedOrSuspicious) {
+      if (webAuditResult.malware.threatLevel === 'CRÍTICO') {
+        score = Math.min(score, 15);
+        grade = 'F';
+      } else {
+        score = Math.max(0, score - 20);
+      }
+    }
+
+    // Penalización por contenido mixto inseguro (HTTP en HTTPS)
+    if (webAuditResult.mixedContent.hasMixedContent) {
+      score = Math.max(0, score - (webAuditResult.mixedContent.risk === 'ALTO' ? 12 : 6));
+    }
+
+    // Penalización leve si el servidor de origen no cuenta con WAF perimetral
+    if (!webAuditResult.waf.hasWaf) {
+      score = Math.max(0, score - 5);
+    }
+
+    // Reajuste del grado final acorde al puntaje consolidado
+    if (score < 40) grade = 'F';
+    else if (score < 55 && grade !== 'F') grade = 'D';
+    else if (score < 70 && !['F', 'D'].includes(grade)) grade = 'C';
+    else if (score < 80 && ['A+', 'A'].includes(grade)) grade = 'B';
+    else if (score < 90 && grade === 'A+') grade = 'A';
+
     // 7. Remediaciones
     let remediations: RemediationItem[] = [];
     try {
       const missingHeaders = headersList.filter((h) =>
         h.status === 'fail' || h.status === 'missing' || h.present === false
       );
-      if (missingHeaders.length > 0 || !sslResult.valid || sensitiveFilesResult.hasExposedFiles) {
+      if (
+        missingHeaders.length > 0 ||
+        !sslResult.valid ||
+        sensitiveFilesResult.hasExposedFiles ||
+        !webAuditResult.waf.hasWaf ||
+        webAuditResult.malware.isInfectedOrSuspicious ||
+        webAuditResult.mixedContent.hasMixedContent
+      ) {
         remediations = await generateRemediation(target.origin, missingHeaders, isHyperscale);
       }
     } catch {
@@ -402,6 +466,10 @@ export async function POST(req: Request) {
       ports: adjustedPorts,
       sensitiveFiles: sensitiveFilesResult,
       dnsSecurity: dnsSecurityResult,
+      waf: webAuditResult.waf,
+      cms: webAuditResult.cms,
+      mixedContent: webAuditResult.mixedContent,
+      malware: webAuditResult.malware,
       remediations,
       location: serverLocation,
       cookies: !Array.isArray(headerResult) && headerResult && 'cookies' in headerResult ? headerResult.cookies : undefined,
@@ -410,7 +478,7 @@ export async function POST(req: Request) {
         durationMs,
         aiModel: 'gemini-1.5-flash',
         targetResolvedIp,
-        engineVersion: '1.2.0-cloud',
+        engineVersion: '1.4.0-cloud',
       },
       scannedAt: new Date().toISOString(),
     };

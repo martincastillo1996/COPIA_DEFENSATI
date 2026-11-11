@@ -232,6 +232,25 @@ export default function PrintableReport({ report, auditId }: Props) {
                   {hasValidSsl && !hasDowngradeRisk ? '🟢 Óptimo' : '🟡 Advertencia'}
                 </span>
               </div>
+
+              {/* 5. Perímetro WAF y Seguridad de Aplicación */}
+              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${report.waf?.hasWaf && !report.sensitiveFiles?.hasExposedFiles && !report.malware?.isInfectedOrSuspicious ? 'bg-emerald-50/50 border-emerald-300' : 'bg-rose-50/50 border-rose-300'}`}>
+                <div>
+                  <strong className="text-neutral-900 block font-bold">5. Perímetro WAF y Fuga de Archivos:</strong>
+                  <span className="text-neutral-700 leading-tight">
+                    {report.sensitiveFiles?.hasExposedFiles
+                      ? `Crítico: Fuga de archivos confidenciales detectada (${report.sensitiveFiles.findings.map(f => f.name).join(', ')}). Requiere remediación urgente.`
+                      : report.malware?.isInfectedOrSuspicious
+                      ? `Crítico: Anomalía forense en portada (${report.malware.threatLevel}). Requiere desinfección forense inmediata.`
+                      : report.waf?.hasWaf
+                      ? `Protegido: Firewall WAF perimetral activo (${report.waf.provider || 'WAF Cloud'}). Servidor de origen enmascarado.`
+                      : 'En observación: Servidor sin Firewall WAF. Origen expuesto directamente a escaneos y bots. Se recomienda Blindaje + WAF Cloudflare (S/ 450).'}
+                  </span>
+                </div>
+                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${report.waf?.hasWaf && !report.sensitiveFiles?.hasExposedFiles && !report.malware?.isInfectedOrSuspicious ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'}`}>
+                  {report.waf?.hasWaf && !report.sensitiveFiles?.hasExposedFiles && !report.malware?.isInfectedOrSuspicious ? '🟢 Óptimo' : '🔴 Crítico'}
+                </span>
+              </div>
             </div>
           </div>
 

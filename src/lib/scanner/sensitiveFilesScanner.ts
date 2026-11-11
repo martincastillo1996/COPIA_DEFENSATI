@@ -95,6 +95,70 @@ const PROBES: ProbeConfig[] = [
       return lower.includes('php version') && (lower.includes('configuration') || lower.includes('zend engine'));
     },
   },
+  {
+    path: '/wp-json/wp/v2/users',
+    name: 'Enumeración Pública de Usuarios WordPress (/wp-json/wp/v2/users)',
+    severity: 'ALTA',
+    description: 'La API REST de WordPress expone públicamente los nombres de usuario administradores, facilitando ataques de fuerza bruta dirigidos.',
+    remediation: 'Restringir el acceso a la lista de usuarios en la REST API para visitantes no autenticados o bloquear la ruta mediante regla WAF.',
+    validator: (status, body, contentType) => {
+      if (status !== 200) return false;
+      if (!contentType.includes('application/json') && !body.trim().startsWith('[')) return false;
+      try {
+        const json = JSON.parse(body);
+        return Array.isArray(json) && json.length > 0 && typeof json[0].id === 'number' && Boolean(json[0].slug || json[0].name);
+      } catch {
+        return false;
+      }
+    },
+  },
+  {
+    path: '/debug.log',
+    name: 'Registro de Depuración PHP / WordPress (debug.log)',
+    severity: 'ALTA',
+    description: 'Archivo de registro con errores PHP internos, rutas absolutas del servidor y potencialmente consultas SQL o claves expuestas.',
+    remediation: 'Desactivar WP_DEBUG_LOG en producción y eliminar debug.log de la raíz y de /wp-content/.',
+    validator: (status, body, contentType) => {
+      if (status !== 200 || contentType.includes('text/html')) return false;
+      const lower = body.toLowerCase();
+      return (
+        lower.includes('php notice:') ||
+        lower.includes('php fatal error:') ||
+        lower.includes('php warning:') ||
+        lower.includes('stack trace:') ||
+        lower.includes('wpdb::') ||
+        lower.includes('wordpress database error')
+      );
+    },
+  },
+  {
+    path: '/backup.zip',
+    name: 'Copia de Respaldo Expuesta (backup.zip)',
+    severity: 'CRÍTICA',
+    description: 'Archivo comprimido de respaldo completo del sitio o código fuente accesible públicamente para descarga directa.',
+    remediation: 'Eliminar de inmediato cualquier archivo de respaldo (.zip, .tar.gz, .sql) de la raíz pública del servidor.',
+    validator: (status, body, contentType) => {
+      if (status !== 200 || contentType.includes('text/html')) return false;
+      return (
+        body.startsWith('PK\x03\x04') ||
+        contentType.includes('application/zip') ||
+        contentType.includes('application/x-zip-compressed') ||
+        contentType.includes('application/octet-stream')
+      );
+    },
+  },
+  {
+    path: '/phpmyadmin/',
+    name: 'Panel de Base de Datos phpMyAdmin Expuesto',
+    severity: 'CRÍTICA',
+    description: 'Interfaz de administración de base de datos expuesta públicamente a Internet, vulnerable a ataques de fuerza bruta.',
+    remediation: 'Restringir el acceso a phpMyAdmin únicamente a red local/VPN o proteger la ruta con autenticación HTTP perimetral.',
+    validator: (status, body) => {
+      if (status !== 200) return false;
+      const lower = body.toLowerCase();
+      return lower.includes('phpmyadmin') && (lower.includes('pma_username') || lower.includes('welcome to phpmyadmin') || lower.includes('token'));
+    },
+  },
 ];
 
 export async function scanSensitiveFiles(baseUrl: string): Promise<SensitiveFilesResult> {

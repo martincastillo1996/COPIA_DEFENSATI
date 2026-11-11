@@ -27,6 +27,7 @@ import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
 import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
 import SslAlertWidget from '@/components/SslAlertWidget';
 import DnsSecurityCard from '@/components/DnsSecurityCard';
+import WebAuditCard from '@/components/WebAuditCard';
 import { Briefcase, Terminal } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
@@ -253,6 +254,14 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           <SslAlertWidget 
             domain={report.url} 
             daysRemaining={report.ssl?.daysRemaining} 
+          />
+
+          {/* Diagnóstico Perimetral Avanzado: WAF, CMS/Plugins, Contenido Mixto y Malware */}
+          <WebAuditCard
+            waf={report.waf}
+            cms={report.cms}
+            mixedContent={report.mixedContent}
+            malware={report.malware}
           />
 
           {/* Contenido Condicional según Perspectiva */}

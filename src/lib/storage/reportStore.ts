@@ -6,6 +6,12 @@ import { ServerGeoLocation } from '@/lib/scanner/geoScanner';
 import { CookieScanResult } from '@/lib/scanner/cookieScanner';
 import { SensitiveFilesResult } from '@/lib/scanner/sensitiveFilesScanner';
 import { DnsSecurityResult } from '@/lib/scanner/dnsScanner';
+import {
+  WafCheckResult,
+  CmsCheckResult,
+  MixedContentResult,
+  MalwareScanResult,
+} from '@/lib/scanner/webAuditScanner';
 
 export interface AuditTelemetry {
   durationMs: number;
@@ -24,6 +30,10 @@ export interface AuditReportRecord {
   ports?: PortCheckResult[];
   sensitiveFiles?: SensitiveFilesResult;
   dnsSecurity?: DnsSecurityResult;
+  waf?: WafCheckResult;
+  cms?: CmsCheckResult;
+  mixedContent?: MixedContentResult;
+  malware?: MalwareScanResult;
   remediations?: RemediationItem[];
   telemetry?: AuditTelemetry;
   location?: ServerGeoLocation | null;

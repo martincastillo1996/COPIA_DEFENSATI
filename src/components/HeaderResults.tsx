@@ -230,8 +230,8 @@ export default function HeaderResults({ headers }: Props) {
                         </span>
                       )}
                     </div>
-                    {/* Resumen en 1 línea limpia para no saturar */}
-                    <p className="text-[11px] sm:text-xs text-neutral-400 truncate mt-0.5 max-w-xl">
+                    {/* Resumen explicativo completo y legible sin truncamientos */}
+                    <p className="text-[11px] sm:text-xs text-neutral-300 mt-1 whitespace-normal leading-snug max-w-2xl">
                       {viewMode === 'plain' ? translation.plain : translation.technical}
                     </p>
                   </div>

@@ -114,6 +114,19 @@ export default function BusinessOverview({ report }: Props) {
         </div>
       )}
 
+      {/* Banner de Alerta Crítica por Anomalías de Malware en Portada */}
+      {report.malware?.isInfectedOrSuspicious && (
+        <div className="p-5 rounded-2xl bg-rose-950/40 border border-rose-500/50 text-rose-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl animate-pulse">
+          <AlertTriangle className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <span className="font-bold text-white text-base">🚨 Alerta de Seguridad: Posible Infección o Código Ofuscado en Portada</span>
+            <p className="text-rose-100 leading-relaxed">
+              {report.malware.description}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Banner de Explicación de Caso Especial (Google, Cloudflare, etc.) */}
       {isGoogleOrGiant && (
         <div className="p-5 rounded-2xl bg-[#0f172a] border border-blue-500/30 text-blue-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl">
