@@ -30,7 +30,8 @@ export async function verifyTurnstileToken(
   }
 
   // Token de prueba oficial de Cloudflare para entornos locales / CI
-  if (token === 'XXXX.DUMMY.TOKEN.XXXX') {
+  // Solo fuera de producción: en producción este token fijo permitiría saltarse la verificación.
+  if (process.env.NODE_ENV !== 'production' && token === 'XXXX.DUMMY.TOKEN.XXXX') {
     return { success: true, hostname: 'localhost' };
   }
 
