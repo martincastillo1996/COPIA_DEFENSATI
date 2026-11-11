@@ -33,6 +33,10 @@ import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
 import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
 import WebAuditCard from '@/components/WebAuditCard';
+import PdfLeadModal from '@/components/PdfLeadModal';
+import RoiLossCalculator from '@/components/RoiLossCalculator';
+import RecentScansTicker from '@/components/RecentScansTicker';
+import SocialViralHub from '@/components/SocialViralHub';
 
 // Componentes Oficiales DEFENSA TI
 import DefensatiHero from '@/components/defensati/DefensatiHero';
@@ -63,6 +67,7 @@ export default function DefensatiPage() {
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [legalConsent, setLegalConsent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
@@ -187,7 +192,7 @@ export default function DefensatiPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
+  const executePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
     setPdfViewMode(mode);
     if (report?.url) {
       try {
@@ -201,6 +206,11 @@ export default function DefensatiPage() {
     setTimeout(() => {
       window.print();
     }, 60);
+  };
+
+  const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
+    setPdfViewMode(mode);
+    setPdfModalOpen(true);
   };
 
   const cleanDomain = report?.url ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
@@ -439,24 +449,34 @@ export default function DefensatiPage() {
                 </div>
               </form>
 
-              {/* Botones de ejemplo rápido */}
-              <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-neutral-300 pt-3">
-                <span className="text-neutral-400">O prueba con un dominio modelo:</span>
-                {['github.com', 'apple.com', 'autonoma.pe'].map((demoDomain) => (
+              {/* Botones de 1-clic para auditorías de prueba representativas */}
+              <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 text-xs text-neutral-300 pt-3">
+                <span className="text-neutral-400 text-xs font-medium">O prueba un caso típico:</span>
+                {[
+                  { label: '🛒 Tienda WooCommerce', domain: 'tienda-demo.pe' },
+                  { label: '🏢 Web Corporativa', domain: 'corporativo-demo.pe' },
+                  { label: '⚡ bcp.com.pe', domain: 'bcp.com.pe' },
+                  { label: '🐙 github.com', domain: 'github.com' },
+                ].map((demo) => (
                   <button
-                    key={demoDomain}
+                    key={demo.domain}
                     type="button"
                     onClick={() => {
-                      const demoUrl = `https://${demoDomain}`;
+                      const demoUrl = `https://${demo.domain}`;
                       setUrl(demoUrl);
                       setLegalConsent(true);
                       handleScan(demoUrl, true);
                     }}
-                    className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 text-sky-400 hover:text-sky-300 font-semibold text-xs sm:text-sm transition-all cursor-pointer shadow-sm"
+                    className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 text-sky-400 hover:text-sky-300 font-semibold text-xs transition-all cursor-pointer shadow-sm"
                   >
-                    {demoDomain}
+                    {demo.label}
                   </button>
                 ))}
+              </div>
+
+              {/* Ticker de auditorías recientes en vivo */}
+              <div className="relative z-10 pt-2">
+                <RecentScansTicker />
               </div>
 
               {/* Micro-garantías visuales de confianza técnica */}
@@ -636,7 +656,14 @@ export default function DefensatiPage() {
 
               {/* Detalle según modo */}
               {viewMode === 'business' ? (
-                <BusinessOverview report={report} />
+                <div className="space-y-6">
+                  <BusinessOverview report={report} />
+                  <RoiLossCalculator
+                    domain={report.url}
+                    hasAdPixel={report.commercial?.hasActiveMarketing}
+                    hasEcommerce={report.cms?.isEcommerce}
+                  />
+                </div>
               ) : (
                 <div className="space-y-6">
                   {Boolean(report.ports?.length) && (
@@ -665,6 +692,20 @@ export default function DefensatiPage() {
                 </div>
               )}
 
+              {/* Hub de Comunidad y Difusión Viral */}
+              <SocialViralHub targetUrl={report.url} score={report.score} />
+
+              {/* Modal de Captura de Lead al Descargar PDF */}
+              <PdfLeadModal
+                isOpen={pdfModalOpen}
+                onClose={() => setPdfModalOpen(false)}
+                onConfirm={() => {
+                  setPdfModalOpen(false);
+                  executePrint(pdfViewMode);
+                }}
+                domain={report.url}
+                pdfViewMode={pdfViewMode}
+              />
             </div>
           )}
 

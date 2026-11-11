@@ -28,6 +28,9 @@ import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
 import SslAlertWidget from '@/components/SslAlertWidget';
 import DnsSecurityCard from '@/components/DnsSecurityCard';
 import WebAuditCard from '@/components/WebAuditCard';
+import PdfLeadModal from '@/components/PdfLeadModal';
+import RoiLossCalculator from '@/components/RoiLossCalculator';
+import SocialViralHub from '@/components/SocialViralHub';
 import { Briefcase, Terminal } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
@@ -42,6 +45,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
 
   // Cargar el reporte automáticamente al entrar a la página
   useEffect(() => {
@@ -91,7 +95,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
+  const executePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
     setPdfViewMode(mode);
     if (report?.url) {
       try {
@@ -105,6 +109,11 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
     setTimeout(() => {
       window.print();
     }, 60);
+  };
+
+  const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
+    setPdfViewMode(mode);
+    setPdfModalOpen(true);
   };
 
   // 1. Estado de Carga
@@ -315,7 +324,14 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
           {/* Contenido Condicional según Perspectiva */}
           {viewMode === 'business' ? (
-            <BusinessOverview report={report} />
+            <div className="space-y-6">
+              <BusinessOverview report={report} />
+              <RoiLossCalculator
+                domain={report.url}
+                hasAdPixel={report.commercial?.hasActiveMarketing}
+                hasEcommerce={report.cms?.isEcommerce}
+              />
+            </div>
           ) : (
             <div className="space-y-6">
               {Boolean(report.ports?.length) && (
@@ -340,6 +356,9 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             </div>
           )}
 
+          {/* Comunidad y Redes Virales */}
+          <SocialViralHub targetUrl={report.url} score={report.score} />
+
           {/* Llamado a la Acción Comercial de Blindaje Inmediato */}
           <WhatsAppCta url={report.url} score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
 
@@ -352,6 +371,18 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               />
             </div>
           )}
+
+          {/* Modal de Captura de Lead al Descargar PDF */}
+          <PdfLeadModal
+            isOpen={pdfModalOpen}
+            onClose={() => setPdfModalOpen(false)}
+            onConfirm={() => {
+              setPdfModalOpen(false);
+              executePrint(pdfViewMode);
+            }}
+            domain={report.url}
+            pdfViewMode={pdfViewMode}
+          />
 
           {/* Asistente IA Flotante */}
           <AiConsultantWidget report={report} />
