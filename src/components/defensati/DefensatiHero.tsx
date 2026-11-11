@@ -7,8 +7,7 @@ import {
   ShieldAlert,
   Zap,
   UserCheck,
-  Receipt,
-  CheckCircle2
+  Receipt
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
@@ -40,7 +39,7 @@ export default function DefensatiHero() {
       {/* Titular Principal Estilo Apple Pro: Tipografía de alto impacto y respiración visual */}
       <div className="max-w-4xl mx-auto space-y-3 px-4">
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] text-[#f5f5f7] leading-[1.08]">
-          Protegemos tu página web.
+          Protegemos tu página web
           <span className="block mt-1 sm:mt-2 bg-gradient-to-r from-[#2997ff] via-[#70b4ff] to-[#d0e4ff] bg-clip-text text-transparent">
             Blindamos tu negocio.
           </span>
