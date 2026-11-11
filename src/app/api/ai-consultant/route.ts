@@ -244,20 +244,42 @@ export async function POST(req: NextRequest) {
 
         reply = response.text || 'Hola, soy Neuronality AI. ¿En qué puedo orientarte sobre la seguridad de tu página web?';
       } catch (geminiError: unknown) {
-        console.warn('Error en Gemini, conmutando a motor seguro de contingencia:', geminiError);
-        const errStr = String(geminiError);
-        const isQuotaOrRateLimit =
-          errStr.includes('429') ||
-          errStr.includes('RESOURCE_EXHAUSTED') ||
-          errStr.includes('quota') ||
-          errStr.includes('rate limit');
+        console.warn('Error en Gemini, conmutando a Groq (IA gratuita de respaldo):', geminiError);
+      }
+    }
 
-        if (isQuotaOrRateLimit) {
-          reply = `Hola, soy Neuronality AI. En este momento nuestros servidores están atendiendo una alta demanda de consultas perimetrales. Para brindarte una cotización o asesoría técnica inmediata sin esperas, puedes conectar directamente con Martín por WhatsApp.`;
-        } else {
-          reply = `Hola, soy Neuronality AI. En DEFENSA TI auditamos y blindamos tu sitio web para prevenir alertas de "Sitio no seguro" y bloqueos de pasarelas por contenido mixto. Puedes escanear tu web gratis o tocar el botón de WhatsApp para coordinar directamente con Martín.`;
+    // Respaldo con Groq Cloud AI ($0 costo, ultra-rápido) si Gemini falló o no tiene cuota
+    const groqKey = process.env.GROQ_API_KEY?.trim();
+    if (!reply && groqKey) {
+      try {
+        const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${groqKey}`,
+          },
+          body: JSON.stringify({
+            model: 'qwen/qwen3.8-27b',
+            messages: [
+              { role: 'system', content: `${SYSTEM_INSTRUCTION}\n\n${contextPrompt}` },
+              ...sanitizedHistory.map((h) => ({
+                role: h.role === 'model' ? 'assistant' : 'user',
+                content: h.parts[0]?.text || '',
+              })),
+              { role: 'user', content: trimmedMsg },
+            ],
+            temperature: 0.4,
+            max_tokens: 250,
+          }),
+          signal: AbortSignal.timeout(5000),
+        });
+
+        if (groqRes.ok) {
+          const groqData = await groqRes.json();
+          reply = groqData.choices?.[0]?.message?.content?.trim() || '';
         }
-        shouldSuggestWhatsApp = true;
+      } catch (groqErr) {
+        console.warn('Error en Groq AI:', groqErr);
       }
     }
 

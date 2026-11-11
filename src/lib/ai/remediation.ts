@@ -162,7 +162,7 @@ async function callGemini(prompt: string, apiKey: string): Promise<RemediationIt
   return parseResponse(res.text || '[]');
 }
 
-// 2. Groq (Llama 3.3 70B Versatile)
+// 2. Groq (Qwen 3.8 27B / Ultra-rápido $0)
 async function callGroq(prompt: string, apiKey: string): Promise<RemediationItem[]> {
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
@@ -171,7 +171,7 @@ async function callGroq(prompt: string, apiKey: string): Promise<RemediationItem
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
+      model: 'qwen/qwen3.8-27b',
       messages: [{ role: 'user', content: prompt }],
       response_format: { type: 'json_object' },
       temperature: 0.1,
