@@ -18,6 +18,8 @@ export default function CookieConsentBanner() {
 
   const handleAccept = () => {
     localStorage.setItem('defensati_cookie_consent', 'accepted');
+    // Avisa a GoogleAnalytics para que cargue la medición sin recargar la página
+    window.dispatchEvent(new Event('defensati-cookie-consent'));
     setShowBanner(false);
   };
 

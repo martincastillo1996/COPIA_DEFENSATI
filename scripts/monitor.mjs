@@ -6,6 +6,8 @@
  *   - plan "basico": comprobación de uptime cada 15 minutos
  *   - plan "tienda": comprobación de uptime cada 5 minutos
  *   - certificado SSL: alerta cuando quedan 15 días o menos (una vez al día)
+ *   - plan "tienda": re-escaneo semanal de seguridad con el motor de DEFENSA TI
+ *     (llama a la app local; alerta si la calificación baja)
  *
  * Clientes:  data/monitor-clients.json
  *   [{ "domain": "cliente.pe", "plan": "basico", "name": "Cliente SAC" }]
@@ -35,6 +37,8 @@ const INTERVAL_MIN = { basico: 15, tienda: 5 };
 const REQUEST_TIMEOUT_MS = 20_000;
 const FAILURES_BEFORE_ALERT = 2; // evita falsas alarmas por un único fallo de red
 const SSL_ALERT_DAYS = 15;
+const RESCAN_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000;
+const RESCAN_RETRY_MS = 6 * 60 * 60 * 1000; // si el re-escaneo falla, se reintenta a las 6 horas
 const DOMAIN_REGEX = /^(?=.{4,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
 
 for (const envFile of ['.env.local', '.env']) {
@@ -159,6 +163,45 @@ async function sendAlert(text) {
   }
 }
 
+/**
+ * Re-escaneo semanal (plan "tienda"). Usa el motor de la propia app en este servidor.
+ * El cliente con plan de mantenimiento autorizó por contrato la auditoría de su dominio.
+ */
+async function rescanClient(client, s) {
+  const base = (process.env.MONITOR_APP_URL || 'http://127.0.0.1:3000').replace(/\/+$/, '');
+  s.lastScanAttempt = Date.now();
+  let data;
+  try {
+    const res = await fetch(base + '/api/scan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'DefensaTI-Monitor/1.0 (re-escaneo semanal de cliente con mantenimiento)',
+      },
+      body: JSON.stringify({ url: client.domain, force: true, legalConsentAccepted: true }),
+      signal: AbortSignal.timeout(150_000),
+    });
+    data = await res.json();
+    if (!res.ok || !data?.report) throw new Error(data?.error || 'HTTP ' + res.status);
+  } catch (err) {
+    console.warn('[monitor] Re-escaneo fallido de ' + client.domain + ': ' + (err?.message || err));
+    return;
+  }
+
+  const previous = s.lastScan;
+  const { score, grade } = data.report;
+  s.lastScan = { at: new Date().toISOString(), score, grade, reportId: data.id };
+  appendLog(client.domain, { t: s.lastScan.at, scan: true, score, grade, reportId: data.id });
+
+  if (previous && typeof previous.score === 'number' && score < previous.score) {
+    await sendAlert(
+      '🟠 SEGURIDAD: la calificación de ' + client.name + ' (' + client.domain + ') bajó de ' +
+        previous.score + ' (' + previous.grade + ') a ' + score + ' (' + grade + ').\n' +
+        'Informe: https://neuronalgravity.com/report/' + data.id
+    );
+  }
+}
+
 function formatDuration(ms) {
   const min = Math.max(1, Math.round(ms / 60_000));
   return min < 60 ? `${min} min` : `${Math.floor(min / 60)} h ${min % 60} min`;
@@ -215,8 +258,19 @@ async function runPass({ force = false } = {}) {
   for (let i = 0; i < due.length; i += 5) {
     await Promise.all(due.slice(i, i + 5).map((c) => checkClient(c, state).catch((e) => console.error(`[monitor] ${c.domain}:`, e))));
   }
-  if (due.length > 0) saveState(state);
-  return { total: clients.length, checked: due.length };
+
+  // Re-escaneo semanal: como máximo un sitio por pasada para no cargar el servidor
+  const toScan = clients.find((c) => {
+    if (c.plan !== 'tienda') return false;
+    const s = state[c.domain];
+    if (!s || s.alerted) return false; // sitio caído: no tiene sentido escanearlo
+    const lastOk = s.lastScan ? new Date(s.lastScan.at).getTime() : 0;
+    return now - lastOk >= RESCAN_INTERVAL_MS && now - (s.lastScanAttempt || 0) >= RESCAN_RETRY_MS;
+  });
+  if (toScan) await rescanClient(toScan, state[toScan.domain]);
+
+  if (due.length > 0 || toScan) saveState(state);
+  return { total: clients.length, checked: due.length, scanned: toScan?.domain };
 }
 
 function monthlyReport(month) {
@@ -238,6 +292,7 @@ function monthlyReport(month) {
         if (!line.startsWith(`{"t":"${month}`)) continue;
         try {
           const e = JSON.parse(line);
+          if (e.scan) continue; // los re-escaneos no cuentan como comprobación de uptime
           total += 1;
           if (e.up) {
             up += 1;
@@ -260,6 +315,7 @@ function monthlyReport(month) {
       Incidentes: incidents,
       'Respuesta media (ms)': up ? Math.round(msSum / up) : '-',
       'SSL (días)': state[c.domain]?.sslDaysRemaining ?? '-',
+      'Último escaneo': state[c.domain]?.lastScan ? state[c.domain].lastScan.score + ' (' + state[c.domain].lastScan.grade + ')' : '-',
     };
   });
   console.log(`\nDEFENSA TI — Reporte mensual de mantenimiento · ${month}\n`);
@@ -272,7 +328,7 @@ if (args.includes('--report')) {
   monthlyReport(args[args.indexOf('--report') + 1] || new Date().toISOString().slice(0, 7));
 } else if (args.includes('--once')) {
   const r = await runPass({ force: true });
-  console.log(`[monitor] Pasada única: ${r.checked}/${r.total} sitios comprobados.`);
+  console.log(`[monitor] Pasada única: ${r.checked}/${r.total} sitios comprobados.` + (r.scanned ? ` Re-escaneado: ${r.scanned}.` : ''));
 } else {
   console.log(`[monitor] Servicio iniciado. Clientes: ${loadClients().length} (${path.relative(ROOT, CLIENTS_FILE)})`);
   let running = false;
