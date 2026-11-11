@@ -12,38 +12,18 @@ import {
 } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 import AuditEngineExplanation from '@/components/AuditEngineExplanation';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 interface Props {
   report: AuditReportRecord;
 }
 
-const HYPERSCALER_DOMAINS = [
-  'google.',
-  'youtube.com',
-  'microsoft.com',
-  'apple.com',
-  'amazon.com',
-  'cloudflare.com',
-  'github.com',
-  'meta.com',
-  'facebook.com',
-  'instagram.com',
-  'netflix.com',
-  'spotify.com',
-  'stripe.com',
-  'openai.com',
-  'linkedin.com',
-  'twitter.com',
-  'x.com',
-  'wikipedia.org',
-  'bing.com',
-];
-
 export default function BusinessOverview({ report }: Props) {
   const cleanUrl = (report.url || '').toLowerCase();
   const isGoogleOrGiant = 
     Boolean(report.isHyperscale) ||
-    HYPERSCALER_DOMAINS.some(d => cleanUrl.includes(d));
+    isHyperscalePlatform(cleanUrl) ||
+    isHyperscalePlatform(report.url);
 
   // Evaluar riesgos de negocio basados en los resultados
   const missingHeaders = (report.headers || []).filter(h => !h.present);

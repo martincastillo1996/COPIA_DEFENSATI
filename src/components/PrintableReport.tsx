@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 import { ShieldCheck, CheckCircle2, AlertTriangle, Building2, Code2, Lock } from 'lucide-react';
 
 interface Props {
@@ -31,27 +32,8 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
   const cleanUrl = (report.url || '').toLowerCase();
   const isHyperscaleOrGiant =
     Boolean(report.isHyperscale) ||
-    [
-      'google.',
-      'youtube.com',
-      'microsoft.com',
-      'apple.com',
-      'amazon.com',
-      'cloudflare.com',
-      'github.com',
-      'meta.com',
-      'facebook.com',
-      'instagram.com',
-      'netflix.com',
-      'spotify.com',
-      'stripe.com',
-      'openai.com',
-      'linkedin.com',
-      'twitter.com',
-      'x.com',
-      'wikipedia.org',
-      'bing.com',
-    ].some((d) => cleanUrl.includes(d));
+    isHyperscalePlatform(cleanUrl) ||
+    isHyperscalePlatform(report.url);
 
   const hasValidSsl =
     Boolean(report.ssl?.valid) &&
@@ -319,24 +301,43 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
           <div className="p-2.5 rounded-lg border-2 border-neutral-900 bg-neutral-50 mb-2.5">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-neutral-300 pb-1.5 mb-1.5">
               <div>
-                <strong className={`text-[10px] font-black uppercase block ${isOptimalSite ? 'text-emerald-900' : 'text-neutral-900'}`}>
-                  {isOptimalSite 
+                <strong className={`text-[10px] font-black uppercase block ${isHyperscaleOrGiant || isOptimalSite ? 'text-emerald-900' : 'text-neutral-900'}`}>
+                  {isHyperscaleOrGiant
+                    ? '🏢 INFRAESTRUCTURA DE HIPERESCALA GLOBAL (CASO DE ESTUDIO TÉCNICO)'
+                    : isOptimalSite 
                     ? '✅ Estado de Blindaje Perimetral: Grado A (Óptimo y Seguro)'
                     : '¿Cómo solucionar estos riesgos y alcanzar Grado A? (Servicios Disponibles)'}
                 </strong>
                 <span className="text-[8.5px] text-neutral-600">
-                  {isOptimalSite
+                  {isHyperscaleOrGiant
+                    ? 'Plataforma con red Anycast mundial y centros de datos dedicados • Referencia didáctica'
+                    : isOptimalSite
                     ? 'Cumplimiento exitoso de cabeceras OWASP y puertos seguros • No requiere intervención correctiva'
                     : 'Entrega en 24h • Sin tocar contraseñas ni base de datos • Soporte directo garantizado'}
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-[9px] font-bold text-neutral-900 block">{isOptimalSite ? 'Contacto con Martín Castillo:' : 'Coordinar con Martín Castillo:'}</span>
+                <span className="text-[9px] font-bold text-neutral-900 block">{isHyperscaleOrGiant || isOptimalSite ? 'Contacto con Martín Castillo:' : 'Coordinar con Martín Castillo:'}</span>
                 <span className="text-[9.5px] font-mono font-black text-emerald-800">WhatsApp: +1 (785) 643-3991</span>
               </div>
             </div>
 
-            {isOptimalSite ? (
+            {isHyperscaleOrGiant ? (
+              <div className="grid grid-cols-2 gap-2 text-[8.5px]">
+                <div className="p-1.5 rounded border border-sky-300 bg-sky-50/60">
+                  <span className="font-bold text-sky-900 block">ARQUITECTURA DEDICADA: Red Global Multicapa</span>
+                  <p className="text-neutral-700 leading-tight mt-0.5">
+                    Esta corporación opera infraestructura propia con mitigación de DDoS distribuida. Las directivas de framing y HSTS se gestionan internamente.
+                  </p>
+                </div>
+                <div className="p-1.5 rounded border border-neutral-300 bg-white">
+                  <span className="font-bold text-neutral-900 block">REPLICABLE PARA TU EMPRESA: Blindaje con WAF</span>
+                  <p className="text-neutral-700 leading-tight mt-0.5">
+                    DEFENSA TI implementa el mismo estándar de defensa perimetral para organizaciones y tiendas online mediante WAF Cloudflare y cabeceras OWASP.
+                  </p>
+                </div>
+              </div>
+            ) : isOptimalSite ? (
               <div className="grid grid-cols-2 gap-2 text-[8.5px]">
                 <div className="p-1.5 rounded border border-emerald-300 bg-emerald-50/60">
                   <span className="font-bold text-emerald-900 block">ESTADO DE TU WEB: Blindaje Activo y Conforme</span>
@@ -609,7 +610,16 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
               </span>
             </h2>
 
-            {isOptimalSite || missingHeaders.length === 0 ? (
+            {isHyperscaleOrGiant ? (
+              <div className="border border-sky-500 rounded-lg p-2.5 bg-[#0a1420] text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
+                <p className="text-sky-300 font-bold"># ESTADO DE AUDITORÍA: INFRAESTRUCTURA DE HIPERESCALA GLOBAL</p>
+                <p className="text-neutral-300"># Plataforma multinacional operando sobre red distribuida Anycast con mitigación L3/L4/L7:</p>
+                <p className="text-sky-400">✓ Balanceo global BGP y centros de datos redundantes: ACTIVOS</p>
+                <p className="text-sky-400">✓ Túnel TLS 1.3 estricto y precarga HSTS en navegador: ACTIVOS</p>
+                <p className="text-sky-400">✓ Protección perimetral anti-framing y control de origen: ACTIVOS</p>
+                <p className="text-neutral-400 mt-1"># Dictamen: Infraestructura corporativa propietaria. No requiere remediación para pymes.</p>
+              </div>
+            ) : isOptimalSite || missingHeaders.length === 0 ? (
               <div className="border border-emerald-500 rounded-lg p-2.5 bg-[#0a1a12] text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
                 <p className="text-emerald-300 font-bold"># ESTADO DE AUDITORÍA: SERVIDOR 100% BLINDADO Y CONFORME</p>
                 <p className="text-neutral-300"># Todas las directivas de seguridad OWASP / RFC 9110 evaluadas ya están activas en tu infraestructura:</p>

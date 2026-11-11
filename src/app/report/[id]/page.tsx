@@ -30,6 +30,7 @@ import WebAuditCard from '@/components/WebAuditCard';
 import PdfLeadModal from '@/components/PdfLeadModal';
 import RoiLossCalculator from '@/components/RoiLossCalculator';
 import SocialViralHub from '@/components/SocialViralHub';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 import { Briefcase, Terminal } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
@@ -321,6 +322,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                 hasAdPixel={report.commercial?.hasActiveMarketing}
                 hasEcommerce={report.cms?.isEcommerce}
                 isOptimal={(report.score ?? 0) >= 90 && (!report.headers || report.headers.filter(h => !h.present).length === 0)}
+                isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
               />
             </div>
           ) : (

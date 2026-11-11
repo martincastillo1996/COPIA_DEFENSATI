@@ -17,6 +17,7 @@ import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackWhatsAppClick } from '@/lib/analytics';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 interface Props {
   report: AuditReportRecord;
@@ -30,6 +31,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
   const hasSslIssue = !report.ssl?.valid || (typeof sslDays === 'number' && sslDays < 30);
   const openPortsCount = report.ports?.filter(p => p.isOpen).length ?? 0;
   const missingHeadersCount = report.headers?.filter(h => !h.present || h.status === 'missing' || h.status === 'fail').length ?? 0;
+  const isHyperscale = Boolean(report.isHyperscale) || isHyperscalePlatform(cleanDomain) || isHyperscalePlatform(report.url);
   const isFullySecure = missingHeadersCount === 0 && (score >= 90 || grade === 'A' || grade === 'A+');
 
   // Determinar nivel de diagnóstico comercial
@@ -41,7 +43,15 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
   let solutionText = 'Aplicamos cabeceras estrictas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y optimización DNS anti-suplantación en 3 a 5 días sin alterar tu diseño.';
   let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y protección perimetral WAF`;
 
-  if (isFullySecure) {
+  if (isHyperscale) {
+    planType = 'monitoreo';
+    badgeText = '🏢 Infraestructura Global de Hiperescala';
+    title = 'Caso de Estudio: Arquitectura Multinacional Dedicada';
+    priceText = 'Infraestructura Propietaria (Multi-Cloud)';
+    diagnosisText = `Este dominio pertenece a una corporación tecnológica global con centros de datos propios, Anycast CDN y mitigación masiva contra ataques DDoS. Las directivas perimetrales se gestionan internamente a nivel de cluster.`;
+    solutionText = 'Las grandes multinacionales cuentan con redes privadas y equipos de ciberdefensa 24/7. Esta auditoría sirve como caso de estudio de cómo una empresa puede replicar este nivel de protección con cabeceras OWASP estrictas y WAF Cloudflare.';
+    primaryIssue = 'Infraestructura multinacional de hiperescala';
+  } else if (isFullySecure) {
     planType = 'monitoreo';
     badgeText = '✅ 100% Blindado y Conforme';
     title = '¡Excelente! Tu web cumple todos los estándares de seguridad';
@@ -67,13 +77,17 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
     primaryIssue = 'Sitio en buen estado, mantener con monitoreo preventivo';
   }
 
-  const whatsappUrl = DEFENSATI_WHATSAPP_MESSAGES.escanerContextual({
-    domain: cleanDomain,
-    score,
-    grade,
-    primaryIssue,
-    recommendation: planType,
-  });
+  const whatsappUrl = isHyperscale
+    ? `https://wa.me/17856433991?text=${encodeURIComponent(
+        `Hola Martín, estuve revisando el análisis de referencia de ${cleanDomain} en DEFENSA TI y quisiera cotizar una arquitectura de blindaje perimetral para mi empresa.`
+      )}`
+    : DEFENSATI_WHATSAPP_MESSAGES.escanerContextual({
+        domain: cleanDomain,
+        score,
+        grade,
+        primaryIssue,
+        recommendation: planType,
+      });
 
   return (
     <div className="p-6 sm:p-9 rounded-[32px] bg-gradient-to-b from-[#101826]/95 via-[#0c121e]/95 to-[#080d16]/98 border-2 border-[#0071e3]/50 shadow-[0_20px_60px_rgba(0,113,227,0.25)] backdrop-blur-2xl space-y-6 text-left">
@@ -180,10 +194,18 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span className="text-xs text-neutral-400 block font-mono">
-            {isFullySecure ? 'Diagnóstico perimetral:' : 'Inversión sugerida:'}
+            {isHyperscale
+              ? 'Nivel de Infraestructura:'
+              : isFullySecure
+              ? 'Diagnóstico perimetral:'
+              : 'Inversión sugerida:'}
           </span>
-          <span className={`text-2xl sm:text-3xl font-extrabold font-mono ${
-            isFullySecure ? 'text-emerald-400' : 'text-white'
+          <span className={`text-xl sm:text-2xl font-extrabold font-mono ${
+            isHyperscale
+              ? 'text-sky-400'
+              : isFullySecure
+              ? 'text-emerald-400'
+              : 'text-white'
           }`}>
             {priceText}
           </span>
@@ -195,7 +217,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
           rel="noopener noreferrer"
           onClick={() =>
             trackWhatsAppClick({
-              service: isFullySecure ? 'general' : planType,
+              service: isHyperscale ? 'general' : isFullySecure ? 'general' : planType,
               placement: 'post_scan_recommendation_card',
               domain: cleanDomain,
             })
@@ -204,7 +226,9 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
         >
           <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
           <span>
-            {isFullySecure
+            {isHyperscale
+              ? 'Cotizar blindaje similar para mi empresa por WhatsApp'
+              : isFullySecure
               ? 'Consultar o solicitar reporte por WhatsApp'
               : planType === 'limpieza'
               ? 'Solicitar desinfección y blindaje por WhatsApp'
