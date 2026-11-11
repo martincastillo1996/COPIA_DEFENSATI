@@ -320,6 +320,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                 domain={report.url}
                 hasAdPixel={report.commercial?.hasActiveMarketing}
                 hasEcommerce={report.cms?.isEcommerce}
+                isOptimal={(report.score ?? 0) >= 90 && (!report.headers || report.headers.filter(h => !h.present).length === 0)}
               />
             </div>
           ) : (

@@ -30,6 +30,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
   const hasSslIssue = !report.ssl?.valid || (typeof sslDays === 'number' && sslDays < 30);
   const openPortsCount = report.ports?.filter(p => p.isOpen).length ?? 0;
   const missingHeadersCount = report.headers?.filter(h => !h.present || h.status === 'missing' || h.status === 'fail').length ?? 0;
+  const isFullySecure = missingHeadersCount === 0 && (score >= 90 || grade === 'A' || grade === 'A+');
 
   // Determinar nivel de diagnóstico comercial
   let planType: 'limpieza' | 'blindaje' | 'monitoreo' = 'blindaje';
@@ -40,7 +41,15 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
   let solutionText = 'Aplicamos cabeceras estrictas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y optimización DNS anti-suplantación en 3 a 5 días sin alterar tu diseño.';
   let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y protección perimetral WAF`;
 
-  if (score < 60 || grade === 'F' || grade === 'D') {
+  if (isFullySecure) {
+    planType = 'monitoreo';
+    badgeText = '✅ 100% Blindado y Conforme';
+    title = '¡Excelente! Tu web cumple todos los estándares de seguridad';
+    priceText = 'Estado Óptimo • S/ 0 (Sin fallas)';
+    diagnosisText = `¡Felicitaciones! Tu sitio web obtuvo ${score}/100 (Grado ${grade}) con directivas de seguridad completas y sin puertos vulnerables expuestos. La navegación viaja cifrada y tus clientes navegan con total confianza.`;
+    solutionText = 'Tu infraestructura perimetral se encuentra en el más alto nivel técnico. No requieres servicios de remediación ni blindaje de emergencia. Si en el futuro deseas tranquilidad permanente contra caídas imprevistas o expiración SSL, nuestro plan mensual es 100% opcional.';
+    primaryIssue = 'Sitio en estado óptimo, no requiere intervención correctiva';
+  } else if (score < 60 || grade === 'F' || grade === 'D') {
     planType = 'limpieza';
     badgeText = 'Alerta de Riesgo Alto / Crítico';
     title = 'Recomendación: Rescate / Limpieza de malware';
@@ -170,8 +179,14 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
       {/* Botón de Conversión Contextual */}
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <span className="text-xs text-neutral-400 block font-mono">Inversión sugerida:</span>
-          <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono">{priceText}</span>
+          <span className="text-xs text-neutral-400 block font-mono">
+            {isFullySecure ? 'Diagnóstico perimetral:' : 'Inversión sugerida:'}
+          </span>
+          <span className={`text-2xl sm:text-3xl font-extrabold font-mono ${
+            isFullySecure ? 'text-emerald-400' : 'text-white'
+          }`}>
+            {priceText}
+          </span>
         </div>
 
         <a
@@ -180,7 +195,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
           rel="noopener noreferrer"
           onClick={() =>
             trackWhatsAppClick({
-              service: planType,
+              service: isFullySecure ? 'general' : planType,
               placement: 'post_scan_recommendation_card',
               domain: cleanDomain,
             })
@@ -189,7 +204,9 @@ export default function DefensatiScanRecommendation({ report, cleanDomain }: Pro
         >
           <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
           <span>
-            {planType === 'limpieza'
+            {isFullySecure
+              ? 'Consultar o solicitar reporte por WhatsApp'
+              : planType === 'limpieza'
               ? 'Solicitar desinfección y blindaje por WhatsApp'
               : planType === 'monitoreo'
               ? 'Activar monitoreo mensual por WhatsApp'

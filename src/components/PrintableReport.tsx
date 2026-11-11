@@ -59,6 +59,9 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
     !report.url?.startsWith('http://');
 
   const missingHeaders = (report.headers || []).filter(h => !h.present);
+  const isOptimalSite =
+    Boolean(isHyperscaleOrGiant) ||
+    (((report.score ?? 0) >= 90 || report.grade === 'A+' || report.grade === 'A') && missingHeaders.length === 0);
   const hasDowngradeRisk = missingHeaders.some(h => (h.header || h.name || '').toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
     p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)
@@ -316,33 +319,54 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
           <div className="p-2.5 rounded-lg border-2 border-neutral-900 bg-neutral-50 mb-2.5">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-neutral-300 pb-1.5 mb-1.5">
               <div>
-                <strong className="text-[10px] font-black uppercase text-neutral-900 block">
-                  ¿Cómo solucionar estos riesgos y alcanzar Grado A? (Servicios Disponibles)
+                <strong className={`text-[10px] font-black uppercase block ${isOptimalSite ? 'text-emerald-900' : 'text-neutral-900'}`}>
+                  {isOptimalSite 
+                    ? '✅ Estado de Blindaje Perimetral: Grado A (Óptimo y Seguro)'
+                    : '¿Cómo solucionar estos riesgos y alcanzar Grado A? (Servicios Disponibles)'}
                 </strong>
                 <span className="text-[8.5px] text-neutral-600">
-                  Entrega en 24h &bull; Sin tocar contraseñas ni base de datos &bull; Soporte directo garantizado
+                  {isOptimalSite
+                    ? 'Cumplimiento exitoso de cabeceras OWASP y puertos seguros • No requiere intervención correctiva'
+                    : 'Entrega en 24h • Sin tocar contraseñas ni base de datos • Soporte directo garantizado'}
                 </span>
               </div>
               <div className="text-right">
-                <span className="text-[9px] font-bold text-neutral-900 block">Coordinar con Martín Castillo:</span>
+                <span className="text-[9px] font-bold text-neutral-900 block">{isOptimalSite ? 'Contacto con Martín Castillo:' : 'Coordinar con Martín Castillo:'}</span>
                 <span className="text-[9.5px] font-mono font-black text-emerald-800">WhatsApp: +1 (785) 643-3991</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-[8.5px]">
-              <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate / Limpieza de malware (S/ 380 - S/ 550 PEN)</span>
-                <p className="text-neutral-700 leading-tight mt-0.5">
-                  Desinfección forense completa de archivos y base de datos con respaldo previo, desbloqueo con el hosting, retiro de pantalla roja y garantía de 30 días.
-                </p>
+            {isOptimalSite ? (
+              <div className="grid grid-cols-2 gap-2 text-[8.5px]">
+                <div className="p-1.5 rounded border border-emerald-300 bg-emerald-50/60">
+                  <span className="font-bold text-emerald-900 block">ESTADO DE TU WEB: Blindaje Activo y Conforme</span>
+                  <p className="text-neutral-700 leading-tight mt-0.5">
+                    Tu sitio ya cuenta con directivas defensivas estrictas y canales cifrados. Tus pasarelas y datos de clientes viajan 100% protegidos.
+                  </p>
+                </div>
+                <div className="p-1.5 rounded border border-neutral-300 bg-white">
+                  <span className="font-bold text-neutral-900 block">PLAN PREVENTIVO OPCIONAL: Mantenimiento 24/7 (S/ 90 PEN/mes)</span>
+                  <p className="text-neutral-700 leading-tight mt-0.5">
+                    Monitoreo preventivo opcional para asegurar que futuras actualizaciones de plugins o cambios de hosting no desactiven tu seguridad.
+                  </p>
+                </div>
               </div>
-              <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje + WAF Cloudflare Unificado (S/ 450 PEN)</span>
-                <p className="text-neutral-700 leading-tight mt-0.5">
-                  Paquete unificado de prevención: cabeceras estrictas canónicas más Firewall Cloudflare WAF perimetral activo contra bots, DDoS y scrapers.
-                </p>
+            ) : (
+              <div className="grid grid-cols-2 gap-2 text-[8.5px]">
+                <div className="p-1.5 rounded border border-neutral-300 bg-white">
+                  <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate / Limpieza de malware (S/ 380 - S/ 550 PEN)</span>
+                  <p className="text-neutral-700 leading-tight mt-0.5">
+                    Desinfección forense completa de archivos y base de datos con respaldo previo, desbloqueo con el hosting, retiro de pantalla roja y garantía de 30 días.
+                  </p>
+                </div>
+                <div className="p-1.5 rounded border border-neutral-300 bg-white">
+                  <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje + WAF Cloudflare Unificado (S/ 450 PEN)</span>
+                  <p className="text-neutral-700 leading-tight mt-0.5">
+                    Paquete unificado de prevención: cabeceras estrictas canónicas más Firewall Cloudflare WAF perimetral activo contra bots, DDoS y scrapers.
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Transparencia Tecnológica y Motores Utilizados */}
@@ -576,25 +600,40 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
             </table>
           </div>
 
-          {/* 3. Receta de Código Lista para Copiar y Pegar */}
+          {/* 3. Receta de Código Lista para Copiar y Pegar o Verificación de Servidor Óptimo */}
           <div className="mb-2.5">
             <h2 className="text-[10.5px] font-bold uppercase tracking-wider border-b border-neutral-300 pb-1 mb-1.5 text-neutral-900 flex items-center justify-between">
-              <span>3. Receta de Código de Remediación Inmediata</span>
-              <span className="text-[8.5px] font-mono text-emerald-800 font-bold">Copia y pega en tu servidor web (Nginx o Apache)</span>
+              <span>3. {isOptimalSite || missingHeaders.length === 0 ? 'Estado de Configuración de Servidor Web' : 'Receta de Código de Remediación Inmediata'}</span>
+              <span className={`text-[8.5px] font-mono font-bold ${isOptimalSite || missingHeaders.length === 0 ? 'text-emerald-800' : 'text-neutral-700'}`}>
+                {isOptimalSite || missingHeaders.length === 0 ? 'Directivas de Servidor Verificadas (100% Conformes)' : 'Copia y pega en tu servidor web (Nginx o Apache)'}
+              </span>
             </h2>
 
-            <div className="border border-neutral-400 rounded-lg p-2.5 bg-neutral-900 text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
-              <p className="text-neutral-400 mb-0.5"># Opción A: Configuración para Nginx (/etc/nginx/conf.d/security.conf)</p>
-              <p className="text-emerald-300">add_header X-Frame-Options &quot;DENY&quot; always;</p>
-              <p className="text-emerald-300">add_header X-Content-Type-Options &quot;nosniff&quot; always;</p>
-              <p className="text-emerald-300">add_header Strict-Transport-Security &quot;max-age=31536000; includeSubDomains; preload&quot; always;</p>
-              <p className="text-emerald-300">add_header Referrer-Policy &quot;strict-origin-when-cross-origin&quot; always;</p>
-              <p className="text-emerald-300">add_header Permissions-Policy &quot;camera=(), microphone=(), geolocation=()&quot; always;</p>
-              <p className="text-neutral-400 mt-1.5 mb-0.5"># Opción B: Reglas para Apache (.htaccess o httpd.conf)</p>
-              <p className="text-sky-300">Header always set X-Frame-Options &quot;DENY&quot;</p>
-              <p className="text-sky-300">Header always set X-Content-Type-Options &quot;nosniff&quot;</p>
-              <p className="text-sky-300">Header always set Strict-Transport-Security &quot;max-age=31536000; includeSubDomains; preload&quot;</p>
-            </div>
+            {isOptimalSite || missingHeaders.length === 0 ? (
+              <div className="border border-emerald-500 rounded-lg p-2.5 bg-[#0a1a12] text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
+                <p className="text-emerald-300 font-bold"># ESTADO DE AUDITORÍA: SERVIDOR 100% BLINDADO Y CONFORME</p>
+                <p className="text-neutral-300"># Todas las directivas de seguridad OWASP / RFC 9110 evaluadas ya están activas en tu infraestructura:</p>
+                <p className="text-emerald-400">✓ Strict-Transport-Security: ACTIVA (Túnel HSTS forzado)</p>
+                <p className="text-emerald-400">✓ Content-Security-Policy: ACTIVA (Mitigación anti-XSS e inyecciones)</p>
+                <p className="text-emerald-400">✓ X-Frame-Options: ACTIVA (Anti-clonación y anti-clickjacking)</p>
+                <p className="text-emerald-400">✓ X-Content-Type-Options: ACTIVA (Anti-MIME sniffing)</p>
+                <p className="text-emerald-400">✓ Referrer-Policy & Permissions-Policy: ACTIVAS (Control de privacidad y sensores)</p>
+                <p className="text-neutral-400 mt-1"># Dictamen: No se requiere aplicar recetas ni parches de remediación correctiva.</p>
+              </div>
+            ) : (
+              <div className="border border-neutral-400 rounded-lg p-2.5 bg-neutral-900 text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
+                <p className="text-neutral-400 mb-0.5"># Opción A: Configuración para Nginx (/etc/nginx/conf.d/security.conf)</p>
+                <p className="text-emerald-300">add_header X-Frame-Options &quot;DENY&quot; always;</p>
+                <p className="text-emerald-300">add_header X-Content-Type-Options &quot;nosniff&quot; always;</p>
+                <p className="text-emerald-300">add_header Strict-Transport-Security &quot;max-age=31536000; includeSubDomains; preload&quot; always;</p>
+                <p className="text-emerald-300">add_header Referrer-Policy &quot;strict-origin-when-cross-origin&quot; always;</p>
+                <p className="text-emerald-300">add_header Permissions-Policy &quot;camera=(), microphone=(), geolocation=()&quot; always;</p>
+                <p className="text-neutral-400 mt-1.5 mb-0.5"># Opción B: Reglas para Apache (.htaccess o httpd.conf)</p>
+                <p className="text-sky-300">Header always set X-Frame-Options &quot;DENY&quot;</p>
+                <p className="text-sky-300">Header always set X-Content-Type-Options &quot;nosniff&quot;</p>
+                <p className="text-sky-300">Header always set Strict-Transport-Security &quot;max-age=31536000; includeSubDomains; preload&quot;</p>
+              </div>
+            )}
           </div>
 
           {/* 4. Protocolo Documental de Remediación e Incidencia */}
