@@ -107,7 +107,7 @@ export default function DefensatiHero() {
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white font-semibold text-base shadow-[0_4px_16px_rgba(0,113,227,0.4)] transition-all cursor-pointer"
         >
           <Search className="w-5 h-5 text-sky-200 shrink-0" />
-          <span>Diagnóstico gratuito de tu web</span>
+          <span>Diagnóstico gratuito en tu web</span>
         </a>
 
         {/* CTA 2 Secundario: Desinfección y limpieza de páginas infectadas */}

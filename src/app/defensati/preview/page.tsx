@@ -236,7 +236,7 @@ export default function DefensatiPreviewPage() {
                 <span>Auditoría Perimetral Gratuita</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
-                Prueba el escáner gratuito de tu web
+                Prueba el escáner gratuito en tu web
               </h2>
               <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl mx-auto">
                 Analiza en segundos certificados SSL/TLS, cabeceras de transporte HTTP y puertos expuestos.

@@ -335,7 +335,7 @@ export default function DefensatiPage() {
                 </div>
                 
                 <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#f5f5f7] tracking-[-0.035em] leading-[1.1] max-w-3xl mx-auto">
-                  Prueba el escáner gratuito de tu web
+                  Prueba el escáner gratuito en tu web
                 </h2>
                 
                 <p className="text-base sm:text-lg lg:text-xl text-[#a1a1a6] font-normal leading-relaxed max-w-2xl mx-auto pt-1">
