@@ -196,9 +196,67 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               <h2 className="text-lg font-semibold text-white">{report.url}</h2>
             </div>
             <div className="flex flex-wrap items-center gap-2.5">
+              {/* Módulo Unificado de Descarga de Dictamen PDF */}
+              <div className="inline-flex items-center gap-1.5 p-1 rounded-2xl bg-black/60 border border-white/10 shadow-inner">
+                <span className="text-[10px] uppercase font-mono font-bold text-neutral-400 pl-2.5 pr-1 hidden sm:inline">
+                  Informe PDF:
+                </span>
+
+                {/* Selector de Perspectiva del PDF */}
+                <div className="inline-flex items-center p-0.5 rounded-xl bg-white/[0.04] border border-white/5">
+                  <button
+                    type="button"
+                    onClick={() => setPdfViewMode('management')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      pdfViewMode === 'management'
+                        ? 'bg-[#0071e3] text-white shadow-sm font-bold'
+                        : 'text-neutral-400 hover:text-white'
+                    }`}
+                    title="Informe ejecutivo de 1 página con pérdidas en Soles y ROI para Gerencia"
+                  >
+                    💼 Gerencial
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPdfViewMode('dev')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      pdfViewMode === 'dev'
+                        ? 'bg-[#0071e3] text-white shadow-sm font-bold'
+                        : 'text-neutral-400 hover:text-white'
+                    }`}
+                    title="Informe técnico de 1 página para Desarrolladores / Sysadmin con RFC y código"
+                  >
+                    🛠️ Técnico
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPdfViewMode('both')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      pdfViewMode === 'both'
+                        ? 'bg-[#0071e3] text-white shadow-sm font-bold'
+                        : 'text-neutral-400 hover:text-white'
+                    }`}
+                    title="Informe completo de 2 páginas con ambas perspectivas"
+                  >
+                    📑 Completo
+                  </button>
+                </div>
+
+                {/* Botón de Descarga integrado al mismo nivel */}
+                <button
+                  onClick={() => handlePrint(pdfViewMode)}
+                  className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
+                  title="Descargar dictamen forense en formato PDF con membrete oficial"
+                >
+                  <Download className="w-3.5 h-3.5 text-white" />
+                  <span>Descargar PDF</span>
+                </button>
+              </div>
+
+              {/* Acciones Secundarias con misma altura armónica */}
               <button
                 onClick={copyShareLink}
-                className="px-3.5 py-2 rounded-xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 border border-[#0071e3]/30 text-[#2997ff] text-xs font-medium flex items-center gap-2 cursor-pointer transition-all"
+                className="px-3.5 py-2 rounded-2xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 border border-[#0071e3]/30 text-[#2997ff] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
                 <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
@@ -207,63 +265,12 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               <button
                 type="button"
                 onClick={() => setCompetitorModalOpen(true)}
-                className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#38bdf8] text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-all"
+                className="px-3.5 py-2 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#38bdf8] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
                 title="Comparar esta web frente a un competidor"
               >
                 <Swords className="w-3.5 h-3.5 text-[#38bdf8]" />
                 <span className="hidden sm:inline">Comparar Competidor</span>
                 <span className="sm:hidden">Duelo</span>
-              </button>
-
-              {/* Selector de Vista del PDF: Gerencia vs Dev vs Completo */}
-              <div className="inline-flex items-center p-1 rounded-xl bg-black/50 border border-white/10">
-                <button
-                  type="button"
-                  onClick={() => setPdfViewMode('management')}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    pdfViewMode === 'management'
-                      ? 'bg-[#0071e3] text-white shadow-sm'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                  title="PDF de 1 página para el Gerente o Finanzas con pérdidas en Soles y ROI"
-                >
-                  💼 Gerencia
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPdfViewMode('dev')}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    pdfViewMode === 'dev'
-                      ? 'bg-[#0071e3] text-white shadow-sm'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                  title="PDF de 1 página técnica para Desarrolladores / Sysadmin con RFC y código"
-                >
-                  🛠️ Dev
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPdfViewMode('both')}
-                  className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    pdfViewMode === 'both'
-                      ? 'bg-[#0071e3] text-white shadow-sm'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                  title="PDF completo de 2 páginas con ambas vistas"
-                >
-                  Ambas
-                </button>
-              </div>
-
-              <button
-                onClick={() => handlePrint(pdfViewMode)}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] text-white text-xs font-semibold flex items-center gap-2 group transition-all shadow-md cursor-pointer"
-                title="Descargar dictamen forense en formato PDF con membrete oficial"
-              >
-                <Download className="w-3.5 h-3.5 text-white group-hover:translate-y-0.5 transition-transform" />
-                <span>
-                  Descargar PDF ({pdfViewMode === 'management' ? 'Gerencia' : pdfViewMode === 'dev' ? 'Dev' : 'Completo'})
-                </span>
               </button>
             </div>
           </div>
