@@ -26,6 +26,7 @@ import AiConsultantWidget from '@/components/AiConsultantWidget';
 import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
 import VerifiedBadgeWidget from '@/components/VerifiedBadgeWidget';
 import SslAlertWidget from '@/components/SslAlertWidget';
+import DnsSecurityCard from '@/components/DnsSecurityCard';
 import { Briefcase, Terminal } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
@@ -262,6 +263,12 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               {Boolean(report.ports?.length) && (
                 <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
                   <PortResults ports={report.ports || []} />
+                </div>
+              )}
+
+              {Boolean(report.dnsSecurity) && (
+                <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                  <DnsSecurityCard dnsSecurity={report.dnsSecurity} />
                 </div>
               )}
 

@@ -5,6 +5,7 @@ import { RemediationItem } from '@/lib/ai/remediation';
 import { ServerGeoLocation } from '@/lib/scanner/geoScanner';
 import { CookieScanResult } from '@/lib/scanner/cookieScanner';
 import { SensitiveFilesResult } from '@/lib/scanner/sensitiveFilesScanner';
+import { DnsSecurityResult } from '@/lib/scanner/dnsScanner';
 
 export interface AuditTelemetry {
   durationMs: number;
@@ -22,6 +23,7 @@ export interface AuditReportRecord {
   headers?: HeaderCheckItem[];
   ports?: PortCheckResult[];
   sensitiveFiles?: SensitiveFilesResult;
+  dnsSecurity?: DnsSecurityResult;
   remediations?: RemediationItem[];
   telemetry?: AuditTelemetry;
   location?: ServerGeoLocation | null;

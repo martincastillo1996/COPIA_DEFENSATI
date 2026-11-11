@@ -440,6 +440,11 @@ export default function PrintableReport({ report, auditId }: Props) {
                     <div className="mt-0.5 font-mono text-[8px] font-black tracking-wide">
                       {badgeText}
                     </div>
+                    {p.banner && (
+                      <div className="mt-1 text-[7px] font-mono font-bold text-amber-800 bg-amber-100/90 rounded px-1 py-0.5 truncate" title={p.banner}>
+                        {p.banner}
+                      </div>
+                    )}
                   </div>
                 );
               })}

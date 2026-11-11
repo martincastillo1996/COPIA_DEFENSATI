@@ -35,7 +35,7 @@ export default function BusinessOverview({ report }: Props) {
     p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)
   );
   const openAdminPortsNames = openAdminPortsList
-    .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port})`)
+    .map(p => `${p.shortName || p.service || `Puerto ${p.port}`} (${p.port}${p.banner ? `: ${p.banner}` : ''})`)
     .join(', ');
 
   // Semáforo estricto de colores (Verde | Amarillo | Rojo)

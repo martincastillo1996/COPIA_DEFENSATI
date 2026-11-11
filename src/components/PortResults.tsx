@@ -98,6 +98,18 @@ export default function PortResults({ ports }: PortResultsProps) {
                   ? 'Puerto proxy perimetral de distribución CDN activo.'
                   : p.description}
               </p>
+
+              {p.isOpen && p.banner && (
+                <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between gap-1 text-[10px]">
+                  <span className="text-[9px] font-mono uppercase text-slate-400">Versión detectada:</span>
+                  <span
+                    className="font-mono font-bold text-amber-300 truncate max-w-[170px] bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded"
+                    title={p.banner}
+                  >
+                    {p.banner}
+                  </span>
+                </div>
+              )}
             </div>
           );
         })}

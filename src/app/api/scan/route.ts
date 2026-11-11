@@ -6,6 +6,7 @@ import { generateRemediation, RemediationItem } from '@/lib/ai/remediation';
 import { saveReport, AuditReportRecord } from '@/lib/storage/reportStore';
 import { scanPerimetralPorts } from '@/lib/scanner/portScanner';
 import { scanSensitiveFiles } from '@/lib/scanner/sensitiveFilesScanner';
+import { scanDnsSecurity } from '@/lib/scanner/dnsScanner';
 import { lookupServerLocation } from '@/lib/scanner/geoScanner';
 import { v4 as uuidv4 } from 'uuid';
 import { isPrivateOrLocalHost, verifyDnsResolution } from '@/lib/security/ssrfValidator';
@@ -271,7 +272,7 @@ export async function POST(req: Request) {
     }
 
     // 3. Ejecución concurrente asíncrona de inspección perimetral
-    const [rawSslResult, portResults, serverLocation, headerResult, sensitiveFilesResult] = await Promise.all([
+    const [rawSslResult, portResults, serverLocation, headerResult, sensitiveFilesResult, dnsSecurityResult] = await Promise.all([
       scanSsl(hostname).catch((err) => ({
         valid: false,
         protocol: 'Error',
@@ -294,6 +295,11 @@ export async function POST(req: Request) {
         hasExposedFiles: false,
         criticalCount: 0,
         findings: [],
+      })),
+      scanDnsSecurity(hostname).catch(() => ({
+        dmarc: { present: false, policy: 'missing' as const, risk: 'CRÍTICO' as const, description: 'No se pudo verificar DMARC.' },
+        spf: { present: false, strict: false, risk: 'ALTO' as const, description: 'No se pudo verificar SPF.' },
+        scoreBonus: 0,
       })),
     ]);
 
@@ -395,6 +401,7 @@ export async function POST(req: Request) {
       isHyperscale,
       ports: adjustedPorts,
       sensitiveFiles: sensitiveFilesResult,
+      dnsSecurity: dnsSecurityResult,
       remediations,
       location: serverLocation,
       cookies: !Array.isArray(headerResult) && headerResult && 'cookies' in headerResult ? headerResult.cookies : undefined,
