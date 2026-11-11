@@ -22,10 +22,11 @@ import { isHyperscalePlatform } from '@/lib/hyperscalers';
 interface Props {
   report: AuditReportRecord;
   cleanDomain: string;
+  auditId?: string;
   onNavigateToSection?: (section: 'ssl' | 'headers' | 'ports') => void;
 }
 
-export default function DefensatiScanRecommendation({ report, cleanDomain, onNavigateToSection }: Props) {
+export default function DefensatiScanRecommendation({ report, cleanDomain, auditId, onNavigateToSection }: Props) {
   const score = report.score ?? 0;
   const grade = report.grade || 'F';
   const sslDays = report.ssl?.daysRemaining;
@@ -34,6 +35,12 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, onNav
   const missingHeadersCount = report.headers?.filter(h => !h.present || h.status === 'missing' || h.status === 'fail').length ?? 0;
   const isHyperscale = Boolean(report.isHyperscale) || isHyperscalePlatform(cleanDomain) || isHyperscalePlatform(report.url);
   const isFullySecure = missingHeadersCount === 0 && (score >= 90 || grade === 'A' || grade === 'A+');
+
+  const reportUrl = auditId
+    ? typeof window !== 'undefined'
+      ? `${window.location.origin}/report/${auditId}`
+      : `https://neuronalgravity.com/report/${auditId}`
+    : undefined;
 
   // Determinar nivel de diagnóstico comercial
   let planType: 'limpieza' | 'blindaje' | 'monitoreo' = 'blindaje';
@@ -80,14 +87,15 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, onNav
 
   const whatsappUrl = isHyperscale
     ? `https://wa.me/17856433991?text=${encodeURIComponent(
-        `Hola Martín, estuve revisando el análisis de referencia de ${cleanDomain} en DEFENSA TI y quisiera cotizar una arquitectura de blindaje perimetral para mi empresa.`
+        `Hola Martín, estuve revisando el análisis de referencia de ${cleanDomain} en DEFENSA TI${reportUrl ? ` (${reportUrl})` : ''} y quisiera cotizar una arquitectura de blindaje perimetral para mi empresa.`
       )}`
     : DEFENSATI_WHATSAPP_MESSAGES.escanerContextual({
         domain: cleanDomain,
         score,
         grade,
         primaryIssue,
-        recommendation: planType,
+        recommendation: isFullySecure ? 'optimo' : planType,
+        reportUrl,
       });
 
   return (

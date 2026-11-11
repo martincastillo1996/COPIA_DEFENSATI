@@ -30,8 +30,12 @@ import WebAuditCard from '@/components/WebAuditCard';
 import PdfLeadModal from '@/components/PdfLeadModal';
 import RoiLossCalculator from '@/components/RoiLossCalculator';
 import SocialViralHub from '@/components/SocialViralHub';
+import SecurityBenchmarkBar from '@/components/SecurityBenchmarkBar';
+import AnpdpComplianceCard from '@/components/AnpdpComplianceCard';
+import CompetitorDuelModal from '@/components/CompetitorDuelModal';
+import MobileStickyConversionBar from '@/components/MobileStickyConversionBar';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
-import { Briefcase, Terminal } from 'lucide-react';
+import { Briefcase, Terminal, Swords } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 
 export default function ReportPage({ params }: { params: Promise<{ id: string }> }) {
@@ -46,6 +50,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
+  const [competitorModalOpen, setCompetitorModalOpen] = useState(false);
 
   // Cargar el reporte automáticamente al entrar a la página
   useEffect(() => {
@@ -199,6 +204,17 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                 <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
               </button>
 
+              <button
+                type="button"
+                onClick={() => setCompetitorModalOpen(true)}
+                className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#38bdf8] text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-all"
+                title="Comparar esta web frente a un competidor"
+              >
+                <Swords className="w-3.5 h-3.5 text-[#38bdf8]" />
+                <span className="hidden sm:inline">Comparar Competidor</span>
+                <span className="sm:hidden">Duelo</span>
+              </button>
+
               {/* Selector de Vista del PDF: Gerencia vs Dev vs Completo */}
               <div className="inline-flex items-center p-1 rounded-xl bg-black/50 border border-white/10">
                 <button
@@ -313,10 +329,25 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             commercial={report.commercial}
           />
 
+          {/* Termómetro Comparativo: Tu Web vs. Mercado Peruano */}
+          <SecurityBenchmarkBar
+            score={report.score ?? 50}
+            grade={report.grade || 'F'}
+            domain={report.url}
+          />
+
           {/* Contenido Condicional según Perspectiva */}
           {viewMode === 'business' ? (
             <div className="space-y-6">
               <BusinessOverview report={report} />
+              <AnpdpComplianceCard
+                domain={report.url}
+                hasValidSsl={Boolean(report.ssl?.valid) && report.ssl?.protocol !== 'Sin HTTPS'}
+                hasDowngradeRisk={Boolean(report.headers?.some(h => !h.present && (h.header || h.name || '').toLowerCase().includes('transport-security')))}
+                hasOpenAdminPorts={Boolean(report.ports?.some(p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)))}
+                cookiesSecure={Boolean(!report.cookies || report.cookies.totalCookies === 0 || report.cookies.secureCookies === report.cookies.totalCookies)}
+                isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
+              />
               <RoiLossCalculator
                 domain={report.url}
                 hasAdPixel={report.commercial?.hasActiveMarketing}
@@ -375,6 +406,24 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             }}
             domain={report.url}
             pdfViewMode={pdfViewMode}
+          />
+
+          {/* Modal de Duelo / Comparativa con Competidor */}
+          <CompetitorDuelModal
+            isOpen={competitorModalOpen}
+            onClose={() => setCompetitorModalOpen(false)}
+            userDomain={report.url}
+            userScore={report.score ?? 50}
+            userGrade={report.grade || 'F'}
+          />
+
+          {/* Barra Flotante Inferior de Conversión (Móvil / Desktop) */}
+          <MobileStickyConversionBar
+            score={report.score ?? 50}
+            grade={report.grade || 'F'}
+            domain={report.url}
+            auditId={auditId}
+            onDownloadPdf={() => handlePrint(pdfViewMode)}
           />
 
           {/* Asistente IA Flotante */}

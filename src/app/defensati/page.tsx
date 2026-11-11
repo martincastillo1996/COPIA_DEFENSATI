@@ -36,6 +36,11 @@ import PdfLeadModal from '@/components/PdfLeadModal';
 import RoiLossCalculator from '@/components/RoiLossCalculator';
 import RecentScansTicker from '@/components/RecentScansTicker';
 import SocialViralHub from '@/components/SocialViralHub';
+import SecurityBenchmarkBar from '@/components/SecurityBenchmarkBar';
+import AnpdpComplianceCard from '@/components/AnpdpComplianceCard';
+import CompetitorDuelModal from '@/components/CompetitorDuelModal';
+import MobileStickyConversionBar from '@/components/MobileStickyConversionBar';
+import { Swords } from 'lucide-react';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 // Componentes Oficiales DEFENSA TI
@@ -68,6 +73,7 @@ export default function DefensatiPage() {
   const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
   const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
+  const [competitorModalOpen, setCompetitorModalOpen] = useState(false);
   const [legalConsent, setLegalConsent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
@@ -579,6 +585,15 @@ export default function DefensatiPage() {
                     {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Share2 className="w-4 h-4" />}
                     <span>{copied ? 'Copiado' : 'Compartir'}</span>
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setCompetitorModalOpen(true)}
+                    className="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 active:scale-[0.98] border border-[#0071e3]/30 text-[#38bdf8] text-xs font-semibold flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                    title="Comparar tu puntaje frente a un competidor"
+                  >
+                    <Swords className="w-4 h-4 text-[#38bdf8]" />
+                    <span>Comparar Competidor</span>
+                  </button>
                 </div>
               </div>
 
@@ -586,6 +601,7 @@ export default function DefensatiPage() {
               <DefensatiScanRecommendation 
                 report={report} 
                 cleanDomain={cleanDomain}
+                auditId={auditId || undefined}
                 onNavigateToSection={(section) => {
                   if (section === 'headers' || section === 'ports') {
                     setViewMode('tech');
@@ -664,10 +680,25 @@ export default function DefensatiPage() {
                 commercial={report.commercial}
               />
 
+              {/* Termómetro Comparativo: Tu Web vs. Mercado Peruano */}
+              <SecurityBenchmarkBar
+                score={report.score ?? 50}
+                grade={report.grade || 'F'}
+                domain={report.url}
+              />
+
               {/* Detalle según modo */}
               {viewMode === 'business' ? (
                 <div className="space-y-6">
                   <BusinessOverview report={report} />
+                  <AnpdpComplianceCard
+                    domain={report.url}
+                    hasValidSsl={Boolean(report.ssl?.valid) && report.ssl?.protocol !== 'Sin HTTPS'}
+                    hasDowngradeRisk={Boolean(report.headers?.some(h => !h.present && (h.header || h.name || '').toLowerCase().includes('transport-security')))}
+                    hasOpenAdminPorts={Boolean(report.ports?.some(p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)))}
+                    cookiesSecure={Boolean(!report.cookies || report.cookies.totalCookies === 0 || report.cookies.secureCookies === report.cookies.totalCookies)}
+                    isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
+                  />
                   <RoiLossCalculator
                     domain={report.url}
                     hasAdPixel={report.commercial?.hasActiveMarketing}
@@ -717,6 +748,24 @@ export default function DefensatiPage() {
                 }}
                 domain={report.url}
                 pdfViewMode={pdfViewMode}
+              />
+
+              {/* Modal de Duelo / Comparativa con Competidor */}
+              <CompetitorDuelModal
+                isOpen={competitorModalOpen}
+                onClose={() => setCompetitorModalOpen(false)}
+                userDomain={report.url}
+                userScore={report.score ?? 50}
+                userGrade={report.grade || 'F'}
+              />
+
+              {/* Barra Flotante Inferior de Conversión (Móvil / Desktop) */}
+              <MobileStickyConversionBar
+                score={report.score ?? 50}
+                grade={report.grade || 'F'}
+                domain={report.url}
+                auditId={auditId || undefined}
+                onDownloadPdf={() => handlePrint(pdfViewMode)}
               />
             </div>
           )}

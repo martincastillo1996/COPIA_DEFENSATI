@@ -136,33 +136,41 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
     return DEFENSATI_WHATSAPP_MESSAGES.precioMensualTiendas(domain);
   },
 
-  // Escáner contextual con diagnóstico dinámico
+  // Escáner contextual con diagnóstico dinámico y enlace de dictamen
   escanerContextual: (params: {
     domain: string;
     score?: number;
     grade?: string;
     primaryIssue?: string;
-    recommendation?: 'limpieza' | 'blindaje' | 'monitoreo';
+    recommendation?: 'limpieza' | 'blindaje' | 'monitoreo' | 'optimo';
+    reportUrl?: string;
   }) => {
-    const { domain, score, grade, primaryIssue, recommendation } = params;
+    const { domain, score, grade, primaryIssue, recommendation, reportUrl } = params;
     const scoreStr = typeof score === 'number' ? `Nota ${score}/100 (Grado ${grade || 'F'})` : '';
+    const linkStr = reportUrl ? ` Ver dictamen: ${reportUrl} -` : '';
 
     if (recommendation === 'monitoreo') {
       return getWhatsAppUrl(
-        `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI. Obtuvo buena calificación (${scoreStr}), pero me interesa mantenerla protegida con el Plan de Monitoreo Mensual.`
+        `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI.${linkStr} Obtuvo buena calificación (${scoreStr}), pero me interesa mantenerla protegida con el Plan de Monitoreo Mensual.`
       );
     }
 
     if (recommendation === 'limpieza') {
       return getWhatsAppUrl(
-        `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI. Obtuvo ${scoreStr} con alerta crítica (${primaryIssue || 'riesgo de infección'}). Quisiera que me ayudes a desinfectarla y blindarla.`
+        `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI.${linkStr} Obtuvo ${scoreStr} con alerta crítica (${primaryIssue || 'riesgo de infección'}). Quisiera que me ayudes a desinfectarla y blindarla.`
+      );
+    }
+
+    if (recommendation === 'optimo') {
+      return getWhatsAppUrl(
+        `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI.${linkStr} Obtuvo calificación máxima (${scoreStr}). Quisiera hacerte una consulta sobre soporte o ciberseguridad.`
       );
     }
 
     // Default blindaje
     const issueText = primaryIssue ? ` Se detectó: ${primaryIssue}.` : '';
     return getWhatsAppUrl(
-      `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI y obtuvo ${scoreStr}.${issueText} Quisiera cotizar el blindaje perimetral para corregirlo.`
+      `Hola Martín, acabo de auditar mi web (${domain}) en DEFENSA TI y obtuvo ${scoreStr}.${issueText}${linkStr} Quisiera cotizar el blindaje perimetral para corregirlo.`
     );
   },
 
