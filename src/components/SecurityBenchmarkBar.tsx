@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { BarChart3, TrendingUp } from 'lucide-react';
+import { BarChart3, TrendingUp, Building2 } from 'lucide-react';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 interface SecurityBenchmarkBarProps {
   score: number;
@@ -15,12 +16,16 @@ export default function SecurityBenchmarkBar({
   domain,
 }: SecurityBenchmarkBarProps) {
   const cleanDomain = domain.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').toLowerCase();
+  const isHyperscale = isHyperscalePlatform(cleanDomain);
   const peruvianAverage = 42;
   const defensatiTarget = 98;
 
+  const displayScore = isHyperscale ? 98 : score;
+  const displayGrade = isHyperscale ? 'A+' : grade;
+
   // Determinar texto explicativo según posición
-  const isAverageToGood = score > peruvianAverage && score < 85;
-  const isElite = score >= 85;
+  const isAverageToGood = displayScore > peruvianAverage && displayScore < 85;
+  const isElite = displayScore >= 85;
 
   return (
     <div className="p-6 sm:p-7 rounded-3xl bg-[#12141c] border border-white/10 shadow-2xl space-y-5 text-left">
@@ -28,19 +33,23 @@ export default function SecurityBenchmarkBar({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-[#0071e3]/15 border border-[#0071e3]/30 text-[#38bdf8] flex items-center justify-center">
-            <BarChart3 className="w-4 h-4" />
+            {isHyperscale ? <Building2 className="w-4 h-4" /> : <BarChart3 className="w-4 h-4" />}
           </div>
           <div>
             <h3 className="text-base font-bold text-white tracking-tight">
-              Termómetro de Ciberseguridad: Tu Web vs. Mercado Peruano
+              {isHyperscale
+                ? 'Benchmark de Arquitectura: Infraestructura de Hiperescala Global'
+                : 'Termómetro de Ciberseguridad: Tu Web vs. Mercado Peruano'}
             </h3>
             <p className="text-xs text-neutral-400">
-              Comparativa de postura perimetral frente al promedio de páginas web corporativas y tiendas online en Perú.
+              {isHyperscale
+                ? 'Evaluación de postura perimetral bajo arquitectura Anycast Multi-Cloud propietaria.'
+                : 'Comparativa de postura perimetral frente al promedio de páginas web corporativas y tiendas online en Perú.'}
             </p>
           </div>
         </div>
         <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 text-[10px] font-mono font-bold w-fit">
-          Benchmark OWASP 2026
+          {isHyperscale ? 'Arquitectura Global' : 'Benchmark OWASP 2026'}
         </span>
       </div>
 
@@ -55,13 +64,15 @@ export default function SecurityBenchmarkBar({
           {/* Barra de progreso de TU SITIO */}
           <div 
             className={`h-full rounded-full transition-all duration-1000 ${
-              score >= 85 
+              isHyperscale
+                ? 'bg-gradient-to-r from-[#0071e3] via-[#7928ca] to-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.5)]'
+                : displayScore >= 85 
                 ? 'bg-gradient-to-r from-[#0071e3] to-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.5)]' 
-                : score >= 60 
+                : displayScore >= 60 
                 ? 'bg-gradient-to-r from-amber-500 to-[#38bdf8] shadow-[0_0_15px_rgba(56,189,248,0.5)]' 
                 : 'bg-gradient-to-r from-rose-600 to-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.5)]'
             }`}
-            style={{ width: `${Math.min(100, Math.max(8, score))}%` }}
+            style={{ width: `${Math.min(100, Math.max(8, isHyperscale ? 100 : displayScore))}%` }}
           />
         </div>
 
@@ -83,31 +94,35 @@ export default function SecurityBenchmarkBar({
 
           {/* Tu Sitio */}
           <div className={`p-3.5 rounded-2xl border space-y-1 ${
-            score >= 85 
+            isHyperscale || displayScore >= 85 
               ? 'bg-emerald-950/20 border-emerald-500/30' 
-              : score >= 60 
+              : displayScore >= 60 
               ? 'bg-sky-950/20 border-[#0071e3]/30' 
               : 'bg-rose-950/20 border-rose-500/30'
           }`}>
-            <span className="text-[10px] uppercase font-mono text-neutral-400 block">Tu Sitio ({cleanDomain})</span>
+            <span className="text-[10px] uppercase font-mono text-neutral-400 block">
+              {isHyperscale ? `Caso de Estudio (${cleanDomain})` : `Tu Sitio (${cleanDomain})`}
+            </span>
             <div className="flex items-center gap-1.5">
               <span className={`text-xl font-black font-mono ${
-                score >= 85 ? 'text-emerald-300' : score >= 60 ? 'text-[#38bdf8]' : 'text-rose-400'
+                isHyperscale || displayScore >= 85 ? 'text-emerald-300' : displayScore >= 60 ? 'text-[#38bdf8]' : 'text-rose-400'
               }`}>
-                {score} pts
+                {displayScore} pts
               </span>
               <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                score >= 85 
+                isHyperscale || displayScore >= 85 
                   ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
-                  : score >= 60 
+                  : displayScore >= 60 
                   ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30' 
                   : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
               }`}>
-                Grado {grade}
+                Grado {displayGrade}
               </span>
             </div>
             <p className="text-[11px] text-neutral-300 leading-tight">
-              {isElite
+              {isHyperscale
+                ? 'Infraestructura de hiperescala nativa en navegadores (Chromium Preload).'
+                : isElite
                 ? 'Nivel de élite, por encima del 95% del mercado.'
                 : isAverageToGood
                 ? 'Superas el promedio, pero aún tienes brechas perimetrales.'
@@ -125,7 +140,9 @@ export default function SecurityBenchmarkBar({
               </span>
             </div>
             <p className="text-[11px] text-neutral-300 leading-tight">
-              Cabeceras canónicas + Cloudflare WAF anti-ataques activo.
+              {isHyperscale
+                ? 'Replicamos esta misma seguridad para pymes mediante WAF Cloudflare.'
+                : 'Cabeceras canónicas + Cloudflare WAF anti-ataques activo.'}
             </p>
           </div>
         </div>
@@ -135,7 +152,9 @@ export default function SecurityBenchmarkBar({
       <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center gap-3 text-xs text-neutral-300">
         <TrendingUp className="w-4 h-4 text-[#38bdf8] shrink-0" />
         <span>
-          {isElite
+          {isHyperscale
+            ? 'Las plataformas de hiperescala (Google, GitHub, Microsoft, Apple) operan con redes Anycast globales y listas nativas de navegador. En DEFENSA TI adaptamos esa misma arquitectura de blindaje perimetral para pymes y empresas en el Perú.'
+            : isElite
             ? 'Tu sitio web ya cuenta con una barrera perimetral ejemplar. Mantener este estándar genera máxima confianza en compradores.'
             : isAverageToGood
             ? `Cerrar la brecha de ${defensatiTarget - score} puntos hacia Grado A+ toma solo 24 horas con el paquete unificado de Blindaje + WAF Cloudflare (S/ 450).`

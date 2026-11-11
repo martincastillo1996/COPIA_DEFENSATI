@@ -327,6 +327,8 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             mixedContent={report.mixedContent}
             malware={report.malware}
             commercial={report.commercial}
+            domain={report.url}
+            isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
           />
 
           {/* Termómetro Comparativo: Tu Web vs. Mercado Peruano */}

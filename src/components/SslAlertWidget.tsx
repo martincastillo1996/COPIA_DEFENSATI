@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bell, Check, Loader2, ShieldAlert, Sparkles } from 'lucide-react';
+import { Bell, Check, Loader2, ShieldAlert } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 interface SslAlertWidgetProps {
   domain: string;
@@ -16,6 +17,11 @@ export default function SslAlertWidget({ domain, daysRemaining = 0 }: SslAlertWi
   const [error, setError] = useState<string | null>(null);
 
   const cleanDomain = domain.replace(/^https?:\/\//i, '').split('/')[0].toLowerCase();
+
+  // No mostrar alertas de WhatsApp para gigantes tecnológicos de hiperescala
+  if (isHyperscalePlatform(cleanDomain)) {
+    return null;
+  }
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();

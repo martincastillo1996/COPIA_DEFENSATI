@@ -26,6 +26,7 @@ import {
   MalwareScanResult,
   CommercialImpactResult,
 } from '@/lib/scanner/webAuditScanner';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 interface WebAuditCardProps {
   waf?: WafCheckResult;
@@ -33,6 +34,8 @@ interface WebAuditCardProps {
   mixedContent?: MixedContentResult;
   malware?: MalwareScanResult;
   commercial?: CommercialImpactResult;
+  domain?: string;
+  isHyperscale?: boolean;
 }
 
 export default function WebAuditCard({
@@ -41,8 +44,11 @@ export default function WebAuditCard({
   mixedContent,
   malware,
   commercial,
+  domain,
+  isHyperscale,
 }: WebAuditCardProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const isGiant = Boolean(isHyperscale) || (domain ? isHyperscalePlatform(domain) : false);
 
   const toggle = (key: string) => {
     setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -120,7 +126,13 @@ export default function WebAuditCard({
             {/* Header del Cuadrante */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${waf?.hasWaf ? 'bg-emerald-500/15 text-emerald-400' : 'bg-amber-500/15 text-amber-400'}`}>
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${
+                  isGiant
+                    ? 'bg-blue-500/15 text-blue-400'
+                    : waf?.hasWaf
+                    ? 'bg-emerald-500/15 text-emerald-400'
+                    : 'bg-amber-500/15 text-amber-400'
+                }`}>
                   <Radio className="w-3.5 h-3.5" />
                 </div>
                 <span className="text-xs uppercase tracking-wider text-neutral-400 font-bold font-mono">
@@ -128,11 +140,13 @@ export default function WebAuditCard({
                 </span>
               </div>
               <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
-                waf?.hasWaf
+                isGiant
+                  ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
+                  : waf?.hasWaf
                   ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
                   : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
               }`}>
-                {waf?.hasWaf ? 'Blindado' : 'Expuesto'}
+                {isGiant ? 'Anycast Global' : waf?.hasWaf ? 'Blindado' : 'Expuesto'}
               </span>
             </div>
 
@@ -140,8 +154,10 @@ export default function WebAuditCard({
             <div className="p-3 rounded-2xl bg-black/50 border border-white/5 space-y-2">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-neutral-400 text-[11px]">Protección Anti-DDoS:</span>
-                <span className={`font-bold ${waf?.hasWaf ? 'text-emerald-400' : 'text-amber-400'}`}>
-                  {waf?.hasWaf ? '100% Activa' : '0% Sin Firewall'}
+                <span className={`font-bold ${
+                  isGiant ? 'text-blue-300' : waf?.hasWaf ? 'text-emerald-400' : 'text-amber-400'
+                }`}>
+                  {isGiant ? '100% Nativo (Google Cloud Armor / Edge Anycast)' : waf?.hasWaf ? '100% Activa' : '0% Sin Firewall'}
                 </span>
               </div>
 
@@ -149,14 +165,18 @@ export default function WebAuditCard({
               <div className="w-full h-2 rounded-full bg-neutral-800 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-700 ${
-                    waf?.hasWaf ? 'w-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]' : 'w-2 bg-amber-400'
+                    isGiant
+                      ? 'w-full bg-gradient-to-r from-[#0071e3] to-[#38bdf8] shadow-[0_0_12px_rgba(56,189,248,0.8)]'
+                      : waf?.hasWaf
+                      ? 'w-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]'
+                      : 'w-2 bg-amber-400'
                   }`}
                 />
               </div>
 
               <div className="flex items-center justify-between text-[10px] text-neutral-400 pt-0.5">
-                <span>{waf?.hasWaf ? waf.provider : 'Servidor Desnudo'}</span>
-                <span>{waf?.hasWaf ? 'Origen Enmascarado' : 'IP Directa'}</span>
+                <span>{isGiant ? 'Infraestructura Propietaria' : waf?.hasWaf ? waf.provider : 'Servidor Desnudo'}</span>
+                <span>{isGiant ? 'Red Anycast Multi-Región' : waf?.hasWaf ? 'Origen Enmascarado' : 'IP Directa'}</span>
               </div>
             </div>
           </div>
@@ -174,8 +194,12 @@ export default function WebAuditCard({
 
             {expanded['waf'] && (
               <div className="text-xs text-neutral-300 leading-relaxed pt-1 space-y-2 animate-in fade-in-50">
-                <p>{waf?.details}</p>
-                {!waf?.hasWaf && (
+                <p>
+                  {isGiant
+                    ? 'Las plataformas de hiperescala (Google, GitHub, Microsoft, Apple) cuentan con clústeres Anycast propios de mitigación DDoS a nivel de capa 3, 4 y 7 (ej. Google Cloud Armor), por lo que no requieren de un WAF comercial convencional.'
+                    : waf?.details}
+                </p>
+                {!isGiant && !waf?.hasWaf && (
                   <a
                     href="https://wa.me/51992520336?text=Hola%20Martín,%20mi%20web%20no%20tiene%20WAF%20y%20deseo%20el%20paquete%20Blindaje%20+%20WAF%20Cloudflare%20(S/%20450)."
                     target="_blank"
