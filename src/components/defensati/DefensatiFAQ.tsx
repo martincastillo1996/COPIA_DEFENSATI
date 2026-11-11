@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, ShieldAlert, ShieldCheck, Lock, RotateCcw, Server, FileText, CheckCircle2, Clock } from 'lucide-react';
+import { ChevronDown, HelpCircle, ShieldAlert, ShieldCheck, Lock, RotateCcw, Server, FileText, Clock } from 'lucide-react';
 
 interface FAQItem {
   id: string;

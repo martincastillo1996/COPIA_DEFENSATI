@@ -3,10 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  ShieldCheck, 
   Sparkles, 
   CheckCircle2, 
-  AlertTriangle,
   ExternalLink,
   FileText,
   TrendingUp,
@@ -15,15 +13,16 @@ import {
   Building2,
   ShoppingCart,
   Server,
-  Lock,
-  ArrowRight,
   Fingerprint,
-  Download
+  Download,
+  ChevronDown
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function DefensatiCases() {
   const [activeCase, setActiveCase] = useState<'ecommerce' | 'corporate' | 'distributor'>('ecommerce');
+  const [showStats, setShowStats] = useState(false);
+  const [showCaseDetail, setShowCaseDetail] = useState(false);
 
   const casesData = {
     ecommerce: {
@@ -127,10 +126,10 @@ export default function DefensatiCases() {
   const current = casesData[activeCase];
 
   return (
-    <section id="casos-reales" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-8 scroll-mt-24 text-left">
+    <section id="casos-reales" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24 text-left">
       
-      {/* 1. Contexto de Ciberseguridad en el Mercado Peruano (Datos Oficiales Verificados) */}
-      <div className="rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 p-6 sm:p-12 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-6">
+      {/* 1. Contexto de Ciberseguridad en el Mercado Peruano */}
+      <div className="rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 p-6 sm:p-10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-5">
         <div className="space-y-2 text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-[#ff453a] text-xs font-semibold tracking-tight">
             <span className="w-2 h-2 rounded-full bg-[#ff453a] animate-ping" />
@@ -139,113 +138,91 @@ export default function DefensatiCases() {
           <h2 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
             La realidad de la seguridad web en Perú (2024 - 2026)
           </h2>
-          <p className="text-sm sm:text-base text-[#86868b] font-normal leading-relaxed max-w-3xl">
-            Las amenazas contra páginas web y tiendas online en el país no son teóricas. La falta de mantenimiento y plugins desactualizados son el principal vector de intrusiones a pymes y negocios peruanos, respaldado por informes oficiales:
+          <p className="text-xs sm:text-sm text-[#86868b] font-normal leading-relaxed max-w-3xl">
+            La falta de mantenimiento y plugins desactualizados son el principal vector de intrusiones en negocios peruanos según la Fiscalía de la Nación y reportes forenses.
           </p>
         </div>
 
-        {/* 3 Métricas Oficiales Verificables con Fuentes Exactas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-          
-          {/* Métrica 1: Denuncias Penales en Perú */}
-          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-neutral-400">
-                <span className="text-xs font-medium uppercase tracking-wider">Crecimiento en Perú</span>
-                <TrendingUp className="w-4 h-4 text-[#ff453a]" />
-              </div>
-              <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff453a] to-[#ff9f0a]">
-                42,161
-              </div>
-              <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-                Denuncias por delitos informáticos ingresadas a nivel nacional durante 2024 (un incremento superior al <strong>+129%</strong>), con Lima Metropolitana concentrando la mayor proporción.
-              </p>
-            </div>
-            <div className="pt-3 border-t border-white/5 text-[11px] text-[#86868b] flex items-center justify-between">
-              <span>🏛️ Ministerio Público - Fiscalía de la Nación</span>
-              <span className="font-mono text-[10px] text-neutral-400">Ley N° 30096</span>
-            </div>
-          </div>
+        {/* Botón Desplegable para ver Estadísticas y Responsabilidad del Hosting */}
+        <div>
+          <button
+            type="button"
+            onClick={() => setShowStats(prev => !prev)}
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[#38bdf8] hover:text-white px-4 py-2 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/20 transition-colors cursor-pointer"
+          >
+            <span>{showStats ? 'Ocultar estadísticas oficiales' : 'Ver estadísticas del Ministerio Público y cláusulas de hosting'}</span>
+            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showStats ? 'rotate-180 text-sky-400' : ''}`} />
+          </button>
 
-          {/* Métrica 2: Vulnerabilidades en Plugins (Fuente Patchstack & Wordfence) */}
-          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-neutral-400">
-                <span className="text-xs font-medium uppercase tracking-wider">Brechas en Plugins</span>
-                <Scale className="w-4 h-4 text-[#ff9f0a]" />
-              </div>
-              <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff9f0a] to-[#30d158]">
-                91.8%
-              </div>
-              <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-                De las vulnerabilidades documentadas en el ecosistema WordPress provienen de <strong>plugins de terceros</strong> desactualizados o con fallas conocidas; el núcleo del CMS representa menos del 1%.
-              </p>
-            </div>
-            <div className="pt-3 border-t border-white/5 text-[11px] text-[#86868b] flex items-center justify-between">
-              <span>🛡️ Patchstack Security Report 2024</span>
-              <span className="font-mono text-[10px] text-neutral-400">Wordfence Intel</span>
-            </div>
-          </div>
+          {showStats && (
+            <div className="space-y-5 pt-4 animate-in fade-in-50 duration-200">
+              {/* 3 Métricas Oficiales */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                {/* Métrica 1 */}
+                <div className="rounded-[20px] bg-white/[0.04] border border-white/10 p-4 sm:p-5 space-y-2">
+                  <div className="flex items-center justify-between text-neutral-400">
+                    <span className="text-[11px] font-medium uppercase tracking-wider">Denuncias en Perú</span>
+                    <TrendingUp className="w-4 h-4 text-[#ff453a]" />
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff453a] to-[#ff9f0a]">
+                    42,161
+                  </div>
+                  <p className="text-xs text-neutral-300 leading-relaxed font-normal">
+                    Denuncias por delitos informáticos ingresadas ante el Ministerio Público en 2024 (+129% de aumento).
+                  </p>
+                </div>
 
-          {/* Métrica 3: Fraude Informático y Phishing */}
-          <div className="rounded-[24px] bg-white/[0.04] border border-white/10 p-5 sm:p-6 space-y-3 flex flex-col justify-between hover:border-white/20 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-neutral-400">
-                <span className="text-xs font-medium uppercase tracking-wider">Modalidad Principal</span>
-                <BarChart3 className="w-4 h-4 text-[#2997ff]" />
-              </div>
-              <div className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#2997ff] to-[#c084fc]">
-                68.3%
-              </div>
-              <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-                De las investigaciones por delitos informáticos en Perú corresponden a <strong>fraude y suplantación web / phishing</strong> para desvío de pagos y robo de credenciales en páginas de negocios.
-              </p>
-            </div>
-            <div className="pt-3 border-t border-white/5 text-[11px] text-[#86868b] flex items-center justify-between">
-              <span>💼 Observatorio de Criminalidad (UFEC)</span>
-              <span className="font-mono text-[10px] text-neutral-400">Fiscalía Perú</span>
-            </div>
-          </div>
+                {/* Métrica 2 */}
+                <div className="rounded-[20px] bg-white/[0.04] border border-white/10 p-4 sm:p-5 space-y-2">
+                  <div className="flex items-center justify-between text-neutral-400">
+                    <span className="text-[11px] font-medium uppercase tracking-wider">Brechas en Plugins</span>
+                    <Scale className="w-4 h-4 text-[#ff9f0a]" />
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff9f0a] to-[#30d158]">
+                    91.8%
+                  </div>
+                  <p className="text-xs text-neutral-300 leading-relaxed font-normal">
+                    De vulnerabilidades provienen de plugins desactualizados; el núcleo del CMS representa menos del 1%.
+                  </p>
+                </div>
 
-        </div>
+                {/* Métrica 3 */}
+                <div className="rounded-[20px] bg-white/[0.04] border border-white/10 p-4 sm:p-5 space-y-2">
+                  <div className="flex items-center justify-between text-neutral-400">
+                    <span className="text-[11px] font-medium uppercase tracking-wider">Fraude y Phishing</span>
+                    <BarChart3 className="w-4 h-4 text-[#2997ff]" />
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#2997ff] to-[#c084fc]">
+                    68.3%
+                  </div>
+                  <p className="text-xs text-neutral-300 leading-relaxed font-normal">
+                    De investigaciones policiales en Perú corresponden a fraude y suplantación web para desvío de pagos.
+                  </p>
+                </div>
 
-        {/* Explicación Técnica y Contractual: Modelo de Responsabilidad Compartida en Hosting (Sin Exageraciones) */}
-        <div className="p-5 sm:p-7 rounded-[24px] bg-white/[0.03] border border-white/10 space-y-3 text-left">
-          <div className="flex items-center gap-2.5 text-xs sm:text-sm font-bold text-[#38bdf8] uppercase tracking-wider">
-            <Server className="w-4 h-4 text-[#38bdf8]" />
-            <span>Riesgo Contractual Real: El Modelo de Responsabilidad Compartida con tu Hosting</span>
-          </div>
-          <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-            En los Términos de Servicio (ToS) y Políticas de Uso Aceptable (AUP) de empresas de hosting (Hostinger, cPanel, GoDaddy, SiteGround, DigitalOcean, etc.), el proveedor garantiza exclusivamente la conectividad de red y la operatividad del hardware físico. <strong>La seguridad de las aplicaciones web, CMS (WordPress), plugins, credenciales y código recae contractualmente en el usuario</strong>.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs text-neutral-400">
-            <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1.5">
-              <span className="font-semibold text-rose-300 flex items-center gap-1.5">
-                <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
-                <span>Por qué suspenden tu cuenta sin previo aviso:</span>
-              </span>
-              <p className="text-[12px] leading-relaxed text-neutral-300">
-                Si un sitio es hackeado e inyecta enlaces de phishing o envía spam saliente masivo, el hosting aplica suspensión preventiva inmediata para evitar que la IP del servidor compartido sea incluida en listas negras mundiales (Spamhaus, Barracuda, Google Safe Browsing). El soporte del hosting no realiza desinfección forense.
-              </p>
+              </div>
+
+              {/* Responsabilidad Compartida en Hosting */}
+              <div className="p-4 sm:p-5 rounded-[20px] bg-white/[0.03] border border-white/10 space-y-2 text-left">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#38bdf8] uppercase tracking-wider">
+                  <Server className="w-3.5 h-3.5 text-[#38bdf8]" />
+                  <span>Cláusula de Responsabilidad Compartida con tu Hosting</span>
+                </div>
+                <p className="text-xs text-neutral-300 leading-relaxed font-normal">
+                  Los proveedores de hosting (Hostinger, cPanel, GoDaddy, DigitalOcean) solo responden por la máquina física. <strong>La seguridad de WordPress, plugins y código es 100% tuya</strong>. Si tu web se infecta, el hosting suspende tu cuenta sin ayudarte a desinfectar.
+                </p>
+              </div>
             </div>
-            <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1.5">
-              <span className="font-semibold text-emerald-300 flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Cómo actuamos en DEFENSA TI:</span>
-              </span>
-              <p className="text-[12px] leading-relaxed text-neutral-300">
-                Tomamos respaldo forense previo, limpiamos archivos PHP y base de datos, eliminamos las puertas traseras, gestionamos el desbloqueo técnico directo con el soporte del hosting para reactivar el sitio y configuramos reglas perimetrales WAF con 30 días de garantía.
-              </p>
-            </div>
-          </div>
+          )}
         </div>
 
       </div>
 
-      {/* 2. Ejemplos Reales de Intervención y Remediación en Perú */}
-      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-8">
+      {/* 2. Ejemplos Reales de Intervención en Perú */}
+      <div className="p-6 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-6">
         
-        <div className="space-y-3 border-b border-white/10 pb-6">
+        <div className="space-y-2 border-b border-white/10 pb-5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>CASOS DOCUMENTADOS EN EL MERCADO PERUANO</span>
@@ -253,208 +230,195 @@ export default function DefensatiCases() {
           <h3 className="text-2xl sm:text-4xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
             Casos de estudio: Cómo resolvemos emergencias reales
           </h3>
-          <p className="text-sm sm:text-base text-[#86868b] leading-relaxed max-w-3xl font-normal">
-            Conoce casos típicos intervenidos en plataformas WordPress y servidores empresariales en Perú, con su respectivo protocolo técnico de diagnóstico, limpieza, evidencia verificable y garantía.
+          <p className="text-xs sm:text-sm text-[#86868b] leading-relaxed max-w-3xl font-normal">
+            Selecciona un caso para ver cómo diagnosticamos, desinfectamos y blindamos negocios en Perú.
           </p>
         </div>
 
         {/* Selector de Casos Apple Pills */}
-        <div className="flex flex-col sm:flex-row gap-2.5 p-1.5 rounded-full bg-white/[0.04] border border-white/10">
+        <div className="flex flex-col sm:flex-row gap-2 p-1 rounded-full bg-white/[0.04] border border-white/10">
           <button
             type="button"
             onClick={() => setActiveCase('ecommerce')}
-            className={`flex-1 py-3 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-2.5 px-4 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeCase === 'ecommerce'
                 ? 'bg-[#0071e3] text-white shadow-[0_4px_14px_rgba(0,113,227,0.35)]'
                 : 'text-neutral-300 hover:text-white hover:bg-white/5'
             }`}
           >
-            <ShoppingCart className="w-4 h-4 shrink-0" />
-            <span>Tienda WooCommerce (Lima)</span>
+            <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
+            <span>Tienda WooCommerce</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveCase('corporate')}
-            className={`flex-1 py-3 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-2.5 px-4 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeCase === 'corporate'
                 ? 'bg-[#0071e3] text-white shadow-[0_4px_14px_rgba(0,113,227,0.35)]'
                 : 'text-neutral-300 hover:text-white hover:bg-white/5'
             }`}
           >
-            <Building2 className="w-4 h-4 shrink-0" />
-            <span>Consultora B2B (San Isidro)</span>
+            <Building2 className="w-3.5 h-3.5 shrink-0" />
+            <span>Consultora B2B</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveCase('distributor')}
-            className={`flex-1 py-3 px-5 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 py-2.5 px-4 rounded-full text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeCase === 'distributor'
                 ? 'bg-[#0071e3] text-white shadow-[0_4px_14px_rgba(0,113,227,0.35)]'
                 : 'text-neutral-300 hover:text-white hover:bg-white/5'
             }`}
           >
-            <Server className="w-4 h-4 shrink-0" />
-            <span>Distribuidora (Callao)</span>
+            <Server className="w-3.5 h-3.5 shrink-0" />
+            <span>Distribuidora Callao</span>
           </button>
         </div>
 
-        {/* Detalle del Caso Seleccionado */}
-        <div className="space-y-6 pt-2 animate-in fade-in duration-200">
+        {/* Resumen del Caso Seleccionado (Ultra Directo) */}
+        <div className="space-y-4 pt-1 animate-in fade-in duration-200">
           
-          {/* Cabecera del Caso */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/10">
+          {/* Cabecera del Caso con Scores */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <span className="text-xs font-mono font-bold text-[#38bdf8] uppercase tracking-wider">
+              <span className="text-[11px] font-mono font-bold text-[#38bdf8] uppercase tracking-wider block">
                 {current.category} &bull; {current.location}
               </span>
-              <h4 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
+              <h4 className="text-base sm:text-xl font-bold text-white tracking-tight">
                 {current.title}
               </h4>
             </div>
-            <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-bold shrink-0 self-start md:self-center ${current.urgencyColor}`}>
-              <AlertTriangle className="w-3.5 h-3.5" />
-              <span>{current.urgency}</span>
-            </div>
-          </div>
-
-          {/* Ficha Técnica, Evidencia Documentada & Referencia de Origen */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/50 border border-sky-500/20 space-y-3 text-left">
-            <div className="flex items-center justify-between flex-wrap gap-2 border-b border-white/10 pb-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400">
-                <Fingerprint className="w-4 h-4 text-sky-400" />
-                <span>Evidencia Documentada &bull; Expediente {current.evidence.ticketId}</span>
-              </div>
-              <span className="text-[11px] font-mono text-neutral-400 bg-white/5 px-2.5 py-0.5 rounded-md border border-white/10">
-                {current.evidence.serviceDate}
+            
+            {/* Medición Antes vs Después */}
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                {current.initialScore}
+              </span>
+              <span className="text-neutral-400 text-xs">&rarr;</span>
+              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                {current.finalScore}
               </span>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-neutral-300 pt-1">
-              <div className="space-y-1">
-                <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide">Vector Técnico Confirmado:</span>
-                <p className="text-[12.5px] leading-relaxed text-neutral-200 font-normal">
-                  {current.evidence.attackVector}
-                </p>
-              </div>
-              <div className="space-y-1">
-                <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wide">Validación Externa y Cierre:</span>
-                <p className="text-[12.5px] leading-relaxed text-neutral-200 font-normal">
-                  {current.evidence.validationSource}
-                </p>
-              </div>
-            </div>
-
-            <p className="text-[11px] text-neutral-400 pt-2 border-t border-white/5 font-mono">
-              🔒 <strong>Privacidad y Trato Directo:</strong> {current.evidence.confidentiality}
-            </p>
           </div>
 
-          {/* Comparativo de Resultados: ANTES vs DESPUÉS */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            
-            {/* Qué se encontró (Antes) */}
-            <div className="p-6 rounded-2xl bg-rose-950/20 border border-rose-500/30 space-y-4">
-              <div className="flex items-center justify-between border-b border-rose-500/20 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-rose-400">
-                  1. Diagnóstico: Qué se encontró
-                </span>
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-rose-500/20 text-rose-300">
-                  Score inicial: {current.initialScore}
-                </span>
-              </div>
-              <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-                {current.found.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
-                    <span className="text-rose-400 font-bold shrink-0 mt-0.5">&times;</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Qué se corrigió (Después) */}
-            <div className="p-6 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-4">
-              <div className="flex items-center justify-between border-b border-emerald-500/20 pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-                  2. Remediación: Qué se corrigió
-                </span>
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300">
-                  Score final: {current.finalScore}
-                </span>
-              </div>
-              <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-                {current.remedied.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+          {/* Resultado Conciso */}
+          <div className="p-4 rounded-xl bg-black/40 border border-white/5 text-xs text-neutral-300 space-y-1">
+            <strong className="text-emerald-400 block font-semibold">Resultado de la Intervención:</strong>
+            <p className="leading-relaxed">{current.result}</p>
           </div>
 
-          {/* Resultado Comercial y Garantía Aplicada */}
-          <div className="p-6 sm:p-7 rounded-[24px] bg-[#161618]/80 border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="space-y-1.5 flex-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#2997ff] uppercase tracking-wider">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Impacto y Garantía Cumplida</span>
-              </div>
-              <p className="text-xs sm:text-sm text-[#f5f5f7] font-medium">
-                <strong>Resultado:</strong> {current.result}
-              </p>
-              <p className="text-xs text-[#86868b]">
-                <strong>Alcance:</strong> {current.warrantyApplied}
-              </p>
-            </div>
+          {/* Botón Desplegable para ver la Bitácora Forense */}
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowCaseDetail(prev => !prev)}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[#38bdf8] hover:text-white px-3.5 py-2 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 transition-colors cursor-pointer"
+            >
+              <span>{showCaseDetail ? 'Ocultar bitácora técnica' : 'Ver expediente forense y remediación paso a paso'}</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showCaseDetail ? 'rotate-180 text-sky-400' : ''}`} />
+            </button>
 
+            {/* Contenido Desplegable: Diagnóstico vs Remediación */}
+            {showCaseDetail && (
+              <div className="space-y-4 pt-3 animate-in fade-in-50 duration-200">
+                
+                {/* Ficha Técnica */}
+                <div className="p-4 rounded-xl bg-black/60 border border-sky-500/20 text-xs text-neutral-300 space-y-2">
+                  <div className="flex items-center justify-between text-sky-400 font-bold uppercase tracking-wider text-[11px] border-b border-white/5 pb-1.5">
+                    <span className="flex items-center gap-1.5">
+                      <Fingerprint className="w-3.5 h-3.5" />
+                      Expediente {current.evidence.ticketId}
+                    </span>
+                    <span className="font-mono text-neutral-400">{current.evidence.serviceDate}</span>
+                  </div>
+                  <p><strong>Vector detectado:</strong> {current.evidence.attackVector}</p>
+                  <p><strong>Validación:</strong> {current.evidence.validationSource}</p>
+                </div>
+
+                {/* ANTES vs DESPUÉS */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  
+                  {/* Qué se encontró */}
+                  <div className="p-4 rounded-xl bg-rose-950/20 border border-rose-500/25 space-y-2">
+                    <span className="font-bold text-rose-400 uppercase tracking-wider text-[11px] block">
+                      1. Qué se encontró (Diagnóstico):
+                    </span>
+                    <ul className="space-y-1.5 text-neutral-300">
+                      {current.found.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-rose-400 font-bold shrink-0">&times;</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Qué se corrigió */}
+                  <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/25 space-y-2">
+                    <span className="font-bold text-emerald-400 uppercase tracking-wider text-[11px] block">
+                      2. Qué se corrigió (Remediación):
+                    </span>
+                    <ul className="space-y-1.5 text-neutral-300">
+                      {current.remedied.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Botón WhatsApp de Consulta del Caso */}
+          <div className="pt-2">
             <a
               href={`https://wa.me/17856433991?text=${encodeURIComponent(current.ctaMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full md:w-auto px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all shadow-[0_4px_16px_rgba(37,211,102,0.35)] cursor-pointer shrink-0"
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs font-extrabold flex items-center justify-center gap-2 transition-all shadow-[0_4px_16px_rgba(37,211,102,0.35)] cursor-pointer"
             >
               <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-              <span>Consultar este caso por WhatsApp</span>
+              <span>Consultar caso similar por WhatsApp</span>
             </a>
           </div>
 
         </div>
 
         {/* Acceso al Informe Completo de Muestra */}
-        <div className="pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="space-y-1 text-center md:text-left">
-            <span className="text-xs sm:text-sm text-[#f5f5f7] font-medium block">
+        <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="space-y-0.5">
+            <span className="text-xs text-[#f5f5f7] font-semibold block">
               ¿Quieres ver qué entregamos antes de contratar?
             </span>
-            <span className="text-xs text-[#86868b] block">
-              Revisa el Dictamen Técnico de 2 páginas con membrete formal, telemetría y recetas de código.
+            <span className="text-[11px] text-[#86868b] block">
+              Revisa el Dictamen Técnico formal de muestra con telemetría y recetas de código.
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2.5 shrink-0">
-            {/* Botón 1: Descargar PDF Directo */}
+          <div className="flex items-center gap-2 shrink-0">
             <a
               href="/informe-ejemplo-defensati.pdf"
               target="_blank"
               download="informe-ejemplo-defensati.pdf"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white font-semibold text-xs sm:text-sm transition-all shadow-[0_4px_16px_rgba(0,113,227,0.35)] active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white font-semibold text-xs transition-all shadow-md active:scale-95 cursor-pointer"
             >
-              <Download className="w-4 h-4 text-sky-200" />
-              <span>Descargar PDF de Ejemplo</span>
+              <Download className="w-3.5 h-3.5 text-sky-200" />
+              <span>Descargar PDF Ejemplo</span>
             </a>
 
-            {/* Botón 2: Ver en el Navegador */}
             <Link
               href="/defensati/informe-ejemplo"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs transition-all cursor-pointer"
             >
-              <FileText className="w-4 h-4 text-[#2997ff]" />
-              <span>Ver en Pantalla</span>
-              <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
+              <FileText className="w-3.5 h-3.5 text-[#2997ff]" />
+              <span>Ver Online</span>
+              <ExternalLink className="w-3 h-3 text-neutral-400" />
             </Link>
           </div>
         </div>
