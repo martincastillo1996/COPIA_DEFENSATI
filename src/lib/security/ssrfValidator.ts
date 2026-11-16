@@ -219,7 +219,7 @@ export function isPrivateOrLocalHost(hostname: string, ip?: string): boolean {
   return false;
 }
 
-async function withDnsTimeout<T>(promise: Promise<T>, ms = 1200): Promise<T> {
+async function withDnsTimeout<T>(promise: Promise<T>, ms = 2500): Promise<T> {
   let timer: NodeJS.Timeout;
   const timeoutPromise = new Promise<never>((_, reject) => {
     timer = setTimeout(() => reject(new Error('DNS_TIMEOUT')), ms);
@@ -260,7 +260,7 @@ export async function verifyDnsResolution(hostname: string): Promise<{ safe: boo
         }
       }
     } catch {
-      // Si falla o timeout en entorno offline/sandbox, continúa
+      // Sin registro A o timeout: se decide abajo según lo resuelto
     }
 
     // 2. Resolver IPv6 (AAAA)
@@ -279,7 +279,13 @@ export async function verifyDnsResolution(hostname: string): Promise<{ safe: boo
         }
       }
     } catch {
-      // Si falla o timeout en entorno offline/sandbox, continúa
+      // Sin registro AAAA o timeout: se decide abajo según lo resuelto
+    }
+
+    // Fail-closed: si no se obtuvo ninguna IP no hay nada que validar. Antes se devolvía
+    // "seguro", y un DNS lento a propósito saltaba la comprobación.
+    if (resolvedIps.length === 0) {
+      return { safe: false, reason: `No se pudo resolver ${host} en DNS.`, resolvedIps };
     }
 
     return { safe: true, resolvedIps };

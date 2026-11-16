@@ -81,7 +81,7 @@ const tests = [
     }
   }],
   ['isHyperscalePlatform: rechaza parecidos, subcadenas y dominios señuelo', () => {
-    for (const d of ['relax.com.pe', 'wix.com', 'fedex.com', 'google.com.mitienda.pe', 'notgoogle.com', 'mibbva.pe', 'amazonas-tours.pe', 'selvaamazon.com.fake.pe', 'mitienda.pe', '', null, undefined]) {
+    for (const d of ['relax.com.pe', 'wix.com', 'fedex.com', 'google.com.mitienda.pe', 'notgoogle.com', 'mibbva.pe', 'amazonas-tours.pe', 'selvaamazon.com.fake.pe', 'google.xyz', 'amazon.top', 'www.google.vip', 'amazon.icu', 'mitienda.pe', '', null, undefined]) {
       assert.equal(isHyperscalePlatform(d), false, String(d));
     }
   }],

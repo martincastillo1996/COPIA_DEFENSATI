@@ -3,35 +3,18 @@ import { Resend } from 'resend';
 import { saveLead } from '@/lib/storage/leadStore';
 import { v4 as uuidv4 } from 'uuid';
 import { verifyTurnstileToken } from '@/lib/security/turnstileValidator';
+import { getClientIp } from '@/lib/security/clientIp';
+import { hitRateLimit, RateLimitMap } from '@/lib/security/rateLimit';
 
 // Rate Limiter per IP (5 envíos por cada 10 minutos para evitar spam y saturación)
-const contactRateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-function getClientIp(req: Request): string {
-  const forwarded = req.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  const realIp = req.headers.get('x-real-ip');
-  if (realIp) return realIp.trim();
-  return '127.0.0.1';
-}
+const contactRateLimitMap: RateLimitMap = new Map();
+// Tope global por hora para envíos sin verificación humana (los formularios actuales no envían
+// token de Turnstile): acota una inundación de spam aunque el atacante rote direcciones IP.
+const noTokenGlobalMap: RateLimitMap = new Map();
+const NO_TOKEN_GLOBAL_MAX_PER_HOUR = 100;
 
 function checkContactRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const windowMs = 10 * 60 * 1000; // 10 minutos
-  const maxRequests = 5;
-
-  const record = contactRateLimitMap.get(ip);
-  if (!record || now > record.resetTime) {
-    contactRateLimitMap.set(ip, { count: 1, resetTime: now + windowMs });
-    return true;
-  }
-
-  if (record.count >= maxRequests) {
-    return false;
-  }
-
-  record.count += 1;
-  return true;
+  return hitRateLimit(contactRateLimitMap, ip, 10 * 60 * 1000, 5).allowed;
 }
 
 // Funciones de Sanitización y Escapado
@@ -98,6 +81,11 @@ export async function POST(req: Request) {
           { status: 403 }
         );
       }
+    } else if (!hitRateLimit(noTokenGlobalMap, 'global', 60 * 60 * 1000, NO_TOKEN_GLOBAL_MAX_PER_HOUR).allowed) {
+      return NextResponse.json(
+        { error: 'Estamos recibiendo demasiadas solicitudes. Por favor escríbenos directamente por WhatsApp.' },
+        { status: 429 }
+      );
     }
 
     // 3. Sanitización estricta de todos los campos

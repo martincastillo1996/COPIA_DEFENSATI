@@ -13,13 +13,14 @@
     "test:score": "npx tsx scripts/test-score.mjs",
     "test": "npm run test:ssrf && npm run test:score",
     "monitor": "node scripts/monitor.mjs",
+    "scan:full": "node scripts/full-scan.mjs",
     "informe:entrega": "node scripts/generate-delivery-report.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
     "cobe": "^2.0.1",
     "lucide-react": "^1.65.0",
-    "next": "16.4.3",
+    "next": "^16.4.6",
     "pdf-lib": "^1.17.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -35,7 +36,7 @@
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.4.3",
+    "eslint-config-next": "^16.4.6",
     "postcss": "^8.5.32",
     "tailwindcss": "^4",
     "typescript": "^5"

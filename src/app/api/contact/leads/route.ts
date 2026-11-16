@@ -1,19 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getAllLeads } from '@/lib/storage/leadStore';
 import crypto from 'crypto';
+import { getClientIp } from '@/lib/security/clientIp';
 
 // Rate limiter en memoria para intentos fallidos de autenticación admin (frena fuerza bruta)
 const failedAttemptsMap = new Map<string, { count: number; blockedUntil: number }>();
-
-function getClientIp(req: Request): string {
-  const cfIp = req.headers.get('cf-connecting-ip');
-  if (cfIp) return cfIp.trim();
-  const forwarded = req.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  const realIp = req.headers.get('x-real-ip');
-  if (realIp) return realIp.trim();
-  return '127.0.0.1';
-}
 
 function isIpBlocked(ip: string): boolean {
   const record = failedAttemptsMap.get(ip);

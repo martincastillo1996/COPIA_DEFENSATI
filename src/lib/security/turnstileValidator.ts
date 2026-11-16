@@ -17,9 +17,8 @@ export async function verifyTurnstileToken(
   token: string,
   remoteIp?: string
 ): Promise<TurnstileVerifyResult> {
-  const secretKey =
-    process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY ||
-    '0x4AAAAAAF8DbSUESFepvMcACRDOR__8hys';
+  // El secreto solo vive en variables de entorno: nunca escrito en el código (queda en git).
+  const secretKey = (process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY || '').trim();
 
   if (!token || typeof token !== 'string' || token.trim().length === 0) {
     return {
@@ -33,6 +32,15 @@ export async function verifyTurnstileToken(
   // Solo fuera de producción: en producción este token fijo permitiría saltarse la verificación.
   if (process.env.NODE_ENV !== 'production' && token === 'XXXX.DUMMY.TOKEN.XXXX') {
     return { success: true, hostname: 'localhost' };
+  }
+
+  if (!secretKey) {
+    console.error('[turnstile] CLOUDFLARE_TURNSTILE_SECRET_KEY no está configurada: la verificación falla cerrada.');
+    return {
+      success: false,
+      message: 'La verificación humana no está configurada en el servidor.',
+      errorCodes: ['missing-input-secret'],
+    };
   }
 
   try {

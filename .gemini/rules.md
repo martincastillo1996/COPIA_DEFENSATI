@@ -37,7 +37,7 @@
 - **Cero Modificaciones Visuales Sorpresa:** Ningún cambio visual se consolida ni se prepara para producción sin la confirmación y visto bueno explícito de Martín sobre el resultado visible.
 
 ## 8. Infraestructura de Producción Oficial: Servidor DigitalOcean (ESTRICTO)
-- **Entorno único de producción:** `https://neuronalgravity.com` en DigitalOcean (Droplet `ubuntu-s-1vcpu-1gb-nyc3`, IP `159.203.80.121` con Cloudflare). Vercel ya no se usa.
+- **Entorno único de producción:** `https://neuronalgravity.com` en DigitalOcean (Droplet `ubuntu-s-1vcpu-1gb-nyc3`, la IP se consulta en el panel de DigitalOcean y no se escribe en el repositorio; detrás de Cloudflare). Vercel ya no se usa.
 - **Procedimiento de Despliegue en DigitalOcean:**
   Para actualizar `neuronalgravity.com` tras cada `git push`, el comando en la Web Console de DigitalOcean se ejecuta en la carpeta activa del proyecto:
   ```bash

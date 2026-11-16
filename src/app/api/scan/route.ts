@@ -4,8 +4,8 @@ import { scanHeaders, HeaderCheckItem } from '@/lib/scanner/headerScanner';
 import { calculateSecurityScore } from '@/lib/scanner/scoreEngine';
 import { generateRemediation, RemediationItem } from '@/lib/ai/remediation';
 import { saveReport, AuditReportRecord } from '@/lib/storage/reportStore';
-import { scanPerimetralPorts } from '@/lib/scanner/portScanner';
-import { scanSensitiveFiles } from '@/lib/scanner/sensitiveFilesScanner';
+import { scanPerimetralPorts, PortCheckResult } from '@/lib/scanner/portScanner';
+import { scanSensitiveFiles, SensitiveFilesResult } from '@/lib/scanner/sensitiveFilesScanner';
 import { scanDnsSecurity } from '@/lib/scanner/dnsScanner';
 import { lookupServerLocation } from '@/lib/scanner/geoScanner';
 import { scanWebAudit } from '@/lib/scanner/webAuditScanner';
@@ -15,6 +15,9 @@ import { saveAuditConsent, AuditConsentRecord } from '@/lib/storage/auditConsent
 import { signBadge } from '@/lib/security/badgeSigner';
 import { verifyTurnstileToken } from '@/lib/security/turnstileValidator';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
+import { getClientIp } from '@/lib/security/clientIp';
+import { hitRateLimit, RateLimitMap } from '@/lib/security/rateLimit';
+import { isAdminRequest } from '@/lib/security/adminAuth';
 
 // Caché en Memoria de Escaneos por Dominio (TTL de 2 horas para soportar picos masivos)
 const DOMAIN_SCAN_CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 horas
@@ -37,43 +40,19 @@ if (!globalForScanCache.__domainScanCache) {
 const domainScanCache = globalForScanCache.__domainScanCache;
 
 // Rate Limiter Per-IP para Escaneos (10 escaneos cada 15 minutos por cliente)
-const scanRateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const scanRateLimitMap: RateLimitMap = new Map();
 const SCAN_WINDOW_MS = 15 * 60 * 1000; // 15 minutos
 const SCAN_MAX_REQUESTS = 10;
 
-function getClientIp(req: Request): string {
-  const cfIp = req.headers.get('cf-connecting-ip');
-  if (cfIp) return cfIp.trim();
-  const forwarded = req.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  const realIp = req.headers.get('x-real-ip');
-  if (realIp) return realIp.trim();
-  return '127.0.0.1';
-}
+// Escaneos SIN verificación humana (Turnstile): cupo mucho menor por IP y un tope global por
+// hora. Antes bastaba con no enviar el token para saltarse la verificación sin ningún límite extra.
+const noTokenIpMap: RateLimitMap = new Map();
+const noTokenGlobalMap: RateLimitMap = new Map();
+const NO_TOKEN_MAX_PER_IP = 3;
+const NO_TOKEN_GLOBAL_MAX_PER_HOUR = 120;
 
 function checkScanRateLimit(ip: string): { allowed: boolean; remaining: number; resetInSec: number } {
-  const now = Date.now();
-  const record = scanRateLimitMap.get(ip);
-
-  if (!record || now > record.resetTime) {
-    scanRateLimitMap.set(ip, { count: 1, resetTime: now + SCAN_WINDOW_MS });
-    return { allowed: true, remaining: SCAN_MAX_REQUESTS - 1, resetInSec: Math.ceil(SCAN_WINDOW_MS / 1000) };
-  }
-
-  if (record.count >= SCAN_MAX_REQUESTS) {
-    return {
-      allowed: false,
-      remaining: 0,
-      resetInSec: Math.ceil((record.resetTime - now) / 1000),
-    };
-  }
-
-  record.count += 1;
-  return {
-    allowed: true,
-    remaining: SCAN_MAX_REQUESTS - record.count,
-    resetInSec: Math.ceil((record.resetTime - now) / 1000),
-  };
+  return hitRateLimit(scanRateLimitMap, ip, SCAN_WINDOW_MS, SCAN_MAX_REQUESTS);
 }
 
 // Filtro Anti-Scrapers y Bots Maliciosos que buscan usar la API como proxy gratuito
@@ -107,7 +86,10 @@ export async function POST(req: Request) {
     const userAgent = req.headers.get('user-agent') || '';
     const origin = req.headers.get('origin');
 
-    if (!userAgent || BLOCKED_BOT_USER_AGENTS.test(userAgent)) {
+    // Petición interna con token de administración (monitor de clientes y auditoría completa)
+    const adminRequest = isAdminRequest(req);
+
+    if (!adminRequest && (!userAgent || BLOCKED_BOT_USER_AGENTS.test(userAgent))) {
       return NextResponse.json(
         { error: 'Acceso denegado: El uso automatizado vía scripts o scrapers está estrictamente restringido.' },
         { status: 403 }
@@ -115,7 +97,7 @@ export async function POST(req: Request) {
     }
 
     // Bloqueo de Hotlinking (Evita que otra web incruste llamadas a tu API de escaneo)
-    if (origin && !isAllowedDomain(origin)) {
+    if (!adminRequest && origin && !isAllowedDomain(origin)) {
       return NextResponse.json(
         { error: 'Acceso no autorizado desde este origen.' },
         { status: 403 }
@@ -123,7 +105,9 @@ export async function POST(req: Request) {
     }
 
     // 0.1 Control de Tasa (Máximo 10 escaneos por cada 15 minutos por IP)
-    const rateCheck = checkScanRateLimit(clientIp);
+    const rateCheck = adminRequest
+      ? { allowed: true, remaining: SCAN_MAX_REQUESTS, resetInSec: 0 }
+      : checkScanRateLimit(clientIp);
     if (!rateCheck.allowed) {
       return NextResponse.json(
         {
@@ -140,23 +124,54 @@ export async function POST(req: Request) {
       );
     }
 
-    const { url, force, legalConsentAccepted, turnstileToken } = await req.json();
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json({ error: 'Cuerpo de la solicitud inválido.' }, { status: 400 });
+    }
+    const { url, force, legalConsentAccepted, turnstileToken, mode } = body;
+
+    // 0.05 Modo de auditoría:
+    //  - 'public' (por defecto): revisión básica — cabeceras, TLS, DNS y portada. Equivale a
+    //    una visita normal al sitio; no sondea puertos ni busca archivos sensibles.
+    //  - 'full': auditoría completa (puertos + archivos sensibles). Es sondeo activo, así que
+    //    solo se ejecuta con token de administración, para dominios de clientes con
+    //    autorización escrita. Pagar no acredita la titularidad: la acredita la autorización.
+    if (mode === 'full' && !adminRequest) {
+      return NextResponse.json(
+        { error: 'La auditoría completa requiere autorización de administración.' },
+        { status: 401 }
+      );
+    }
+    const scanMode: 'public' | 'full' = mode === 'full' && adminRequest ? 'full' : 'public';
 
     // 0.1 Validación de Seguridad Cloudflare Turnstile Anti-Bot
-    if (turnstileToken) {
-      const turnstileCheck = await verifyTurnstileToken(turnstileToken, clientIp);
-      if (!turnstileCheck.success) {
-        return NextResponse.json(
-          {
-            error:
-              'Verificación humana de Cloudflare Turnstile fallida o expirada. Por favor completa la verificación e intenta de nuevo.',
-          },
-          { status: 403 }
-        );
+    if (!adminRequest) {
+      if (turnstileToken) {
+        const turnstileCheck = await verifyTurnstileToken(turnstileToken, clientIp);
+        if (!turnstileCheck.success) {
+          return NextResponse.json(
+            {
+              error:
+                'Verificación humana de Cloudflare Turnstile fallida o expirada. Por favor completa la verificación e intenta de nuevo.',
+            },
+            { status: 403 }
+          );
+        }
+      } else {
+        // Sin token: se permite (hay secciones del sitio que escanean sin widget), pero con un
+        // cupo reducido por IP y un tope global, para que omitir el token no sea un atajo.
+        const perIp = hitRateLimit(noTokenIpMap, clientIp, SCAN_WINDOW_MS, NO_TOKEN_MAX_PER_IP);
+        const global = hitRateLimit(noTokenGlobalMap, 'global', 60 * 60 * 1000, NO_TOKEN_GLOBAL_MAX_PER_HOUR);
+        if (!perIp.allowed || !global.allowed) {
+          return NextResponse.json(
+            { error: 'Para seguir escaneando completa la verificación humana en el escáner principal o espera unos minutos.' },
+            { status: 429, headers: { 'Retry-After': String(perIp.allowed ? global.resetInSec : perIp.resetInSec) } }
+          );
+        }
       }
     }
 
-    if (!url) {
+    if (typeof url !== 'string' || !url.trim()) {
       return NextResponse.json(
         { error: 'Parámetro de URL requerido para auditoría perimetral.' },
         { status: 400 }
@@ -226,7 +241,8 @@ export async function POST(req: Request) {
     saveAuditConsent(consentRecord);
 
     // 2.0 Caché Inteligente por Dominio (Zero-Downtime y $0 Costo en Picos de Tráfico)
-    const cacheKey = target.origin.toLowerCase();
+    // La clave incluye el modo: un informe completo nunca se sirve a una petición pública
+    const cacheKey = `${scanMode}:${target.origin.toLowerCase()}`;
     if (!force && domainScanCache.has(cacheKey)) {
       const cached = domainScanCache.get(cacheKey)!;
       if (Date.now() < cached.expiresAt) {
@@ -284,7 +300,10 @@ export async function POST(req: Request) {
         isHyperscale: false,
         error: err?.message || 'Error en socket TLS',
       })),
-      scanPerimetralPorts(hostname).catch(() => []),
+      // Sondeo activo de puertos: solo en auditoría completa autorizada
+      (scanMode === 'full' ? scanPerimetralPorts(hostname) : Promise.resolve([] as PortCheckResult[])).catch(
+        () => [] as PortCheckResult[]
+      ),
       lookupServerLocation(targetResolvedIp || hostname).catch(() => null),
       scanHeaders(parsedUrl).catch(() => ({
         headers: [],
@@ -292,7 +311,11 @@ export async function POST(req: Request) {
         score: 0,
         grade: 'F' as const,
       })),
-      scanSensitiveFiles(parsedUrl).catch(() => ({
+      // Búsqueda de archivos sensibles (/.env, /.git, respaldos): solo en auditoría completa
+      (scanMode === 'full'
+        ? scanSensitiveFiles(parsedUrl)
+        : Promise.resolve({ hasExposedFiles: false, criticalCount: 0, findings: [] } as SensitiveFilesResult)
+      ).catch(() => ({
         hasExposedFiles: false,
         criticalCount: 0,
         findings: [],
@@ -467,7 +490,9 @@ export async function POST(req: Request) {
     const auditId = uuidv4();
     const durationMs = Date.now() - startTime;
 
-    const badgeToken = (grade === 'A+' || grade === 'A' || score >= 85)
+    // Las referencias corporativas (hiperescala) reciben una nota fija de comparación, no una
+    // medición: nunca se les firma un sello verificado.
+    const badgeToken = !isHyperscale && (grade === 'A+' || grade === 'A' || score >= 85)
       ? signBadge(target.origin, grade, auditId)
       : undefined;
 
@@ -479,6 +504,7 @@ export async function POST(req: Request) {
       ssl: sslResult,
       headers: headersList,
       isHyperscale,
+      scanMode,
       ports: adjustedPorts,
       sensitiveFiles: sensitiveFilesResult,
       dnsSecurity: dnsSecurityResult,
@@ -493,7 +519,7 @@ export async function POST(req: Request) {
       badgeToken,
       telemetry: {
         durationMs,
-        aiModel: 'gemini-1.5-flash',
+        aiModel: process.env.GEMINI_MODEL?.trim() || 'gemini-flash-lite-latest',
         targetResolvedIp,
         engineVersion: '1.4.0-cloud',
       },
@@ -526,9 +552,10 @@ export async function POST(req: Request) {
       report: fullReport,
     });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Error interno de auditoría';
+    // El detalle queda en el log del servidor; al cliente no se le exponen mensajes internos
+    console.error('[scan] Error interno de auditoría:', error);
     return NextResponse.json(
-      { error: `Fallo en el motor perimetral: ${message}` },
+      { error: 'No se pudo completar la auditoría. Intenta de nuevo en unos minutos o escríbenos por WhatsApp.' },
       { status: 500 }
     );
   }

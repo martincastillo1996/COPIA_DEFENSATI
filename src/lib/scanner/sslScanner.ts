@@ -1,4 +1,5 @@
 import tls from 'tls';
+import { safeLookup } from '@/lib/security/safeNet';
 
 export interface SslCheckResult {
   valid: boolean;
@@ -27,6 +28,7 @@ export async function scanSsl(hostname: string): Promise<SslCheckResult> {
         host: cleanHost,
         port: 443,
         servername: cleanHost,
+        lookup: safeLookup, // valida la IP en el momento de conectar (anti DNS rebinding)
         timeout: 3500,
         rejectUnauthorized: false,
       },

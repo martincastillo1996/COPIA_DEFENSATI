@@ -1,5 +1,6 @@
 import * as net from 'net';
 import { isPrivateOrLocalHost } from '@/lib/security/ssrfValidator';
+import { safeLookup } from '@/lib/security/safeNet';
 import { CANONICAL_PORTS } from '@/config/ports';
 
 export interface PortCheckResult {
@@ -91,7 +92,8 @@ function checkPortAndBanner(host: string, port: number, timeout = 750): Promise<
     socket.on('timeout', () => finish(false));
     socket.on('error', () => finish(false));
 
-    socket.connect(port, host);
+    // lookup validado al conectar: impide que un DNS rebinding desvíe el sondeo a la red interna
+    socket.connect({ port, host, lookup: safeLookup });
   });
 }
 

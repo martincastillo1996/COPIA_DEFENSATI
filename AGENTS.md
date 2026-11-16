@@ -17,7 +17,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 3. **Estándar Apple Pro Dark Glass:**
    - Alta legibilidad con contrastes nítidos (`#141416`, `#0e1118`, `#38bdf8`), micro-interacciones suaves, badges interactivos y estados activos/hover claros en móvil y escritorio.
 4. **Despliegue Único en DigitalOcean:**
-   - Producción es `neuronalgravity.com` en DigitalOcean (`159.203.80.121`) con Cloudflare. Vercel ya no se usa.
+   - Producción es `neuronalgravity.com` en DigitalOcean (la IP se consulta en el panel de DigitalOcean; no escribirla en el repositorio) con Cloudflare. Vercel ya no se usa.
    - El comando para actualizar DigitalOcean en su carpeta activa es:
      `cd /var/www/app && git pull origin main && npm run build && pm2 restart all`
 5. **Regla de Identidad de Marca (Logotipo Neuronal Gravity vs. DEFENSA TI):**

@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        // El panel interno no se lista aquí (robots.txt es público y solo lo anunciaría);
+        // ya lleva noindex en su propio layout.
+        disallow: ['/api/'],
       },
     ],
     sitemap: 'https://neuronalgravity.com/sitemap.xml',

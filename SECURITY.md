@@ -18,10 +18,13 @@ La seguridad es el núcleo fundamental de este proyecto. Agradecemos la colabora
   * Validación estricta de la cabecera `Location` en saltos `301`, `302`, `307` y `308`.
   * Restricción estricta de esquemas a solo `http:` y `https:`.
   * Re-resolución DNS en cada salto antes de conectar para neutralizar desvíos maliciosos hacia IPs internas.
-* **Matriz Canónica de Puertos y Sondeo No Intrusivo:**
-  * Inspección activa restringida exclusivamente a puertos web (`80`, `443`, `8080`).
-  * Inspección no invasiva de puertos de infraestructura (`21`, `22`, `3306`) sin port-scanning agresivo.
-  * Cero pruebas de inyección, fuerza bruta o denegación de servicio (DDoS).
+* **Dos Modos de Auditoría (público y completo):**
+  * **Público (escáner gratuito):** revisión básica equivalente a una visita normal al sitio: cabeceras HTTP, certificado TLS, registros DNS (SPF/DMARC) y análisis de la portada. No sondea puertos ni busca archivos sensibles.
+  * **Completo (solo con token de administración):** añade sondeo TCP de la matriz cerrada de 12 puertos (`80`, `443`, `8080`, `21`, `22`, `3306`, `5432`, `1433`, `6379`, `3389`, `445`, `27017`) con lectura de banners, y búsqueda de archivos sensibles expuestos (`/.env`, `/.git/HEAD`, respaldos, `phpmyadmin`). Es sondeo activo: se ejecuta únicamente sobre dominios de clientes con autorización escrita.
+  * Cero pruebas de inyección, fuerza bruta o denegación de servicio (DDoS) en ambos modos.
+* **Conexiones Salientes Validadas al Conectar:**
+  * Toda conexión hacia un destino indicado por el visitante (HTTP, TLS, TCP) valida la IP resuelta en el propio socket (`safeLookup`), no en una comprobación previa, para cerrar la ventana de DNS rebinding.
+  * Las descargas tienen tiempo total acotado y tope de bytes; las redirecciones se validan una a una.
 * **Marco Legal y Declaración de Titularidad:**
   * En cumplimiento de la **Ley N° 30096 (Ley de Delitos Informáticos del Perú)**, toda auditoría requiere que el usuario declare bajo juramento ser propietario o contar con autorización formal del titular del dominio.
 

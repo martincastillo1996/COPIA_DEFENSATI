@@ -44,6 +44,8 @@ export interface AuditReportRecord {
   cookies?: CookieScanResult;
   scannedAt?: string;
   isHyperscale?: boolean;
+  /** 'public' = revisión básica; 'full' = auditoría completa autorizada (puertos y archivos). */
+  scanMode?: 'public' | 'full';
   badgeToken?: string;
 }
 
@@ -56,9 +58,25 @@ const REPORT_ID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f
 const MAX_CACHED_REPORTS = 200;
 const MAX_STORED_REPORTS = 5000;
 
+// Retención de los informes del escáner público. La política de privacidad publicada promete
+// depurarlos en un máximo de 24 horas; se puede ajustar con REPORT_RETENTION_HOURS (y entonces
+// hay que actualizar el texto de la política). Las auditorías completas ('full') son entregables
+// de clientes con contrato y no caducan por esta regla.
+const RETENTION_HOURS = Number(process.env.REPORT_RETENTION_HOURS) > 0 ? Number(process.env.REPORT_RETENTION_HOURS) : 24;
+const RETENTION_MS = RETENTION_HOURS * 60 * 60 * 1000;
+
+function isExpired(scannedAt: number, isFull: boolean): boolean {
+  return !isFull && scannedAt > 0 && Date.now() - scannedAt > RETENTION_MS;
+}
+
+function reportTime(report: AuditReportRecord): number {
+  return report.scannedAt ? new Date(report.scannedAt).getTime() || 0 : 0;
+}
+
 interface ReportIndexEntry {
   domain: string;
   scannedAt: number;
+  full?: boolean;
 }
 
 const globalForReports = globalThis as unknown as {
@@ -145,7 +163,8 @@ function ensureIndexLoaded(): void {
         id,
         {
           domain: cleanDomain(report.url),
-          scannedAt: report.scannedAt ? new Date(report.scannedAt).getTime() || 0 : 0,
+          scannedAt: reportTime(report),
+          full: report.scanMode === 'full',
         },
       ]);
     }
@@ -159,6 +178,12 @@ function ensureIndexLoaded(): void {
   }
 }
 
+function removeReport(key: string): void {
+  reportIndex.delete(key);
+  reportStore.delete(key);
+  deleteReportFromDisk(key);
+}
+
 export function saveReport(id: string, report: AuditReportRecord): void {
   ensureIndexLoaded();
   const key = id.toLowerCase();
@@ -168,6 +193,7 @@ export function saveReport(id: string, report: AuditReportRecord): void {
   reportIndex.set(key, {
     domain: cleanDomain(report.url),
     scannedAt: report.scannedAt ? new Date(report.scannedAt).getTime() || Date.now() : Date.now(),
+    full: report.scanMode === 'full',
   });
 
   const file = reportFilePath(key);
@@ -183,6 +209,11 @@ export function saveReport(id: string, report: AuditReportRecord): void {
     }
   }
 
+  // Retención por antigüedad: se depuran los informes públicos vencidos
+  for (const [oldId, entry] of reportIndex) {
+    if (isExpired(entry.scannedAt, Boolean(entry.full))) removeReport(oldId);
+  }
+
   // Retención: al superar el tope se eliminan los informes más antiguos
   while (reportIndex.size > MAX_STORED_REPORTS) {
     const oldestKey = reportIndex.keys().next().value;
@@ -195,16 +226,21 @@ export function saveReport(id: string, report: AuditReportRecord): void {
 
 export function getReportById(id: string): AuditReportRecord | undefined {
   const key = (id || '').toLowerCase();
-  const cached = reportStore.get(key);
-  if (cached) return cached;
+  const report = reportStore.get(key) || readReportFromDisk(key);
+  if (!report) return undefined;
 
-  const fromDisk = readReportFromDisk(key);
-  if (fromDisk) cacheReport(key, fromDisk);
-  return fromDisk;
+  // Un informe público vencido se depura en el momento y deja de estar disponible
+  if (isExpired(reportTime(report), report.scanMode === 'full')) {
+    removeReport(key);
+    return undefined;
+  }
+
+  if (!reportStore.has(key)) cacheReport(key, report);
+  return report;
 }
 
 export function getReportByDomain(domain: string): AuditReportRecord | undefined {
-  const clean = cleanDomain(domain);
+  const clean = cleanDomain(domain).replace(/^www\./, '');
   if (!clean) return undefined;
 
   ensureIndexLoaded();
@@ -214,7 +250,9 @@ export function getReportByDomain(domain: string): AuditReportRecord | undefined
   for (const [id, entry] of reportIndex) {
     const d = entry.domain;
     if (!d) continue;
-    if (d === clean || d.endsWith('.' + clean) || clean.endsWith('.' + d)) {
+    // Coincidencia exacta (solo se ignora "www."): el informe de un dominio padre o de un
+    // subdominio no certifica a otro host distinto.
+    if (d.replace(/^www\./, '') === clean) {
       if (entry.scannedAt >= latestTime) {
         latestTime = entry.scannedAt;
         latestId = id;

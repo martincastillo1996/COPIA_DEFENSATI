@@ -66,7 +66,13 @@ export function isHyperscalePlatform(rawUrlOrDomain?: string | null): boolean {
       const idx = labels.lastIndexOf(brand);
       if (idx === -1) return false;
       const tld = labels.slice(idx + 1);
-      return tld.length >= 1 && tld.length <= 2 && tld.every((l) => /^[a-z]{2,3}$/.test(l));
+      // Solo sufijos propios de una marca global: .com, un ccTLD de 2 letras (.es, .pe)
+      // o com/co + ccTLD (.com.pe, .co.uk). Los gTLD abiertos (.xyz, .top, .vip, .icu)
+      // los registra cualquiera: "google.xyz" o "amazon.top" NO son la marca.
+      const isCc = (l: string) => /^[a-z]{2}$/.test(l);
+      if (tld.length === 1) return tld[0] === 'com' || isCc(tld[0]);
+      if (tld.length === 2) return (tld[0] === 'com' || tld[0] === 'co') && isCc(tld[1]);
+      return false;
     }
     return host === giant || host.endsWith('.' + giant);
   });

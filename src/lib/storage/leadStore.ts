@@ -49,6 +49,15 @@ function persistLeadsToDisk(leads: LeadRecord[]): void {
     if (fs.existsSync(LEADS_FILE) && !fs.existsSync(backupFile)) {
       fs.mkdirSync(backupDir, { recursive: true });
       fs.copyFileSync(LEADS_FILE, backupFile);
+      // Los respaldos contienen datos personales: se conservan solo los 60 más recientes
+      const old = fs.readdirSync(backupDir).filter((f) => /^leads-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
+      for (const f of old.slice(0, Math.max(0, old.length - 60))) {
+        try {
+          fs.unlinkSync(path.join(backupDir, f));
+        } catch {
+          // Se reintenta en el siguiente respaldo
+        }
+      }
     }
     // Escritura atomica para no dejar un JSON truncado si el proceso se corta
     const tmp = `${LEADS_FILE}.${process.pid}.tmp`;

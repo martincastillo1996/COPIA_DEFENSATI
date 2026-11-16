@@ -10,6 +10,8 @@
  * 6. Detección Temprana de Infección / Malware / SEO Spam (Inyecciones en el DOM).
  */
 
+import { safeHttpGet } from '@/lib/security/safeNet';
+
 export interface WafCheckResult {
   hasWaf: boolean;
   provider?: string;
@@ -109,27 +111,22 @@ export async function scanWebAudit(targetUrl: string): Promise<WebAuditResult> {
   let htmlSample = '';
 
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-    const res = await fetch(targetUrl, {
-      method: 'GET',
+    // Petición segura: redirecciones validadas contra SSRF, IP comprobada al conectar,
+    // tiempo total acotado y descarga cortada a 350 KB.
+    const res = await safeHttpGet(targetUrl, {
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 DefensaTI-Audit/1.4',
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
       },
-      signal: controller.signal,
-      cache: 'no-store',
+      timeoutMs: 6000,
+      maxBytes: 350000,
+      maxRedirects: 3,
     });
 
-    clearTimeout(timeoutId);
     responseHeaders = res.headers;
-
-    // Leer hasta 350 KB para analizar DOM sin sobrecargar memoria
-    const rawText = await res.text();
-    htmlSample = rawText.slice(0, 350000);
+    htmlSample = res.body;
   } catch {
     // Si falla la petición HTML, se devuelven resultados predeterminados seguros
   }

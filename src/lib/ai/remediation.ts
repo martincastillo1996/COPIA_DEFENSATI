@@ -155,7 +155,8 @@ function parseResponse(raw: string): RemediationItem[] {
 async function callGemini(prompt: string, apiKey: string): Promise<RemediationItem[]> {
   const ai = new GoogleGenAI({ apiKey });
   const res = await ai.models.generateContent({
-    model: 'gemini-1.5-flash',
+    // Configurable: Google retira modelos con frecuencia. El alias "-latest" sigue al vigente.
+    model: process.env.GEMINI_MODEL?.trim() || 'gemini-flash-lite-latest',
     contents: prompt,
     config: { responseMimeType: 'application/json' },
   });

@@ -5,6 +5,8 @@
  * Protegido contra falsos positivos de Single Page Applications (SPAs que devuelven HTML 200 en cualquier ruta).
  */
 
+import { safeHttpGet } from '@/lib/security/safeNet';
+
 export interface SensitiveFileFinding {
   path: string;
   name: string;
@@ -167,26 +169,21 @@ export async function scanSensitiveFiles(baseUrl: string): Promise<SensitiveFile
 
   for (const probe of PROBES) {
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1400);
-
       const targetUrl = `${origin}${probe.path}`;
-      const res = await fetch(targetUrl, {
-        method: 'GET',
+      // Petición segura: redirecciones validadas contra SSRF, tiempo total acotado y descarga
+      // cortada a los 2 KB (antes se leía el cuerpo entero, sin límite de tamaño ni de tiempo).
+      const res = await safeHttpGet(targetUrl, {
         headers: {
           'User-Agent': 'DefensaTI-Perimetral-Probe/1.3.0 (+https://neuronalgravity.com/defensati)',
           'Accept': '*/*',
         },
-        signal: controller.signal,
-        cache: 'no-store',
+        timeoutMs: 2000,
+        maxBytes: 2048,
+        maxRedirects: 2,
       });
 
-      clearTimeout(timeoutId);
-
       const contentType = res.headers.get('content-type') || '';
-      // Leer solo los primeros 2 KB para no saturar memoria
-      const text = await res.text();
-      const sample = text.slice(0, 2048);
+      const sample = res.body;
 
       const isExposed = probe.validator(res.status, sample, contentType);
 

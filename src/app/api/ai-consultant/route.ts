@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { getClientIp } from '@/lib/security/clientIp';
+import { hitRateLimit, RateLimitMap } from '@/lib/security/rateLimit';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -21,33 +23,15 @@ interface RequestBody {
 }
 
 // 1. Rate Limiter per IP (10 consultas por minuto por cliente para frenar abusos de cuota)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-function getClientIp(req: Request): string {
-  const forwarded = req.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  const realIp = req.headers.get('x-real-ip');
-  if (realIp) return realIp.trim();
-  return '127.0.0.1';
-}
+const rateLimitMap: RateLimitMap = new Map();
+// Tope global por hora: protege la cuota de los proveedores de IA ante un abuso distribuido
+const globalRateLimitMap: RateLimitMap = new Map();
+const GLOBAL_MAX_PER_HOUR = 600;
 
 function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const windowMs = 60 * 1000; // 1 minuto
-  const maxRequests = 10;
-
-  const record = rateLimitMap.get(ip);
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + windowMs });
-    return true;
-  }
-
-  if (record.count >= maxRequests) {
-    return false;
-  }
-
-  record.count += 1;
-  return true;
+  const perIp = hitRateLimit(rateLimitMap, ip, 60 * 1000, 10).allowed;
+  if (!perIp) return false;
+  return hitRateLimit(globalRateLimitMap, 'global', 60 * 60 * 1000, GLOBAL_MAX_PER_HOUR).allowed;
 }
 
 // 2. Patrones de Prompt Injection / Jailbreak / Intento de usar como proxy abierto
@@ -123,29 +107,16 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Validación Estricta de Origen y Host (Anti-Bypass de Subcadena)
-    const host = req.headers.get('host');
+    // El Host siempre es el propio dominio en producción, así que no prueba de dónde viene la
+    // petición (antes anulaba la comprobación). Se exige un Origin o, en su defecto, un Referer
+    // del propio sitio: el navegador siempre envía Origin en un POST desde la página.
     const origin = req.headers.get('origin');
     const referer = req.headers.get('referer');
+    const sourceAllowed = origin ? isAllowedDomain(origin) : referer ? isAllowedDomain(referer) : false;
 
-    const hostAllowed = isAllowedDomain(host);
-
-    if (origin) {
-      if (!isAllowedDomain(origin) && !hostAllowed) {
-        return NextResponse.json(
-          { error: 'Acceso no autorizado desde este origen.' },
-          { status: 403 }
-        );
-      }
-    } else if (referer) {
-      if (!isAllowedDomain(referer) && !hostAllowed) {
-        return NextResponse.json(
-          { error: 'Acceso no autorizado desde este referer.' },
-          { status: 403 }
-        );
-      }
-    } else if (!hostAllowed) {
+    if (!sourceAllowed) {
       return NextResponse.json(
-        { error: 'Acceso no autorizado: Host no reconocido.' },
+        { error: 'Acceso no autorizado desde este origen.' },
         { status: 403 }
       );
     }
@@ -233,7 +204,9 @@ export async function POST(req: NextRequest) {
         ];
 
         const response = await ai.models.generateContent({
-          model: 'gemini-1.5-flash',
+          // Configurable: Google retira modelos con frecuencia (gemini-1.5-flash ya devuelve 404).
+          // El alias "-latest" apunta siempre al modelo vigente de esa familia.
+          model: process.env.GEMINI_MODEL?.trim() || 'gemini-flash-lite-latest',
           contents,
           config: {
             temperature: 0.4,
@@ -241,7 +214,8 @@ export async function POST(req: NextRequest) {
           },
         });
 
-        reply = response.text || 'Hola, soy Neuronality AI. ¿En qué puedo orientarte sobre la seguridad de tu página web?';
+        // Si Gemini devuelve texto vacío, se deja vacío para que conmute al respaldo (Groq)
+        reply = (response.text || '').trim();
       } catch (geminiError: unknown) {
         console.warn('Error en Gemini, conmutando a Groq (IA gratuita de respaldo):', geminiError);
       }
@@ -298,7 +272,10 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : 'Error interno';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[ai-consultant] Error interno:', err);
+    return NextResponse.json(
+      { error: 'No se pudo procesar la consulta. Intenta de nuevo o escríbenos por WhatsApp.' },
+      { status: 500 }
+    );
   }
 }

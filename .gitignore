@@ -64,3 +64,5 @@ data/
 # Agent local configs
 .claude/
 
+# Temporales de prueba (se pueden borrar)
+_to_delete/

@@ -177,8 +177,15 @@ async function rescanClient(client, s) {
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'DefensaTI-Monitor/1.0 (re-escaneo semanal de cliente con mantenimiento)',
+        // Con ADMIN_TOKEN el re-escaneo es completo (puertos y archivos sensibles); sin él, básico.
+        ...(process.env.ADMIN_TOKEN ? { Authorization: 'Bearer ' + process.env.ADMIN_TOKEN.trim() } : {}),
       },
-      body: JSON.stringify({ url: client.domain, force: true, legalConsentAccepted: true }),
+      body: JSON.stringify({
+        url: client.domain,
+        force: true,
+        legalConsentAccepted: true,
+        ...(process.env.ADMIN_TOKEN ? { mode: 'full' } : {}),
+      }),
       signal: AbortSignal.timeout(150_000),
     });
     data = await res.json();

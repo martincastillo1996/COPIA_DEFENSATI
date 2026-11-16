@@ -29,7 +29,8 @@ export async function GET(request: Request, context: RouteContext) {
   return NextResponse.json(report, {
     status: 200,
     headers: {
-      'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=600',
+      // Solo caché del propio navegador: el informe no debe quedar en cachés compartidas/CDN
+      'Cache-Control': 'private, max-age=60',
       'X-Content-Type-Options': 'nosniff',
     },
   });

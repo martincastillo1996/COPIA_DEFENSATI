@@ -21,6 +21,7 @@ export default function CompetitorDuelModal({
 }: CompetitorDuelModalProps) {
   const [competitorUrl, setCompetitorUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [legalConsent, setLegalConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [competitorResult, setCompetitorResult] = useState<{
     domain: string;
@@ -35,7 +36,7 @@ export default function CompetitorDuelModal({
 
   const handleRunDuel = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!competitorUrl.trim()) return;
+    if (!competitorUrl.trim() || !legalConsent) return;
 
     setLoading(true);
     setError(null);
@@ -119,6 +120,18 @@ export default function CompetitorDuelModal({
           <label className="text-xs font-semibold text-neutral-300 block">
             Ingresa el dominio o web de tu competidor comercial:
           </label>
+          <label className="flex items-start gap-2.5 cursor-pointer select-none text-[11px] leading-snug text-neutral-400">
+            <input
+              type="checkbox"
+              checked={legalConsent}
+              onChange={(e) => setLegalConsent(e.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-[#0071e3]"
+            />
+            <span>
+              Declaro bajo juramento que cuento con autorización para revisar este dominio, conforme a la Ley N° 30096.
+              Solo se realiza una revisión pública básica (cabeceras, certificado y DNS).
+            </span>
+          </label>
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -129,9 +142,9 @@ export default function CompetitorDuelModal({
             />
             <button
               type="submit"
-              disabled={loading || !competitorUrl.trim()}
+              disabled={loading || !competitorUrl.trim() || !legalConsent}
               className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
-                loading || !competitorUrl.trim()
+                loading || !competitorUrl.trim() || !legalConsent
                   ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-60'
                   : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/30 cursor-pointer active:scale-95'
               }`}

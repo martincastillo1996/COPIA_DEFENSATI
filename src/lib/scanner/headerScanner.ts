@@ -1,4 +1,4 @@
-import { validateRedirectTarget } from '@/lib/security/ssrfValidator';
+import { safeHttpGet } from '@/lib/security/safeNet';
 import { auditCookies, CookieScanResult } from '@/lib/scanner/cookieScanner';
 
 export interface HeaderCheckItem {
@@ -69,7 +69,6 @@ const REQUIRED_HEADERS = [
 
 export async function scanHeaders(targetUrl: string): Promise<HeaderScanResult> {
   let currentUrl = targetUrl;
-  let maxRedirectHops = 2;
   let responseHeaders: Headers | null = null;
   let rawSetCookie: string | null = null;
   let blockedSsrf = false;
@@ -81,42 +80,26 @@ export async function scanHeaders(targetUrl: string): Promise<HeaderScanResult> 
     'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
   };
 
-  while (maxRedirectHops >= 0) {
-    try {
-      const response = await fetch(currentUrl, {
-        method: 'GET',
-        redirect: 'manual',
-        signal: AbortSignal.timeout(4000),
-        headers: defaultHeaders,
-      });
+  try {
+    // Solo cabeceras (maxBytes 0), hasta 2 redirecciones validadas contra SSRF una a una,
+    // con la IP comprobada en el momento de conectar.
+    const response = await safeHttpGet(targetUrl, {
+      headers: defaultHeaders,
+      timeoutMs: 8000,
+      maxBytes: 0,
+      maxRedirects: 2,
+    });
 
-      responseHeaders = response.headers;
-      rawSetCookie = response.headers.get('set-cookie');
+    responseHeaders = response.headers;
+    rawSetCookie = response.headers.get('set-cookie');
+    currentUrl = response.finalUrl;
 
-      const isRedirect = [301, 302, 303, 307, 308].includes(response.status);
-      const location = response.headers.get('location');
-
-      if (isRedirect && location) {
-        const validation = await validateRedirectTarget(currentUrl, location);
-
-        if (!validation.allowed) {
-          blockedSsrf = true;
-          blockReason = validation.reason;
-          break;
-        }
-
-        if (validation.sanitizedUrl && validation.sanitizedUrl !== currentUrl) {
-          currentUrl = validation.sanitizedUrl;
-          maxRedirectHops--;
-          continue;
-        }
-      }
-
-      break;
-    } catch {
-      responseHeaders = null;
-      break;
+    if (response.blockedRedirect) {
+      blockedSsrf = true;
+      blockReason = response.blockedRedirect;
     }
+  } catch {
+    responseHeaders = null;
   }
 
   const results: HeaderCheckItem[] = [];

@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getReportById, getReportByDomain } from '@/lib/storage/reportStore';
 import { normalizeDomain, verifyBadgeToken, VERIFIED_CLIENT_DOMAINS } from '@/lib/security/badgeSigner';
+import { isHyperscalePlatform } from '@/lib/hyperscalers';
+
+const stripWww = (d: string) => d.replace(/^www\./, '');
 
 interface RouteContext {
   params: Promise<{ domain: string }>;
@@ -24,8 +27,12 @@ export async function GET(request: Request, context: RouteContext) {
     badgeGrade = 'A';
   }
 
+  // Las grandes corporaciones de referencia (hiperescala) no son clientes auditados: su nota es
+  // una referencia fija, así que nunca obtienen sello por token ni por informes almacenados.
+  const isReferenceGiant = isHyperscalePlatform(cleanDomain);
+
   // 2. Verificación criptográfica mediante token firmado HMAC-SHA256
-  if (status === 'unverified' && token && auditId) {
+  if (status === 'unverified' && !isReferenceGiant && token && auditId) {
     if (verifyBadgeToken(cleanDomain, 'A', auditId, token) || verifyBadgeToken(cleanDomain, 'A+', auditId, token)) {
       status = 'verified';
       badgeGrade = 'A';
@@ -33,11 +40,12 @@ export async function GET(request: Request, context: RouteContext) {
   }
 
   // 3. Verificación contra el almacén de reportes por auditId directo
-  if (status === 'unverified' && auditId) {
+  if (status === 'unverified' && !isReferenceGiant && auditId) {
     const report = getReportById(auditId);
-    if (report) {
+    if (report && !report.isHyperscale) {
       const repDomain = normalizeDomain(report.url);
-      if (repDomain === cleanDomain || repDomain.endsWith('.' + cleanDomain) || cleanDomain.endsWith('.' + repDomain)) {
+      // Dominio exacto (solo se ignora "www."): un informe ajeno no certifica a otro host
+      if (stripWww(repDomain) === stripWww(cleanDomain)) {
         if (report.grade === 'A+' || report.grade === 'A' || report.score >= 85) {
           status = 'verified';
           badgeGrade = report.grade || 'A';
@@ -50,9 +58,9 @@ export async function GET(request: Request, context: RouteContext) {
   }
 
   // 4. Verificación retrospectiva contra el almacén en memoria por nombre de dominio
-  if (status === 'unverified') {
+  if (status === 'unverified' && !isReferenceGiant) {
     const domainReport = getReportByDomain(cleanDomain);
-    if (domainReport) {
+    if (domainReport && !domainReport.isHyperscale) {
       if (domainReport.grade === 'A+' || domainReport.grade === 'A' || domainReport.score >= 85) {
         status = 'verified';
         badgeGrade = domainReport.grade || 'A';
