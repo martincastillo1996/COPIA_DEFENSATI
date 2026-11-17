@@ -16,7 +16,7 @@ export default function PricingSection({ targetUrl, score, grade }: Props) {
 
   const getPlanWhatsAppUrl = (planName: string, pricePen: string) => {
     const message = `Hola Martín, estuve revisando mi web ${cleanUrl ? `(${cleanUrl})` : ''} en DEFENSA TI ${score ? `con nota ${score}/100 (Grado ${grade})` : ''} y quiero contratar el plan: *${planName}* (${pricePen}). ¿Cuáles son los pasos para empezar?`;
-    return `https://wa.me/17856433991?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/51987010380?text=${encodeURIComponent(message)}`;
   };
 
   const plans = [

@@ -77,7 +77,7 @@ export default function CompetitorDuelModal({
   };
 
   const isUserWinning = competitorResult && userScore >= competitorResult.score;
-  const whatsappNumber = (siteConfig.contact.whatsappNumber || '17856433991').replace(/[^0-9]/g, '');
+  const whatsappNumber = (siteConfig.contact.whatsappNumber || '51987010380').replace(/[^0-9]/g, '');
   const whatsappMsg = encodeURIComponent(
     competitorResult
       ? `Hola Martín, comparé mi web (${cleanUserDomain} con ${userScore}/100) contra mi competencia (${competitorResult.domain} con ${competitorResult.score}/100). Quisiera asesoría para blindar mi web y asegurar ventaja competitiva.`

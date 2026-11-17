@@ -235,7 +235,7 @@ export default function GlobalCyberThreatsAndSeoScanner() {
               </div>
 
               <a
-                href={`https://wa.me/17856433991?text=${encodeURIComponent(`Hola Martin, acabo de auditar mi web ${scanResult.domain} en Neuronal Gravity y vi que tengo baja nota en seguridad y SEO. Deseo una propuesta para corregirlo e implementar IA.`)}`}
+                href={`https://wa.me/51987010380?text=${encodeURIComponent(`Hola Martin, acabo de auditar mi web ${scanResult.domain} en Neuronal Gravity y vi que tengo baja nota en seguridad y SEO. Deseo una propuesta para corregirlo e implementar IA.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-black font-bold text-xs shadow-md transition-all shrink-0 cursor-pointer"

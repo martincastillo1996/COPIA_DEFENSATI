@@ -8,9 +8,9 @@ export const siteConfig = {
   
   // Contacto Oficial Unificado
   contact: {
-    whatsappNumber: '+17856433991',
-    whatsappFormatted: '+1 (785) 643-3991',
-    whatsappLink: 'https://wa.me/17856433991',
+    whatsappNumber: '+51987010380',
+    whatsappFormatted: '+51 987 010 380',
+    whatsappLink: 'https://wa.me/51987010380',
     email: 'contacto@neuronalgravity.com',
     hours: 'Lunes a Sábado, 9:00 a 20:00 (Hora Perú)',
   },
@@ -25,7 +25,7 @@ export const siteConfig = {
     receiptNotice: 'Factura o Boleta de Venta Electrónica formal con RUC conforme a SUNAT',
     locationNotice: 'Lima, República del Perú',
     email: 'contacto@neuronalgravity.com',
-    whatsappFormatted: '+1 (785) 643-3991',
+    whatsappFormatted: '+51 987 010 380',
     githubRepo: 'https://github.com/martincastillo1996/security-score',
   },
 

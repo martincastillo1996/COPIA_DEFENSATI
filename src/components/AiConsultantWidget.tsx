@@ -108,7 +108,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: 'Inmediato (< 2h)',
       desc: 'Diagnóstico perimetral determinista sin credenciales, membrete formal con RUC y dictamen descargable.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Diagn%C3%B3stico%20Gratuito%20de%20DEFENSA%20TI.'
+      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Diagn%C3%B3stico%20Gratuito%20de%20DEFENSA%20TI.'
     },
     {
       name: 'Rescate (Sitio Corporativo)',
@@ -116,7 +116,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: '24 a 48h',
       desc: 'Desinfección forense completa de archivos y base de datos, desbloqueo de hosting y garantía formal de 30 días.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Rescate%20para%20Sitio%20Corporativo%20(S/%20380).'
+      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Rescate%20para%20Sitio%20Corporativo%20(S/%20380).'
     },
     {
       name: 'Rescate (WooCommerce / Tienda)',
@@ -124,7 +124,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: '24 a 48h',
       desc: 'Desinfección forense integral para tiendas online con saneamiento de checkout y pasarelas de pago.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Rescate%20para%20WooCommerce%20(S/%20550).'
+      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Rescate%20para%20WooCommerce%20(S/%20550).'
     },
     {
       name: 'Blindaje + WAF Cloudflare',
@@ -132,7 +132,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: '3 a 5 días',
       desc: 'Cabeceras estrictas canónicas más Cloudflare WAF perimetral activo anti-bots y mitigación DDoS.',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Blindaje%20+%20WAF%20Cloudflare%20(S/%20450).'
+      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20contratar%20el%20Blindaje%20+%20WAF%20Cloudflare%20(S/%20450).'
     },
     {
       name: 'Mantenimiento Mensual',
@@ -140,7 +140,7 @@ export default function AiConsultantWidget({ report }: Props) {
       original: '',
       time: 'Continuo 24/7',
       desc: 'Vigilancia 24/7 sin permanencia forzosa: Básico (S/ 90/mes) o Tiendas Online con soporte prioritario (S/ 180/mes).',
-      link: 'https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Mantenimiento%20Mensual%20de%20DEFENSA%20TI.'
+      link: 'https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20deseo%20consultar%20sobre%20el%20Mantenimiento%20Mensual%20de%20DEFENSA%20TI.'
     }
   ];
 
@@ -166,7 +166,7 @@ export default function AiConsultantWidget({ report }: Props) {
           ...prev,
           {
             role: 'assistant',
-            content: '¡Con gusto! Te conecto directamente con Martín por WhatsApp al **+1 (785) 643-3991** para coordinar tu requerimiento técnico o blindaje perimetral de inmediato.',
+            content: '¡Con gusto! Te conecto directamente con Martín por WhatsApp al **+51 987 010 380** para coordinar tu requerimiento técnico o blindaje perimetral de inmediato.',
             ctaType: 'whatsapp'
           }
         ]);
@@ -182,7 +182,7 @@ export default function AiConsultantWidget({ report }: Props) {
           ...prev,
           {
             role: 'assistant',
-            content: 'DEFENSA TI ofrece su **diagnóstico perimetral 100% gratuito**. Si deseas contratar nuestros servicios de **Rescate / Desinfección** (desde S/ 380) o **Blindaje + WAF Cloudflare** (S/ 450), puedes escribirnos directamente a nuestro WhatsApp oficial: **+1 (785) 643-3991**.',
+            content: 'DEFENSA TI ofrece su **diagnóstico perimetral 100% gratuito**. Si deseas contratar nuestros servicios de **Rescate / Desinfección** (desde S/ 380) o **Blindaje + WAF Cloudflare** (S/ 450), puedes escribirnos directamente a nuestro WhatsApp oficial: **+51 987 010 380**.',
           }
         ]);
         setIsTyping(false);
@@ -223,7 +223,7 @@ export default function AiConsultantWidget({ report }: Props) {
         ...prev,
         {
           role: 'assistant',
-          content: 'Soy Neuronality AI. En DEFENSA TI auditamos y blindamos tu web contra ataques y bloqueos de pasarela. Puedes tocar el botón para coordinar directamente con Martín por WhatsApp al +1 (785) 643-3991.',
+          content: 'Soy Neuronality AI. En DEFENSA TI auditamos y blindamos tu web contra ataques y bloqueos de pasarela. Puedes tocar el botón para coordinar directamente con Martín por WhatsApp al +51 987 010 380.',
           ctaType: 'whatsapp'
         }
       ]);
@@ -373,7 +373,7 @@ export default function AiConsultantWidget({ report }: Props) {
 
             <div className="flex items-center gap-1">
               <a
-                href="https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20estoy%20en%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta%20directa."
+                href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20estoy%20en%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta%20directa."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-1.5 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] transition-colors"
@@ -468,7 +468,7 @@ export default function AiConsultantWidget({ report }: Props) {
                       {msg.ctaType === 'whatsapp' && (
                         <div className="mt-2.5 pt-2 border-t border-white/10">
                           <a
-                            href="https://wa.me/17856433991?text=Hola%20Mart%C3%ADn,%20estuve%20chateando%20con%20el%20asistente%20de%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta."
+                            href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn,%20estuve%20chateando%20con%20el%20asistente%20de%20DEFENSA%20TI%20y%20deseo%20hacerte%20una%20consulta."
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-[11px] font-bold shadow-md transition-all active:scale-95"
@@ -476,7 +476,7 @@ export default function AiConsultantWidget({ report }: Props) {
                             <svg className="w-3.5 h-3.5 fill-white" viewBox="0 0 24 24">
                               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                             </svg>
-                            <span>Abrir WhatsApp (+1 785 643-3991)</span>
+                            <span>Abrir WhatsApp (+51 987 010 380)</span>
                           </a>
                         </div>
                       )}

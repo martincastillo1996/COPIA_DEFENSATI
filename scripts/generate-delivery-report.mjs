@@ -258,7 +258,7 @@ page.drawText('Nombre, firma y fecha', { x: W - MARGIN - 210, y, size: 8, font, 
 // Pie de página numerado
 const pages = pdf.getPages();
 pages.forEach((p, i) => {
-  const footer = `neuronalgravity.com/defensati  |  contacto@neuronalgravity.com  |  WhatsApp +1 (785) 643-3991`;
+  const footer = `neuronalgravity.com/defensati  |  contacto@neuronalgravity.com  |  WhatsApp +51 987 010 380`;
   p.drawLine({ start: { x: MARGIN, y: 42 }, end: { x: W - MARGIN, y: 42 }, thickness: 0.6, color: C.border });
   p.drawText(footer, { x: MARGIN, y: 28, size: 7.5, font, color: C.muted });
   const num = `Página ${i + 1} de ${pages.length}`;

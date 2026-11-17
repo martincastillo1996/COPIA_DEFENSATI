@@ -318,7 +318,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
               </div>
               <div className="text-right">
                 <span className="text-[9px] font-bold text-neutral-900 block">{isHyperscaleOrGiant || isOptimalSite ? 'Contacto con Martín Castillo:' : 'Coordinar con Martín Castillo:'}</span>
-                <span className="text-[9.5px] font-mono font-black text-emerald-800">WhatsApp: +1 (785) 643-3991</span>
+                <span className="text-[9.5px] font-mono font-black text-emerald-800">WhatsApp: +51 987 010 380</span>
               </div>
             </div>
 

@@ -52,7 +52,7 @@ export default function MobileStickyConversionBar({
     : undefined;
 
   const whatsappUrl = isHyperscale
-    ? `https://wa.me/17856433991?text=${encodeURIComponent(
+    ? `https://wa.me/51987010380?text=${encodeURIComponent(
         `Hola Martín, estuve revisando el análisis de referencia de ${cleanDomain} en DEFENSA TI${reportUrl ? ` (${reportUrl})` : ''} y deseo cotizar una arquitectura de blindaje perimetral.`
       )}`
     : DEFENSATI_WHATSAPP_MESSAGES.escanerContextual({

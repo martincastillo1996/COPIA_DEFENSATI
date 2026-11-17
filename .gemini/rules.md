@@ -15,7 +15,7 @@
 
 ## 4. Contexto Legal y Comercial (Perú)
 - Todas las auditorías y mensajes de privacidad deben contemplar la **Ley Peruana N° 29733 (Protección de Datos Personales)** y las directivas de la ANPDP.
-- Los llamados a la acción comerciales siempre van conectados a la consultoría por WhatsApp (`+1 785 643-3991`).
+- Los llamados a la acción comerciales siempre van conectados a la consultoría por WhatsApp (`+51 987 010 380`).
 
 ## 5. Cero Errores Técnicos
 - Mantener siempre **0 errores de TypeScript** (`npx tsc --noEmit`) y **0 errores de ESLint** (`npm run lint`).

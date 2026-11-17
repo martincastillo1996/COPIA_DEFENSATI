@@ -1,11 +1,11 @@
 import { siteConfig } from '@/config/site';
 
 /**
- * Genera el enlace directo a WhatsApp oficial (+1 785 643-3991) con mensaje claro,
+ * Genera el enlace directo a WhatsApp oficial (+51 987 010 380) con mensaje claro,
  * sin etiquetas raras y 100% contextual para el cliente.
  */
 export function getWhatsAppUrl(message: string): string {
-  const number = (siteConfig.contact.whatsappNumber || '17856433991').replace(/[^0-9]/g, '');
+  const number = (siteConfig.contact.whatsappNumber || '51987010380').replace(/[^0-9]/g, '');
   return `https://wa.me/${number}?text=${encodeURIComponent(message.trim())}`;
 }
 

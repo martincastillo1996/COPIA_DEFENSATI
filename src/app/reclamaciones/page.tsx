@@ -162,7 +162,7 @@ export default function LibroReclamacionesPage() {
                 Volver a DEFENSA TI
               </Link>
               <a
-                href={`https://wa.me/17856433991?text=${encodeURIComponent(`Hola Martín, he presentado la reclamación código ${claimId} en el Libro Virtual. Confirmo la recepción.`)}`}
+                href={`https://wa.me/51987010380?text=${encodeURIComponent(`Hola Martín, he presentado la reclamación código ${claimId} en el Libro Virtual. Confirmo la recepción.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold transition-all shadow-lg shadow-emerald-500/20"

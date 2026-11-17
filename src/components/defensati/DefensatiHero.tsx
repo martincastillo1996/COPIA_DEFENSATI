@@ -144,7 +144,7 @@ export default function DefensatiHero() {
           className="text-[#25D366] hover:underline font-bold inline-flex items-center gap-1.5"
         >
           <WhatsAppIcon className="w-3.5 h-3.5 fill-current inline" />
-          <span>Escríbenos a WhatsApp (+1 (785) 643-3991)</span>
+          <span>Escríbenos a WhatsApp (+51 987 010 380)</span>
         </a>
       </div>
 

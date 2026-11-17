@@ -65,7 +65,7 @@ const jsonLd = {
       ],
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+1-785-643-3991",
+        "telephone": "+51-987-010-380",
         "contactType": "customer service",
         "availableLanguage": ["Spanish"],
         "hoursAvailable": {

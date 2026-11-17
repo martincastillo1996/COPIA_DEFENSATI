@@ -58,7 +58,7 @@ async function generateSamplePdf() {
     color: rgb(56 / 255, 189 / 255, 248 / 255),
   });
 
-  page1.drawText('WhatsApp: +1 (785) 643-3991', {
+  page1.drawText('WhatsApp: +51 987 010 380', {
     x: width - 210,
     y: height - 55,
     size: 8.5,
@@ -361,7 +361,7 @@ async function generateSamplePdf() {
     borderWidth: 0.5,
   });
 
-  page1.drawText('DEFENSA TI  •  contacto@neuronalgravity.com  •  WhatsApp: +1 (785) 643-3991  •  RUC 10704877850', {
+  page1.drawText('DEFENSA TI  •  contacto@neuronalgravity.com  •  WhatsApp: +51 987 010 380  •  RUC 10704877850', {
     x: 50,
     y: 39,
     size: 7.5,
@@ -609,7 +609,7 @@ async function generateSamplePdf() {
     borderWidth: 0.5,
   });
 
-  page2.drawText('DEFENSA TI  •  contacto@neuronalgravity.com  •  WhatsApp: +1 (785) 643-3991  •  RUC 10704877850', {
+  page2.drawText('DEFENSA TI  •  contacto@neuronalgravity.com  •  WhatsApp: +51 987 010 380  •  RUC 10704877850', {
     x: 50,
     y: 39,
     size: 7.5,

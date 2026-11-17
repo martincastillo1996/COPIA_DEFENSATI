@@ -63,7 +63,7 @@ const jsonLd = {
       '@id': 'https://neuronalgravity.com/defensati/#service',
       name: 'DEFENSA TI - Blindaje y Ciberseguridad Web',
       url: 'https://neuronalgravity.com/defensati',
-      telephone: '+17856433991',
+      telephone: '+51987010380',
       priceRange: 'S/ 90 - S/ 550',
       currenciesAccepted: 'PEN',
       paymentAccepted: 'Yape, Plin, Transferencia Bancaria Directa',

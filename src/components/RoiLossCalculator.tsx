@@ -27,7 +27,7 @@ export default function RoiLossCalculator({
   const estimatedMonthlyLoss = Math.round(monthlyBudget * lossRate);
   const paybackDays = Math.max(2, Math.ceil((450 / estimatedMonthlyLoss) * 30));
 
-  const whatsappNumber = (siteConfig.contact.whatsappNumber || '17856433991').replace(/[^0-9]/g, '');
+  const whatsappNumber = (siteConfig.contact.whatsappNumber || '51987010380').replace(/[^0-9]/g, '');
   const whatsappMsg = encodeURIComponent(
     isHyperscale
       ? `Hola Martín, estuve revisando el análisis de referencia corporativa para ${cleanDomain} en DEFENSA TI y quisiera cotizar una arquitectura de blindaje perimetral para mi empresa.`

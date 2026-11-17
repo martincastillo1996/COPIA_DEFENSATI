@@ -72,7 +72,7 @@ export default function TerminosYPrivacidadPage() {
               <strong>Titular y Prestador:</strong> Karol Martin Castillo Rojas (Persona Natural con Negocio) &bull; <strong>RUC:</strong> 10704877850 &bull; Domicilio: Lima, República del Perú.
             </p>
             <p>
-              <strong>Contacto Oficial y Ejercicio de Derechos:</strong> Correo Institucional: <a href="mailto:contacto@neuronalgravity.com" className="text-[#38bdf8] underline">contacto@neuronalgravity.com</a> &bull; WhatsApp Oficial: <a href="https://wa.me/17856433991" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">+1 (785) 643-3991</a>.
+              <strong>Contacto Oficial y Ejercicio de Derechos:</strong> Correo Institucional: <a href="mailto:contacto@neuronalgravity.com" className="text-[#38bdf8] underline">contacto@neuronalgravity.com</a> &bull; WhatsApp Oficial: <a href="https://wa.me/51987010380" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline">+51 987 010 380</a>.
             </p>
             <p>
               <strong>Horario Oficial de Atención y Soporte Técnico:</strong> Lunes a Sábado de 9:00 a 20:00 (Hora Oficial de la República del Perú &bull; UTC-5). Solicitudes fuera de horario o en días domingos/feriados se gestionan al inicio de la jornada hábil siguiente.
@@ -452,7 +452,7 @@ export default function TerminosYPrivacidadPage() {
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
                   <strong className="text-white block">Meta Platforms Inc. / WhatsApp LLC (EE. UU.)</strong>
-                  <span className="text-neutral-400">Canal cifrado de extremo a extremo para mensajería directa, coordinación de soporte técnico y envío de dictámenes al número oficial +1 (785) 643-3991.</span>
+                  <span className="text-neutral-400">Canal cifrado de extremo a extremo para mensajería directa, coordinación de soporte técnico y envío de dictámenes al número oficial +51 987 010 380.</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
                   <strong className="text-white block">Google LLC (EE. UU.)</strong>
