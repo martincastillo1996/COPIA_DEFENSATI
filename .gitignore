@@ -62,7 +62,8 @@ data/
 /informes/
 
 # Agent local configs
-.claude/
+.claude/*
+!.claude/skills/
 
 # Temporales de prueba (se pueden borrar)
 _to_delete/
