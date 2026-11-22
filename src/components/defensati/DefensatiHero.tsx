@@ -110,23 +110,28 @@ export default function DefensatiHero({
         </div>
 
         {isPremiumMode && (
-          <div className="px-4 py-2.5 bg-amber-500/[0.04] border-b ed-line flex flex-col sm:flex-row items-center gap-2">
-            <span className="text-[10px] font-mono uppercase text-amber-400 shrink-0 font-bold">Clave Serial / Licencia:</span>
-            <input
-              type="text"
-              placeholder="Ej. DEFENSA-VIP-2026"
-              value={serialKey || ''}
-              onChange={(e) => setSerialKey?.(e.target.value)}
-              className="w-full bg-black/60 border border-amber-500/30 px-2.5 py-1 text-xs font-mono text-amber-200 placeholder-amber-500/40 focus:outline-none focus:border-amber-400"
-            />
-            <a
-              href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn%2C%20quisiera%20solicitar%20mi%20clave%20serial%20para%20la%20Auditor%C3%ADa%20Premium."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[10px] text-amber-300 underline hover:text-amber-100 shrink-0 whitespace-nowrap"
-            >
-              Pedir clave por WhatsApp
-            </a>
+          <div className="px-4 py-3 bg-amber-500/[0.04] border-b ed-line space-y-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
+              <span className="text-[10px] font-mono uppercase text-amber-400 shrink-0 font-bold">Clave Serial / Licencia:</span>
+              <input
+                type="text"
+                placeholder="Ej. DEFENSA-VIP-2026"
+                value={serialKey || ''}
+                onChange={(e) => setSerialKey?.(e.target.value)}
+                className="w-full bg-black/60 border border-amber-500/30 px-2.5 py-1 text-xs font-mono text-amber-200 placeholder-amber-500/40 focus:outline-none focus:border-amber-400"
+              />
+              <a
+                href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn%2C%20quisiera%20solicitar%20mi%20clave%20serial%20para%20la%20Auditor%C3%ADa%20Premium."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] text-amber-300 underline hover:text-amber-100 shrink-0 whitespace-nowrap"
+              >
+                Pedir clave por WhatsApp
+              </a>
+            </div>
+            <p className="text-[11px] text-amber-300/80 font-mono leading-relaxed flex items-center gap-1.5">
+              <span>⏱️</span> Entrega en 24 horas (1 día): Para evitar saturar tu servidor y procesar sondeos profundos (.env, buckets y TLS), el dictamen forense completo se procesa en cola y se entrega certificado en 24 h.
+            </p>
           </div>
         )}
         <div className="flex flex-col sm:flex-row">

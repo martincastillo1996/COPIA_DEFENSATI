@@ -318,7 +318,7 @@ export default function DefensatiResultsReport({ report, cleanDomain, auditId, i
       </div>
 
       {/* Banner de actualización a Premium si fue un escaneo Lite */}
-      {!report.isPremium && (
+      {!report.isPremium ? (
         <div className="p-4 bg-amber-500/[0.04] border border-amber-500/20 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="space-y-0.5">
             <span className="font-bold text-[#EDEDED] flex items-center gap-1.5">
@@ -335,6 +335,25 @@ export default function DefensatiResultsReport({ report, cleanDomain, auditId, i
             className="px-3.5 py-1.5 bg-amber-400 text-black font-bold text-xs shrink-0 hover:bg-amber-300 transition-colors whitespace-nowrap"
           >
             Obtener Clave Premium
+          </a>
+        </div>
+      ) : (
+        <div className="p-4 bg-amber-500/[0.08] border border-amber-500/30 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="space-y-0.5">
+            <span className="font-bold text-amber-300 flex items-center gap-1.5">
+              <span>⏱️</span> Dictamen Forense Premium en Procesamiento Programado (Entrega: 24 Horas)
+            </span>
+            <p className="text-[#8b97a2]">
+              Para garantizar la estabilidad del servidor y ejecutar pruebas no intrusivas en profundidad (fuga de .env, buckets cloud, suites TLS y endpoints), tu auditoría forense completa con sello de certificación se entrega en un plazo de 24 horas hábiles.
+            </p>
+          </div>
+          <a
+            href={`https://wa.me/51987010380?text=${encodeURIComponent(`Hola Martín, acabo de lanzar la auditoría Premium para ${cleanDomain}. Quisiera confirmar el seguimiento de mi dictamen en 24 horas.`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-1.5 bg-amber-400 text-black font-bold text-xs shrink-0 hover:bg-amber-300 transition-colors whitespace-nowrap"
+          >
+            Confirmar por WhatsApp
           </a>
         </div>
       )}
