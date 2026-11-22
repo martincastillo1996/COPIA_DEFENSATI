@@ -70,6 +70,10 @@ export default function DefensatiPage() {
     turnstileRef,
     resultsRef,
     handleScan,
+    serialKey,
+    setSerialKey,
+    isPremiumMode,
+    setIsPremiumMode,
   } = useSecurityScan();
 
   const handleLoadDemo = () => {
@@ -186,6 +190,10 @@ export default function DefensatiPage() {
               error={error}
               setError={setError}
               onLoadDemo={handleLoadDemo}
+              serialKey={serialKey}
+              setSerialKey={setSerialKey}
+              isPremiumMode={isPremiumMode}
+              setIsPremiumMode={setIsPremiumMode}
             />
 
             {/* Comparativa Cara a Cara de Competidores */}

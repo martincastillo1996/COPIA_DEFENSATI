@@ -288,7 +288,18 @@ export default function DefensatiResultsReport({ report, cleanDomain, auditId, i
       {/* Encabezado */}
       <div className="flex flex-wrap items-end justify-between gap-4 border-b ed-line pb-5">
         <div>
-          <p className="hud-label !tracking-[0.2em]">Resultado del escaneo{date ? ` · ${date}` : ''}</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="hud-label !tracking-[0.2em]">Resultado del escaneo{date ? ` · ${date}` : ''}</p>
+            {report.isPremium ? (
+              <span className="text-[10px] font-mono px-2 py-0.5 border border-amber-400/40 bg-amber-400/10 text-amber-300 font-bold">
+                💎 AUDITORÍA FORENSE PREMIUM
+              </span>
+            ) : (
+              <span className="text-[10px] font-mono px-2 py-0.5 border border-emerald-400/30 bg-emerald-400/10 text-emerald-300">
+                ⚡ ESCANEO LITE
+              </span>
+            )}
+          </div>
           <h2 className="mt-2 text-2xl sm:text-3xl font-light tracking-tight text-[#e8edf1] break-all">{cleanDomain}</h2>
         </div>
         <div className="flex flex-wrap gap-2 text-sm">
@@ -305,6 +316,28 @@ export default function DefensatiResultsReport({ report, cleanDomain, auditId, i
           )}
         </div>
       </div>
+
+      {/* Banner de actualización a Premium si fue un escaneo Lite */}
+      {!report.isPremium && (
+        <div className="p-4 bg-amber-500/[0.04] border border-amber-500/20 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="space-y-0.5">
+            <span className="font-bold text-[#EDEDED] flex items-center gap-1.5">
+              <span>💎</span> ¿Deseas análisis forense profundo de archivos sensibles y TLS?
+            </span>
+            <p className="text-[#8b97a2]">
+              La versión Premium audita fugas de .env, .git, respaldos, buckets S3/GCS y endpoints de API con clave serial de cliente.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn%2C%20quisiera%20solicitar%20mi%20clave%20serial%20para%20la%20Auditor%C3%ADa%20Premium."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-1.5 bg-amber-400 text-black font-bold text-xs shrink-0 hover:bg-amber-300 transition-colors whitespace-nowrap"
+          >
+            Obtener Clave Premium
+          </a>
+        </div>
+      )}
 
       {/* Veredicto */}
       <div className="grid grid-cols-12 gap-y-8 lg:gap-x-12 items-start">

@@ -405,7 +405,7 @@ async function activeChecks(origin: string, html: string, jsUrls: string[]): Pro
 
 export async function scanWebApp(
   targetUrl: string,
-  opts: { mode: 'public' | 'full'; rawHeaders?: Record<string, string> }
+  opts: { mode: 'public' | 'full'; isPremium?: boolean; rawHeaders?: Record<string, string> }
 ): Promise<WebAppResult> {
   const findings: ScanFinding[] = [];
   const origin = new URL(targetUrl).origin;
@@ -580,14 +580,16 @@ export async function scanWebApp(
     });
   }
 
-  // Escaneo activo profundo (CORS, métodos HTTP, source maps, APIs, WordPress, endpoints expuestos)
+  // Escaneo activo profundo (CORS, métodos HTTP, source maps, APIs, WordPress, endpoints expuestos) - Solo en Premium o Full
   let active: WebAppResult['active'];
-  try {
-    const a = await activeChecks(origin, html, firstParty);
-    active = a.result;
-    findings.push(...a.findings);
-  } catch {
-    // Si falla la verificación activa, continúa con el análisis pasivo
+  if (opts.mode === 'full' || opts.isPremium === true) {
+    try {
+      const a = await activeChecks(origin, html, firstParty);
+      active = a.result;
+      findings.push(...a.findings);
+    } catch {
+      // Si falla la verificación activa, continúa con el análisis pasivo
+    }
   }
 
   return {

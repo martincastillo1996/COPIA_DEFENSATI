@@ -150,22 +150,27 @@ export async function POST(req: Request) {
     if (!body || typeof body !== 'object') {
       return NextResponse.json({ error: 'Cuerpo de la solicitud inválido.' }, { status: 400 });
     }
-    const { url, force, legalConsentAccepted, turnstileToken, mode, industry, previousReportId, engagementId, deep, comparison } = body;
+    const { url, force, legalConsentAccepted, turnstileToken, mode, industry, previousReportId, engagementId, deep, comparison, serialKey, licenseKey } = body;
 
-    // 0.05 Modo de auditoría:
-    //  - 'public' (por defecto): revisión básica — cabeceras, TLS, DNS y portada. Equivale a
-    //    una visita normal al sitio; además sondea una lista cerrada de puertos. No busca archivos sensibles.
-    //  - 'full': auditoría completa (puertos + archivos sensibles). Es sondeo activo, así que
-    //    solo se ejecuta con token de administración, para dominios de clientes con
-    //    autorización escrita. Pagar no acredita la titularidad: la acredita la autorización.
-    const isLocalOrDev = process.env.NODE_ENV !== 'production' || process.env.ENABLE_DEEP_SCAN === '1';
-    if (mode === 'full' && !adminRequest && !isLocalOrDev) {
+    // 0.05 Diferenciación de versiones: Lite (gratuita / pública) vs. Premium (clientes con clave serial)
+    const rawKey = typeof serialKey === 'string' ? serialKey.trim() : typeof licenseKey === 'string' ? licenseKey.trim() : '';
+    const configuredKeys = (process.env.PREMIUM_SERIAL_KEYS || 'DEFENSA-VIP-2026,DTI-PREMIUM-2026')
+      .split(',')
+      .map((k) => k.trim().toLowerCase())
+      .filter(Boolean);
+    if (process.env.ADMIN_TOKEN) configuredKeys.push(process.env.ADMIN_TOKEN.trim().toLowerCase());
+
+    const isPremiumKey = rawKey ? configuredKeys.includes(rawKey.toLowerCase()) : false;
+    if (rawKey && !isPremiumKey && !adminRequest) {
       return NextResponse.json(
-        { error: 'La auditoría completa requiere autorización de administración.' },
-        { status: 401 }
+        { error: 'Clave serial o código de cliente inválido o expirado. Solicita tu clave de auditoría premium por WhatsApp.' },
+        { status: 403 }
       );
     }
-    const scanMode: 'public' | 'full' = (mode === 'full' && (adminRequest || isLocalOrDev)) ? 'full' : 'public';
+
+    const isLocalOrDev = process.env.NODE_ENV !== 'production' || process.env.ENABLE_DEEP_SCAN === '1';
+    const isPremium = Boolean(adminRequest || isPremiumKey || (mode === 'full' && isLocalOrDev));
+    const scanMode: 'public' | 'full' = isPremium ? 'full' : 'public';
 
     if (typeof url !== 'string' || !url.trim()) {
       return NextResponse.json(
@@ -471,8 +476,11 @@ export async function POST(req: Request) {
         score: 0,
         grade: 'F' as const,
       })),
-      // Búsqueda de archivos sensibles (/.env, /.git, respaldos, wp-config, etc.): activo en auditoría profunda
-      scanSensitiveFiles(parsedUrl).catch(() => ({
+      // Búsqueda de archivos sensibles (/.env, /.git, respaldos, wp-config, etc.): activo en versión Premium
+      (isPremium
+        ? scanSensitiveFiles(parsedUrl)
+        : Promise.resolve({ hasExposedFiles: false, criticalCount: 0, findings: [] } as SensitiveFilesResult)
+      ).catch(() => ({
         hasExposedFiles: false,
         criticalCount: 0,
         findings: [],
@@ -532,8 +540,8 @@ export async function POST(req: Request) {
     const rawHeadersForIntel = headerResult && 'rawHeaders' in headerResult ? headerResult.rawHeaders : undefined;
     const [cveIntelResult, asmResult, webAppResult] = await Promise.all([
       scanCveIntel({ rawHeaders: rawHeadersForIntel, cms: webAuditResult.cms, ports: portResults }).catch(() => undefined) as Promise<CveIntelResult | undefined>,
-      scanAsm(hostname, { mode: scanMode }).catch(() => undefined) as Promise<AsmResult | undefined>,
-      scanWebApp(parsedUrl, { mode: scanMode, rawHeaders: rawHeadersForIntel }).catch(() => undefined) as Promise<WebAppResult | undefined>,
+      scanAsm(hostname, { mode: scanMode, isPremium }).catch(() => undefined) as Promise<AsmResult | undefined>,
+      scanWebApp(parsedUrl, { mode: scanMode, isPremium, rawHeaders: rawHeadersForIntel }).catch(() => undefined) as Promise<WebAppResult | undefined>,
     ]);
 
     // Nuclei (plantillas comunitarias de CVE/exposición): auditoría autorizada o entorno local con binario
@@ -795,6 +803,8 @@ export async function POST(req: Request) {
       headers: headersList,
       isHyperscale,
       scanMode,
+      isPremium,
+      scanTier: (isPremium ? 'premium' : 'lite') as 'premium' | 'lite',
       ports: adjustedPorts,
       portsVerification: scanMode === 'public' && !isComparison
         ? (() => {

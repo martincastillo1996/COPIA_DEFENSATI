@@ -88,6 +88,8 @@ export interface AuditReportRecord {
   compliance?: ComplianceResult;
   integrity?: ReportIntegrity;
   diff?: ReportDiff;
+  isPremium?: boolean;
+  scanTier?: 'lite' | 'premium';
 }
 
 // Persistencia en disco: un archivo JSON por informe en data/reports/<uuid>.json.

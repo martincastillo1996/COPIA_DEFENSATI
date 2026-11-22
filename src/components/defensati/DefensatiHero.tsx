@@ -20,6 +20,10 @@ interface DefensatiHeroProps {
   error: string | null;
   setError: (err: string | null) => void;
   onLoadDemo?: () => void;
+  serialKey?: string;
+  setSerialKey?: (key: string) => void;
+  isPremiumMode?: boolean;
+  setIsPremiumMode?: (premium: boolean) => void;
 }
 
 export default function DefensatiHero({
@@ -34,6 +38,10 @@ export default function DefensatiHero({
   error,
   setError,
   onLoadDemo,
+  serialKey,
+  setSerialKey,
+  isPremiumMode = false,
+  setIsPremiumMode,
 }: DefensatiHeroProps) {
   const canScan = !loading && legalConsent && Boolean(url.trim());
 
@@ -78,6 +86,49 @@ export default function DefensatiHero({
             <span className={loading ? 'text-[#cfe3ee] font-medium' : ''}>{loading ? 'Auditando...' : 'Listo'}</span>
           </span>
         </div>
+
+        {/* Selector de Nivel: Lite (Gratuito) vs. Premium (Clave Serial) */}
+        <div className="flex border-b ed-line text-xs font-mono">
+          <button
+            type="button"
+            onClick={() => setIsPremiumMode?.(false)}
+            className={`flex-1 py-2 px-3 text-center transition-colors ${
+              !isPremiumMode ? 'bg-white/[0.08] text-[#EDEDED] font-bold border-b-2 border-emerald-400' : 'text-[#8b97a2] hover:text-[#EDEDED]'
+            }`}
+          >
+            ⚡ Auditoría Lite (Gratuita)
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsPremiumMode?.(true)}
+            className={`flex-1 py-2 px-3 text-center transition-colors flex items-center justify-center gap-1.5 ${
+              isPremiumMode ? 'bg-white/[0.08] text-[#EDEDED] font-bold border-b-2 border-amber-400' : 'text-[#8b97a2] hover:text-[#EDEDED]'
+            }`}
+          >
+            💎 Auditoría Premium (Forense)
+          </button>
+        </div>
+
+        {isPremiumMode && (
+          <div className="px-4 py-2.5 bg-amber-500/[0.04] border-b ed-line flex flex-col sm:flex-row items-center gap-2">
+            <span className="text-[10px] font-mono uppercase text-amber-400 shrink-0 font-bold">Clave Serial / Licencia:</span>
+            <input
+              type="text"
+              placeholder="Ej. DEFENSA-VIP-2026"
+              value={serialKey || ''}
+              onChange={(e) => setSerialKey?.(e.target.value)}
+              className="w-full bg-black/60 border border-amber-500/30 px-2.5 py-1 text-xs font-mono text-amber-200 placeholder-amber-500/40 focus:outline-none focus:border-amber-400"
+            />
+            <a
+              href="https://wa.me/51987010380?text=Hola%20Mart%C3%ADn%2C%20quisiera%20solicitar%20mi%20clave%20serial%20para%20la%20Auditor%C3%ADa%20Premium."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[10px] text-amber-300 underline hover:text-amber-100 shrink-0 whitespace-nowrap"
+            >
+              Pedir clave por WhatsApp
+            </a>
+          </div>
+        )}
         <div className="flex flex-col sm:flex-row">
           <label htmlFor="url-scan-input-defensati" className="flex flex-1 items-center gap-3 px-4 py-4 cursor-text">
             <span className="font-mono text-[#4a535b] select-none">&gt;</span>

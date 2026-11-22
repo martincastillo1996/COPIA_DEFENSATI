@@ -550,9 +550,10 @@ async function scanTlsDeep(host: string): Promise<TlsDeepResult> {
 
 // ─────────────────────────── Motor ───────────────────────────
 
-export async function scanAsm(rawHostname: string, opts: { mode: 'public' | 'full' }): Promise<AsmResult> {
+export async function scanAsm(rawHostname: string, opts: { mode: 'public' | 'full'; isPremium?: boolean }): Promise<AsmResult> {
   const domain = rawHostname.replace(/^www\./, '').toLowerCase();
   const host = rawHostname.toLowerCase();
+  const shouldDeepScan = opts.mode === 'full' || opts.isPremium === true;
 
   const [ct, dnssec, caaRaw, nsRaw, emailAuth, tlsDeep] = await Promise.all([
     discoverSubdomains(domain),
@@ -560,12 +561,12 @@ export async function scanAsm(rawHostname: string, opts: { mode: 'public' | 'ful
     safeResolve(() => resolver.resolveCaa(domain), [] as dns.CaaRecord[]),
     safeResolve(() => resolver.resolveNs(domain), [] as string[]),
     checkEmailAuth(domain),
-    sleepTimeout(scanTlsDeep(host), 14000),
+    shouldDeepScan ? sleepTimeout(scanTlsDeep(host), 14000) : Promise.resolve(null),
   ]);
   const [typosquats, publicBuckets] = await Promise.all([
     sleepTimeout(findTyposquats(domain, nsRaw), 12000).then((r) => r ?? []),
-    // Búsqueda de buckets públicos activos en AWS S3 y Google Cloud Storage
-    sleepTimeout(findPublicBuckets(domain), 12000).then((r) => r ?? []),
+    // Búsqueda de buckets públicos activos en AWS S3 y Google Cloud Storage (Solo Premium)
+    shouldDeepScan ? sleepTimeout(findPublicBuckets(domain), 12000).then((r) => r ?? []) : Promise.resolve([] as PublicBucket[]),
   ]);
 
   // Se analizan hasta 60 subdominios, priorizando los de nombre sensible

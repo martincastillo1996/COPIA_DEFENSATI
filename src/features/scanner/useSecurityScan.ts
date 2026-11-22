@@ -17,6 +17,8 @@ export function useSecurityScan() {
   const [error, setError] = useState<string | null>(null);
   const [legalConsent, setLegalConsent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [serialKey, setSerialKey] = useState('');
+  const [isPremiumMode, setIsPremiumMode] = useState(false);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -45,8 +47,9 @@ export function useSecurityScan() {
           url: finalUrl,
           legalConsentAccepted: true,
           turnstileToken,
-          mode: 'full',
-          deep: true,
+          serialKey: isPremiumMode ? serialKey.trim() : undefined,
+          mode: isPremiumMode ? 'full' : 'public',
+          deep: isPremiumMode,
         }),
       });
 
@@ -129,5 +132,6 @@ export function useSecurityScan() {
   return {
     url, setUrl, loading, report, setReport, auditId, setAuditId, error, setError,
     legalConsent, setLegalConsent, setTurnstileToken, turnstileRef, resultsRef, handleScan,
+    serialKey, setSerialKey, isPremiumMode, setIsPremiumMode,
   };
 }
