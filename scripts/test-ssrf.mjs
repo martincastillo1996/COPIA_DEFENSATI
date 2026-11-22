@@ -4,7 +4,20 @@
  * sean interceptadas y bloqueadas de acuerdo con la recomendación RFC 1918.
  */
 
+import dns from 'dns/promises';
 import { validateRedirectTarget } from '../src/lib/security/ssrfValidator.ts';
+
+// DNS simulado por defecto: la suite no debe depender de Internet ni de la velocidad del resolvedor
+// (con un DNS lento, las pruebas con dominios reales fallaban de forma intermitente).
+// SSRF_LIVE_DNS=1 usa el DNS real para una comprobación de humo.
+if (process.env.SSRF_LIVE_DNS !== '1') {
+  const A = { 'www.google.com': ['142.250.80.4'], 'google.com': ['142.250.80.14'], 'autonoma.pe': ['93.184.216.34'], 'attacker-domain.com': ['93.184.216.35'], 'rebind-attacker.com': ['10.0.0.5'], 'metadata-attacker.com': ['169.254.169.254'] };
+  const AAAA = { 'rebind6-attacker.com': ['fd00::1'], 'loop6-attacker.com': ['::1'] };
+  const notFound = () => Object.assign(new Error('ENODATA'), { code: 'ENODATA' });
+  // "lento-attacker.com" no responde nunca: debe bloquearse por tiempo, no aprobarse
+  dns.resolve4 = async (h) => (h === 'lento-attacker.com' ? new Promise(() => {}) : A[h] ? A[h] : Promise.reject(notFound()));
+  dns.resolve6 = async (h) => (h === 'lento-attacker.com' ? new Promise(() => {}) : AAAA[h] ? AAAA[h] : Promise.reject(notFound()));
+}
 
 const ANSI_GREEN = '\x1b[32m';
 const ANSI_RED = '\x1b[31m';
@@ -67,6 +80,36 @@ async function runSsrfTestSuite() {
       location: '/contacto',
       expectedAllowed: true,
     },
+    {
+      name: '9. DNS rebinding: un dominio público que resuelve a una IP privada (10.0.0.5)',
+      base: 'https://attacker-domain.com',
+      location: 'https://rebind-attacker.com/admin',
+      expectedAllowed: false,
+    },
+    {
+      name: '10. Un dominio que resuelve a los metadatos de la nube (169.254.169.254)',
+      base: 'https://attacker-domain.com',
+      location: 'https://metadata-attacker.com/latest/meta-data/',
+      expectedAllowed: false,
+    },
+    {
+      name: '11. Un dominio con IPv6 privada (fd00::1)',
+      base: 'https://attacker-domain.com',
+      location: 'https://rebind6-attacker.com/',
+      expectedAllowed: false,
+    },
+    {
+      name: '12. Un dominio con IPv6 de loopback (::1)',
+      base: 'https://attacker-domain.com',
+      location: 'https://loop6-attacker.com/',
+      expectedAllowed: false,
+    },
+    {
+      name: '13. Un DNS que no responde: se bloquea (falla cerrado), no se aprueba',
+      base: 'https://attacker-domain.com',
+      location: 'https://lento-attacker.com/',
+      expectedAllowed: false,
+    },
   ];
 
   let passedCount = 0;
@@ -97,7 +140,15 @@ async function runSsrfTestSuite() {
     console.log(`${ANSI_GREEN}${ANSI_BOLD}✓ TODOS LOS TESTS PASARON (${passedCount}/${testCases.length}). Sistema 100% protegido contra SSRF por redirección.${ANSI_RESET}\n`);
   } else {
     console.log(`${ANSI_RED}${ANSI_BOLD}✗ HUBO FALLOS EN LA SUITE (${failedCount} fallaron).${ANSI_RESET}\n`);
+    // Sin esto la suite salía con código 0 aunque fallara: el CI quedaba en verde con la protección rota
+    process.exitCode = 1;
   }
 }
 
-runSsrfTestSuite();
+runSsrfTestSuite()
+  .catch((e) => {
+    console.error(e);
+    process.exitCode = 1;
+  })
+  // Las consultas DNS simuladas que no responden dejarían el proceso abierto
+  .finally(() => process.exit(process.exitCode ?? 0));

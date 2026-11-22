@@ -18,6 +18,7 @@ import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackWhatsAppClick } from '@/lib/analytics';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
+import { P } from '@/config/catalog';
 
 interface Props {
   report: AuditReportRecord;
@@ -32,6 +33,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
   const sslDays = report.ssl?.daysRemaining;
   const hasSslIssue = !report.ssl?.valid || (typeof sslDays === 'number' && sslDays < 30);
   const openPortsCount = report.ports?.filter(p => p.isOpen).length ?? 0;
+  const portsScanned = Boolean(report.ports?.length);
   const missingHeadersCount = report.headers?.filter(h => !h.present || h.status === 'missing' || h.status === 'fail').length ?? 0;
   const isHyperscale = Boolean(report.isHyperscale) || isHyperscalePlatform(cleanDomain) || isHyperscalePlatform(report.url);
   const isFullySecure = missingHeadersCount === 0 && (score >= 90 || grade === 'A' || grade === 'A+');
@@ -46,7 +48,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
   let planType: 'limpieza' | 'blindaje' | 'monitoreo' = 'blindaje';
   let badgeText = 'Vulnerabilidades Detectadas';
   let title = 'Recomendación: Blindaje + WAF Cloudflare (Unificado)';
-  let priceText = 'S/ 450 (Pago único)';
+  let priceText = `${P.blindajeWaf} (Pago único)`;
   let diagnosisText = `Tu sitio presenta ${missingHeadersCount} cabeceras de seguridad ausentes y posibles puntos ciegos perimetrales. Aunque carga en el navegador, no cuenta con barreras defensivas contra ataques automatizados ni bots.`;
   let solutionText = 'Aplicamos cabeceras estrictas (HSTS, CSP, X-Frame), Firewall WAF Cloudflare perimetral y optimización DNS anti-suplantación en 3 a 5 días sin alterar tu diseño.';
   let primaryIssue = `Faltan cabeceras OWASP (${missingHeadersCount}) y protección perimetral WAF`;
@@ -61,17 +63,17 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
     primaryIssue = 'Infraestructura multinacional de hiperescala';
   } else if (isFullySecure) {
     planType = 'monitoreo';
-    badgeText = '✅ 100% Blindado y Conforme';
-    title = '¡Excelente! Tu web cumple todos los estándares de seguridad';
+    badgeText = portsScanned ? '✅ 100% Blindado y Conforme' : 'Revisión pública superada';
+    title = portsScanned ? '¡Excelente! Tu web cumple todos los estándares de seguridad' : 'Tu web superó la revisión pública';
     priceText = 'Estado Óptimo • S/ 0 (Sin fallas)';
-    diagnosisText = `¡Felicitaciones! Tu sitio web obtuvo ${score}/100 (Grado ${grade}) con directivas de seguridad completas y sin puertos vulnerables expuestos. La navegación viaja cifrada y tus clientes navegan con total confianza.`;
-    solutionText = 'Tu infraestructura perimetral se encuentra en el más alto nivel técnico. No requieres servicios de remediación ni blindaje de emergencia. Si en el futuro deseas tranquilidad permanente contra caídas imprevistas o expiración SSL, nuestro plan mensual es 100% opcional.';
+    diagnosisText = `¡Felicitaciones! Tu sitio web obtuvo ${score}/100 (Grado ${grade}) con directivas de seguridad completas ${portsScanned ? 'y sin puertos vulnerables expuestos' : '(puertos no evaluados)'}. La navegación viaja cifrada y tus clientes navegan con total confianza.`;
+    solutionText = !portsScanned ? 'Este informe no incluye medición de puertos. Repite el análisis para completarla.' : 'Tu infraestructura perimetral se encuentra en el más alto nivel técnico. No requieres servicios de remediación ni blindaje de emergencia. Si en el futuro deseas tranquilidad permanente contra caídas imprevistas o expiración SSL, nuestro plan mensual es 100% opcional.';
     primaryIssue = 'Sitio en estado óptimo, no requiere intervención correctiva';
   } else if (score < 60 || grade === 'F' || grade === 'D') {
     planType = 'limpieza';
     badgeText = 'Alerta de Riesgo Alto / Crítico';
     title = 'Recomendación: Rescate / Limpieza de malware';
-    priceText = 'S/ 380 (Corp) | S/ 550 (WooCommerce)';
+    priceText = `${P.rescateCorporativo} (Corp) | ${P.rescateTienda} (WooCommerce)`;
     diagnosisText = `Tu sitio obtuvo nota baja (${score}/100, Grado ${grade}) con ${missingHeadersCount} fallas defensivas graves. Este estado lo hace un blanco fácil para virus, desvío de clientes a webs de spam o sanción en Google.`;
     solutionText = 'Desinfectamos los archivos y base de datos con respaldo previo, eliminamos virus o puertas traseras y reactivamos tu hosting con garantía formal de 30 días.';
     primaryIssue = `Puntaje crítico (${score}/100, Grado ${grade}) y vulnerabilidad perimetral`;
@@ -79,7 +81,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
     planType = 'monitoreo';
     badgeText = 'Configuración Saludable';
     title = 'Recomendación: Mantenimiento Mensual 24/7';
-    priceText = 'S/ 90 / mes (Sin permanencia)';
+    priceText = `${P.mantenimientoBasico} / mes (Sin permanencia)`;
     diagnosisText = `¡Excelente trabajo! Tu web obtuvo ${score}/100 (Grado ${grade}). Para que este estándar no se degrade con futuras actualizaciones de plugins o caídas de servidor, te conviene mantenerla vigilada.`;
     solutionText = 'Verificamos caídas cada 15 min, monitoreamos la expiración de tu SSL y te enviamos alertas directas a WhatsApp con soporte técnico incluido.';
     primaryIssue = 'Sitio en buen estado, mantener con monitoreo preventivo';
@@ -99,17 +101,17 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
       });
 
   return (
-    <div className="p-6 sm:p-9 rounded-[32px] bg-gradient-to-b from-[#101826]/95 via-[#0c121e]/95 to-[#080d16]/98 border-2 border-[#0071e3]/50 shadow-[0_20px_60px_rgba(0,113,227,0.25)] backdrop-blur-2xl space-y-6 text-left">
+    <div className="p-6 sm:p-9 border-2 border-white/20 space-y-6 text-left">
       
       {/* Encabezado del Hallazgo Comercial */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
         <div className="flex items-center gap-2.5">
-          <span className={`text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${
+          <span className={`text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 border ${
             planType === 'limpieza'
-              ? 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+              ? 'bg-white/[0.03] border-white/10 text-[#ff4d4d]'
               : planType === 'monitoreo'
-              ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
-              : 'bg-sky-500/15 border-sky-500/30 text-[#38bdf8]'
+              ? 'bg-white/[0.03] border-white/10 text-[#EDEDED]'
+              : 'bg-white/[0.03] border-white/10 text-[#bdbdbd]'
           }`}>
             {badgeText}
           </span>
@@ -125,7 +127,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
 
       {/* Explicación en lenguaje directo */}
       <div className="space-y-3">
-        <h4 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+        <h4 className="text-2xl sm:text-3xl font-extrabold text-[#EDEDED] tracking-tight leading-tight">
           {title}
         </h4>
         
@@ -147,21 +149,21 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }}
-          className="p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-sky-400/50 space-y-1 text-left transition-all active:scale-[0.98] cursor-pointer group"
+          className="p-3.5 bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-white/10 space-y-1 text-left transition-all cursor-pointer group"
           title="Ver detalle del certificado SSL/TLS y días restantes"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] uppercase font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">Certificado SSL/TLS</span>
-            <span className="text-[10px] text-sky-400 font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
+            <span className="text-[10px] text-[#EDEDED] font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
           </div>
-          <p className="text-sm font-bold text-white flex items-center gap-1.5">
+          <p className="text-sm font-bold text-[#EDEDED] flex items-center gap-1.5">
             {hasSslIssue ? (
-              <span className="text-rose-400 flex items-center gap-1">
+              <span className="text-[#ff4d4d] flex items-center gap-1">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 Requiere atención ({sslDays ?? 0} días)
               </span>
             ) : (
-              <span className="text-emerald-400 flex items-center gap-1">
+              <span className="text-[#EDEDED] flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Válido ({sslDays ?? 0} días restantes)
               </span>
@@ -180,21 +182,21 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }}
-          className="p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-sky-400/50 space-y-1 text-left transition-all active:scale-[0.98] cursor-pointer group"
+          className="p-3.5 bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-white/10 space-y-1 text-left transition-all cursor-pointer group"
           title="Ver detalle de las 6 directivas de cabeceras OWASP"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] uppercase font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">Cabeceras OWASP</span>
-            <span className="text-[10px] text-sky-400 font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
+            <span className="text-[10px] text-[#EDEDED] font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
           </div>
-          <p className="text-sm font-bold text-white flex items-center gap-1.5">
+          <p className="text-sm font-bold text-[#EDEDED] flex items-center gap-1.5">
             {missingHeadersCount > 0 ? (
-              <span className="text-amber-400 flex items-center gap-1">
+              <span className="text-[#EDEDED] flex items-center gap-1">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 {missingHeadersCount} cabeceras sin aplicar
               </span>
             ) : (
-              <span className="text-emerald-400 flex items-center gap-1">
+              <span className="text-[#EDEDED] flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Cabeceras completas
               </span>
@@ -213,21 +215,23 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }}
-          className="p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-sky-400/50 space-y-1 text-left transition-all active:scale-[0.98] cursor-pointer group"
+          className="p-3.5 bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-white/10 space-y-1 text-left transition-all cursor-pointer group"
           title="Ver sondeo de sockets y puertos de red expuestos"
         >
           <div className="flex items-center justify-between">
             <span className="text-[11px] uppercase font-mono text-neutral-400 group-hover:text-neutral-200 transition-colors">Puertos de Servidor</span>
-            <span className="text-[10px] text-sky-400 font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
+            <span className="text-[10px] text-[#EDEDED] font-mono flex items-center gap-0.5 opacity-80 group-hover:opacity-100 transition-opacity">Ver detalle &darr;</span>
           </div>
-          <p className="text-sm font-bold text-white flex items-center gap-1.5">
-            {openPortsCount > 2 ? (
-              <span className="text-amber-400 flex items-center gap-1">
+          <p className="text-sm font-bold text-[#EDEDED] flex items-center gap-1.5">
+            {!portsScanned ? (
+              <span className="text-neutral-400">No evaluados</span>
+            ) : openPortsCount > 2 ? (
+              <span className="text-[#EDEDED] flex items-center gap-1">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 {openPortsCount} puertos expuestos
               </span>
             ) : (
-              <span className="text-emerald-400 flex items-center gap-1">
+              <span className="text-[#EDEDED] flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 Puertos estándar
               </span>
@@ -237,9 +241,9 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
       </div>
 
       {/* Solución técnica propuesta */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
-        <div className="flex items-center gap-2 text-xs font-bold text-[#38bdf8]">
-          <Wrench className="w-4 h-4 text-[#38bdf8]" />
+      <div className="p-4 sm:p-5 bg-white/[0.04] border border-white/10 space-y-2">
+        <div className="flex items-center gap-2 text-xs font-bold text-[#bdbdbd]">
+          <Wrench className="w-4 h-4 text-[#bdbdbd]" />
           <span>Plan de acción técnico llave en mano:</span>
         </div>
         <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
@@ -279,7 +283,7 @@ export default function DefensatiScanRecommendation({ report, cleanDomain, audit
               domain: cleanDomain,
             })
           }
-          className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-extrabold text-base sm:text-lg shadow-[0_10px_30px_rgba(37,211,102,0.35)] flex items-center justify-center gap-3 transition-all cursor-pointer"
+          className="w-full sm:w-auto px-8 py-4 bg-[#25D366] hover:bg-[#20ba59] text-black font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 transition-all cursor-pointer"
         >
           <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
           <span>

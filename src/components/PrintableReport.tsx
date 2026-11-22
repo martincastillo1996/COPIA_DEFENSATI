@@ -4,6 +4,7 @@ import React from 'react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
 import { ShieldCheck, CheckCircle2, AlertTriangle, Building2, Code2, Lock } from 'lucide-react';
+import { P } from '@/config/catalog';
 
 interface Props {
   report: AuditReportRecord;
@@ -42,12 +43,12 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
 
   const missingHeaders = (report.headers || []).filter(h => !h.present);
   const isOptimalSite =
-    Boolean(isHyperscaleOrGiant) ||
     (((report.score ?? 0) >= 90 || report.grade === 'A+' || report.grade === 'A') && missingHeaders.length === 0);
   const hasDowngradeRisk = missingHeaders.some(h => (h.header || h.name || '').toLowerCase().includes('transport-security'));
   const hasOpenAdminPorts = (report.ports || []).some(
     p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)
   );
+  const portsScanned = Boolean(report.ports?.length);
   const openAdminPortsList = (report.ports || []).filter(
     p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)
   );
@@ -195,7 +196,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
                   <strong className="text-neutral-900 block font-bold">1. Candado de Seguridad (Certificado SSL / TLS):</strong>
                   <span className="text-neutral-700 leading-tight">
                     {hasValidSsl 
-                      ? `Activo y vigente (${report.ssl?.protocol || 'TLS 1.3'}, vigencia por ${report.ssl?.daysRemaining ?? '...'} días). La conexión básica viaja cifrada.` 
+                      ? `Activo y vigente (${report.ssl?.protocol || 'N/D'}, vigencia por ${report.ssl?.daysRemaining ?? '...'} días). La conexión básica viaja cifrada.` 
                       : 'Crítico: Certificado SSL vencido o ausente. Los navegadores muestran advertencia roja y ahuyentan compradores.'}
                   </span>
                 </div>
@@ -205,51 +206,49 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
               </div>
 
               {/* 2. Anti-Clonación */}
-              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${isHyperscaleOrGiant || missingHeaders.length === 0 ? 'bg-emerald-50/50 border-emerald-300' : missingHeaders.length < 3 ? 'bg-amber-50/50 border-amber-300' : 'bg-rose-50/50 border-rose-300'}`}>
+              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${missingHeaders.length === 0 ? 'bg-emerald-50/50 border-emerald-300' : missingHeaders.length < 3 ? 'bg-amber-50/50 border-amber-300' : 'bg-rose-50/50 border-rose-300'}`}>
                 <div>
                   <strong className="text-neutral-900 block font-bold">2. Protección Anti-Clonación en Navegadores:</strong>
                   <span className="text-neutral-700 leading-tight">
-                    {isHyperscaleOrGiant
-                      ? 'Infraestructura de Hiperescala: La plataforma implementa controles perimetrales propios y validación nativa de framing que impiden ser duplicada por terceros.'
-                      : missingHeaders.length === 0
+                    {missingHeaders.length === 0
                       ? 'Blindado: Tu portal cuenta con las directivas perimetrales que impiden ser duplicado o incrustado dentro de otras páginas.'
                       : `Atención: Faltan ${missingHeaders.length} reglas perimetrales (CSP, X-Frame). Terceros pueden incrustar tu web en páginas espejo para desviar pedidos o suplantar identidad.`}
                   </span>
                 </div>
-                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${isHyperscaleOrGiant || missingHeaders.length === 0 ? 'bg-emerald-200 text-emerald-900' : missingHeaders.length < 3 ? 'bg-amber-200 text-amber-900' : 'bg-rose-200 text-rose-900'}`}>
-                  {isHyperscaleOrGiant || missingHeaders.length === 0 ? '🟢 Óptimo' : missingHeaders.length < 3 ? '🟡 Advertencia' : '🔴 Crítico'}
+                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${missingHeaders.length === 0 ? 'bg-emerald-200 text-emerald-900' : missingHeaders.length < 3 ? 'bg-amber-200 text-amber-900' : 'bg-rose-200 text-rose-900'}`}>
+                  {missingHeaders.length === 0 ? '🟢 Óptimo' : missingHeaders.length < 3 ? '🟡 Advertencia' : '🔴 Crítico'}
                 </span>
               </div>
 
               {/* 3. Accesos y Bases de Datos */}
-              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${!hasOpenAdminPorts ? 'bg-emerald-50/50 border-emerald-300' : 'bg-rose-50/50 border-rose-300'}`}>
+              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${!portsScanned ? 'bg-neutral-50 border-neutral-300' : !hasOpenAdminPorts ? 'bg-emerald-50/50 border-emerald-300' : 'bg-rose-50/50 border-rose-300'}`}>
                 <div>
                   <strong className="text-neutral-900 block font-bold">3. Accesos y Bases de Datos:</strong>
                   <span className="text-neutral-700 leading-tight">
-                    {!hasOpenAdminPorts
+                    {!portsScanned
+                      ? 'No evaluado: este informe no incluye medición de puertos.'
+                      : !hasOpenAdminPorts
                       ? 'Protegido: Tus bases de datos y accesos privados (MySQL, SSH, FTP) están debidamente ocultos y cerrados a miradas públicas.'
                       : `Crítico: Detectado ${openAdminPortsNames || 'puertos sensibles'} expuesto(s) a internet público. Riesgo inminente de captura de credenciales y fuga de datos.`}
                   </span>
                 </div>
-                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${!hasOpenAdminPorts ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'}`}>
-                  {!hasOpenAdminPorts ? '🟢 Óptimo' : '🔴 Crítico'}
+                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${!portsScanned ? 'bg-neutral-200 text-neutral-700' : !hasOpenAdminPorts ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'}`}>
+                  {!portsScanned ? 'No evaluado' : !hasOpenAdminPorts ? '🟢 Óptimo' : '🔴 Crítico'}
                 </span>
               </div>
 
               {/* 4. Ley de Protección de Datos */}
-              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${isHyperscaleOrGiant || (hasValidSsl && !hasDowngradeRisk) ? 'bg-emerald-50/50 border-emerald-300' : 'bg-amber-50/50 border-amber-300'}`}>
+              <div className={`p-2 rounded-lg border flex items-start justify-between gap-3 ${(hasValidSsl && !hasDowngradeRisk) ? 'bg-emerald-50/50 border-emerald-300' : 'bg-amber-50/50 border-amber-300'}`}>
                 <div>
                   <strong className="text-neutral-900 block font-bold">4. Ley de Protección de Datos Personales (Perú Ley N° 29733):</strong>
                   <span className="text-neutral-700 leading-tight">
-                    {isHyperscaleOrGiant
-                      ? 'Conforme a Estándares Globales: Implementa cifrado TLS 1.3 de extremo a extremo y precarga HSTS nativa (Chromium Preload), superando los requerimientos de la Ley N° 29733 y normativas internacionales (GDPR / ISO 27001).'
-                      : hasValidSsl && !hasDowngradeRisk
+                    {hasValidSsl && !hasDowngradeRisk
                       ? 'En cumplimiento: Las sesiones de clientes viajan con cifrado forzado, protegiendo datos personales conforme a la Ley N° 29733.'
                       : 'En observación: Requiere forzar cifrado permanente HSTS y cookies seguras para prevenir fugas accidentales y multas de hasta 50 UIT.'}
                   </span>
                 </div>
-                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${isHyperscaleOrGiant || (hasValidSsl && !hasDowngradeRisk) ? 'bg-emerald-200 text-emerald-900' : 'bg-amber-200 text-amber-900'}`}>
-                  {isHyperscaleOrGiant || (hasValidSsl && !hasDowngradeRisk) ? '🟢 Óptimo' : '🟡 Advertencia'}
+                <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${(hasValidSsl && !hasDowngradeRisk) ? 'bg-emerald-200 text-emerald-900' : 'bg-amber-200 text-amber-900'}`}>
+                  {(hasValidSsl && !hasDowngradeRisk) ? '🟢 Óptimo' : '🟡 Advertencia'}
                 </span>
               </div>
 
@@ -264,7 +263,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
                       ? `Crítico: Anomalía forense en portada (${report.malware.threatLevel}). Requiere desinfección forense inmediata.`
                       : report.waf?.hasWaf
                       ? `Protegido: Firewall WAF perimetral activo (${report.waf.provider || 'WAF Cloud'}). Servidor de origen enmascarado.`
-                      : 'En observación: Servidor sin Firewall WAF. Origen expuesto directamente a escaneos y bots. Se recomienda Blindaje + WAF Cloudflare (S/ 450).'}
+                      : `En observación: Servidor sin Firewall WAF. Origen expuesto directamente a escaneos y bots. Se recomienda Blindaje + WAF Cloudflare (${P.blindajeWaf}).`}
                   </span>
                 </div>
                 <span className={`px-2 py-0.5 rounded font-mono font-bold text-[8.5px] shrink-0 ${report.waf?.hasWaf && !report.sensitiveFiles?.hasExposedFiles && !report.malware?.isInfectedOrSuspicious ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'}`}>
@@ -312,7 +311,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
                   {isHyperscaleOrGiant
                     ? 'Plataforma con red Anycast mundial y centros de datos dedicados • Referencia didáctica'
                     : isOptimalSite
-                    ? 'Cumplimiento exitoso de cabeceras OWASP y puertos seguros • No requiere intervención correctiva'
+                    ? (portsScanned ? 'Cumplimiento exitoso de cabeceras OWASP y puertos seguros • No requiere intervención correctiva' : 'Cabeceras OWASP correctas • Puertos no evaluados')
                     : 'Entrega en 24h • Sin tocar contraseñas ni base de datos • Soporte directo garantizado'}
                 </span>
               </div>
@@ -327,7 +326,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
                 <div className="p-1.5 rounded border border-sky-300 bg-sky-50/60">
                   <span className="font-bold text-sky-900 block">ARQUITECTURA DEDICADA: Red Global Multicapa</span>
                   <p className="text-neutral-700 leading-tight mt-0.5">
-                    Esta corporación opera infraestructura propia con mitigación de DDoS distribuida. Las directivas de framing y HSTS se gestionan internamente.
+                    Esta corporación opera infraestructura propia con mitigación de DDoS distribuida. La calificación refleja solo lo observado desde fuera.
                   </p>
                 </div>
                 <div className="p-1.5 rounded border border-neutral-300 bg-white">
@@ -346,7 +345,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
                   </p>
                 </div>
                 <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                  <span className="font-bold text-neutral-900 block">PLAN PREVENTIVO OPCIONAL: Mantenimiento 24/7 (S/ 90 PEN/mes)</span>
+                  <span className="font-bold text-neutral-900 block">PLAN PREVENTIVO OPCIONAL: Mantenimiento 24/7 ({P.mantenimientoBasico} PEN/mes)</span>
                   <p className="text-neutral-700 leading-tight mt-0.5">
                     Monitoreo preventivo opcional para asegurar que futuras actualizaciones de plugins o cambios de hosting no desactiven tu seguridad.
                   </p>
@@ -355,13 +354,13 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
             ) : (
               <div className="grid grid-cols-2 gap-2 text-[8.5px]">
                 <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                  <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate / Limpieza de malware (S/ 380 - S/ 550 PEN)</span>
+                  <span className="font-bold text-neutral-900 block">OPCIÓN 1: Rescate / Limpieza de malware ({P.rescateCorporativo} - {P.rescateTienda} PEN)</span>
                   <p className="text-neutral-700 leading-tight mt-0.5">
                     Desinfección forense completa de archivos y base de datos con respaldo previo, desbloqueo con el hosting, retiro de pantalla roja y garantía de 30 días.
                   </p>
                 </div>
                 <div className="p-1.5 rounded border border-neutral-300 bg-white">
-                  <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje + WAF Cloudflare Unificado (S/ 450 PEN)</span>
+                  <span className="font-bold text-neutral-900 block">OPCIÓN 2: Blindaje + WAF Cloudflare Unificado ({P.blindajeWaf} PEN)</span>
                   <p className="text-neutral-700 leading-tight mt-0.5">
                     Paquete unificado de prevención: cabeceras estrictas canónicas más Firewall Cloudflare WAF perimetral activo contra bots, DDoS y scrapers.
                   </p>
@@ -509,6 +508,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
               </span>
             </div>
 
+            {!portsScanned && <p className="text-[9px] text-neutral-600">No evaluado: este informe no incluye medición de puertos.</p>}
             <div className="grid grid-cols-6 gap-2">
               {(report.ports || []).map((p) => {
                 const isPort80 = p.port === 80;
@@ -610,16 +610,7 @@ export default function PrintableReport({ report, auditId, pdfViewMode = 'both' 
               </span>
             </h2>
 
-            {isHyperscaleOrGiant ? (
-              <div className="border border-sky-500 rounded-lg p-2.5 bg-[#0a1420] text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
-                <p className="text-sky-300 font-bold"># ESTADO DE AUDITORÍA: INFRAESTRUCTURA DE HIPERESCALA GLOBAL</p>
-                <p className="text-neutral-300"># Plataforma multinacional operando sobre red distribuida Anycast con mitigación L3/L4/L7:</p>
-                <p className="text-sky-400">✓ Balanceo global BGP y centros de datos redundantes: ACTIVOS</p>
-                <p className="text-sky-400">✓ Túnel TLS 1.3 estricto y precarga HSTS en navegador: ACTIVOS</p>
-                <p className="text-sky-400">✓ Protección perimetral anti-framing y control de origen: ACTIVOS</p>
-                <p className="text-neutral-400 mt-1"># Dictamen: Infraestructura corporativa propietaria. No requiere remediación para pymes.</p>
-              </div>
-            ) : isOptimalSite || missingHeaders.length === 0 ? (
+            {isOptimalSite || missingHeaders.length === 0 ? (
               <div className="border border-emerald-500 rounded-lg p-2.5 bg-[#0a1a12] text-neutral-100 font-mono text-[8.5px] leading-relaxed overflow-x-hidden">
                 <p className="text-emerald-300 font-bold"># ESTADO DE AUDITORÍA: SERVIDOR 100% BLINDADO Y CONFORME</p>
                 <p className="text-neutral-300"># Todas las directivas de seguridad OWASP / RFC 9110 evaluadas ya están activas en tu infraestructura:</p>

@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { getReportById } from '@/lib/storage/reportStore';
+import { getReportById, saveReport } from '@/lib/storage/reportStore';
+import { isAdminRequest, hasRole } from '@/lib/security/adminAuth';
+import { verifyShare } from '@/lib/audit/share.mjs';
+import { evaluateRansomwareRisk } from '@/lib/scanner/ransomwareRiskScanner';
+import { evaluateDdosResilience } from '@/lib/scanner/ddosResilienceScanner';
+import { evaluateBankingCompliance } from '@/lib/scanner/bankingComplianceScanner';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -26,11 +31,85 @@ export async function GET(request: Request, context: RouteContext) {
     );
   }
 
-  return NextResponse.json(report, {
+  // Un informe de auditoría completa lleva hallazgos sensibles: solo con sesión del personal o con un enlace firmado vigente.
+  // Se responde 404 y no 403 para no confirmar que existe.
+  if (report.scanMode === 'full' && !hasRole(request, 'viewer') && !verifyShare(id, new URL(request.url).searchParams.get('t') || '')) {
+    return NextResponse.json({ error: 'Reporte perimetral no encontrado o expirado' }, { status: 404 });
+  }
+
+  // Enriquecimiento dinámico para reportes persistidos antes de la actualización
+  const cleanHostname = (report.url || '').replace(/^https?:\/\//i, '').replace(/\/.*$/, '');
+  let wasUpdated = false;
+
+  if (!report.ransomware && report.ports) {
+    try {
+      report.ransomware = evaluateRansomwareRisk({
+        ports: report.ports,
+        sensitiveFiles: report.sensitiveFiles,
+        filesScanned: report.scanMode === 'full',
+      });
+      wasUpdated = true;
+    } catch {
+      // Ignorar fallback
+    }
+  }
+
+  if (!report.ddos) {
+    try {
+      report.ddos = await evaluateDdosResilience({
+        hostname: cleanHostname,
+        resolvedIp: report.telemetry?.targetResolvedIp || report.location?.ip,
+        hasWaf: Boolean(report.waf?.hasWaf),
+        wafProvider: report.waf?.provider,
+        hasXmlRpc: report.sensitiveFiles?.findings?.some(f => f.path.includes('xmlrpc') && f.isExposed),
+        spfRaw: report.dnsSecurity?.spf?.raw,
+      });
+      wasUpdated = true;
+    } catch {
+      // Ignorar fallback
+    }
+  }
+
+  if (!report.banking) {
+    try {
+      report.banking = await evaluateBankingCompliance({
+        hostname: cleanHostname,
+        headers: report.headers || [],
+        cookies: report.cookies,
+        isEcommerce: report.cms?.isEcommerce,
+        paymentGateways: report.commercial?.paymentGateways,
+      });
+      wasUpdated = true;
+    } catch {
+      // Ignorar fallback
+    }
+  }
+
+  if (wasUpdated) {
+    try {
+      saveReport(id, report);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  const adminRequest = isAdminRequest(request);
+  const clientReport = adminRequest
+    ? report
+    : {
+        ...report,
+        telemetry: report.telemetry
+          ? {
+              durationMs: report.telemetry.durationMs,
+            }
+          : undefined,
+      };
+
+  return NextResponse.json(clientReport, {
     status: 200,
     headers: {
       // Solo caché del propio navegador: el informe no debe quedar en cachés compartidas/CDN
-      'Cache-Control': 'private, max-age=60',
+      'Cache-Control': report.scanMode === 'full' ? 'no-store' : 'private, max-age=60',
       'X-Content-Type-Options': 'nosniff',
     },
   });

@@ -78,3 +78,23 @@ export function verifyBadgeToken(domain: string, grade: string, auditId = '', to
     return false;
   }
 }
+
+
+/**
+ * Firma HMAC-SHA256 completa (hex, 64 caracteres) de una carga arbitraria.
+ * Se usa para sellar la integridad de los informes de auditoría.
+ */
+export function signPayload(payload: string): string {
+  return crypto.createHmac('sha256', BADGE_SECRET).update(`report:${payload}`).digest('hex');
+}
+
+export function verifyPayloadSignature(payload: string, signature: string): boolean {
+  if (!signature || typeof signature !== 'string') return false;
+  const expected = signPayload(payload);
+  if (expected.length !== signature.length) return false;
+  try {
+    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+  } catch {
+    return false;
+  }
+}

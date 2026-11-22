@@ -18,7 +18,7 @@ export const projectsRegistry: ProjectItem[] = [
     badge: 'Primer Proyecto Activo',
     targetAudience: 'Para empresas y negocios en el Perú con presencia web que necesitan blindar su reputación y cumplir con estándares de ciberseguridad.',
     description: 'Auditoría externa no intrusiva y blindaje perimetral para sitios web corporativos y comercio electrónico.',
-    entryPrice: 'Desde S/ 65',
+    entryPrice: 'Diagnóstico gratis',
     href: '/defensati',
     status: 'active',
     features: [

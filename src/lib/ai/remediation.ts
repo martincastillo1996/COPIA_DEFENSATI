@@ -151,6 +151,10 @@ function parseResponse(raw: string): RemediationItem[] {
   }));
 }
 
+/** Tope por llamada y tope total: el escaneo nunca debe esperar a la IA más de unos segundos. */
+const AI_CALL_TIMEOUT_MS = 2200;
+const AI_TOTAL_DEADLINE_MS = 2500;
+
 // 1. Google Gemini 2.5 Flash
 async function callGemini(prompt: string, apiKey: string): Promise<RemediationItem[]> {
   const ai = new GoogleGenAI({ apiKey });
@@ -177,6 +181,7 @@ async function callGroq(prompt: string, apiKey: string): Promise<RemediationItem
       response_format: { type: 'json_object' },
       temperature: 0.1,
     }),
+    signal: AbortSignal.timeout(AI_CALL_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`Groq status ${res.status}`);
   const data = await res.json();
@@ -195,6 +200,7 @@ async function callCloudflare(prompt: string, accountId: string, apiToken: strin
     body: JSON.stringify({
       messages: [{ role: 'user', content: prompt }],
     }),
+    signal: AbortSignal.timeout(AI_CALL_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`Cloudflare AI status ${res.status}`);
   const data = await res.json();
@@ -247,46 +253,53 @@ export async function generateRemediation(
 
   const prompt = buildPrompt(targetUrl, headersToAudit, isHyperscale);
 
-  // 1. Intentar Gemini
-  const geminiKey = process.env.GEMINI_API_KEY?.trim();
-  if (geminiKey) {
-    try {
-      const result = await callGemini(prompt, geminiKey);
-      knowledgeBase.set(cacheKey, result);
-      return result;
-    } catch {
-      console.warn('[CASCADE] Gemini no disponible. Conmutando a Groq (Llama 3.3)...');
+  const runAiCascade = async (): Promise<RemediationItem[] | null> => {
+    // 1. Intentar Gemini
+    const geminiKey = process.env.GEMINI_API_KEY?.trim();
+    if (geminiKey) {
+      try {
+        const result = await callGemini(prompt, geminiKey);
+        knowledgeBase.set(cacheKey, result);
+        return result;
+      } catch {
+        console.warn('[CASCADE] Gemini no disponible. Conmutando a Groq (Llama 3.3)...');
+      }
     }
-  }
 
-  // 2. Intentar Groq
-  const groqKey = process.env.GROQ_API_KEY?.trim();
-  if (groqKey) {
-    try {
-      const result = await callGroq(prompt, groqKey);
-      knowledgeBase.set(cacheKey, result);
-      return result;
-    } catch {
-      console.warn('[CASCADE] Groq no disponible. Conmutando a Cloudflare Workers AI...');
+    // 2. Intentar Groq
+    const groqKey = process.env.GROQ_API_KEY?.trim();
+    if (groqKey) {
+      try {
+        const result = await callGroq(prompt, groqKey);
+        knowledgeBase.set(cacheKey, result);
+        return result;
+      } catch {
+        console.warn('[CASCADE] Groq no disponible. Conmutando a Cloudflare Workers AI...');
+      }
     }
-  }
 
-  // 3. Intentar Cloudflare
-  const cfKey = process.env.CLOUDFLARE_API_KEY?.trim();
-  const cfAccount = process.env.CLOUDFLARE_ACCOUNT_ID?.trim();
-  if (cfKey && cfAccount) {
-    try {
-      const result = await callCloudflare(prompt, cfAccount, cfKey);
-      knowledgeBase.set(cacheKey, result);
-      return result;
-    } catch {
-      console.warn('[CASCADE] Cloudflare AI no disponible. Conmutando a Motor Propio Local OWASP...');
+    // 3. Intentar Cloudflare
+    const cfKey = process.env.CLOUDFLARE_API_KEY?.trim();
+    const cfAccount = process.env.CLOUDFLARE_ACCOUNT_ID?.trim();
+    if (cfKey && cfAccount) {
+      try {
+        const result = await callCloudflare(prompt, cfAccount, cfKey);
+        knowledgeBase.set(cacheKey, result);
+        return result;
+      } catch {
+        console.warn('[CASCADE] Cloudflare AI no disponible. Conmutando a Motor Propio Local OWASP...');
+      }
     }
-  }
+    return null;
+  };
 
-  // 4. Motor Determinista Propio
+  const aiResult = await Promise.race([
+    runAiCascade(),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), AI_TOTAL_DEADLINE_MS)),
+  ]);
+  if (aiResult) return aiResult;
+
+  // 4. Motor Determinista Propio (sin caché si fue por plazo: la IA puede responder la próxima vez)
   console.info('[CASCADE] Operando sobre Motor Propio Local OWASP ($0 permanente).');
-  const localResult = getLocalEngineFallback(headersToAudit);
-  knowledgeBase.set(cacheKey, localResult);
-  return localResult;
+  return getLocalEngineFallback(headersToAudit);
 }

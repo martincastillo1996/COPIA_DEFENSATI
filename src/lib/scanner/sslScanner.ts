@@ -34,7 +34,7 @@ export async function scanSsl(hostname: string): Promise<SslCheckResult> {
       },
       () => {
         const cert = socket.getPeerCertificate(true);
-        const protocol = socket.getProtocol() || 'TLSv1.2';
+        const protocol = socket.getProtocol() || 'N/D';
 
         if (!cert || Object.keys(cert).length === 0) {
           socket.destroy();

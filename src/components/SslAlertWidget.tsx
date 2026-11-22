@@ -68,19 +68,19 @@ export default function SslAlertWidget({ domain, daysRemaining = 0 }: SslAlertWi
   };
 
   return (
-    <div className="rounded-2xl bg-neutral-900/80 border border-white/10 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden">
+    <div className="bg-neutral-900/80 border border-white/10 p-5 sm:p-6 relative overflow-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+          <div className="w-9 h-9 bg-white/[0.03] border border-white/10 flex items-center justify-center text-[#EDEDED] shrink-0">
             <Bell className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#EDEDED] bg-white/[0.03] px-2 py-0.5 border border-white/10">
                 Monitoreo Proactivo Gratis
               </span>
             </div>
-            <h4 className="text-sm font-bold text-white mt-0.5">
+            <h4 className="text-sm font-bold text-[#EDEDED] mt-0.5">
               Alerta de Vencimiento de SSL y Caídas en WhatsApp
             </h4>
           </div>
@@ -94,8 +94,8 @@ export default function SslAlertWidget({ domain, daysRemaining = 0 }: SslAlertWi
       </p>
 
       {registered ? (
-        <div className="mt-4 p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/40 text-emerald-200 text-xs flex items-center gap-2.5">
-          <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="mt-4 p-3.5 bg-white/[0.03] border border-white/10 text-[#EDEDED] text-xs flex items-center gap-2.5">
+          <Check className="w-4 h-4 text-[#EDEDED] shrink-0" />
           <span>¡Alerta activada correctamente para <strong>{cleanDomain}</strong>! Te avisaremos por WhatsApp antes de que tu web sufra caídas.</span>
         </div>
       ) : (
@@ -106,12 +106,12 @@ export default function SslAlertWidget({ domain, daysRemaining = 0 }: SslAlertWi
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             disabled={loading}
-            className="w-full sm:w-auto sm:flex-1 bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#0071e3] transition-colors"
+            className="w-full sm:w-auto sm:flex-1 bg-[#080808] border border-white/15 px-4 py-2.5 text-xs text-[#EDEDED] placeholder-slate-500 focus:outline-none focus:border-white/20 transition-colors"
           />
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] disabled:bg-neutral-800 disabled:text-neutral-500 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer shadow-md shadow-[#25D366]/20 active:scale-95"
+            className="w-full sm:w-auto px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] disabled:bg-neutral-800 disabled:text-neutral-500 text-[#EDEDED] font-bold text-xs transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer"
           >
             {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Bell className="w-3.5 h-3.5" />}
             <span>Activar Alerta Gratis</span>
@@ -120,7 +120,7 @@ export default function SslAlertWidget({ domain, daysRemaining = 0 }: SslAlertWi
       )}
 
       {error && (
-        <p className="text-[11px] text-rose-400 mt-2 font-medium flex items-center gap-1">
+        <p className="text-[11px] text-[#ff4d4d] mt-2 font-medium flex items-center gap-1">
           <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
           {error}
         </p>

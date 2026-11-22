@@ -128,7 +128,7 @@ export default function AuditEngineExplanation({
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong>Sondeo TCP de Sockets Canónicos:</strong> Conexión activa no invasiva a puertos clave (80, 443, 8080, 21, 22, 3306) para verificar exposición perimetral sin tocar tu base de datos ni pedir contraseñas.
+                    <strong>Sondeo TCP de Sockets Canónicos:</strong> Con la titularidad del dominio verificada: conexión no invasiva a puertos clave (80, 443, 8080, 21, 22, 3306) para verificar exposición perimetral sin tocar tu base de datos ni pedir contraseñas.
                   </span>
                 </div>
                 <div className="flex items-start gap-2">

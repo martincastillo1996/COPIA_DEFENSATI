@@ -50,6 +50,7 @@ dist
 # Variables de entorno y secretos
 .env*.local
 .env
+!.env.example
 .DS_Store
 *.log
 
@@ -66,3 +67,6 @@ data/
 
 # Temporales de prueba (se pueden borrar)
 _to_delete/
+# Copias de seguridad cifradas del servidor (docs/despliegue.md): nunca al repositorio
+/backups/
+*.dtibak

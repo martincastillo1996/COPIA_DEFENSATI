@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getClientIp } from '@/lib/security/clientIp';
 import { hitRateLimit, RateLimitMap } from '@/lib/security/rateLimit';
+import { P } from '@/config/catalog';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -59,14 +60,20 @@ const SYSTEM_INSTRUCTION = `Eres el Asesor Oficial de Inteligencia Artificial de
 Tu identidad oficial es Neuronality AI. Tu rol es orientar a dueños de negocios, tiendas online y emprendedores sobre la ciberdefensa de sus páginas web y conectarlos directamente con Martín por WhatsApp (+51 987 010 380) para contratar o resolver urgencias.
 
 CATÁLOGO COMERCIAL OFICIAL DE DEFENSA TI (Precios transparentes en Soles PEN):
-1. Diagnóstico gratuito (S/ 0): Auditoría perimetral pasiva de cabeceras HTTP, SSL/TLS y puertos expuestos. Dictamen técnico descargable en menos de 2 horas.
+1. Diagnóstico gratuito (S/ 0): Auditoría perimetral no intrusiva de cabeceras HTTP, SSL/TLS y DNS; los puertos solo si el titular demuestra que el dominio es suyo (registro TXT o archivo) o con una auditoría autorizada por escrito. Dictamen técnico descargable en menos de 2 horas.
 2. Rescate / Limpieza de malware (Desinfección forense con respaldo integral previo, retiro de virus/malware, desbloqueo con el hosting, retiro de pantalla roja de Google y garantía formal de 30 días por escrito ante reinfecciones. Martín revisa personalmente cada web):
-   - Sitio Corporativo (blogs, portafolios): S/ 380 (pago único).
-   - WooCommerce / Tienda Online (Shopify, Wix): S/ 550 (pago único, saneamiento de checkout y pasarelas de pago).
-3. Blindaje + WAF Cloudflare (Paquete Unificado): S/ 450 (pago único). Cabeceras canónicas estrictas (HSTS, CSP, X-Frame) más Firewall perimetral WAF activo contra bots, scrapers y ataques DDoS. No se venden cabeceras por separado.
+   - Sitio Corporativo (blogs, portafolios): ${P.rescateCorporativo} (pago único).
+   - WooCommerce / Tienda Online (Shopify, Wix): ${P.rescateTienda} (pago único, saneamiento de checkout y pasarelas de pago).
+3. Blindaje + WAF Cloudflare (Paquete Unificado): ${P.blindajeWaf} (pago único). Cabeceras canónicas estrictas (HSTS, CSP, X-Frame) más Firewall perimetral WAF activo contra bots, scrapers y ataques DDoS. No se venden cabeceras por separado.
 4. Mantenimiento Mensual (sin permanencia forzosa):
-   - Básico (sitios corporativos): S/ 90 / mes (uptime cada 15 min, alerta SSL, reporte mensual y 40 min de soporte).
-   - Tiendas Online (soporte prioritario): S/ 180 / mes (uptime cada 5 min, alerta prioritaria a WhatsApp, re-escaneos semanales y 90 min de soporte prioritario).
+   - Básico (sitios corporativos): ${P.mantenimientoBasico} / mes (uptime cada 15 min, alerta SSL, reporte mensual y 40 min de soporte).
+   - Tiendas Online (soporte prioritario): ${P.mantenimientoTiendas} / mes (uptime cada 5 min, alerta prioritaria a WhatsApp, re-escaneos semanales y 90 min de soporte prioritario).
+5. Servicios complementarios (pago único):
+   - Blindaje de correo anti-spam (SPF, DKIM, DMARC): ${P.correoSpfDkimDmarc}.
+   - Migración segura de hosting sin caída: ${P.migracionCorporativa} (web corporativa) / ${P.migracionTienda} (tienda online).
+   - Optimización de velocidad (WPO + Core Web Vitals): ${P.wpoCorporativo} (web corporativa) / ${P.wpoTienda} (tienda online).
+   - Adecuación legal Ley N° 29733: ${P.legalBasica} (básica) / ${P.legalIntegral} (integral).
+   - Auditoría técnica de pasarelas de pago (Niubiz, Culqi, Izipay, MercadoPago, Stripe): ${P.auditoriaPasarelas}.
 
 REGLAS DE ATENCIÓN:
 - Habla en español con un tono cercano, profesional y enfocado en negocios (proteger ventas, evitar bloqueos de pasarelas, evitar hackeos).

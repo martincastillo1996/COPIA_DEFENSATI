@@ -3,7 +3,7 @@
  *
  * El escáner público hace únicamente revisión básica (cabeceras, TLS, DNS y portada).
  * El sondeo activo de puertos y de archivos sensibles solo corre en modo "full", que exige
- * el token de administración. Este script lo lanza contra la app en ejecución.
+ * el token de administración y una autorización verificada (npm run audit:cli). Este script lo lanza contra la app en ejecución.
  *
  * Uso:  npm run scan:full -- cliente.com
  * Requiere ADMIN_TOKEN (variable de entorno o .env.local / .env).

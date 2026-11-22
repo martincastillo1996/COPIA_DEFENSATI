@@ -70,7 +70,7 @@ export default function AdminLeadsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-[#f5f5f7] px-4 sm:px-6 py-8">
+    <main className="min-h-screen bg-[#080808] text-[#f5f5f7] px-4 sm:px-6 py-8">
       <div className="max-w-6xl mx-auto space-y-6">
         <header className="flex flex-wrap items-center justify-between gap-4">
           <NeuronalGravityBrandLogo />

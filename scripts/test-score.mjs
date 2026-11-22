@@ -7,6 +7,8 @@
 import assert from 'node:assert/strict';
 import { calculateSecurityScore } from '../src/lib/scanner/scoreEngine.ts';
 import { isHyperscalePlatform } from '../src/lib/hyperscalers.ts';
+import { ENDPOINT_PROBES, probeExposedEndpoints } from '../src/lib/scanner/webAppScanner.ts';
+import { isUnsafeUrl } from './audit/crawler.mjs';
 
 const header = (name, status, value = null) => ({
   header: name,
@@ -66,9 +68,10 @@ const tests = [
     const r = calculateSecurityScore('https://mitienda.pe/tienda?x=1', ALL_PASS, SSL_13);
     assert.equal(r.score, 85);
   }],
-  ['Hiperescalador real obtiene A+ aunque no envíe cabeceras', () => {
+  ['Una marca global se puntúa por lo medido, sin nota fija', () => {
     const r = calculateSecurityScore('google.com', ALL_MISSING, SSL_13);
-    assert.equal(r.grade, 'A+');
+    assert.equal(r.score, 45);
+    assert.equal(r.grade, 'D');
   }],
   ['Una pyme cuyo dominio contiene "x.com" NO recibe la nota de hiperescalador', () => {
     const r = calculateSecurityScore('relax.com.pe', ALL_MISSING, SSL_13);
@@ -84,6 +87,57 @@ const tests = [
     for (const d of ['relax.com.pe', 'wix.com', 'fedex.com', 'google.com.mitienda.pe', 'notgoogle.com', 'mibbva.pe', 'amazonas-tours.pe', 'selvaamazon.com.fake.pe', 'google.xyz', 'amazon.top', 'www.google.vip', 'amazon.icu', 'mitienda.pe', '', null, undefined]) {
       assert.equal(isHyperscalePlatform(d), false, String(d));
     }
+  }],
+  ['Rutas expuestas: las huellas nuevas aciertan con cuerpos reales y no con páginas blandas', () => {
+    const by = (p) => ENDPOINT_PROBES.find((x) => x.path === p);
+    const positives = {
+      '/metrics': '# HELP process_cpu_user_seconds_total Total user CPU time spent in seconds.\n# TYPE process_cpu_user_seconds_total counter\n',
+      '/api-docs': '{"swagger":"2.0","info":{"title":"B2B API"}}',
+      '/swagger-ui.html': '<html><title>Swagger UI</title><div id="swagger-ui"></div>',
+      '/swagger/index.html': '<html><div id="swagger-ui"></div>',
+      '/debug/pprof/': '<html><head><title>/debug/pprof/</title></head><body>Types of profiles available:',
+      '/server-info': '<h1>Apache Server Information</h1>',
+      '/.DS_Store': '\u0000\u0000\u0000\u0001Bud1\u0000',
+      '/.htpasswd': 'admin:$apr1$abc$def\n',
+      '/WEB-INF/web.xml': '<?xml version="1.0"?><web-app>',
+      '/actuator': '{"_links":{"self":{"href":"http://x/actuator","templated":false},"health":{}}}',
+      '/env': '{"systemProperties":{"java.version":"17"}}',
+      '/package.json': '{"name":"app","dependencies":{"express":"4.18.0"}}',
+      '/composer.json': '{"require":{"php":">=8.1"}}',
+    };
+    for (const [path, body] of Object.entries(positives)) {
+      assert.ok(by(path), 'falta ' + path);
+      assert.ok(by(path).fingerprint.test(body), 'no reconoce ' + path);
+    }
+    const soft = '<!doctype html><html><head><title>Mi tienda</title></head><body><h1>Página no encontrada</h1><p>El recurso solicitado no existe</p></body></html>';
+    for (const p of ENDPOINT_PROBES) assert.equal(p.fingerprint.test(soft), false, 'falso positivo en una página blanda: ' + p.path);
+    const paths = ENDPOINT_PROBES.map((p) => p.path);
+    assert.equal(new Set(paths).size, paths.length, 'rutas duplicadas');
+    for (const p of ENDPOINT_PROBES) assert.ok(!isUnsafeUrl(p.path), 'ruta peligrosa para un GET: ' + p.path);
+  }],
+  ['Directorios navegables: reconoce Apache, nginx, Python y Express, y no una página normal', () => {
+    const listing = ENDPOINT_PROBES.filter((p) => p.label === 'Listado de directorio');
+    assert.ok(listing.length >= 20 && listing.every((p) => p.path.endsWith('/')));
+    const fp = listing[0].fingerprint;
+    for (const title of ['Index of /backup', 'Directory listing for /uploads/', 'listing directory /ftp']) assert.ok(fp.test(`<html><head><title>${title}</title>`), title);
+    assert.equal(fp.test('<html><head><title>Mi tienda</title></head><body>Index of products</body></html>'), false);
+  }],
+  ['probeExposedEndpoints: encuentra lo expuesto y descarta la aplicación que responde a todo', async () => {
+    const shell = '<!doctype html><html><head><title>App</title></head><body><app-root></app-root></body></html>';
+    const fake = (routes, fallback) => async (url) => {
+      const path = new URL(url).pathname;
+      const r = routes[path] ?? fallback;
+      return r ? { status: 200, body: r } : { status: 404, body: '' };
+    };
+    // Una SPA responde 200 con su HTML a toda ruta: solo lo que cumple la huella cuenta
+    const found = await probeExposedEndpoints('http://x', fake({ '/metrics': '# HELP process_cpu_user_seconds_total x\n# TYPE y counter', '/api-docs/': '<div id="swagger-ui"></div>', '/ftp/': '<title>listing directory /ftp</title>' }, shell));
+    assert.deepEqual(found.exposed.map((e) => e.path).sort(), ['/api-docs/', '/ftp/', '/metrics']);
+    assert.ok(found.findings.every((f) => f.confidence === 'confirmado' && /accesible: \//.test(f.title)));
+    // Si hasta una ruta inexistente devuelve esa misma huella, no hay hallazgo (la app "responde a todo")
+    const all = await probeExposedEndpoints('http://x', fake({}, '<div id="swagger-ui"></div>'));
+    assert.deepEqual(all.exposed, [], 'una página que cumple la huella en cualquier ruta no es un hallazgo');
+    const none = await probeExposedEndpoints('http://x', fake({}, null));
+    assert.deepEqual(none.findings, []);
   }],
 ];
 

@@ -16,6 +16,8 @@ Hacer que un solo producto, **DEFENSA TI**, sea tan claro, creíble y fácil de 
 
 ## 2. Decisiones del Dueño (NO PREGUNTAR — DEFINICIONES OFICIALES)
 
+> ⚠️ **OBSOLETO (19-11-2026):** los planes S/ 65 / S/ 165 / S/ 335 de esta sección ya no se venden. Los precios vigentes son los del Catálogo Oficial (AGENTS.md, regla 7) y viven en `src/config/catalog.ts`.
+
 1. **Precios y Moneda (Soles como principal, USD referencia fija):**
    - **Plan 1: Auditoría Independiente:** `S/ 65` (~$19 USD). Pago 100% por adelantado. Entrega en 48 horas laborables.
    - **Plan 2: Blindaje Esencial (El más pedido):** `S/ 165` (~$49 USD). Pago 100% por adelantado. Entrega en 3 a 5 días hábiles.

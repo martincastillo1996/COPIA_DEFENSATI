@@ -23,9 +23,9 @@ export default function FloatingWhatsAppButton({ url, score }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp a Martin Castillo"
-        className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 hover:scale-110 active:scale-95 transition-all duration-300 relative group"
+        className="w-13 h-13 sm:w-14 sm:h-14 bg-[#25D366] hover:bg-[#20ba59] text-[#EDEDED] flex items-center justify-center transition-all duration-300 relative group"
       >
-        <span className="absolute inset-0 rounded-full bg-emerald-400/40 animate-ping pointer-events-none" />
+        <span className="absolute inset-0 bg-white/[0.03] pointer-events-none" />
         
         {/* SVG Oficial de WhatsApp */}
         <svg
@@ -42,9 +42,9 @@ export default function FloatingWhatsAppButton({ url, score }: Props) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#1c1c1e]/90 border border-white/10 text-white text-[11px] font-medium shadow-2xl backdrop-blur-xl hover:border-emerald-500/40 transition-all hover:scale-105"
+        className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-[#0d0d0d] border border-white/10 text-[#EDEDED] text-[11px] font-medium hover:border-white/10 transition-all"
       >
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+        <span className="w-1.5 h-1.5 bg-white/[0.03]" />
         <span>WhatsApp Soporte</span>
       </a>
     </aside>

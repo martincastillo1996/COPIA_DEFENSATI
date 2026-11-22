@@ -19,21 +19,21 @@ export default function DefensatiWarranty() {
     <section id="garantia" className="w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24 space-y-4">
       
       {/* Tarjeta Principal de Garantía Estilo Apple Pro */}
-      <div className="p-6 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-3xl relative overflow-hidden">
+      <div className="p-6 sm:p-10 bg-[#0d0d0d] border border-white/10 relative overflow-hidden">
         
         {/* Glow de seguridad verde esmeralda */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-white/[0.03] blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-5 sm:gap-8 text-center md:text-left">
           
           {/* Icono de Escudo */}
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#30d158] shrink-0 shadow-inner">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#30d158] shrink-0">
             <ShieldCheck className="w-8 h-8 sm:w-10 sm:h-10" />
           </div>
 
           {/* Textos de Garantía */}
           <div className="space-y-2.5 flex-1">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#2997ff] text-xs font-medium tracking-tight">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/[0.06] border border-white/10 text-[#bdbdbd] text-xs font-medium tracking-tight">
               <Sparkles className="w-3.5 h-3.5 text-[#30d158]" />
               <span>Garantía de Satisfacción Técnica DEFENSA TI</span>
             </div>
@@ -62,7 +62,7 @@ export default function DefensatiWarranty() {
               </span>
               <span>&bull;</span>
               <span className="inline-flex items-center gap-1 text-neutral-200">
-                <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
+                <FileText className="w-3.5 h-3.5 text-[#bdbdbd]" />
                 Factura o Boleta Electrónica
               </span>
             </div>
@@ -73,19 +73,19 @@ export default function DefensatiWarranty() {
       </div>
 
       {/* Desplegable de Términos y Condiciones */}
-      <div className="rounded-[24px] bg-white/[0.02] border border-white/10 backdrop-blur-xl overflow-hidden transition-all text-left">
+      <div className="bg-white/[0.02] border border-white/10 overflow-hidden transition-all text-left">
         <button
           type="button"
           onClick={() => setShowTerms(prev => !prev)}
           className="w-full p-4 sm:p-5 flex items-center justify-between hover:bg-white/[0.02] transition-colors cursor-pointer text-left"
         >
           <div className="flex items-center gap-2.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-[#EDEDED] shrink-0" />
             <span className="text-xs sm:text-sm font-semibold text-neutral-200">
               {showTerms ? 'Ocultar términos y exclusiones' : '¿Qué cubre y qué no cubre la garantía? (Ver condiciones)'}
             </span>
           </div>
-          <ChevronDown className={`w-4 h-4 text-neutral-400 transition-transform duration-200 ${showTerms ? 'rotate-180 text-emerald-400' : ''}`} />
+          <ChevronDown className={`w-4 h-4 text-neutral-400 transition-transform duration-200 ${showTerms ? 'rotate-180 text-[#EDEDED]' : ''}`} />
         </button>
 
         {showTerms && (
@@ -118,7 +118,7 @@ export default function DefensatiWarranty() {
 
             {/* Qué no cubre */}
             <div className="space-y-2.5 pt-4">
-              <div className="flex items-center gap-2 text-amber-400 font-bold">
+              <div className="flex items-center gap-2 text-[#EDEDED] font-bold">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>Exclusiones Técnicas</span>
               </div>

@@ -18,7 +18,6 @@ import HeaderResults from '@/components/HeaderResults';
 import RemediationList from '@/components/RemediationList';
 import PrintableReport from '@/components/PrintableReport';
 import TechnicalLogs from '@/components/TechnicalLogs';
-import NeuralBackground from '@/components/NeuralBackground';
 import WhatsAppCta from '@/components/WhatsAppCta';
 import DefensatiVideoAuditCard from '@/components/defensati/DefensatiVideoAuditCard';
 import BusinessOverview from '@/components/BusinessOverview';
@@ -28,6 +27,10 @@ import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
 import SslAlertWidget from '@/components/SslAlertWidget';
 import DnsSecurityCard from '@/components/DnsSecurityCard';
 import WebAuditCard from '@/components/WebAuditCard';
+import CveIntelCard from '@/components/CveIntelCard';
+import AttackSurfaceCard from '@/components/AttackSurfaceCard';
+import WebAppSecurityCard from '@/components/WebAppSecurityCard';
+import ComplianceCard from '@/components/ComplianceCard';
 import PdfLeadModal from '@/components/PdfLeadModal';
 import RoiLossCalculator from '@/components/RoiLossCalculator';
 import SocialViralHub from '@/components/SocialViralHub';
@@ -36,8 +39,10 @@ import AnpdpComplianceCard from '@/components/AnpdpComplianceCard';
 import CompetitorDuelModal from '@/components/CompetitorDuelModal';
 import MobileStickyConversionBar from '@/components/MobileStickyConversionBar';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
-import { Briefcase, Terminal, Swords } from 'lucide-react';
+import { Briefcase, Terminal, Swords, LayoutDashboard } from 'lucide-react';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
+import HighDensitySecurityDashboard from '@/components/dashboard/HighDensitySecurityDashboard';
+import { toScanApiResponse } from '@/lib/scanner/benchmarks';
 
 export default function ReportPage({ params }: { params: Promise<{ id: string }> }) {
   // En Next.js 15/16 los params son una Promesa:
@@ -48,7 +53,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
+  const [viewMode, setViewMode] = useState<'dashboard' | 'business' | 'tech'>('dashboard');
   const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [competitorModalOpen, setCompetitorModalOpen] = useState(false);
@@ -75,7 +80,9 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
     }
 
     // 2. Recuperar el dictamen auténtico verificado desde el backend
-    fetch(`/api/report/${auditId}`)
+    // Un informe de auditoría completa se abre con el enlace firmado que lleva ?t=
+    const share = new URLSearchParams(window.location.search).get('t');
+    fetch(`/api/report/${auditId}${share ? `?t=${encodeURIComponent(share)}` : ''}`)
       .then(async (res) => {
         if (!res.ok) {
           const errData = await res.json().catch(() => ({}));
@@ -125,12 +132,11 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
   // 1. Estado de Carga
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-[#080808] text-[#EDEDED] flex flex-col items-center justify-center gap-4">
         <div className="fixed inset-0 pointer-events-none z-0 opacity-45">
-        <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/40 to-[#000000]/80" />
+        <div className="absolute inset-0" />
       </div>
-        <Loader2 className="w-8 h-8 animate-spin text-[#0071e3]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#bdbdbd]" />
         <p className="text-neutral-400 text-sm">Recuperando auditoría perimetral...</p>
       </div>
     );
@@ -139,19 +145,18 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
   // 2. Estado de Error (Reporte no encontrado o expirado)
   if (error || !report) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-4 px-6 text-center">
+      <div className="min-h-screen bg-[#080808] text-[#EDEDED] flex flex-col items-center justify-center gap-4 px-6 text-center">
         <div className="fixed inset-0 pointer-events-none z-0 opacity-45">
-        <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/40 to-[#000000]/80" />
+        <div className="absolute inset-0" />
       </div>
-        <AlertTriangle className="w-12 h-12 text-rose-500 mb-2" />
+        <AlertTriangle className="w-12 h-12 text-[#ff4d4d] mb-2" />
         <h1 className="text-xl font-bold">Reporte no disponible</h1>
         <p className="text-neutral-400 text-sm max-w-md">
           {error || 'El reporte solicitado no existe o ha expirado de la memoria del servidor.'}
         </p>
         <Link 
           href="/" 
-          className="mt-4 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-xs font-medium flex items-center gap-2"
+          className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/15 border border-white/10 text-[#EDEDED] text-xs font-medium flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" /> Realizar nueva auditoría
         </Link>
@@ -161,19 +166,18 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
   // 3. Renderizar el reporte cargado
   return (
-    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#080808] text-[#f5f5f7] selection:bg-[#EDEDED] selection:text-[#080808] font-sans antialiased overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none z-0 opacity-45">
-        <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#000000]/40 to-[#000000]/80" />
+        <div className="absolute inset-0" />
       </div>
       <PrintableReport report={report} auditId={auditId} pdfViewMode={pdfViewMode} />
 
       <div className="relative z-10 print:hidden flex flex-col min-h-screen">
-        <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#000000]/65 backdrop-blur-2xl">
+        <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#080808]">
           <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <ShieldCheck className="w-5 h-5 text-[#2997ff]" />
-              <span className="font-semibold text-sm tracking-tight text-white">DEFENSA TI</span>
+              <ShieldCheck className="w-5 h-5 text-[#bdbdbd]" />
+              <span className="font-semibold text-sm tracking-tight text-[#EDEDED]">DEFENSA TI</span>
             </Link>
             <div className="flex items-center gap-2.5 sm:gap-3">
               <HeaderWhatsAppButton 
@@ -181,7 +185,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               />
               <Link 
                 href="/defensati" 
-                className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium flex items-center gap-1.5 text-neutral-300"
+                className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium flex items-center gap-1.5 text-neutral-300"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Nuevo Escaneo</span>
               </Link>
@@ -191,27 +195,27 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
 
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12 space-y-6 sm:space-y-8 flex-1 w-full overflow-x-hidden">
           {/* Barra de Acciones del Reporte */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-white/[0.03] border border-white/10">
             <div>
               <span className="text-xs uppercase tracking-wider text-neutral-400">Auditoría compartida</span>
-              <h2 className="text-lg font-semibold text-white">{report.url}</h2>
+              <h2 className="text-lg font-semibold text-[#EDEDED]">{report.url}</h2>
             </div>
             <div className="flex flex-wrap items-center gap-2.5">
               {/* Módulo Unificado de Descarga de Dictamen PDF */}
-              <div className="inline-flex items-center gap-1.5 p-1 rounded-2xl bg-black/60 border border-white/10 shadow-inner">
+              <div className="inline-flex items-center gap-1.5 p-1 bg-[#080808] border border-white/10">
                 <span className="text-[10px] uppercase font-mono font-bold text-neutral-400 pl-2.5 pr-1 hidden sm:inline">
                   Informe PDF:
                 </span>
 
                 {/* Selector de Perspectiva del PDF */}
-                <div className="inline-flex items-center p-0.5 rounded-xl bg-white/[0.04] border border-white/5">
+                <div className="inline-flex items-center p-0.5 bg-white/[0.04] border border-white/5">
                   <button
                     type="button"
                     onClick={() => setPdfViewMode('management')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                       pdfViewMode === 'management'
-                        ? 'bg-[#0071e3] text-white shadow-sm font-bold'
-                        : 'text-neutral-400 hover:text-white'
+                        ? 'bg-[#EDEDED] text-[#080808] font-bold'
+                        : 'text-neutral-400 hover:text-[#EDEDED]'
                     }`}
                     title="Informe ejecutivo de 1 página con pérdidas en Soles y ROI para Gerencia"
                   >
@@ -220,10 +224,10 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                   <button
                     type="button"
                     onClick={() => setPdfViewMode('dev')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                       pdfViewMode === 'dev'
-                        ? 'bg-[#0071e3] text-white shadow-sm font-bold'
-                        : 'text-neutral-400 hover:text-white'
+                        ? 'bg-[#EDEDED] text-[#080808] font-bold'
+                        : 'text-neutral-400 hover:text-[#EDEDED]'
                     }`}
                     title="Informe técnico de 1 página para Desarrolladores / Sysadmin con RFC y código"
                   >
@@ -232,10 +236,10 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                   <button
                     type="button"
                     onClick={() => setPdfViewMode('both')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                       pdfViewMode === 'both'
-                        ? 'bg-[#0071e3] text-white shadow-sm font-bold'
-                        : 'text-neutral-400 hover:text-white'
+                        ? 'bg-[#EDEDED] text-[#080808] font-bold'
+                        : 'text-neutral-400 hover:text-[#EDEDED]'
                     }`}
                     title="Informe completo de 2 páginas con ambas perspectivas"
                   >
@@ -246,10 +250,10 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                 {/* Botón de Descarga integrado al mismo nivel */}
                 <button
                   onClick={() => handlePrint(pdfViewMode)}
-                  className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
+                  className="px-4 py-1.5 text-[#EDEDED] text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap"
                   title="Descargar dictamen forense en formato PDF con membrete oficial"
                 >
-                  <Download className="w-3.5 h-3.5 text-white" />
+                  <Download className="w-3.5 h-3.5 text-[#EDEDED]" />
                   <span>Descargar PDF</span>
                 </button>
               </div>
@@ -257,35 +261,47 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               {/* Acciones Secundarias con misma altura armónica */}
               <button
                 onClick={copyShareLink}
-                className="px-3.5 py-2 rounded-2xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 border border-[#0071e3]/30 text-[#2997ff] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
+                className="px-3.5 py-2 bg-white/[0.06] hover:bg-white/[0.06] border border-white/20 text-[#bdbdbd] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-all"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#EDEDED]" /> : <Share2 className="w-3.5 h-3.5" />}
                 <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setCompetitorModalOpen(true)}
-                className="px-3.5 py-2 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#38bdf8] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
+                className="px-3.5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-[#bdbdbd] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-all"
                 title="Comparar esta web frente a un competidor"
               >
-                <Swords className="w-3.5 h-3.5 text-[#38bdf8]" />
+                <Swords className="w-3.5 h-3.5 text-[#bdbdbd]" />
                 <span className="hidden sm:inline">Comparar Competidor</span>
                 <span className="sm:hidden">Duelo</span>
               </button>
             </div>
           </div>
 
-          {/* Selector de Perspectiva: Negocio vs Técnico */}
+          {/* Selector de Perspectiva: Dashboard vs Negocio vs Técnico */}
           <div className="flex justify-center">
-            <div className="inline-flex p-1 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div className="inline-flex p-1 bg-white/5 border border-white/10 flex-wrap justify-center">
+              <button
+                type="button"
+                onClick={() => setViewMode('dashboard')}
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition-all ${
+                  viewMode === 'dashboard'
+                    ? 'bg-[#EDEDED] text-[#080808]'
+                    : 'text-neutral-400 hover:text-[#EDEDED]'
+                }`}
+              >
+                <LayoutDashboard className="w-4 h-4 text-emerald-500" />
+                Dashboard Alta Densidad
+              </button>
               <button
                 type="button"
                 onClick={() => setViewMode('business')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition-all ${
                   viewMode === 'business'
-                    ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'bg-[#EDEDED] text-[#080808]'
+                    : 'text-neutral-400 hover:text-[#EDEDED]'
                 }`}
               >
                 <Briefcase className="w-4 h-4" />
@@ -294,10 +310,10 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
               <button
                 type="button"
                 onClick={() => setViewMode('tech')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold transition-all ${
                   viewMode === 'tech'
-                    ? 'bg-[#0071e3] text-white shadow-lg shadow-[#0071e3]/30'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'bg-[#EDEDED] text-[#080808]'
+                    : 'text-neutral-400 hover:text-[#EDEDED]'
                 }`}
               >
                 <Terminal className="w-4 h-4" />
@@ -306,15 +322,24 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             </div>
           </div>
 
-          {/* Resultados de la Auditoría */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-1 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-              <ScoreCircle score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
+          {viewMode === 'dashboard' ? (
+            <div className="w-full">
+              <HighDensitySecurityDashboard
+                data={toScanApiResponse(report, auditId)}
+                onCompareClick={() => setCompetitorModalOpen(true)}
+              />
             </div>
-            <div id="section-ssl" className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
-              <SslResults ssl={report.ssl} />
-            </div>
-          </div>
+          ) : (
+            <>
+              {/* Resultados de la Auditoría */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="md:col-span-1 bg-white/2 border border-white/5 p-6">
+                  <ScoreCircle score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
+                </div>
+                <div id="section-ssl" className="md:col-span-2 bg-white/2 border border-white/5 p-6 scroll-mt-24 transition-all duration-300">
+                  <SslResults ssl={report.ssl} />
+                </div>
+              </div>
 
           {/* Geolocalización e Infraestructura de Servidor (Inspirado en WebCheck / Apple Style) */}
           <ServerLocationCard 
@@ -339,6 +364,14 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
           />
 
+          {/* Inteligencia de Vulnerabilidades: CVE × CISA KEV × EPSS, con vector de ataque y mitigación */}
+          <CveIntelCard cveIntel={report.cveIntel} />
+
+          {/* Superficie de ataque (subdominios, takeover, DNSSEC, correo, TLS), aplicación web y cumplimiento normativo */}
+          <AttackSurfaceCard asm={report.asm} />
+          <WebAppSecurityCard webApp={report.webApp} />
+          <ComplianceCard compliance={report.compliance} reportId={report.id} hasIntegrity={Boolean(report.integrity)} diff={report.diff} />
+
           {/* Termómetro Comparativo: Tu Web vs. Mercado Peruano */}
           <SecurityBenchmarkBar
             score={report.score ?? 50}
@@ -354,6 +387,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                 domain={report.url}
                 hasValidSsl={Boolean(report.ssl?.valid) && report.ssl?.protocol !== 'Sin HTTPS'}
                 hasDowngradeRisk={Boolean(report.headers?.some(h => !h.present && (h.header || h.name || '').toLowerCase().includes('transport-security')))}
+                portsScanned={Boolean(report.ports?.length)}
                 hasOpenAdminPorts={Boolean(report.ports?.some(p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)))}
                 cookiesSecure={Boolean(!report.cookies || report.cookies.totalCookies === 0 || report.cookies.secureCookies === report.cookies.totalCookies)}
                 isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
@@ -368,23 +402,21 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
             </div>
           ) : (
             <div className="space-y-6">
-              {Boolean(report.ports?.length) && (
-                <div id="section-ports" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
-                  <PortResults ports={report.ports || []} />
-                </div>
-              )}
+              <div id="section-ports" className="bg-white/2 border border-white/5 p-6 scroll-mt-24 transition-all duration-300">
+                <PortResults ports={report.ports || []} verification={report.portsVerification} />
+              </div>
 
               {Boolean(report.dnsSecurity) && (
-                <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                <div className="bg-white/2 border border-white/5 p-6">
                   <DnsSecurityCard dnsSecurity={report.dnsSecurity} domain={report.url} />
                 </div>
               )}
 
-              <div id="section-headers" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
+              <div id="section-headers" className="bg-white/2 border border-white/5 p-6 scroll-mt-24 transition-all duration-300">
                 <HeaderResults headers={report.headers || []} domain={report.url} />
               </div>
 
-              <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+              <div className="bg-white/2 border border-white/5 p-6">
                 <RemediationList items={report.remediations || []} />
               </div>
             </div>
@@ -404,13 +436,15 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           <WhatsAppCta url={report.url} score={report.score} grade={(report.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'} />
 
           {viewMode === 'tech' && (
-            <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+            <div className="bg-white/2 border border-white/5 p-6">
               <TechnicalLogs 
                 id={auditId} 
                 telemetry={report.telemetry} 
                 scannedAt={report.scannedAt || ''} 
               />
             </div>
+          )}
+          </>
           )}
 
           {/* Modal de Captura de Lead al Descargar PDF */}

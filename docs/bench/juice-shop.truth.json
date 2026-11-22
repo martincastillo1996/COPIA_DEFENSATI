@@ -1,0 +1,108 @@
+{
+  "lab": "OWASP Juice Shop",
+  "nota": "Cada sonda comprueba contra TU laboratorio que la vulnerabilidad existe; si falla, se descarta y se informa. Sin sonda no se puede verificar y se marca así.",
+  "vulnerabilities": [
+    {
+      "id": "listado-ftp",
+      "class": "exposicion",
+      "match": "listado de directorio.*/ftp",
+      "probe": {
+        "path": "/ftp",
+        "contains": "legal\\.md"
+      }
+    },
+    {
+      "id": "robots-anuncia-ftp",
+      "class": "exposicion",
+      "match": "robots\\.txt anuncia.*ftp",
+      "probe": {
+        "path": "/robots.txt",
+        "contains": "/ftp"
+      }
+    },
+    {
+      "id": "metricas-prometheus",
+      "class": "exposicion",
+      "match": "m[eé]tricas prometheus",
+      "probe": {
+        "path": "/metrics",
+        "contains": "process_cpu"
+      }
+    },
+    {
+      "id": "documentacion-api",
+      "class": "exposicion",
+      "match": "swagger|openapi|api-docs",
+      "probe": {
+        "path": "/api-docs/",
+        "contains": "swagger|openapi"
+      }
+    },
+    {
+      "id": "claves-cifrado",
+      "class": "exposicion",
+      "match": "listado de directorio.*encryptionkeys",
+      "probe": {
+        "path": "/encryptionkeys/",
+        "contains": "jwt\\.pub"
+      }
+    },
+    {
+      "id": "config-admin-expuesta",
+      "class": "exposicion",
+      "match": "ruta sensible /rest/admin/application-configuration",
+      "probe": {
+        "path": "/rest/admin/application-configuration",
+        "contains": "\"server\""
+      }
+    },
+    {
+      "id": "version-expuesta",
+      "class": "exposicion",
+      "match": "ruta sensible /rest/admin/application-version",
+      "probe": {
+        "path": "/rest/admin/application-version",
+        "contains": "\"version\""
+      }
+    },
+    {
+      "id": "inyeccion-sql-login",
+      "class": "activa",
+      "match": "inyecci[oó]n sql|sql injection"
+    },
+    {
+      "id": "xss-reflejado",
+      "class": "activa",
+      "match": "cross.?site scripting|xss"
+    },
+    {
+      "id": "idor-cesta",
+      "class": "logica",
+      "match": "idor|control de acceso"
+    },
+    {
+      "id": "cupon-falsificado",
+      "class": "logica",
+      "match": "cup[oó]n"
+    },
+    {
+      "id": "manipulacion-precio",
+      "class": "logica",
+      "match": "precio"
+    }
+  ],
+  "accepted": [
+    "cabecera",
+    "content-security-policy",
+    "hsts",
+    "cookie",
+    "dmarc",
+    "spf",
+    "dkim",
+    "certificado",
+    "tls",
+    "rutas internas visibles",
+    "rutas de api llamadas",
+    "terceros"
+  ]
+}

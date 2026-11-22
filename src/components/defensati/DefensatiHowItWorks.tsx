@@ -20,7 +20,7 @@ export default function DefensatiHowItWorks() {
       desc: 'Analizo tu página y te comparto el diagnóstico exacto de fallas o infección antes de que pagues.',
       icon: Search,
       iconColor: 'text-[#38bdf8]',
-      accentBg: 'bg-[#38bdf8]/15 border-[#38bdf8]/30',
+      accentBg: 'bg-[#EDEDED] text-[#080808] border-white/20',
     },
     {
       num: '3',
@@ -34,11 +34,11 @@ export default function DefensatiHowItWorks() {
 
   return (
     <section id="como-funciona" className="w-full max-w-6xl xl:max-w-7xl mx-auto space-y-6 scroll-mt-24 text-left">
-      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-8">
+      <div className="p-6 sm:p-12 bg-[#0d0d0d] border border-white/10 space-y-8">
         
         {/* Cabecera Estilo Apple Pro */}
         <div className="space-y-2 border-b border-white/10 pb-5">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#2997ff] font-semibold px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 inline-block">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#bdbdbd] font-semibold px-3.5 py-1 bg-white/[0.06] border border-white/12 inline-block">
             CÓMO FUNCIONA
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight pt-2">
@@ -53,13 +53,13 @@ export default function DefensatiHowItWorks() {
             return (
               <div
                 key={item.num}
-                className="p-6 sm:p-8 rounded-[24px] bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-start space-y-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                className="p-6 sm:p-8 bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-start space-y-4"
               >
                 <div className="flex items-center justify-between">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${item.accentBg} ${item.iconColor}`}>
+                  <div className={`w-12 h-12 flex items-center justify-center border ${item.accentBg} ${item.iconColor}`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-3xl sm:text-4xl font-bold text-white/25 font-mono">
+                  <span className="text-3xl sm:text-4xl font-bold text-[#EDEDED]/25 font-mono">
                     0{item.num}
                   </span>
                 </div>
@@ -68,7 +68,7 @@ export default function DefensatiHowItWorks() {
                   {item.title}
                 </h3>
 
-                <p className="text-base sm:text-lg text-[#86868b] leading-relaxed font-normal">
+                <p className="text-base sm:text-lg text-[#bdbdbd] leading-relaxed font-normal">
                   {item.desc}
                 </p>
               </div>

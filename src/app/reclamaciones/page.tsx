@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, Send, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
-import NeuralBackground from '@/components/NeuralBackground';
 import NeuronalGravityBrandLogo from '@/components/NeuronalGravityBrandLogo';
 import HeaderWhatsAppButton from '@/components/HeaderWhatsAppButton';
 
@@ -77,17 +76,16 @@ export default function LibroReclamacionesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-white selection:bg-[#0071e3] selection:text-white font-sans antialiased relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#080808] selection:bg-[#EDEDED] selection:text-[#080808] font-sans antialiased relative overflow-x-hidden">
       {/* Fondo estelar cósmico limpio sin texto atravesado */}
-      <NeuralBackground showDomains={false} />
 
       {/* Cabecera / Barra Superior */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/60 border-b border-white/10">
+      <header className="sticky top-0 z-50 bg-[#080808] border-b border-white/10">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
           <NeuronalGravityBrandLogo />
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 bg-white/[0.03]" />
               <span className="text-[11px] text-neutral-400 font-medium">Libro Oficial INDECOPI (D.S. 011-2011-PCM)</span>
             </div>
             <HeaderWhatsAppButton
@@ -99,13 +97,13 @@ export default function LibroReclamacionesPage() {
 
       <main className="max-w-3xl mx-auto px-4 py-10 relative z-10 space-y-8">
         {/* Banner de Identificación del Proveedor */}
-        <div className="p-6 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-xl space-y-4">
+        <div className="p-6 bg-[#0d0d0d] border border-white/10 space-y-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400">
+            <div className="p-3 bg-white/[0.03] border border-white/10 text-[#EDEDED]">
               <BookOpen className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-bold text-[#EDEDED] tracking-tight">
                 Libro de Reclamaciones Virtual
               </h1>
               <p className="text-xs text-neutral-400">
@@ -133,22 +131,22 @@ export default function LibroReclamacionesPage() {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 leading-relaxed">
+          <div className="p-3 bg-white/[0.03] border border-white/10 text-[11px] text-[#EDEDED] leading-relaxed">
             <strong>Plazo legal de respuesta:</strong> Conforme al D.S. N° 011-2011-PCM modificado por Ley N° 31435, todo reclamo o queja formulado a través de este Libro será atendido en un plazo máximo de <strong>quince (15) días hábiles improrrogables</strong> al correo electrónico consignado.
           </div>
         </div>
 
         {submitted ? (
           /* Confirmación de Envío */
-          <div className="p-8 rounded-3xl bg-emerald-950/30 border border-emerald-500/30 backdrop-blur-xl text-center space-y-4">
-            <div className="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+          <div className="p-8 bg-white/[0.03] border border-white/10 text-center space-y-4">
+            <div className="w-14 h-14 mx-auto bg-white/[0.03] border border-white/10 flex items-center justify-center text-[#EDEDED]">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h2 className="text-2xl font-bold text-white">Reclamación Registrada con Éxito</h2>
+            <h2 className="text-2xl font-bold text-[#EDEDED]">Reclamación Registrada con Éxito</h2>
             <p className="text-sm text-neutral-300 max-w-md mx-auto">
               Se ha generado la constancia con código oficial:
             </p>
-            <div className="inline-block px-5 py-2 rounded-2xl bg-black/60 border border-emerald-400/40 text-lg font-mono font-bold text-emerald-300">
+            <div className="inline-block px-5 py-2 bg-[#080808] border border-white/10 text-lg font-mono font-bold text-[#EDEDED]">
               {claimId}
             </div>
             <p className="text-xs text-neutral-400 max-w-lg mx-auto leading-relaxed">
@@ -157,7 +155,7 @@ export default function LibroReclamacionesPage() {
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/defensati"
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all"
+                className="w-full sm:w-auto px-6 py-2.5 bg-white/10 hover:bg-white/20 text-[#EDEDED] text-xs font-semibold transition-all"
               >
                 Volver a DEFENSA TI
               </Link>
@@ -165,7 +163,7 @@ export default function LibroReclamacionesPage() {
                 href={`https://wa.me/51987010380?text=${encodeURIComponent(`Hola Martín, he presentado la reclamación código ${claimId} en el Libro Virtual. Confirmo la recepción.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold transition-all shadow-lg shadow-emerald-500/20"
+                className="w-full sm:w-auto px-6 py-2.5 bg-white/[0.03] hover:bg-white/[0.03] text-[#EDEDED] text-xs font-bold transition-all"
               >
                 Avisar también por WhatsApp
               </a>
@@ -173,24 +171,24 @@ export default function LibroReclamacionesPage() {
           </div>
         ) : (
           /* Formulario Oficial de Reclamación */
-          <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-3xl bg-[#141416]/90 border border-white/10 backdrop-blur-xl space-y-6">
+          <form onSubmit={handleSubmit} className="p-6 sm:p-8 bg-[#0d0d0d] border border-white/10 space-y-6">
             
             {/* Diferenciación Reclamo vs Queja */}
             <div className="space-y-2">
-              <label className="text-xs font-bold text-white block">
+              <label className="text-xs font-bold text-[#EDEDED] block">
                 Tipo de Disconformidad:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setClaimType('reclamo')}
-                  className={`p-3.5 rounded-2xl border text-left transition-all ${
+                  className={`p-3.5 border text-left transition-all ${
                     claimType === 'reclamo'
-                      ? 'bg-sky-500/15 border-sky-500 text-white'
+                      ? 'bg-white/[0.03] border-white/10 text-[#EDEDED]'
                       : 'bg-white/5 border-white/10 text-neutral-400 hover:border-white/20'
                   }`}
                 >
-                  <strong className="block text-xs font-bold text-white">RECLAMO</strong>
+                  <strong className="block text-xs font-bold text-[#EDEDED]">RECLAMO</strong>
                   <span className="text-[11px] leading-tight block mt-1 text-neutral-300">
                     Disconformidad relacionada directamente con los productos o servicios contratados.
                   </span>
@@ -198,13 +196,13 @@ export default function LibroReclamacionesPage() {
                 <button
                   type="button"
                   onClick={() => setClaimType('queja')}
-                  className={`p-3.5 rounded-2xl border text-left transition-all ${
+                  className={`p-3.5 border text-left transition-all ${
                     claimType === 'queja'
-                      ? 'bg-sky-500/15 border-sky-500 text-white'
+                      ? 'bg-white/[0.03] border-white/10 text-[#EDEDED]'
                       : 'bg-white/5 border-white/10 text-neutral-400 hover:border-white/20'
                   }`}
                 >
-                  <strong className="block text-xs font-bold text-white">QUEJA</strong>
+                  <strong className="block text-xs font-bold text-[#EDEDED]">QUEJA</strong>
                   <span className="text-[11px] leading-tight block mt-1 text-neutral-300">
                     Disconformidad que no tiene relación con el producto en sí, sino con la atención al público.
                   </span>
@@ -214,8 +212,8 @@ export default function LibroReclamacionesPage() {
 
             {/* 1. Datos del Consumidor */}
             <div className="space-y-3 pt-4 border-t border-white/10">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-sky-400" />
+              <h3 className="text-sm font-bold text-[#EDEDED] flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#EDEDED]" />
                 <span>1. Identificación del Consumidor Reclamante</span>
               </h3>
 
@@ -229,7 +227,7 @@ export default function LibroReclamacionesPage() {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="Ej. Juan Pérez / Empresa SAC"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
 
@@ -239,7 +237,7 @@ export default function LibroReclamacionesPage() {
                     name="docType"
                     value={formData.docType}
                     onChange={handleChange}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#1c1d22] border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-[#1c1d22] border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   >
                     <option value="DNI">DNI (Documento Nacional de Identidad)</option>
                     <option value="RUC">RUC</option>
@@ -257,7 +255,7 @@ export default function LibroReclamacionesPage() {
                     value={formData.docNumber}
                     onChange={handleChange}
                     placeholder="Número"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
 
@@ -270,7 +268,7 @@ export default function LibroReclamacionesPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="tucorreo@dominio.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
 
@@ -283,7 +281,7 @@ export default function LibroReclamacionesPage() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+51 999 999 999"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
 
@@ -296,7 +294,7 @@ export default function LibroReclamacionesPage() {
                     value={formData.address}
                     onChange={handleChange}
                     placeholder="Av./Calle, Número, Distrito, Provincia, Departamento"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
               </div>
@@ -304,8 +302,8 @@ export default function LibroReclamacionesPage() {
 
             {/* 2. Detalle del Servicio Contratado */}
             <div className="space-y-3 pt-4 border-t border-white/10">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-sky-400" />
+              <h3 className="text-sm font-bold text-[#EDEDED] flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-[#EDEDED]" />
                 <span>2. Detalle del Servicio Contratado</span>
               </h3>
 
@@ -318,7 +316,7 @@ export default function LibroReclamacionesPage() {
                     name="serviceHired"
                     value={formData.serviceHired}
                     onChange={handleChange}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
 
@@ -330,7 +328,7 @@ export default function LibroReclamacionesPage() {
                     value={formData.claimedAmount}
                     onChange={handleChange}
                     placeholder="S/ 0.00"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500"
+                    className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10"
                   />
                 </div>
               </div>
@@ -338,7 +336,7 @@ export default function LibroReclamacionesPage() {
 
             {/* 3. Detalle de la Reclamación y Pedido */}
             <div className="space-y-3 pt-4 border-t border-white/10">
-              <h3 className="text-sm font-bold text-white">
+              <h3 className="text-sm font-bold text-[#EDEDED]">
                 3. Detalle de la Disconformidad y Pedido Concreto
               </h3>
 
@@ -351,7 +349,7 @@ export default function LibroReclamacionesPage() {
                   value={formData.description}
                   onChange={handleChange}
                   placeholder="Describa con la mayor precisión posible qué ocurrió, fechas y circunstancias..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500 leading-relaxed"
+                  className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10 leading-relaxed"
                 />
               </div>
 
@@ -364,7 +362,7 @@ export default function LibroReclamacionesPage() {
                   value={formData.consumerRequest}
                   onChange={handleChange}
                   placeholder="Indique con claridad cuál es su pretensión o solución esperada..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-sky-500 leading-relaxed"
+                  className="w-full px-3.5 py-2.5 bg-white/5 border border-white/10 text-xs text-[#EDEDED] focus:outline-none focus:border-white/10 leading-relaxed"
                 />
               </div>
             </div>
@@ -378,7 +376,7 @@ export default function LibroReclamacionesPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 px-6 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-500/25 active:scale-98 disabled:opacity-50 cursor-pointer"
+                className="w-full py-3.5 px-6 bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>{loading ? 'Generando Hoja de Reclamación...' : 'Enviar y Registrar Hoja de Reclamación'}</span>

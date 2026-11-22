@@ -2,108 +2,84 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { 
-  ShieldCheck, 
-  CheckCircle2, 
-  ArrowRight, 
-  Sparkles, 
-  Send, 
-  Clock, 
-  FileCheck, 
-  AlertTriangle, 
-  Lock, 
-  Building, 
-  Mail, 
-  Phone, 
-  Globe, 
-  Receipt,
-  User,
-  Layers
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { getWhatsAppUrl } from '@/lib/whatsapp';
 import { siteConfig } from '@/config/site';
 import { trackFormSubmit, trackWhatsAppClick } from '@/lib/analytics';
+import { P } from '@/config/catalog';
 
 interface Props {
   initialUrl?: string;
 }
 
+const PLATFORMS = [
+  { id: 'wordpress', label: 'WordPress / WooCommerce' },
+  { id: 'shopify', label: 'Shopify' },
+  { id: 'wix', label: 'Wix' },
+  { id: 'prestashop', label: 'PrestaShop / Magento' },
+  { id: 'custom', label: 'A medida / otro' },
+];
+
+const SERVICES = [
+  { id: 'diagnostico', label: 'Diagnóstico gratuito', price: 'S/ 0' },
+  { id: 'rescate-corp', label: 'Rescate de malware · web', price: P.rescateCorporativo },
+  { id: 'rescate-woocommerce', label: 'Rescate de malware · tienda', price: P.rescateTienda },
+  { id: 'blindaje-waf', label: 'Blindaje + WAF Cloudflare', price: P.blindajeWaf },
+  { id: 'mantenimiento-basico', label: 'Mantenimiento · web', price: `${P.mantenimientoBasico}/mes` },
+  { id: 'mantenimiento-tiendas', label: 'Mantenimiento · tienda', price: `${P.mantenimientoTiendas}/mes` },
+];
+
+const field =
+  'w-full px-3.5 py-3 bg-[#0a0c0f]/80 border border-white/10 text-[#e8edf1] placeholder-[#4a535b] text-sm focus:outline-none focus:border-[#cfe3ee]/60 transition-colors';
+
 export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
+  const [open, setOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
-  const [ruc, setRuc] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [targetUrl, setTargetUrl] = useState(initialUrl);
-  const [platform, setPlatform] = useState('wordpress');
   const [service, setService] = useState('diagnostico');
+  const [company, setCompany] = useState('');
+  const [ruc, setRuc] = useState('');
+  const [platform, setPlatform] = useState('wordpress');
   const [note, setNote] = useState('');
-  const [acceptedDisclaimer, setAcceptedDisclaimer] = useState(false);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [contractId, setContractId] = useState('');
 
-  const platformsList = [
-    { id: 'wordpress', label: 'WordPress / WooCommerce' },
-    { id: 'shopify', label: 'Shopify' },
-    { id: 'wix', label: 'Wix' },
-    { id: 'prestashop', label: 'PrestaShop / Magento' },
-    { id: 'custom', label: 'Desarrollo a medida / HTML / Otro' },
-  ];
-
-  const servicesList = [
-    { id: 'diagnostico', label: '1. Diagnóstico preliminar gratuito (S/ 0 • Entrega < 2h)' },
-    { id: 'rescate-corp', label: '2. Rescate / Limpieza de malware - Sitio Corporativo (S/ 380 • 24-48h con garantía)' },
-    { id: 'rescate-woocommerce', label: '3. Rescate / Limpieza de malware - WooCommerce / Tienda Online (S/ 550 • 24-48h con garantía)' },
-    { id: 'blindaje-waf', label: '4. Blindaje + WAF Cloudflare - Paquete Unificado (S/ 450 • 3 a 5 días hábiles)' },
-    { id: 'mantenimiento-basico', label: '5. Mantenimiento Básico - Sitios Corporativos (S/ 90 PEN / mes • Vigilancia 24/7)' },
-    { id: 'mantenimiento-tiendas', label: '6. Mantenimiento Tiendas Online con Soporte Prioritario (S/ 180 PEN / mes • 24/7)' },
-  ];
-
-  const isFormValid = Boolean(
-    name.trim() &&
-    email.trim() &&
-    phone.trim() &&
-    targetUrl.trim() &&
-    acceptedDisclaimer &&
-    acceptedTerms
-  );
+  const isFormValid = Boolean(name.trim() && email.trim() && phone.trim() && targetUrl.trim() && consent);
+  const selected = SERVICES.find((s) => s.id === service) || SERVICES[0];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isFormValid || loading) return;
     setLoading(true);
 
-    const cleanUrl = targetUrl.trim() || 'mi sitio web';
-    const clientName = name.trim();
-    const cleanCompany = company.trim();
-    const cleanRuc = ruc.trim();
-    const cleanEmail = email.trim();
-    const cleanPhone = phone.trim();
-    const selectedService = servicesList.find((s) => s.id === service) || servicesList[0];
-    const selectedPlatform = platformsList.find((p) => p.id === platform) || platformsList[0];
+    const cleanUrl = targetUrl.trim();
+    const serviceLabel = `${selected.label} (${selected.price})`;
+    const platformLabel = (PLATFORMS.find((p) => p.id === platform) || PLATFORMS[0]).label;
     const generatedId = `DFT-${Date.now().toString().slice(-6)}`;
     setContractId(generatedId);
 
-    // 1. Guardar lead y confirmación legal en almacenamiento del servidor
     try {
       await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: clientName,
-          company: cleanCompany || 'Persona Natural',
-          taxId: cleanRuc,
-          email: cleanEmail,
-          phone: cleanPhone,
+          name: name.trim(),
+          company: company.trim() || 'Persona Natural',
+          taxId: ruc.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
           targetUrl: cleanUrl,
-          platform: selectedPlatform.label,
-          service: selectedService.label,
-          details: note.trim() || 'Solicitud generada desde formulario oficial de contratación',
-          acceptedTerms: true,
-          acceptedDisclaimer: true,
+          platform: platformLabel,
+          service: serviceLabel,
+          details: note.trim() || 'Solicitud generada desde el formulario de DEFENSA TI',
+          acceptedTerms: consent,
+          acceptedDisclaimer: consent,
         }),
       });
     } catch (err) {
@@ -116,386 +92,214 @@ export default function DefensatiQuickContact({ initialUrl = '' }: Props) {
       domain: cleanUrl,
       serviceRequested: service,
     });
-    trackWhatsAppClick({
-      service: `contratacion_${service}`,
-      placement: 'contract_form_submit',
-      domain: cleanUrl,
-    });
+    trackWhatsAppClick({ service: `contratacion_${service}`, placement: 'contract_form_submit', domain: cleanUrl });
 
-    // 2. Construir mensaje oficial estructurado para WhatsApp
-    const waMessage = 
-`📋 *SOLICITUD FORMAL DE SERVICIO — DEFENSA TI*
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-• *N° Solicitud:* ${generatedId}
-• *Contacto:* ${clientName}
-• *Empresa / Razón Social:* ${cleanCompany || 'Persona Natural con Negocio'}
-• *RUC / DNI:* ${cleanRuc || 'Por confirmar'}
-• *Web a intervenir:* ${cleanUrl}
-• *Plataforma:* ${selectedPlatform.label}
-• *Correo para informe / factura:* ${cleanEmail}
-• *Teléfono / WhatsApp:* ${cleanPhone}
-• *Servicio solicitado:* ${selectedService.label}
-${note.trim() ? `• *Situación actual:* ${note.trim()}\n` : ''}━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚖️ *Declaraciones y Conformidad Legal:*
-✓ Titularidad / Autorización acreditada (Ley N° 30096)
-✓ Modelo de Responsabilidad Compartida aceptado
-✓ Términos del Servicio y Privacidad aceptados (Ley N° 29733)
-✓ Requiere comprobante formal con RUC (SUNAT)
-━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hola Martín, he completado la solicitud formal en la web. ¿Cuáles son los pasos para dar inicio a la revisión técnica?`;
+    const waMessage = `📋 *SOLICITUD DE SERVICIO — DEFENSA TI*
+• *N°:* ${generatedId}
+• *Contacto:* ${name.trim()}${company.trim() ? ` (${company.trim()})` : ''}
+• *RUC / DNI:* ${ruc.trim() || 'Por confirmar'}
+• *Web:* ${cleanUrl}
+• *Plataforma:* ${platformLabel}
+• *Correo:* ${email.trim()}
+• *WhatsApp:* ${phone.trim()}
+• *Servicio:* ${serviceLabel}
+${note.trim() ? `• *Situación:* ${note.trim()}\n` : ''}✓ Titularidad o autorización declarada (Ley N° 30096)
+✓ Términos y Privacidad aceptados (Ley N° 29733)
 
-    const waUrl = getWhatsAppUrl(waMessage);
-    window.open(waUrl, '_blank', 'noopener,noreferrer');
+Hola Martín, acabo de enviar la solicitud desde la web. ¿Cuáles son los siguientes pasos?`;
+
+    window.open(getWhatsAppUrl(waMessage), '_blank', 'noopener,noreferrer');
     setLoading(false);
     setSubmitted(true);
   };
 
   return (
-    <section id="contratar" className="w-full max-w-4xl mx-auto scroll-mt-24 text-left">
+    <section id="contratar" className="w-full max-w-3xl scroll-mt-24 text-left lg:ml-[25%]">
       <div id="contacto-rapido" className="pointer-events-none" />
 
-      <div className="p-6 sm:p-10 rounded-[32px] sm:rounded-[36px] bg-[#161618]/75 border border-white/10 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] space-y-6">
-        
-        {/* Cabecera Estilo Apple Pro */}
-        <div className="space-y-2 border-b border-white/10 pb-5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
-              <FileCheck className="w-3.5 h-3.5" />
-              <span>SOLICITA TU SERVICIO</span>
+      <div className={`border backdrop-blur-sm transition-colors duration-200 ${open ? 'border-[#cfe3ee]/40 bg-[#0a0c0f]/90' : 'border-white/10 bg-[#0a0c0f]/60 hover:border-[#cfe3ee]/40'}`}>
+        {/* Cabecera: abre o cierra el formulario */}
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls="form-contratar"
+          onClick={() => setOpen((v) => !v)}
+          className="w-full flex items-center justify-between gap-4 px-4 sm:px-6 py-5 text-left cursor-pointer group"
+        >
+          <span>
+            <span className="hud-label block">Solicitar servicio · 1 minuto</span>
+            <span className="mt-1.5 block text-xl sm:text-2xl font-light tracking-tight text-[#e8edf1]">
+              ¿Prefieres que te escribamos?
             </span>
-            <span className="text-xs text-[#86868b] flex items-center gap-1.5 font-mono">
-              <Receipt className="w-3.5 h-3.5 text-emerald-400" />
-              Factura / Boleta con RUC {siteConfig.business.ruc}
-            </span>
-          </div>
+          </span>
+          <span
+            aria-hidden
+            className={`w-9 h-9 shrink-0 grid place-items-center border font-mono text-lg transition-all duration-200 ${
+              open ? 'border-[#cfe3ee] text-[#0a0c0f] bg-[#cfe3ee] rotate-45' : 'border-white/15 text-[#cfe3ee] group-hover:border-[#cfe3ee]'
+            }`}
+          >
+            +
+          </span>
+        </button>
 
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-snug pt-1">
-            Solicita tu servicio en un minuto
-          </h3>
-          <p className="text-sm sm:text-base text-[#86868b] font-normal leading-relaxed">
-            Déjanos tus datos y seguimos por WhatsApp. No pagas nada hasta acordar el servicio.
-          </p>
-        </div>
-
-        {submitted ? (
-          /* Estado de Éxito y Resumen Formal */
-          <div className="p-6 sm:p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-left space-y-5 animate-in fade-in duration-300">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-                <CheckCircle2 className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="text-lg sm:text-xl font-bold text-white">
-                  ¡Solicitud {contractId} Registrada con Éxito!
-                </h4>
-                <p className="text-xs sm:text-sm text-neutral-300">
-                  Hemos guardado tu requerimiento en el sistema con validez legal e informado a nuestro equipo técnico.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-1.5 text-xs text-neutral-300 font-mono">
-              <p>• <strong>Solicitante:</strong> {name} {company ? `(${company})` : ''}</p>
-              <p>• <strong>RUC / DNI:</strong> {ruc.trim() || 'Por confirmar'}</p>
-              <p>• <strong>Web a intervenir:</strong> {targetUrl}</p>
-              <p>• <strong>Correo:</strong> {email} &bull; <strong>Teléfono:</strong> {phone}</p>
-              <p>• <strong>Servicio:</strong> {servicesList.find((s) => s.id === service)?.label}</p>
-              <p className="text-emerald-400 pt-1">✓ Declaración Ley 30096, Términos y Privacidad aceptados formalmente.</p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-              <a
-                href={getWhatsAppUrl(`Hola Martín, acabo de enviar la solicitud formal de servicio código ${contractId} desde la web para ${targetUrl}. Deseo confirmar la recepción.`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-black font-extrabold text-sm flex items-center justify-center gap-2 transition-all shadow-md"
-              >
-                <WhatsAppIcon className="w-4 h-4 fill-current" />
-                <span>Continuar por WhatsApp (+51 987 010 380)</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setSubmitted(false);
-                  setAcceptedDisclaimer(false);
-                  setAcceptedTerms(false);
-                }}
-                className="w-full sm:w-auto px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 text-xs font-semibold transition-all border border-white/10"
-              >
-                Ingresar otra solicitud
-              </button>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            
-            {/* Fila 1: Nombre y Empresa */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label htmlFor="contract-name" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Nombre completo o contacto responsable <span className="text-rose-400">*</span></span>
-                </label>
-                <input
-                  id="contract-name"
-                  type="text"
-                  required
-                  placeholder="Ej. Carlos Mendoza"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label htmlFor="contract-email" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Correo para informe técnico y factura <span className="text-rose-400">*</span></span>
-                </label>
-                <input
-                  id="contract-email"
-                  type="email"
-                  required
-                  placeholder="contacto@tuempresa.pe"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-
-              
-            </div>
-
-            {/* Fila 2: RUC/DNI y Correo Electrónico */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
-
-              
-            </div>
-
-            {/* Fila 3: Teléfono y Dirección Web */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label htmlFor="contract-phone" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Teléfono / WhatsApp oficial del titular <span className="text-rose-400">*</span></span>
-                </label>
-                <input
-                  id="contract-phone"
-                  type="tel"
-                  required
-                  placeholder="Ej. +51 987 654 321"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label htmlFor="contract-url" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Globe className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Dirección web a auditar o blindar <span className="text-rose-400">*</span></span>
-                </label>
-                <input
-                  id="contract-url"
-                  type="text"
-                  required
-                  placeholder="https://tudominio.com"
-                  value={targetUrl}
-                  onChange={(e) => setTargetUrl(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-            </div>
-
-            {/* Fila 4: Plataforma Web y Selector de Servicio Oficial */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
-
-              <div className="space-y-1.5">
-                <label htmlFor="contract-service" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Servicio oficial a solicitar <span className="text-rose-400">*</span></span>
-                </label>
-                <select
-                  id="contract-service"
-                  value={service}
-                  onChange={(e) => setService(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
-                >
-                  {servicesList.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-[#141416] text-white">
-                      {s.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Fila 5: Detalles o Síntomas */}
-            
-
-            {/* Datos opcionales, plegados para que el formulario sea corto */}
-            <details className="rounded-2xl bg-white/[0.03] border border-white/10 group">
-              <summary className="cursor-pointer select-none px-4 py-3 text-sm font-semibold text-[#f5f5f7] flex items-center justify-between gap-3 list-none [&::-webkit-details-marker]:hidden">
-                <span>Datos opcionales: factura, plataforma y detalles</span>
-                <span className="text-[#38bdf8] text-xs font-medium group-open:hidden">Agregar</span>
-                <span className="text-[#38bdf8] text-xs font-medium hidden group-open:inline">Ocultar</span>
-              </summary>
-              <div className="px-4 pb-4 space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                <label htmlFor="contract-company" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Empresa o Razón Social (Opcional)</span>
-                </label>
-                <input
-                  id="contract-company"
-                  type="text"
-                  placeholder="Ej. Distribuidora Lima S.A.C."
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
-                  <div className="space-y-1.5">
-                <label htmlFor="contract-ruc" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Receipt className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>RUC o DNI para Factura / Boleta <span className="text-neutral-500">(opcional, puedes darlo después)</span></span>
-                </label>
-                <input
-                  id="contract-ruc"
-                  type="text"
-                  placeholder="Ej. 20601234567 o 45678912"
-                  value={ruc}
-                  onChange={(e) => setRuc(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal"
-                />
-              </div>
+        <div
+          id="form-contratar"
+          className={`grid transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+          style={{ gridTemplateRows: open ? 'minmax(0, 1fr)' : 'minmax(0, 0fr)' }}
+        >
+          <div className="overflow-hidden">
+            <div className="px-4 sm:px-6 pb-6 border-t ed-line pt-5">
+              {submitted ? (
+                <div className="space-y-4">
+                  <p className="flex items-center gap-2 text-lg font-light text-[#e8edf1]">
+                    <CheckCircle2 className="w-5 h-5 text-[#cfe3ee]" /> Solicitud {contractId} enviada
+                  </p>
+                  <p className="text-sm text-[#9aa6af]">Te responderemos por WhatsApp. No pagas nada hasta acordar el servicio.</p>
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href={getWhatsAppUrl(`Hola Martín, envié la solicitud ${contractId} para ${targetUrl}. Deseo confirmar la recepción.`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hud-btn hud-btn-solid"
+                    >
+                      <WhatsAppIcon className="w-3.5 h-3.5 fill-current" /> Abrir WhatsApp
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setConsent(false);
+                      }}
+                      className="hud-btn"
+                    >
+                      Otra solicitud
+                    </button>
+                  </div>
                 </div>
-                <div className="space-y-1.5">
-                <label htmlFor="contract-platform" className="text-xs font-medium text-neutral-300 flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#38bdf8]" />
-                  <span>Plataforma de tu web</span>
-                </label>
-                <select
-                  id="contract-platform"
-                  value={platform}
-                  onChange={(e) => setPlatform(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#141416] border border-white/10 text-white focus:outline-none focus:border-[#0071e3] transition-all text-sm cursor-pointer"
-                >
-                  {platformsList.map((p) => (
-                    <option key={p.id} value={p.id} className="bg-[#141416] text-white">
-                      {p.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-                <div className="space-y-1.5">
-              <label htmlFor="contract-note" className="text-xs font-medium text-neutral-300">
-                Detalles de la situación técnica o síntomas (Opcional)
-              </label>
-              <textarea
-                id="contract-note"
-                rows={2}
-                placeholder="Ej. El proveedor de hosting me bloqueó hoy, Google muestra pantalla roja, o es una web limpia que deseo blindar antes de lanzar campañas."
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all text-sm font-normal resize-none"
-              />
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Servicio: chips con precio */}
+                  <fieldset>
+                    <legend className="hud-label mb-2">Servicio</legend>
+                    <div className="flex flex-wrap gap-2">
+                      {SERVICES.map((s) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          aria-pressed={service === s.id}
+                          onClick={() => setService(s.id)}
+                          className={`px-3 py-2 border text-xs transition-colors duration-75 cursor-pointer ${
+                            service === s.id
+                              ? 'bg-[#e8edf1] text-[#0a0c0f] border-[#e8edf1]'
+                              : 'border-white/10 text-[#9aa6af] hover:border-[#cfe3ee]/60 hover:text-[#e8edf1]'
+                          }`}
+                        >
+                          {s.label} <span className="font-mono opacity-70">· {s.price}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label className="space-y-1">
+                      <span className="hud-label block">Nombre</span>
+                      <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Carlos Mendoza" autoComplete="name" className={field} />
+                    </label>
+                    <label className="space-y-1">
+                      <span className="hud-label block">WhatsApp</span>
+                      <input required type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+51 987 654 321" autoComplete="tel" className={field} />
+                    </label>
+                    <label className="space-y-1">
+                      <span className="hud-label block">Correo</span>
+                      <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@empresa.pe" autoComplete="email" className={field} />
+                    </label>
+                    <label className="space-y-1">
+                      <span className="hud-label block">Tu web</span>
+                      <input required inputMode="url" value={targetUrl} onChange={(e) => setTargetUrl(e.target.value)} placeholder="https://tudominio.com" className={field} />
+                    </label>
+                  </div>
+
+                  {/* Datos opcionales plegados */}
+                  <div className="border-t ed-line">
+                    <button
+                      type="button"
+                      aria-expanded={showMore}
+                      onClick={() => setShowMore((v) => !v)}
+                      className="w-full flex items-center justify-between py-3 text-left cursor-pointer group"
+                    >
+                      <span className="hud-label group-hover:!text-[#e8edf1]">Opcional: factura, plataforma y detalles</span>
+                      <span className={`font-mono text-[#cfe3ee] transition-transform duration-200 ${showMore ? 'rotate-45' : ''}`}>+</span>
+                    </button>
+                    <div className={`grid transition-all duration-300 ${showMore ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                      style={{ gridTemplateRows: showMore ? 'minmax(0, 1fr)' : 'minmax(0, 0fr)' }}>
+                      <div className="overflow-hidden">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3">
+                          <label className="space-y-1">
+                            <span className="hud-label block">Empresa</span>
+                            <input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Distribuidora Lima S.A.C." className={field} />
+                          </label>
+                          <label className="space-y-1">
+                            <span className="hud-label block">RUC o DNI</span>
+                            <input value={ruc} onChange={(e) => setRuc(e.target.value)} placeholder="20601234567" className={field} />
+                          </label>
+                          <label className="space-y-1 sm:col-span-2">
+                            <span className="hud-label block">Plataforma</span>
+                            <select value={platform} onChange={(e) => setPlatform(e.target.value)} className={`${field} cursor-pointer`}>
+                              {PLATFORMS.map((p) => (
+                                <option key={p.id} value={p.id} className="bg-[#0a0c0f]">
+                                  {p.label}
+                                </option>
+                              ))}
+                            </select>
+                          </label>
+                          <label className="space-y-1 sm:col-span-2">
+                            <span className="hud-label block">¿Qué está pasando?</span>
+                            <textarea
+                              rows={2}
+                              value={note}
+                              onChange={(e) => setNote(e.target.value)}
+                              placeholder="Ej. el hosting bloqueó mi web, Google muestra pantalla roja…"
+                              className={`${field} resize-none`}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Un solo consentimiento legal */}
+                  <label className="flex items-start gap-3 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 accent-[#cfe3ee] shrink-0 cursor-pointer"
+                    />
+                    <span className="text-xs text-[#9aa6af] leading-relaxed">
+                      Declaro que la web es mía o tengo autorización (Ley N° 30096) y acepto los{' '}
+                      <Link href="/terminos" target="_blank" className="text-[#e8edf1] underline hover:text-white">
+                        Términos y la Política de Privacidad
+                      </Link>{' '}
+                      (Ley N° 29733).
+                    </span>
+                  </label>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                    <span className="hud-label">Factura o boleta · RUC {siteConfig.business.ruc}</span>
+                    <button type="submit" disabled={!isFormValid || loading} className="hud-btn hud-btn-solid group/btn">
+                      <WhatsAppIcon className="w-3.5 h-3.5 fill-current" />
+                      <span>{loading ? 'Enviando…' : 'Enviar por WhatsApp'}</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
-              </div>
-            </details>
-
-            {/* ============================================================== */}
-            {/* CASILLAS LEGALES OBLIGATORIAS (Ley 30096 + Ley 29733)           */}
-            {/* ============================================================== */}
-            <div className="pt-2 space-y-3">
-              
-              {/* Checkbox 1: Autorización Legal y No Responsabilidad (Ley 30096) */}
-              <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-white/20 transition-all cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  required
-                  checked={acceptedDisclaimer}
-                  onChange={(e) => setAcceptedDisclaimer(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded text-[#0071e3] bg-black/60 border-white/30 focus:ring-0 focus:ring-offset-0 shrink-0 cursor-pointer"
-                />
-                <span className="text-xs text-neutral-300 leading-relaxed font-normal">
-                  <strong className="text-white font-semibold">Declaración Bajo Juramento (Ley N° 30096) y Responsabilidad Compartida:</strong> Declaro bajo juramento que soy el titular del dominio consignado o cuento con autorización expresa y por escrito para solicitar este servicio de auditoría, remediación o blindaje. Acepto el <strong>Modelo de Responsabilidad Compartida</strong> del hosting y desligo a DEFENSA TI de responsabilidades por contraseñas débiles, plugins de terceros o alteraciones posteriores ajenas a la intervención contratada.
-                </span>
-              </label>
-
-              {/* Checkbox 2: Términos del Servicio y Política de Privacidad (Ley 29733) */}
-              <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-white/20 transition-all cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  required
-                  checked={acceptedTerms}
-                  onChange={(e) => setAcceptedTerms(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded text-[#0071e3] bg-black/60 border-white/30 focus:ring-0 focus:ring-offset-0 shrink-0 cursor-pointer"
-                />
-                <span className="text-xs text-neutral-300 leading-relaxed font-normal">
-                  <strong className="text-white font-semibold">Términos del Servicio y Privacidad:</strong> He leído y acepto los <Link href="/terminos" target="_blank" className="text-[#38bdf8] underline font-semibold hover:text-white">Términos del Servicio</Link> (plazos técnicos de 24-48h a 7 días hábiles, alcances y garantía por escrito de 30 días) y la <Link href="/terminos" target="_blank" className="text-[#38bdf8] underline font-semibold hover:text-white">Política de Privacidad</Link> conforme a la Ley N° 29733 y D.S. 016-2024-JUS.
-                </span>
-              </label>
-
-            </div>
-
-            {/* Aviso visual si falta marcar las casillas */}
-            {(!acceptedDisclaimer || !acceptedTerms) && (
-              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2 text-xs text-amber-300">
-                <AlertTriangle className="w-4 h-4 shrink-0 text-amber-400" />
-                <span>Marca ambas casillas legales obligatorias para habilitar el botón de solicitud.</span>
-              </div>
-            )}
-
-            {/* Botón de Envío Directo y Coordinación Apple Pill */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={!isFormValid || loading}
-                className={`w-full py-4 px-6 rounded-full font-extrabold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all shadow-[0_4px_24px_rgba(37,211,102,0.35)] ${
-                  isFormValid && !loading
-                    ? 'bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black cursor-pointer'
-                    : 'bg-white/10 text-neutral-500 cursor-not-allowed border border-white/10 shadow-none'
-                }`}
-              >
-                <WhatsAppIcon className="w-5 h-5 fill-current shrink-0" />
-                <span>
-                  {loading 
-                    ? 'Procesando solicitud formal...' 
-                    : 'Enviar solicitud y seguir por WhatsApp'}
-                </span>
-              </button>
-            </div>
-
-            {/* Micro-garantías de Confianza Legal */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-xs text-neutral-400">
-              <span className="flex items-center gap-1.5 text-neutral-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                Factura o Boleta Electrónica con RUC
-              </span>
-              <span className="flex items-center gap-1.5 text-neutral-300">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                Garantía formal por escrito de 30 días
-              </span>
-              <span className="flex items-center gap-1.5 text-neutral-200 font-medium">
-                <CheckCircle2 className="w-4 h-4 text-[#38bdf8] shrink-0" />
-                Yo mismo reviso tu web (sin intermediarios)
-              </span>
-            </div>
-
-            {/* Horario de Atención Técnica */}
-            <div className="pt-2 text-center text-xs text-neutral-400 border-t border-white/5 flex items-center justify-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-[#38bdf8] shrink-0" />
-              <span>Horario de atención técnica: <strong>Lunes a Sábado de 9:00 a 20:00 (Hora Perú)</strong>. Solicitudes fuera de horario se gestionan a primera hora de la mañana hábil siguiente.</span>
-            </div>
-
-          </form>
-        )}
-
+          </div>
+        </div>
       </div>
     </section>
   );

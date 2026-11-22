@@ -1,3 +1,5 @@
+import { P, PRICES } from '@/config/catalog';
+
 // Configuración oficial y única fuente de verdad para Neuronal Gravity y DEFENSA TI
 export const siteConfig = {
   name: 'Neuronal Gravity',
@@ -41,11 +43,11 @@ export const siteConfig = {
         priceDisplay: 'Gratis',
         deliveryTime: 'Inmediato (< 2h en revisión técnica)',
         paymentTerms: '100% sin costo',
-        description: 'Escáner pasivo no invasivo de cabeceras HTTP, certificados SSL/TLS y puertos expuestos.',
+        description: 'Escáner no invasivo de cabeceras HTTP, certificados SSL/TLS y DNS; puertos si demuestras que el dominio es tuyo.',
         features: [
           'Auditoría perimetral externa determinista sin credenciales',
           'Calificación de seguridad (Score 0-100 y Grado A-F)',
-          'Detección de puertos expuestos y vigencia de SSL',
+          'Vigencia de SSL, DNS y puertos expuestos (con titularidad verificada)',
           'Dictamen técnico descargable en PDF',
         ],
         guarantee: false,
@@ -53,8 +55,8 @@ export const siteConfig = {
       {
         id: 'rescate-corporativo',
         name: 'Rescate / Limpieza de malware (Sitio Corporativo)',
-        price: 380,
-        priceDisplay: 'S/ 380',
+        price: PRICES.rescateCorporativo,
+        priceDisplay: P.rescateCorporativo,
         deliveryTime: '24 a 48 horas (casos críticos < 24h)',
         paymentTerms: 'Pago único • 50% al iniciar y 50% al entregar verificado',
         description: 'Desinfección forense profunda para sitios corporativos, blogs y portafolios infectados con virus, spam o suspensión de hosting.',
@@ -72,8 +74,8 @@ export const siteConfig = {
       {
         id: 'rescate-woocommerce',
         name: 'Rescate / Limpieza de malware (WooCommerce / Tienda Online)',
-        price: 550,
-        priceDisplay: 'S/ 550',
+        price: PRICES.rescateTienda,
+        priceDisplay: P.rescateTienda,
         deliveryTime: '24 a 48 horas (casos críticos < 24h)',
         paymentTerms: 'Pago único • 50% al iniciar y 50% al entregar verificado',
         description: 'Desinfección forense integral para tiendas online y e-commerce (WooCommerce, Shopify, Wix) con saneamiento de pasarelas y checkout.',
@@ -91,8 +93,8 @@ export const siteConfig = {
       {
         id: 'blindaje-waf',
         name: 'Blindaje + WAF Cloudflare (Paquete Unificado)',
-        price: 450,
-        priceDisplay: 'S/ 450',
+        price: PRICES.blindajeWaf,
+        priceDisplay: P.blindajeWaf,
         deliveryTime: '3 a 5 días hábiles',
         paymentTerms: 'Pago único • 50% al iniciar y 50% al entregar verificado',
         description: 'Solución perimetral completa: fortalecimiento de cabeceras canónicas estrictas más Firewall de Aplicaciones Web (WAF Cloudflare) activo contra ataques y bots.',
@@ -112,8 +114,8 @@ export const siteConfig = {
       {
         id: 'mantenimiento-basico',
         name: 'Mantenimiento Básico (Sitios Corporativos)',
-        price: 90,
-        priceDisplay: 'S/ 90 / mes',
+        price: PRICES.mantenimientoBasico,
+        priceDisplay: `${P.mantenimientoBasico} / mes`,
         billingCycle: 'Mensual prepagado (sin permanencia forzosa)',
         features: [
           'Muestreo de disponibilidad web (Uptime) cada 15 minutos',
@@ -126,8 +128,8 @@ export const siteConfig = {
       {
         id: 'mantenimiento-tiendas',
         name: 'Mantenimiento Tiendas Online (Soporte Prioritario)',
-        price: 180,
-        priceDisplay: 'S/ 180 / mes',
+        price: PRICES.mantenimientoTiendas,
+        priceDisplay: `${P.mantenimientoTiendas} / mes`,
         billingCycle: 'Mensual prepagado (sin permanencia forzosa)',
         features: [
           'Muestreo de disponibilidad en tiempo real cada 5 minutos',

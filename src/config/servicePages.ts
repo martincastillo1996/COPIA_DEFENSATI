@@ -1,3 +1,5 @@
+import { P } from '@/config/catalog';
+
 /**
  * Páginas de servicio de DEFENSA TI (/defensati/servicios/[slug]).
  * Precios y alcances tomados del Catálogo Oficial (AGENTS.md, regla 7). Cualquier cambio de
@@ -36,9 +38,9 @@ export const SERVICE_PAGES: ServicePage[] = [
   {
     slug: 'limpieza-malware-wordpress',
     shortName: 'Limpieza de malware',
-    metaTitle: 'Limpieza de Malware en WordPress y WooCommerce en Perú | Desde S/ 380 | DEFENSA TI',
+    metaTitle: `Limpieza de Malware en WordPress y WooCommerce en Perú | Desde ${P.rescateCorporativo} | DEFENSA TI`,
     metaDescription:
-      'Desinfectamos tu web hackeada: retiro de virus y malware, desbloqueo con el hosting y retiro de la pantalla roja de Google. Respaldo previo y garantía de 30 días. Desde S/ 380.',
+      `Desinfectamos tu web hackeada: retiro de virus y malware, desbloqueo con el hosting y retiro de la pantalla roja de Google. Respaldo previo y garantía de 30 días. Desde ${P.rescateCorporativo}.`,
     h1: 'Limpieza de malware y rescate de páginas web infectadas',
     intro:
       'Si tu web redirige a sitios de apuestas, muestra la pantalla roja de Google o fue suspendida por el hosting, la desinfectamos a fondo: archivos y base de datos, con respaldo previo y garantía de 30 días por escrito.',
@@ -58,8 +60,8 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Informe de entrega: qué se encontró, qué se corrigió y qué quedó pendiente',
     ],
     prices: [
-      { label: 'Sitio corporativo', price: 'S/ 380' },
-      { label: 'WooCommerce / Tienda online', price: 'S/ 550' },
+      { label: 'Sitio corporativo', price: P.rescateCorporativo },
+      { label: 'WooCommerce / Tienda online', price: P.rescateTienda },
     ],
     paymentTerms: 'Pago único • 50% al iniciar y 50% al entregar verificado',
     deliveryTime: '24 a 48 horas',
@@ -85,9 +87,9 @@ export const SERVICE_PAGES: ServicePage[] = [
   {
     slug: 'blindaje-waf-cloudflare',
     shortName: 'Blindaje + WAF Cloudflare',
-    metaTitle: 'Blindaje Web + WAF Cloudflare en Perú | S/ 450 pago único | DEFENSA TI',
+    metaTitle: `Blindaje Web + WAF Cloudflare en Perú | ${P.blindajeWaf} pago único | DEFENSA TI`,
     metaDescription:
-      'Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame) y firewall WAF de Cloudflare activo contra bots, scrapers y ataques DDoS. Paquete unificado por S/ 450, pago único.',
+      `Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame) y firewall WAF de Cloudflare activo contra bots, scrapers y ataques DDoS. Paquete unificado por ${P.blindajeWaf}, pago único.`,
     h1: 'Blindaje web con cabeceras de seguridad y WAF de Cloudflare',
     intro:
       'Cerramos las puertas que usan los atacantes automáticos: configuramos las cabeceras de seguridad de tu sitio y ponemos un firewall perimetral delante de tu web, en un solo paquete.',
@@ -104,7 +106,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Reglas contra bots, scrapers y ataques DDoS',
       'Re-escaneo de verificación con la nueva calificación de seguridad',
     ],
-    prices: [{ label: 'Paquete unificado (cabeceras + WAF)', price: 'S/ 450' }],
+    prices: [{ label: 'Paquete unificado (cabeceras + WAF)', price: P.blindajeWaf }],
     paymentTerms: 'Pago único • 50% al iniciar y 50% al entregar verificado',
     deliveryTime: '3 a 5 días hábiles',
     guarantee:
@@ -120,14 +122,14 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
     ],
     whatsappMessage:
-      'Hola Martín, quiero el Blindaje + WAF Cloudflare (S/ 450) para mi página web. ¿Qué necesitas para empezar?',
+      `Hola Martín, quiero el Blindaje + WAF Cloudflare (${P.blindajeWaf}) para mi página web. ¿Qué necesitas para empezar?`,
   },
   {
     slug: 'mantenimiento-web-mensual',
     shortName: 'Mantenimiento mensual',
-    metaTitle: 'Mantenimiento y Monitoreo Web Mensual en Perú | Desde S/ 90 al mes | DEFENSA TI',
+    metaTitle: `Mantenimiento y Monitoreo Web Mensual en Perú | Desde ${P.mantenimientoBasico} al mes | DEFENSA TI`,
     metaDescription:
-      'Vigilancia continua de tu web: monitoreo de uptime, alerta de vencimiento SSL, reporte mensual y soporte. Sin permanencia forzosa. Sitios corporativos S/ 90/mes, tiendas S/ 180/mes.',
+      `Vigilancia continua de tu web: monitoreo de uptime, alerta de vencimiento SSL, reporte mensual y soporte. Sin permanencia forzosa. Sitios corporativos ${P.mantenimientoBasico}/mes, tiendas ${P.mantenimientoTiendas}/mes.`,
     h1: 'Mantenimiento mensual y vigilancia continua de tu web',
     intro:
       'Nos enteramos antes que tus clientes si tu web se cae o si tu certificado SSL está por vencer. Vigilancia continua 24/7, reporte mensual y soporte directo, sin contratos de permanencia.',
@@ -145,8 +147,8 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Tiendas Online: 90 minutos de soporte prioritario',
     ],
     prices: [
-      { label: 'Mantenimiento Básico (sitios corporativos)', price: 'S/ 90 / mes' },
-      { label: 'Mantenimiento Tiendas Online (soporte prioritario)', price: 'S/ 180 / mes' },
+      { label: 'Mantenimiento Básico (sitios corporativos)', price: `${P.mantenimientoBasico} / mes` },
+      { label: 'Mantenimiento Tiendas Online (soporte prioritario)', price: `${P.mantenimientoTiendas} / mes` },
     ],
     paymentTerms: 'Pago mensual • Sin permanencia forzosa',
     faqs: [
@@ -156,7 +158,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
       {
         q: '¿El mantenimiento incluye la limpieza si me hackean?',
-        a: 'No. La desinfección tras una infección se cotiza aparte con la tarifa de Rescate / Limpieza de malware (S/ 380 sitio corporativo, S/ 550 tienda online).',
+        a: `No. La desinfección tras una infección se cotiza aparte con la tarifa de Rescate / Limpieza de malware (${P.rescateCorporativo} sitio corporativo, ${P.rescateTienda} tienda online).`,
       },
     ],
     whatsappMessage:
@@ -165,9 +167,9 @@ export const SERVICE_PAGES: ServicePage[] = [
   {
     slug: 'blindaje-correo-spf-dkim-dmarc',
     shortName: 'Blindaje de correo',
-    metaTitle: 'Configuración SPF, DKIM y DMARC en Perú | Blindaje de Correo S/ 190 | DEFENSA TI',
+    metaTitle: `Configuración SPF, DKIM y DMARC en Perú | Blindaje de Correo ${P.correoSpfDkimDmarc} | DEFENSA TI`,
     metaDescription:
-      'Evita que tus correos caigan en spam en Gmail y Outlook y que suplanten tu dominio. Configuración de SPF, DKIM y DMARC por S/ 190, pago único.',
+      `Evita que tus correos caigan en spam en Gmail y Outlook y que suplanten tu dominio. Configuración de SPF, DKIM y DMARC por ${P.correoSpfDkimDmarc}, pago único.`,
     h1: 'Blindaje de correo y anti-spam: SPF, DKIM y DMARC',
     intro:
       'Configuramos los tres registros que Gmail y Outlook revisan para confiar en tu dominio, de modo que tus correos lleguen a la bandeja de entrada y nadie pueda enviar mensajes haciéndose pasar por tu empresa.',
@@ -183,7 +185,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Configuración de la política DMARC',
       'Verificación de entrega y de protección contra suplantación',
     ],
-    prices: [{ label: 'Blindaje de correo y anti-spam', price: 'S/ 190' }],
+    prices: [{ label: 'Blindaje de correo y anti-spam', price: P.correoSpfDkimDmarc }],
     paymentTerms: 'Pago único',
     faqs: [
       {
@@ -196,14 +198,14 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
     ],
     whatsappMessage:
-      'Hola Martín, quiero el Blindaje de Correo (SPF, DKIM y DMARC) por S/ 190 para mi dominio.',
+      `Hola Martín, quiero el Blindaje de Correo (SPF, DKIM y DMARC) por ${P.correoSpfDkimDmarc} para mi dominio.`,
   },
   {
     slug: 'migracion-hosting-segura',
     shortName: 'Migración de hosting',
-    metaTitle: 'Migración de Hosting sin Caída en Perú | Desde S/ 290 | DEFENSA TI',
+    metaTitle: `Migración de Hosting sin Caída en Perú | Desde ${P.migracionCorporativa} | DEFENSA TI`,
     metaDescription:
-      'Trasladamos tu web o tienda online a otro hosting sin caída: respaldo, traslado y saneamiento perimetral. Web corporativa S/ 290, tienda e-commerce S/ 450.',
+      `Trasladamos tu web o tienda online a otro hosting sin caída: respaldo, traslado y saneamiento perimetral. Web corporativa ${P.migracionCorporativa}, tienda e-commerce ${P.migracionTienda}.`,
     h1: 'Migración limpia y segura de hosting, sin caída',
     intro:
       'Cambiamos tu web de proveedor sin que tus clientes lo noten: respaldamos todo, trasladamos el sitio y lo dejamos saneado en su nuevo servidor.',
@@ -220,8 +222,8 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Verificación de funcionamiento tras el cambio',
     ],
     prices: [
-      { label: 'Web corporativa', price: 'S/ 290' },
-      { label: 'Tienda e-commerce', price: 'S/ 450' },
+      { label: 'Web corporativa', price: P.migracionCorporativa },
+      { label: 'Tienda e-commerce', price: P.migracionTienda },
     ],
     paymentTerms: 'Pago único',
     faqs: [
@@ -240,9 +242,9 @@ export const SERVICE_PAGES: ServicePage[] = [
   {
     slug: 'optimizacion-velocidad-web-wpo',
     shortName: 'Velocidad web (WPO)',
-    metaTitle: 'Optimización de Velocidad Web (WPO) y Core Web Vitals en Perú | Desde S/ 320 | DEFENSA TI',
+    metaTitle: `Optimización de Velocidad Web (WPO) y Core Web Vitals en Perú | Desde ${P.wpoCorporativo} | DEFENSA TI`,
     metaDescription:
-      'Aceleramos tu web: caché Edge de Cloudflare, compresión Brotli y aceleración móvil para mejorar tus Core Web Vitals. Web corporativa S/ 320, tienda e-commerce S/ 480.',
+      `Aceleramos tu web: caché Edge de Cloudflare, compresión Brotli y aceleración móvil para mejorar tus Core Web Vitals. Web corporativa ${P.wpoCorporativo}, tienda e-commerce ${P.wpoTienda}.`,
     h1: 'Optimización de velocidad web (WPO) y Core Web Vitals',
     intro:
       'Una web lenta pierde visitas antes de mostrar tu oferta. Optimizamos la carga con caché en el borde de la red, compresión y ajustes específicos para móviles.',
@@ -259,8 +261,8 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Medición de Core Web Vitals antes y después',
     ],
     prices: [
-      { label: 'Web corporativa', price: 'S/ 320' },
-      { label: 'Tienda e-commerce', price: 'S/ 480' },
+      { label: 'Web corporativa', price: P.wpoCorporativo },
+      { label: 'Tienda e-commerce', price: P.wpoTienda },
     ],
     paymentTerms: 'Pago único',
     faqs: [
@@ -279,9 +281,9 @@ export const SERVICE_PAGES: ServicePage[] = [
   {
     slug: 'adecuacion-ley-29733-proteccion-datos',
     shortName: 'Adecuación Ley 29733',
-    metaTitle: 'Adecuación Web a la Ley 29733 de Protección de Datos (ANPDP) | Desde S/ 350 | DEFENSA TI',
+    metaTitle: `Adecuación Web a la Ley 29733 de Protección de Datos (ANPDP) | Desde ${P.legalBasica} | DEFENSA TI`,
     metaDescription:
-      'Adecuamos tu web a la Ley N° 29733: banner de cookies activo, políticas a medida y cláusulas de consentimiento. Adecuación básica S/ 350, integral S/ 500.',
+      `Adecuamos tu web a la Ley N° 29733: banner de cookies activo, políticas a medida y cláusulas de consentimiento. Adecuación básica ${P.legalBasica}, integral ${P.legalIntegral}.`,
     h1: 'Adecuación legal de tu web a la Ley N° 29733 (ANPDP Perú)',
     intro:
       'Si tu web recoge datos personales con formularios, cookies o un carrito de compras, debe cumplir la Ley de Protección de Datos Personales. Implementamos en tu sitio los elementos que la norma exige.',
@@ -297,8 +299,8 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Cláusulas de consentimiento en formularios',
     ],
     prices: [
-      { label: 'Adecuación básica', price: 'S/ 350' },
-      { label: 'Adecuación integral', price: 'S/ 500' },
+      { label: 'Adecuación básica', price: P.legalBasica },
+      { label: 'Adecuación integral', price: P.legalIntegral },
     ],
     paymentTerms: 'Pago único',
     faqs: [
@@ -317,9 +319,9 @@ export const SERVICE_PAGES: ServicePage[] = [
   {
     slug: 'auditoria-pasarelas-de-pago',
     shortName: 'Auditoría de pasarelas',
-    metaTitle: 'Auditoría Técnica de Pasarelas de Pago (Niubiz, Culqi, Izipay) | S/ 420 | DEFENSA TI',
+    metaTitle: `Auditoría Técnica de Pasarelas de Pago (Niubiz, Culqi, Izipay) | ${P.auditoriaPasarelas} | DEFENSA TI`,
     metaDescription:
-      'Revisión forense del checkout de tu tienda: Niubiz, Culqi, Izipay, MercadoPago o Stripe contra Magecart y manipulación de datos. S/ 420, pago único.',
+      `Revisión forense del checkout de tu tienda: Niubiz, Culqi, Izipay, MercadoPago o Stripe contra Magecart y manipulación de datos. ${P.auditoriaPasarelas}, pago único.`,
     h1: 'Auditoría técnica de pasarelas de pago y checkout',
     intro:
       'Revisamos el punto más sensible de tu tienda: la página donde tus clientes ingresan su tarjeta. Buscamos scripts que roban datos (Magecart) y manipulación del flujo de pago.',
@@ -335,7 +337,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       'Detección de skimmers tipo Magecart',
       'Detección de manipulación de datos en el flujo de pago',
     ],
-    prices: [{ label: 'Auditoría técnica de pasarela de pago', price: 'S/ 420' }],
+    prices: [{ label: 'Auditoría técnica de pasarela de pago', price: P.auditoriaPasarelas }],
     paymentTerms: 'Pago único',
     faqs: [
       {
@@ -348,7 +350,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
     ],
     whatsappMessage:
-      'Hola Martín, quiero la Auditoría Técnica de Pasarela de Pago (S/ 420) para el checkout de mi tienda.',
+      `Hola Martín, quiero la Auditoría Técnica de Pasarela de Pago (${P.auditoriaPasarelas}) para el checkout de mi tienda.`,
   },
 ];
 

@@ -7,7 +7,7 @@ export default function DefensatiScanScope() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-4xl xl:max-w-5xl mx-auto rounded-[24px] sm:rounded-[28px] bg-[#161618]/70 border border-white/10 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] overflow-hidden transition-all text-left">
+    <div className="w-full max-w-4xl xl:max-w-5xl mx-auto bg-[#0d0d0d] border border-white/10 overflow-hidden transition-all text-left">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -15,11 +15,11 @@ export default function DefensatiScanScope() {
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-[#38bdf8] shrink-0">
+          <div className="w-9 h-9 bg-white/[0.03] border border-white/10 flex items-center justify-center text-[#bdbdbd] shrink-0">
             <HelpCircle className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-sm sm:text-base font-bold text-white tracking-tight">
+            <h4 className="text-sm sm:text-base font-bold text-[#EDEDED] tracking-tight">
               ¿Qué puede detectar este escáner gratuito y qué no?
             </h4>
             <p className="text-xs text-neutral-400">
@@ -28,7 +28,7 @@ export default function DefensatiScanScope() {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-[#38bdf8] bg-sky-500/10 px-3 py-1.5 rounded-full border border-sky-500/20 shrink-0 ml-2">
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-[#bdbdbd] bg-white/[0.03] px-3 py-1.5 border border-white/10 shrink-0 ml-2">
           <span>{isOpen ? 'Ocultar' : 'Ver alcance'}</span>
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </div>
@@ -39,8 +39,8 @@ export default function DefensatiScanScope() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-4">
             
             {/* Lo que SÍ detecta */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/25 space-y-3">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs sm:text-sm">
+            <div className="p-4 sm:p-5 bg-white/[0.03] border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 text-[#EDEDED] font-bold text-xs sm:text-sm">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>Lo que SÍ analiza (Perímetro Externo)</span>
               </div>
@@ -59,7 +59,7 @@ export default function DefensatiScanScope() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold shrink-0">&bull;</span>
-                  <span><strong>Puertos expuestos:</strong> Puertos administrativos riesgosos abiertos a internet.</span>
+                  <span><strong>Puertos expuestos:</strong> Puertos administrativos riesgosos abiertos a internet, cuando demuestras que el dominio es tuyo.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold shrink-0">&bull;</span>
@@ -69,8 +69,8 @@ export default function DefensatiScanScope() {
             </div>
 
             {/* Lo que NO puede detectar sin acceso interno */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-amber-950/20 border border-amber-500/25 space-y-3">
-              <div className="flex items-center gap-2 text-amber-300 font-bold text-xs sm:text-sm">
+            <div className="p-4 sm:p-5 bg-white/[0.03] border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 text-[#EDEDED] font-bold text-xs sm:text-sm">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>Lo que NO detecta (Requiere Acceso Forense)</span>
               </div>
@@ -100,7 +100,7 @@ export default function DefensatiScanScope() {
 
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-neutral-300 flex items-center justify-between gap-3 flex-wrap">
+          <div className="p-3.5 bg-white/[0.04] border border-white/10 text-xs text-neutral-300 flex items-center justify-between gap-3 flex-wrap">
             <span>
               ¿Tu web redirige a páginas dudosas, muestra pantalla roja de Google o tu hosting la suspendió?
             </span>

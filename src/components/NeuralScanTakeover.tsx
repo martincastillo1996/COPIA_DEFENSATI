@@ -1,454 +1,180 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ShieldCheck, Cpu, Lock, Activity, Check, Terminal, Wifi } from 'lucide-react';
+import ShatterLayer from '@/components/defensati/world/ShatterLayer';
 
 interface NeuralScanTakeoverProps {
   targetUrl: string;
 }
 
+/** Pasos del escaneo público (el mismo orden que sigue /api/scan). */
 const SCAN_STEPS = [
-  { 
-    phase: 'Fase 1 / 4 • Verificación de Dominio',
-    title: 'Comprobando Conexión y Estado del Servidor',
-    log: '[CONEXIÓN] Comprobando disponibilidad del servidor y dominio...',
-    progress: 25, 
-    icon: Cpu 
-  },
-  { 
-    phase: 'Fase 2 / 4 • Certificado y Cifrado',
-    title: 'Inspeccionando Certificado SSL / HTTPS',
-    log: '[SSL/TLS] Verificando candado de seguridad y vigencia del certificado...',
-    progress: 55, 
-    icon: Lock 
-  },
-  { 
-    phase: 'Fase 3 / 4 • Protección Web',
-    title: 'Auditando Cabeceras y Puertos Expuestos',
-    log: '[DEFENSA] Evaluando cabeceras de protección y puertos expuestos...',
-    progress: 82, 
-    icon: ShieldCheck 
-  },
-  { 
-    phase: 'Fase 4 / 4 • Compilación de Dictamen',
-    title: 'Generando Diagnóstico para tu Negocio',
-    log: '[INFORME] Estructurando diagnóstico y recomendaciones para tu negocio...',
-    progress: 98, 
-    icon: Activity 
-  },
+  { name: 'DNS y red', detail: 'Resolución del dominio y disponibilidad del servidor', progress: 25 },
+  { name: 'Cifrado SSL', detail: 'Certificado, vigencia y configuración HTTPS', progress: 55 },
+  { name: 'Cabeceras y puertos', detail: 'Protecciones HTTP y servicios expuestos', progress: 82 },
+  { name: 'Dictamen', detail: 'Calificación y recomendaciones para tu negocio', progress: 98 },
 ];
 
-const REALTIME_LOGS = [
-  '[DOMINIO] Verificando resolución del sitio web... OK',
-  '[CONEXIÓN] Conexión establecida a servidor web seguro (puerto 443)',
-  '[SSL/TLS] Verificando cifrado HTTPS de alta seguridad',
-  '[CERTIFICADO] Cadena de certificación verificada y vigente',
-  '[PROTECCIÓN] Inspeccionando cabeceras de seguridad web (HSTS)...',
-  '[DEFENSA] Evaluando defensas contra clonación y robo de datos...',
-  '[PUERTOS] Verificando que no existan accesos vulnerables expuestos...',
-  '[INFORME] Compilando resultados y calificación final...'
+const LOGS = [
+  'dns · resolviendo dominio',
+  'red · comprobando respuesta del servidor (443)',
+  'tls · leyendo certificado y cadena',
+  'tls · verificando vigencia',
+  'http · inspeccionando cabeceras de seguridad',
+  'http · evaluando protección contra clonación',
+  'puertos · buscando servicios expuestos',
+  'informe · calculando calificación',
 ];
-
-interface Node {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  label?: string;
-}
-
-interface Pulse {
-  fromNode: number;
-  toNode: number;
-  progress: number;
-  speed: number;
-}
 
 export default function NeuralScanTakeover({ targetUrl }: NeuralScanTakeoverProps) {
   const [mounted, setMounted] = useState(false);
-  const [currentStepIdx, setCurrentStepIdx] = useState(0);
-  const [progress, setProgress] = useState(15);
+  const [step, setStep] = useState(0);
+  const [progress, setProgress] = useState(8);
+  const [logs, setLogs] = useState<string[]>([]);
 
-  const cleanDomain = targetUrl
-    .replace(/^https?:\/\//i, '')
-    .replace(/\/.*$/, '')
-    .toLowerCase() || 'tuweb.com';
-
-  const [logFeed, setLogFeed] = useState<string[]>([
-    `[INICIO] Iniciando auditoría perimetral de ${cleanDomain}`
-  ]);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const cleanDomain =
+    targetUrl
+      .replace(/^https?:\/\//i, '')
+      .replace(/\/.*$/, '')
+      .toLowerCase() || 'tuweb.com';
 
   useEffect(() => {
-    const handle = requestAnimationFrame(() => {
-      setMounted(true);
-    });
-    return () => cancelAnimationFrame(handle);
+    const h = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(h);
   }, []);
 
-  // Bloquear el scroll del body mientras la pantalla completa esté activa
+  // Bloquear el scroll de la página mientras dura el escaneo
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = originalOverflow;
-      };
-    }
+    const original = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = original;
+    };
   }, []);
 
-  // Progresión realista entre fases
   useEffect(() => {
-    const stepInterval = setInterval(() => {
-      setCurrentStepIdx((prev) => {
-        if (prev < SCAN_STEPS.length - 1) {
-          const next = prev + 1;
-          setProgress(SCAN_STEPS[next].progress);
-          return next;
-        }
-        return prev;
+    const s = setInterval(() => {
+      setStep((prev) => {
+        const next = Math.min(prev + 1, SCAN_STEPS.length - 1);
+        setProgress(SCAN_STEPS[next].progress);
+        return next;
       });
     }, 850);
-
-    return () => clearInterval(stepInterval);
-  }, []);
-
-  // Flujo continuo de logs realistas de terminal
-  useEffect(() => {
-    let logIdx = 0;
-    const logInterval = setInterval(() => {
-      if (logIdx < REALTIME_LOGS.length) {
-        const nextLog = REALTIME_LOGS[logIdx];
-        setLogFeed((prev) => [...prev.slice(-3), nextLog]);
-        logIdx++;
+    let i = 0;
+    const l = setInterval(() => {
+      if (i < LOGS.length) {
+        const line = LOGS[i++];
+        setLogs((prev) => [...prev.slice(-4), line]);
       }
     }, 420);
-
-    return () => clearInterval(logInterval);
-  }, []);
-
-  // Canvas de Red Neuronal en segundo plano completo
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    const nodeCount = Math.min(50, Math.floor((width * height) / 24000));
-    const labels = [
-      'SSL/TLS 1.3',
-      'HSTS Gate',
-      'CSP Shield',
-      'OWASP Core',
-      'Anti-Bot',
-      'DNS Root',
-      'X-Frame',
-      'Port Sockets',
-      'WAF Guard',
-      'Cipher Suite'
-    ];
-
-    const nodes: Node[] = [];
-    for (let i = 0; i < nodeCount; i++) {
-      nodes.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
-        radius: Math.random() * 2.5 + 2,
-        label: i < labels.length ? labels[i] : undefined,
-      });
-    }
-
-    const pulses: Pulse[] = [];
-    for (let i = 0; i < 16; i++) {
-      const from = Math.floor(Math.random() * nodes.length);
-      let to = Math.floor(Math.random() * nodes.length);
-      if (to === from) to = (from + 1) % nodes.length;
-      pulses.push({
-        fromNode: from,
-        toNode: to,
-        progress: Math.random(),
-        speed: 0.015 + Math.random() * 0.02,
-      });
-    }
-
-    let pulseWave = 0;
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Radar concéntrico que se expande desde el centro
-      pulseWave = (pulseWave + 1.2) % (Math.max(width, height) * 0.75);
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(width / 2, height / 2, pulseWave, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0, 0.2 - pulseWave / (Math.max(width, height) * 0.75))})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.restore();
-
-      // Mover nodos
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        n.x += n.vx;
-        n.y += n.vy;
-
-        if (n.x < 0 || n.x > width) n.vx *= -1;
-        if (n.y < 0 || n.y > height) n.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-        ctx.fillStyle = n.label ? '#38bdf8' : 'rgba(255, 255, 255, 0.6)';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = n.label ? 10 : 4;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        if (n.label) {
-          ctx.font = '10px ui-monospace, SFMono-Regular, monospace';
-          ctx.fillStyle = 'rgba(186, 230, 253, 0.75)';
-          ctx.fillText(n.label, n.x + 8, n.y + 3);
-        }
-      }
-
-      // Conexiones sinápticas
-      const maxDistance = 150;
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < maxDistance) {
-            const alpha = (1 - dist / maxDistance) * 0.35;
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Pulsos eléctricos
-      for (let i = 0; i < pulses.length; i++) {
-        const p = pulses[i];
-        p.progress += p.speed;
-        if (p.progress >= 1) {
-          p.progress = 0;
-          p.fromNode = Math.floor(Math.random() * nodes.length);
-          p.toNode = (p.fromNode + 1) % nodes.length;
-        }
-
-        const from = nodes[p.fromNode];
-        const to = nodes[p.toNode];
-        if (!from || !to) continue;
-
-        const curX = from.x + (to.x - from.x) * p.progress;
-        const curY = from.y + (to.y - from.y) * p.progress;
-
-        ctx.beginPath();
-        ctx.arc(curX, curY, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 10;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
+    const first = setTimeout(() => setProgress(SCAN_STEPS[0].progress), 60);
     return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      clearInterval(s);
+      clearInterval(l);
+      clearTimeout(first);
     };
   }, []);
 
   if (!mounted) return null;
 
-  const activeStep = SCAN_STEPS[currentStepIdx];
-  const StepIcon = activeStep.icon;
-
-  const takeoverContent = (
-    <div className="fixed inset-0 z-[999999] w-screen h-screen min-h-screen flex flex-col items-center justify-center bg-[#05070e]/96 backdrop-blur-3xl overflow-hidden select-none animate-in fade-in duration-300">
-      
-      {/* 1. LIENZO VIVO DE LA RED NEURONAL EN PANTALLA COMPLETA */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-80"
-      />
-
-      {/* 2. GRADIENTES Y AURAS CÓSMICAS DE FONDO */}
-      <div className="absolute w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-[#0071e3]/22 via-[#7928ca]/20 to-[#38bdf8]/18 blur-[130px] pointer-events-none animate-pulse" />
-      <div className="absolute w-[360px] h-[360px] rounded-full bg-[#0071e3]/18 blur-[90px] pointer-events-none" />
-
-      {/* 3. PANEL CENTRAL TIPO HUD APPLE PRO (PANTALLA DE CARGA NEURONAL) */}
-      <div className="relative z-10 w-full max-w-2xl mx-auto px-6 py-6 sm:py-8 flex flex-col items-center text-center space-y-6">
-        
-        {/* Barra superior de estado técnico realista */}
-        <div className="flex items-center gap-3 text-xs font-mono text-neutral-400 bg-black/60 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-xl shadow-lg">
-          <span className="flex items-center gap-1.5 text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>SOCKET EN VIVO</span>
-          </span>
-          <span className="text-neutral-600">&bull;</span>
-          <span className="flex items-center gap-1 text-sky-400">
-            <Wifi className="w-3.5 h-3.5" />
-            <span>TLSv1.3 / HTTP 2</span>
-          </span>
-          <span className="text-neutral-600 hidden sm:inline">&bull;</span>
-          <span className="hidden sm:inline text-neutral-300">Latencia ~38ms</span>
-        </div>
-
-        {/* RADAR NEURONAL CENTRAL CON ANILLOS GIRATORIOS */}
-        <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full border border-sky-400/35 animate-spin [animation-duration:8s]" />
-          <div className="absolute inset-3 rounded-full border-2 border-dashed border-[#7928ca]/50 animate-spin [animation-duration:12s] [animation-direction:reverse]" />
-          <div className="absolute inset-7 rounded-full border border-sky-300/40 animate-spin [animation-duration:5s]" />
-          <div className="absolute inset-11 rounded-full border-2 border-t-transparent border-emerald-400/60 animate-spin [animation-duration:3s]" />
-          
-          <span className="absolute inset-0 rounded-full bg-[#38bdf8]/10 animate-ping [animation-duration:2.5s]" />
-
-          {/* Núcleo Central */}
-          <div className="relative z-10 w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-tr from-[#0071e3] via-[#7928ca] to-[#38bdf8] p-0.5 shadow-[0_0_50px_rgba(56,189,248,0.7)] animate-pulse">
-            <div className="w-full h-full bg-[#07090e] rounded-3xl flex items-center justify-center text-[#38bdf8]">
-              <StepIcon className="w-9 h-9 sm:w-10 sm:h-10 animate-bounce" />
-            </div>
-          </div>
-        </div>
-
-        {/* Información del Objetivo & Dominio */}
-        <div className="space-y-1.5 max-w-lg">
-          <div className="text-xs font-mono font-bold text-neutral-400 uppercase tracking-wider">
-            {activeStep.phase} &bull; {activeStep.title}
-          </div>
-
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            Auditando Perímetro de{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-sky-300 to-white block sm:inline font-mono">
-              {cleanDomain}
-            </span>
-          </h2>
-        </div>
-
-        {/* TERMINAL DE LOGS TÉCNICOS EN TIEMPO REAL (MÁXIMO REALISMO) */}
-        <div className="w-full max-w-xl bg-black/80 rounded-2xl border border-white/10 p-3.5 text-left font-mono text-xs shadow-2xl backdrop-blur-2xl space-y-1.5 overflow-hidden">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10 text-[11px] text-neutral-400">
-            <div className="flex items-center gap-2">
-              <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-neutral-200 font-semibold">CONSOLA DE TELEMETRÍA EN VIVO</span>
-            </div>
-            <span className="text-emerald-400 font-bold">200 OK</span>
-          </div>
-
-          <div className="space-y-1 font-mono text-[11.5px] sm:text-xs">
-            {logFeed.map((line, idx) => (
-              <div 
-                key={idx} 
-                className={`truncate ${
-                  idx === logFeed.length - 1 ? 'text-sky-300 font-semibold' : 'text-neutral-400'
-                }`}
-              >
-                <span className="text-neutral-600 mr-1.5">&gt;</span>
-                {line}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* BARRA DE PROGRESO DE ALTA PRECISIÓN */}
-        <div className="w-full max-w-xl space-y-2">
-          <div className="w-full h-3 sm:h-3.5 rounded-full bg-white/10 p-0.5 overflow-hidden border border-white/15 shadow-inner">
-            <div
-              className="h-full bg-gradient-to-r from-[#0071e3] via-[#7928ca] to-[#38bdf8] rounded-full transition-all duration-700 ease-out shadow-[0_0_20px_rgba(56,189,248,0.8)] relative"
-              style={{ width: `${progress}%` }}
-            >
-              <div className="absolute inset-0 bg-white/20 animate-pulse" />
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center text-xs font-mono text-neutral-400 px-1">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
-              <span>Sondeo Cero-Riesgo (No invasivo)</span>
-            </span>
-            <span className="font-extrabold text-[#38bdf8] text-sm font-mono">
-              {progress}%
-            </span>
-          </div>
-        </div>
-
-        {/* 4 CHECKPOINTS DE TELEMETRÍA */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full max-w-xl pt-1">
-          {SCAN_STEPS.map((s, idx) => {
-            const isCompleted = currentStepIdx > idx;
-            const isCurrent = currentStepIdx === idx;
-
-            return (
-              <div
-                key={idx}
-                className={`p-3 rounded-2xl border text-xs font-mono transition-all flex flex-col items-center justify-center gap-1 ${
-                  isCompleted
-                    ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.2)]'
-                    : isCurrent
-                    ? 'bg-[#0071e3]/30 border-[#38bdf8] text-white font-bold shadow-[0_0_25px_rgba(0,113,227,0.5)] scale-[1.03]'
-                    : 'bg-white/5 border-white/10 text-neutral-500'
-                }`}
-              >
-                <div className="flex items-center gap-1">
-                  {isCompleted ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  ) : isCurrent ? (
-                    <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-ping" />
-                  ) : (
-                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-600" />
-                  )}
-                  <span className="text-[10px] font-bold">Paso {idx + 1}</span>
-                </div>
-                <span className="font-semibold text-[11px] truncate w-full text-center">
-                  {idx === 0 && 'DNS & Red'}
-                  {idx === 1 && 'Cifrado SSL'}
-                  {idx === 2 && 'OWASP'}
-                  {idx === 3 && 'Dictamen'}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Pie de pantalla: Garantía de seguridad */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-neutral-400 font-mono pt-1 border-t border-white/10 w-full max-w-xl">
-          <span className="flex items-center gap-1.5 text-neutral-300">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Auditoría perimetral sin tocar tu base de datos.</span>
-          </span>
-          <span className="text-[#38bdf8] bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/25 text-[10px]">
-            DEFENSA TI v1.2 &bull; RFC 9110
-          </span>
-        </div>
-
+  const content = (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-label={`Escaneando ${cleanDomain}`}
+      data-shatter-scan
+      style={{ background: 'rgba(10, 12, 15, 0.94)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)' }}
+      className="ice fixed inset-0 z-[999999] text-[#e8edf1] select-none animate-in fade-in duration-300 overflow-hidden"
+    >
+      {/* Retícula suiza de 1px, igual que el resto de la página */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute left-0 right-0 top-16 h-px bg-white/[0.08]" />
+        <div className="absolute left-0 right-0 bottom-20 h-px bg-white/[0.08]" />
+        <div className="absolute inset-y-0 w-px bg-white/[0.05]" style={{ left: '8.333%' }} />
+        <div className="absolute inset-y-0 w-px bg-white/[0.05]" style={{ right: '8.333%' }} />
+        {/* Barrido de escaneo vertical */}
+        <style>{`@keyframes dtScanline{0%{top:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+          @media (prefers-reduced-motion: reduce){.dt-scanline{animation:none!important;opacity:0}}`}</style>
+        <div
+          className="dt-scanline absolute left-0 right-0 h-px bg-[#cfe3ee]/40 shadow-[0_0_24px_4px_rgba(207,227,238,0.25)]"
+          style={{ animation: 'dtScanline 2.4s linear infinite' }}
+        />
       </div>
 
+      {/* Esquinas */}
+      <p className="hud-label !tracking-[0.2em] !text-[#e8edf1] absolute top-6 left-4 sm:left-8">Fase 06 · Detección</p>
+      <p className="hud-label !tracking-[0.2em] absolute top-6 right-4 sm:right-8 hidden sm:block">Escaneo no intrusivo · sin tocar tu base de datos</p>
+
+      <div className="relative h-full grid grid-cols-12 gap-x-6 px-4 sm:px-8 pt-24 pb-28 content-center">
+        {/* Título + dominio */}
+        <div className="col-span-12 lg:col-span-7 self-center" style={{ paddingLeft: 'max(0px, calc(8.333% - 2rem))' }}>
+          <p className="hud-label !tracking-[0.2em] mb-5">Escaneando el perímetro de</p>
+          <h2
+            className="hud-display !font-normal !leading-[0.95] !tracking-[-0.04em] break-all"
+            style={{ fontSize: 'clamp(2.25rem, 5.5vw, 5.5rem)' }}
+          >
+            {cleanDomain}
+          </h2>
+          {/* Telemetría */}
+          <ol className="mt-10 space-y-1.5 font-mono text-xs sm:text-[13px]">
+            {logs.map((line, idx) => (
+              <li
+                key={`${line}-${idx}`}
+                className={`truncate transition-opacity duration-300 ${idx === logs.length - 1 ? 'text-[#cfe3ee]' : 'text-[#7d8891]'}`}
+              >
+                <span className="text-[#4a535b] mr-2">›</span>
+                {line}
+                {idx === logs.length - 1 && <span className="inline-block w-2 h-3.5 ml-1 align-middle bg-[#cfe3ee] animate-pulse" />}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Pasos */}
+        <ol className="col-span-12 lg:col-span-4 lg:col-start-9 self-center mt-10 lg:mt-0 border-t border-white/[0.08]">
+          {SCAN_STEPS.map((s, i) => {
+            const done = step > i;
+            const current = step === i;
+            return (
+              <li
+                key={s.name}
+                className={`grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-3 px-3 py-4 border-b border-white/[0.08] transition-colors duration-150 ${
+                  current ? 'bg-[#e8edf1] text-[#0a0c0f]' : done ? 'text-[#e8edf1]' : 'text-[#4a535b]'
+                }`}
+              >
+                <span className="font-mono text-[11px] tracking-[0.2em]">0{i + 1}</span>
+                <span>
+                  <span className="block text-lg font-light tracking-tight">{s.name}</span>
+                  {current && <span className="block text-xs mt-0.5 opacity-70">{s.detail}</span>}
+                </span>
+                <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
+                  {done ? 'OK' : current ? '···' : ''}
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+
+      {/* Progreso: línea de 1px de borde a borde y porcentaje grande */}
+      <div className="absolute left-0 right-0 bottom-20 h-px">
+        <div className="h-full bg-[#cfe3ee] transition-[width] duration-700 ease-out shadow-[0_0_12px_rgba(207,227,238,0.6)]" style={{ width: `${progress}%` }} />
+      </div>
+      <div className="absolute bottom-5 left-4 sm:left-8 right-4 sm:right-8 flex items-end justify-between gap-4">
+        <p className="hud-label !tracking-[0.2em]">
+          Paso {step + 1} / {SCAN_STEPS.length} · {SCAN_STEPS[step].name}
+        </p>
+        <p className="font-light tracking-[-0.04em] tabular-nums leading-none" style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)' }}>
+          {progress}
+          <span className="text-[#7d8891] text-[0.5em] align-top ml-1">%</span>
+        </p>
+      </div>
+
+      {/* Se arma a partir de fragmentos al abrirse */}
+      <ShatterLayer selector="[data-shatter-scan]" introOnly className="absolute inset-0 z-10" />
     </div>
   );
 
-  return createPortal(takeoverContent, document.body);
+  return createPortal(content, document.body);
 }

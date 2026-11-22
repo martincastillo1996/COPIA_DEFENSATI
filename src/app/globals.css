@@ -142,3 +142,234 @@ h1, h2, h3 {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Sistema Editorial Oscuro (AGENTS.md regla 3) ── */
+:root {
+  --ed-bg: #080808;
+  --ed-fg: #ededed;
+  --ed-muted: #8a8a8a;
+  --ed-line: rgba(255, 255, 255, 0.08);
+  --ed-critical: #ff4d4d;
+}
+.ed-line { border-color: var(--ed-line); }
+.ed-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.ed-display {
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+.ed-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid var(--ed-fg);
+  border-radius: 0;
+  padding: 1rem 1.75rem;
+  transition: background-color 75ms, color 75ms;
+}
+.ed-btn:hover { background: var(--ed-fg); color: var(--ed-bg); }
+.ed-btn-solid { background: var(--ed-fg); color: var(--ed-bg); }
+.ed-btn-solid:hover { background: transparent; color: var(--ed-fg); }
+:where(a, button, input):focus-visible { outline: 2px solid var(--ed-fg); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── Sistema de Diseño DEFENSA TI (tasteskill 2.5 / figma.com & x.ai standard) ── */
+:root {
+  --ed-bg: #07080b;
+  --ed-surface: #0d1117;
+  --ed-card: #111620;
+  --ed-fg: #f3f4f6;
+  --ed-muted: #9ca3af;
+  --ed-line: rgba(255, 255, 255, 0.08);
+  --ed-line-strong: rgba(255, 255, 255, 0.16);
+  --ed-cyan: #00f0ff;
+  --ed-emerald: #00e599;
+  --ed-crimson: #ff3b30;
+  --m-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --m-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ed-line { border-color: var(--ed-line); }
+.ed-line-strong { border-color: var(--ed-line-strong); }
+
+.ed-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.ed-display {
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+/* Micro-interacciones de Botón (Step on hover + Press on click) */
+.taste-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: background-color 150ms var(--m-ease),
+              color 150ms var(--m-ease),
+              border-color 150ms var(--m-ease),
+              box-shadow 150ms var(--m-ease),
+              transform 90ms var(--m-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .taste-btn:hover {
+    transform: translateY(-1px);
+  }
+}
+.taste-btn:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.taste-btn-primary {
+  background: #f3f4f6;
+  color: #07080b;
+  border: 1px solid #f3f4f6;
+}
+.taste-btn-primary:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+
+.taste-btn-secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: #f3f4f6;
+  border: 1px solid var(--ed-line);
+}
+.taste-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--ed-line-strong);
+}
+
+/* Micro-interacciones de Tarjetas (2px card lift) */
+.taste-card {
+  background: var(--ed-surface);
+  border: 1px solid var(--ed-line);
+  transition: transform 180ms var(--m-ease), border-color 180ms var(--m-ease), box-shadow 180ms var(--m-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .taste-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ed-line-strong);
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Enlaces con subrayado interactivo de izquierda a derecha */
+.taste-link {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--ed-line-strong), var(--ed-line-strong));
+  background-repeat: no-repeat;
+  background-size: 0% 1px, 100% 1px;
+  background-position: right 0 bottom 0, 0 100%;
+  transition: background-size 150ms var(--m-ease), color 150ms var(--m-ease);
+  padding-bottom: 2px;
+}
+.taste-link:hover, .taste-link:focus-visible {
+  background-size: 100% 1px, 100% 1px;
+  background-position: left 0 bottom 0, 0 100%;
+}
+
+/* Entrada de hero data-enter */
+@keyframes heroEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+[data-enter] {
+  animation: heroEntrance 600ms var(--m-ease-enter) forwards;
+}
+
+/* Halo estático detrás del núcleo 3D (también fallback sin WebGL) */
+.dt-core-halo {
+  background:
+    radial-gradient(circle at 65% 45%, rgba(0, 240, 255, 0.12), transparent 45%),
+    radial-gradient(circle at 75% 55%, rgba(0, 229, 153, 0.08), transparent 55%);
+}
+@media (max-width: 1023px) {
+  .dt-core-halo {
+    background: radial-gradient(circle at 50% 40%, rgba(0, 240, 255, 0.10), transparent 50%);
+  }
+}
+
+/* ── DEFENSA TI · Glacial HUD (scope .ice) ── */
+.ice {
+  --ice-bg: #0a0c0f;
+  --ice-bg-2: #101418;
+  --ice-fg: #e8edf1;
+  --ice-muted: #7d8891;
+  --ice-dim: #4a535b;
+  --ice-accent: #cfe3ee;
+  --ice-line: rgba(207, 227, 238, 0.09);
+  --ice-line-strong: rgba(207, 227, 238, 0.22);
+  --ed-line: var(--ice-line);
+  --ed-line-strong: var(--ice-line-strong);
+  --ed-surface: transparent;
+  background: var(--ice-bg);
+  color: var(--ice-fg);
+}
+.ice .taste-card { border-radius: 0 !important; background: rgba(16, 20, 24, 0.6); }
+.ice .taste-btn { border-radius: 0 !important; }
+.ice .taste-btn-primary { background: var(--ice-accent); border-color: var(--ice-accent); color: #0a0c0f; }
+.ice .taste-btn-primary:hover { background: #fff; box-shadow: none; }
+.hud-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ice-muted);
+}
+.hud-display {
+  font-family: var(--font-display), var(--font-geist-sans), sans-serif;
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: var(--ice-fg);
+}
+.hud-frame { position: relative; border: 1px solid var(--ice-line); }
+.hud-frame::before, .hud-frame::after {
+  content: ''; position: absolute; width: 10px; height: 10px; pointer-events: none;
+  border-color: var(--ice-accent); border-style: solid;
+}
+.hud-frame::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+.hud-frame::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+.hud-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  padding: .9rem 1.4rem; border: 1px solid var(--ice-line-strong); color: var(--ice-fg);
+  transition: background-color 120ms, color 120ms, border-color 120ms;
+}
+.hud-btn:hover { border-color: var(--ice-accent); background: rgba(207,227,238,.06); }
+.hud-btn-solid { background: var(--ice-accent); color: #0a0c0f; border-color: var(--ice-accent); }
+.hud-btn-solid:hover { background: #fff; color: #0a0c0f; }
+.hud-btn:disabled { opacity: .35; cursor: not-allowed; }
+.ice-grid-bg {
+  background-image:
+    linear-gradient(var(--ice-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ice-line) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
+}
+
+

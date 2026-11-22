@@ -43,7 +43,8 @@ export default function GoogleAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${gaId}');
+          // Un enlace firmado lleva ?t=: Analytics registraría la URL completa y se llevaría el token
+          gtag('config', '${gaId}', new URLSearchParams(location.search).has('t') ? { page_location: location.origin + location.pathname } : {});
         `}
       </Script>
     </>

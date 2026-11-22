@@ -1,0 +1,8 @@
+# HTTPS automático (Let's Encrypt) y acceso solo desde las IP permitidas.
+# El desafío ACME de Let's Encrypt lo atiende Caddy antes de estas reglas, así que el certificado se emite igual.
+{$LAB_DOMAIN} {
+	@fuera not remote_ip {$ALLOWED_IPS}
+	respond @fuera "Laboratorio privado" 403
+
+	reverse_proxy juice:3000
+}

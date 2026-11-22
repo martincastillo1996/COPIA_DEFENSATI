@@ -2,247 +2,159 @@
 
 import React from 'react';
 import Link from 'next/link';
-import NeuralBackground from '@/components/NeuralBackground';
-import NeuronalGravityBrandLogo from '@/components/NeuronalGravityBrandLogo';
 import FounderProfileCard from '@/components/FounderProfileCard';
-import { 
-  ShieldCheck, 
-  ArrowRight, 
-  Sparkles, 
-  Layers,
-  Cpu
-} from 'lucide-react';
+import NeuronalGravityBrandLogo from '@/components/NeuronalGravityBrandLogo';
 import { siteConfig } from '@/config/site';
 
+const LINE = 'border-[rgba(255,255,255,0.08)]';
+const MONO = 'font-mono text-[11px] uppercase tracking-[0.2em]';
+
+const INDEX = [
+  { n: '01', t: 'Auditoría perimetral', tel: 'TLS 1.3 · HSTS · CSP · puertos verificados', href: '/defensati' },
+  { n: '02', t: 'Blindaje WordPress', tel: 'WP-CORE · PLUGINS · XML-RPC · WAF', href: '/defensati/servicios/limpieza-malware-wordpress' },
+  { n: '03', t: 'Correo SPF / DKIM / DMARC', tel: 'DNS TXT · p=reject · rua', href: '/defensati/servicios/blindaje-correo-spf-dkim-dmarc' },
+  { n: '04', t: 'Pasarelas de pago', tel: 'PCI-DSS · CHECKOUT · WEBHOOKS', href: '/defensati/servicios/auditoria-pasarelas-de-pago' },
+  { n: '05', t: 'Ley 29733 · Datos', tel: 'ANPDP · COOKIES · CONSENTIMIENTO', href: '/defensati/servicios/adecuacion-ley-29733-proteccion-datos' },
+];
+
 export default function NeuronalGravityHubHome() {
+  const year = new Date().getFullYear();
+
   return (
-    <div className="min-h-screen bg-[#07090e] text-white selection:bg-[#0071e3] selection:text-white font-sans antialiased relative overflow-x-hidden">
-      {/* Fondo estelar cósmico limpio sin texto atravesado */}
-      <NeuralBackground showDomains={false} />
+    <div className="min-h-screen bg-[#080808] text-[#EDEDED] font-sans antialiased selection:bg-[#EDEDED] selection:text-[#080808]">
+      {/* Navegación editorial: esquinas ancladas */}
+      <div className="fixed top-4 left-4 sm:left-6 z-50">
+        <NeuronalGravityBrandLogo />
+      </div>
+      <div className={`${MONO} fixed top-5 right-4 sm:right-6 z-50 mix-blend-difference flex gap-6`}>
+        <Link href="/defensati" className="hover:underline underline-offset-4">Defensa TI</Link>
+        <a href={siteConfig.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">Contacto</a>
+      </div>
+      <div className={`${MONO} fixed bottom-5 left-4 sm:left-6 z-50 mix-blend-difference text-[#8a8a8a] hidden sm:block`}>
+        12°02′S — 77°02′W
+      </div>
+      <div className={`${MONO} fixed bottom-5 right-4 sm:right-6 z-50 mix-blend-difference text-[#8a8a8a] hidden sm:block`}>
+        Ed. {year} / Lima
+      </div>
 
-      {/* 1. NAVEGACIÓN SUPERIOR APPLE PRO GLASS */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/60 border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <NeuronalGravityBrandLogo />
-
-          <nav className="flex items-center gap-4 text-xs">
-            <Link 
-              href="/defensati" 
-              className="text-[#38bdf8] hover:text-white transition-colors font-medium flex items-center gap-1.5"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span>DEFENSA TI</span>
-            </Link>
-            <Link 
-              href="/defensati" 
-              className="text-neutral-400 hover:text-white transition-colors hidden sm:inline-block"
-            >
-              Escáner Perimetral
-            </Link>
-            <a
-              href={`${siteConfig.contact.whatsappLink}?text=${encodeURIComponent('Hola Martín, vi el portal de Neuronal Gravity y deseo consultar sobre una solución técnica.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.35)] active:scale-95"
-            >
-              <svg className="w-3.5 h-3.5 fill-white" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-              <span>WhatsApp</span>
-            </a>
-          </nav>
-        </div>
-      </header>
-
-      <main className="max-w-5xl mx-auto px-6 py-16 space-y-24 relative z-10">
-        
-        {/* BLOQUE 1: PRESENTACIÓN CORTA DE NEURONAL GRAVITY */}
-        <section className="text-center max-w-3xl mx-auto space-y-6 pt-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-linear-to-r from-[#0071e3]/20 via-[#7928ca]/20 to-[#38bdf8]/20 border border-[#38bdf8]/30 text-[#38bdf8] text-xs font-semibold backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
-            <span>Desarrollo de Software & Ciberdefensa</span>
+      <main>
+        {/* ESCENA 01 */}
+        <section className={`relative h-screen min-h-[640px] overflow-hidden border-b ${LINE}`}>
+          {/* Escultura obsidiana */}
+          <div aria-hidden className="absolute right-[-18vw] sm:right-[-6vw] top-1/2 -translate-y-1/2 w-[110vw] sm:w-[75vw] max-w-[1100px] aspect-square">
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background:
+                  'radial-gradient(circle at 32% 28%, #3a3a3a 0%, #161616 18%, #0b0b0b 42%, #030303 70%), #000',
+                boxShadow: 'inset -60px -80px 140px rgba(0,0,0,0.9), inset 30px 40px 80px rgba(255,255,255,0.05)',
+              }}
+            />
+            <div
+              className="absolute inset-[8%] rounded-full opacity-60"
+              style={{
+                background:
+                  'conic-gradient(from 210deg at 50% 50%, transparent 0deg, rgba(237,237,237,0.10) 40deg, transparent 90deg, transparent 260deg, rgba(237,237,237,0.06) 300deg, transparent 340deg)',
+                filter: 'blur(18px)',
+              }}
+            />
+            <div className="absolute left-[24%] top-[20%] w-[14%] h-[7%] rounded-full bg-[#EDEDED]/25 blur-2xl rotate-[-30deg]" />
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.035em] text-white leading-[1.08] max-w-4xl mx-auto">
-            Soluciones tecnológicas listas
-            <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#ffffff] via-[#e5e7eb] to-[#9ca3af]">
-              para usar.
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
-            En <strong>Neuronal Gravity</strong> desarrollamos herramientas de software e ingeniería aplicada para empresas. Presentamos nuestro primer proyecto activo y desplegado para producción: <strong className="text-white">DEFENSA TI</strong>.
-          </p>
-
-          {/* Único botón principal de la página principal */}
-          <div className="pt-2">
-            <Link
-              href="/defensati"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-sm transition-all shadow-[0_0_25px_rgba(0,113,227,0.4)] hover:shadow-[0_0_35px_rgba(0,113,227,0.6)]"
-            >
-              <span>Conoce DEFENSA TI</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+          <div className="relative z-10 h-full grid grid-cols-12 px-4 sm:px-6">
+            <div className="col-span-12 md:col-span-8 self-end pb-20 sm:pb-24">
+              <p className={`${MONO} text-[#8a8a8a] mb-6`}>Ingeniería · Ciberdefensa</p>
+              <h1 className="font-semibold text-[clamp(3.5rem,8vw,9rem)] leading-[0.88] tracking-[-0.05em]">
+                Software que<br />no cede.
+              </h1>
+              <Link
+                href="/defensati"
+                className={`${MONO} mt-10 inline-block rounded-none border border-[#EDEDED] px-8 py-4 hover:bg-[#EDEDED] hover:text-[#080808] transition-colors duration-75`}
+              >
+                Escanear mi sitio →
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* BLOQUE 2: PRESENTACIÓN DEL PRIMER PROYECTO (DEFENSA TI) */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Layers className="w-5 h-5 text-[#38bdf8]" />
-              <span>Primer Proyecto Activo</span>
-            </h2>
-            <span className="text-xs text-neutral-400 font-mono">1 de 1 disponible hoy</span>
+        {/* ESCENA 02: Índice técnico */}
+        <section className={`border-b ${LINE}`}>
+          <div className={`grid grid-cols-12 px-4 sm:px-6 py-6 border-b ${LINE} ${MONO} text-[#8a8a8a]`}>
+            <span className="col-span-6 md:col-span-2">Índice</span>
+            <span className="col-span-6 md:col-span-10 text-right md:text-left">Defensa TI / Capacidades</span>
           </div>
-
-          <div className="relative rounded-[32px] bg-gradient-to-b from-[#10141f] via-[#0b0e15] to-[#07090e] border border-[#38bdf8]/40 p-8 sm:p-10 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,113,227,0.22)] overflow-hidden hover:border-[#38bdf8]/70 transition-all">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#0071e3]/15 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-sky-500/10 rounded-full blur-[90px] pointer-events-none" />
-
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
-              <div className="space-y-4 max-w-2xl text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-blue-500/20 via-sky-500/20 to-blue-600/20 border border-sky-400/50 text-sky-200 text-xs font-bold shadow-[0_0_15px_rgba(56,189,248,0.25)]">
-                  <ShieldCheck className="w-4 h-4 text-[#38bdf8]" />
-                  <span>DEFENSA TI es el servicio de seguridad web de Neuronal Gravity</span>
-                </div>
-
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
-                  DEFENSA TI &bull; Auditoría y Blindaje Web
-                </h3>
-
-                <p className="text-sm sm:text-base text-neutral-100 leading-relaxed font-normal">
-                  Auditoría perimetral de seguridad externa y blindaje técnico para sitios web de negocios, con especialización en <strong className="text-white font-semibold">WordPress, WooCommerce y sistemas web a medida</strong>. Detectamos vulnerabilidades visibles antes de que afecten tus ventas y aplicamos las correcciones necesarias.
-                </p>
-
-                <div className="pt-2 flex flex-wrap items-center gap-2.5 text-xs">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-neutral-200 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                    <span>Cobertura para empresas en todo el Perú</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-neutral-200 font-medium">
-                    <span className="text-[#38bdf8] font-bold">⚡ 48h</span>
-                    <span>Diagnóstico técnico objetivo garantizado</span>
-                  </span>
-                </div>
-              </div>
-
-              <div className="lg:w-72 shrink-0 flex flex-col justify-center space-y-3 text-center">
+          <ul>
+            {INDEX.map((row) => (
+              <li key={row.n} className={`border-b ${LINE} last:border-b-0`}>
                 <Link
-                  href="/defensati"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] text-white text-sm font-extrabold transition-all shadow-[0_10px_25px_rgba(0,113,227,0.35)] hover:shadow-[0_15px_35px_rgba(0,113,227,0.55)] active:scale-95 cursor-pointer"
+                  href={row.href}
+                  className="group grid grid-cols-12 items-baseline gap-x-4 px-4 sm:px-6 py-6 sm:py-8 hover:bg-[#EDEDED] hover:text-[#080808] transition-colors duration-75"
                 >
-                  <span>Probar Escáner Perimetral</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <span className="text-[11px] text-neutral-300 font-medium">
-                  100% Gratuito &bull; Sin contraseñas
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* BLOQUE 3: SOBRE MARTÍN CASTILLO, FUNDADOR (TARJETA IDÉNTICA A LA CAPTURA) */}
-        <FounderProfileCard />
-
-        {/* BLOQUE 4: FUTURO (SOLUCIONES EN FASE DE LABORATORIO) */}
-        <section className="relative p-8 sm:p-12 rounded-3xl bg-[#0f1219]/90 border border-purple-500/20 backdrop-blur-xl shadow-2xl overflow-hidden hover:border-purple-500/40 transition-all">
-          {/* Resplandor ambiental cósmico violeta/azul */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 relative z-10">
-            <div className="space-y-4 max-w-xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-semibold backdrop-blur-md">
-                <Cpu className="w-3.5 h-3.5 text-purple-400" />
-                <span>Próximamente &bull; En desarrollo</span>
-              </div>
-
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-                Próximas Soluciones: Nuevos proyectos y herramientas tecnológicas para distintos rubros (en fase de laboratorio)
-              </h2>
-
-              <p className="text-sm sm:text-base text-neutral-100 leading-relaxed font-normal">
-                En <strong className="text-white font-semibold">Neuronal Gravity</strong> nos encontramos desarrollando y testeando nuevas soluciones de ingeniería de software e inteligencia artificial aplicadas a diversos sectores comerciales. Cada proyecto atraviesa una fase estricta de pruebas antes de su lanzamiento oficial para producción.
-              </p>
-
-              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs font-mono text-purple-300">
-                <span className="px-3 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                  &bull; Soluciones Multi-Rubro
-                </span>
-                <span className="px-3 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                  &bull; Modelos de Lenguaje &amp; Automatización
-                </span>
-                <span className="px-3 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                  &bull; Laboratorio Experimental
-                </span>
-              </div>
-            </div>
-
-            {/* Diseño 3D Isométrico Cósmico de Laboratorio / Núcleo de IA */}
-            <div className="relative w-64 h-64 sm:w-72 sm:h-72 shrink-0 flex items-center justify-center">
-              {/* Anillos orbitales giratorios */}
-              <div className="absolute inset-0 rounded-full border border-purple-500/20 animate-[spin_20s_linear_infinite]" />
-              <div className="absolute inset-4 rounded-full border border-dashed border-sky-400/25 animate-[spin_15s_linear_infinite_reverse]" />
-              <div className="absolute inset-10 rounded-full border border-purple-400/30 animate-[spin_25s_linear_infinite]" />
-
-              {/* Orbe Central 3D Dark Glass con Glow Cósmico */}
-              <div className="relative w-36 h-36 rounded-3xl bg-gradient-to-tr from-[#16122b] via-[#1f1642] to-[#2e1d66] border border-purple-400/40 p-4 shadow-[0_0_50px_rgba(168,85,247,0.35)] flex flex-col items-center justify-center transform rotate-6 hover:rotate-0 transition-transform duration-500 backdrop-blur-2xl">
-                {/* Reflejo glass Apple superior */}
-                <div className="absolute inset-x-2 top-2 h-10 rounded-t-2xl bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
-
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-sky-400 p-[1.5px] shadow-[0_0_25px_rgba(168,85,247,0.5)]">
-                  <div className="w-full h-full bg-[#0a0d14] rounded-2xl flex items-center justify-center">
-                    <Sparkles className="w-7 h-7 text-purple-300 animate-pulse" />
-                  </div>
-                </div>
-
-                <div className="mt-2.5 text-center">
-                  <span className="text-[10px] font-mono tracking-widest uppercase font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-sky-300 block">
-                    NG &bull; LAB
+                  <span className={`${MONO} col-span-2 md:col-span-1`}>{row.n} /</span>
+                  <span className="col-span-10 md:col-span-7 font-semibold uppercase text-[clamp(1.75rem,4.5vw,4.5rem)] leading-[0.9] tracking-[-0.04em]">
+                    {row.t}
                   </span>
-                  <span className="text-[9px] text-neutral-400 font-mono">Fase Experimental</span>
-                </div>
+                  <span className={`${MONO} col-span-12 md:col-span-4 mt-3 md:mt-0 md:text-right text-[#8a8a8a] group-hover:text-[#080808]`}>
+                    {row.tel}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-                {/* Micro nodos orbitales flotantes */}
-                <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-sky-400 shadow-[0_0_12px_#38bdf8] border-2 border-[#0f1219]" />
-                <div className="absolute -bottom-2 -left-2 w-3.5 h-3.5 rounded-full bg-purple-400 shadow-[0_0_12px_#c084fc] border-2 border-[#0f1219]" />
-              </div>
-            </div>
+        {/* ESCENA 03: Manifiesto */}
+        <section className={`grid grid-cols-12 border-b ${LINE}`}>
+          <div className={`col-span-12 md:col-span-4 px-4 sm:px-6 py-10 md:border-r ${LINE} ${MONO} text-[#8a8a8a]`}>
+            03 / Proyecto activo
+          </div>
+          <div className="col-span-12 md:col-span-8 px-4 sm:px-6 py-10 md:py-16">
+            <p className="text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.05] tracking-[-0.03em] max-w-[22ch]">
+              Defensa TI audita el perímetro externo de tu web y corrige lo que encuentra. Sin contraseñas. Diagnóstico en 48 h.
+            </p>
+            <Link href="/defensati/informe-ejemplo" className={`${MONO} mt-8 inline-block underline underline-offset-4 hover:no-underline`}>
+              Ver informe de ejemplo
+            </Link>
           </div>
         </section>
 
-      </main>
+        {/* ESCENA 04: Fundador */}
+        <section className={`border-b ${LINE} px-4 sm:px-6 py-16`}>
+          <p className={`${MONO} text-[#8a8a8a] mb-8`}>04 / Fundador</p>
+          <FounderProfileCard />
+        </section>
 
-      {/* PIE DE PÁGINA PROFESIONAL Y LEGAL */}
-      <footer className="border-t border-white/10 bg-black/90 py-12 relative z-10 text-xs text-neutral-400">
-        <div className="max-w-6xl mx-auto px-6 space-y-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
-            <div>
-              <span className="font-extrabold text-white text-sm tracking-tight">NEURONAL GRAVITY</span>
-              <p className="text-[11px] text-neutral-400 mt-0.5">
-                RUC con Negocio: <strong>{siteConfig.business.ruc}</strong> &bull; {siteConfig.business.receiptNotice}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-6 text-xs text-neutral-300">
-              <Link href="/terminos" className="hover:text-white transition-colors">Términos y Privacidad (Ley 29733)</Link>
-              <Link href="/reclamaciones" className="hover:text-white transition-colors text-amber-300/90 font-medium">Libro de Reclamaciones</Link>
-              <Link href="/defensati" className="hover:text-white transition-colors text-[#38bdf8]">DEFENSA TI</Link>
-              <Link href="/defensati/informe-ejemplo" className="hover:text-white transition-colors">Informe Ejemplo</Link>
-              <a href={siteConfig.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                WhatsApp ({siteConfig.contact.whatsappFormatted})
-              </a>
-            </div>
+        {/* ESCENA 05: Laboratorio */}
+        <section className={`grid grid-cols-12 border-b ${LINE}`}>
+          <div className={`col-span-12 md:col-span-4 px-4 sm:px-6 py-10 md:border-r ${LINE} ${MONO} text-[#8a8a8a]`}>
+            05 / Laboratorio
           </div>
-
-          <div className="text-[11px] text-neutral-500">
-            <p>
-              &copy; {new Date().getFullYear()} {siteConfig.name} &bull; Primer proyecto: DEFENSA TI. {siteConfig.business.receiptNotice}.
+          <div className="col-span-12 md:col-span-8 px-4 sm:px-6 py-10 md:py-16">
+            <h2 className="font-semibold text-[clamp(2.5rem,6vw,6rem)] leading-[0.88] tracking-[-0.05em]">
+              En prueba.<br /><span className="text-[#5a5a5a]">No en venta.</span>
+            </h2>
+            <p className="mt-8 max-w-[52ch] text-[#a0a0a0]">
+              Nuevas herramientas de software y automatización con modelos de lenguaje para distintos rubros. Ninguna sale a producción sin pasar el laboratorio.
             </p>
           </div>
+        </section>
+      </main>
+
+      {/* Pie legal */}
+      <footer className={`${MONO} grid grid-cols-12 gap-y-4 px-4 sm:px-6 pt-10 pb-20 text-[#8a8a8a]`}>
+        <div className="col-span-12 md:col-span-4 normal-case tracking-normal font-sans text-xs">
+          <span className="text-[#EDEDED] font-mono uppercase tracking-[0.2em]">Neuronal Gravity</span>
+          <p className="mt-2">RUC {siteConfig.business.ruc} · {siteConfig.business.receiptNotice}</p>
+          <p>© {year} {siteConfig.name}</p>
         </div>
+        <nav className="col-span-12 md:col-span-8 flex flex-wrap gap-x-8 gap-y-3 md:justify-end">
+          <Link href="/terminos" className="hover:text-[#EDEDED]">Términos · Ley 29733</Link>
+          <Link href="/reclamaciones" className="hover:text-[#EDEDED]">Libro de Reclamaciones</Link>
+          <Link href="/defensati/informe-ejemplo" className="hover:text-[#EDEDED]">Informe ejemplo</Link>
+          <a href={siteConfig.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-[#EDEDED]">
+            WhatsApp {siteConfig.contact.whatsappFormatted}
+          </a>
+        </nav>
       </footer>
     </div>
   );

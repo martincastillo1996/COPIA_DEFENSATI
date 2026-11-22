@@ -1,196 +1,95 @@
 'use client';
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { 
-  ShieldCheck, 
-  Search, 
-  ArrowRight, 
-  AlertTriangle, 
-  Download, 
-  Share2, 
-  Check, 
-  Briefcase, 
-  Terminal, 
-  Clock
-} from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
-import NeuralBackground from '@/components/NeuralBackground';
 import PrintableReport from '@/components/PrintableReport';
 import ScoreCircle from '@/components/ScoreCircle';
 import SslResults from '@/components/SslResults';
-import ServerLocationCard from '@/components/ServerLocationCard';
-import SslAlertWidget from '@/components/SslAlertWidget';
-import BusinessOverview from '@/components/BusinessOverview';
 import PortResults from '@/components/PortResults';
 import HeaderResults from '@/components/HeaderResults';
 import CookieResults from '@/components/CookieResults';
 import RemediationList from '@/components/RemediationList';
 import TechnicalLogs from '@/components/TechnicalLogs';
 import NeuralScanTakeover from '@/components/NeuralScanTakeover';
-import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
 import WebAuditCard from '@/components/WebAuditCard';
 import PdfLeadModal from '@/components/PdfLeadModal';
-import RoiLossCalculator from '@/components/RoiLossCalculator';
-import SocialViralHub from '@/components/SocialViralHub';
-import SecurityBenchmarkBar from '@/components/SecurityBenchmarkBar';
-import AnpdpComplianceCard from '@/components/AnpdpComplianceCard';
-import CompetitorDuelModal from '@/components/CompetitorDuelModal';
 import MobileStickyConversionBar from '@/components/MobileStickyConversionBar';
-import { Swords } from 'lucide-react';
 import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
-// Componentes Oficiales DEFENSA TI
+import DefensatiResultsReport from '@/components/defensati/DefensatiResultsReport';
 import DefensatiHero from '@/components/defensati/DefensatiHero';
-import DefensatiProblems from '@/components/defensati/DefensatiProblems';
+import DefensatiOdyssey from '@/components/defensati/odyssey/DefensatiOdyssey';
+import CyberWorld from '@/components/defensati/world/CyberWorld';
 import DefensatiPlans from '@/components/defensati/DefensatiPlans';
-import DefensatiHowItWorks from '@/components/defensati/DefensatiHowItWorks';
-import DefensatiScanScope from '@/components/defensati/DefensatiScanScope';
-import DefensatiRealData from '@/components/defensati/DefensatiRealData';
-import DefensatiWarranty from '@/components/defensati/DefensatiWarranty';
+import DefensatiProcess from '@/components/defensati/DefensatiProcess';
 import DefensatiFAQ from '@/components/defensati/DefensatiFAQ';
-import DefensatiScanRecommendation from '@/components/defensati/DefensatiScanRecommendation';
-import DefensatiVideoAuditCard from '@/components/defensati/DefensatiVideoAuditCard';
 import DefensatiQuickContact from '@/components/defensati/DefensatiQuickContact';
-import TurnstileWidget, { TurnstileWidgetRef } from '@/components/TurnstileWidget';
+import CompetitorComparisonSection from '@/components/CompetitorComparisonSection';
+import CompetitorDuelModal from '@/components/CompetitorDuelModal';
+import AttackSurfaceCard from '@/components/AttackSurfaceCard';
+import WebAppSecurityCard from '@/components/WebAppSecurityCard';
+import CveIntelCard from '@/components/CveIntelCard';
+import ComplianceCard from '@/components/ComplianceCard';
 
 import { siteConfig } from '@/config/site';
 import { SERVICE_PAGES } from '@/config/servicePages';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
-import { AuditReportRecord } from '@/lib/storage/reportStore';
-import { trackScanStart, trackScanComplete, trackWhatsAppClick } from '@/lib/analytics';
+import { trackWhatsAppClick } from '@/lib/analytics';
+import { useSecurityScan } from '@/features/scanner/useSecurityScan';
+import { DEMO_REPORT } from '@/lib/scanner/demoReport';
+
+const NAV = [
+  ['#capitulo-reconocimiento', 'Recorrido'],
+  ['#escaner-perimetral', 'Escáner'],
+  ['#servicios', 'Precios'],
+  ['#como-funciona', 'Metodología'],
+  ['#faq', 'Preguntas'],
+] as const;
 
 export default function DefensatiPage() {
-  const [url, setUrl] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [report, setReport] = useState<AuditReportRecord | null>(null);
-  const [auditId, setAuditId] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [viewMode, setViewMode] = useState<'business' | 'tech'>('business');
+  const [showFull, setShowFull] = useState(false);
   const [pdfViewMode, setPdfViewMode] = useState<'both' | 'management' | 'dev'>('both');
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [competitorModalOpen, setCompetitorModalOpen] = useState(false);
-  const [legalConsent, setLegalConsent] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const turnstileRef = useRef<TurnstileWidgetRef>(null);
-  const resultsRef = useRef<HTMLDivElement>(null);
 
-  const handleScan = useCallback(async (targetUrl?: string, overrideConsent?: boolean) => {
-    const finalUrl = targetUrl || url;
-    if (!finalUrl) return;
+  const {
+    url,
+    setUrl,
+    loading,
+    report,
+    setReport,
+    auditId,
+    setAuditId,
+    error,
+    setError,
+    legalConsent,
+    setLegalConsent,
+    setTurnstileToken,
+    turnstileRef,
+    resultsRef,
+    handleScan,
+  } = useSecurityScan();
 
-    const hasConsent = overrideConsent ?? legalConsent;
-    if (!hasConsent) {
-      setError('Marca la casilla para confirmar que la web es tuya o que tienes permiso de su dueño.');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setReport(null);
-    setAuditId(null);
-    const startTime = Date.now();
-    trackScanStart(finalUrl);
-
-    try {
-      const scanPromise = fetch('/api/scan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          url: finalUrl,
-          legalConsentAccepted: true,
-          turnstileToken,
-        }),
-      });
-
-      const minDelayPromise = new Promise((resolve) => setTimeout(resolve, 3200));
-      const [res] = await Promise.all([scanPromise, minDelayPromise]);
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Error al ejecutar auditoría');
-      }
-
-      const reportData = data.report || data;
-      setReport(reportData);
-      setAuditId(data.id || (data.report && data.report.id) || 'audit-local');
-      trackScanComplete({
-        domain: finalUrl,
-        score: reportData.score ?? 0,
-        grade: reportData.grade || 'F',
-        durationMs: Date.now() - startTime,
-      });
-
-      setTimeout(() => {
-        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error de conexión con el motor perimetral';
-      setError(msg);
-    } finally {
-      setLoading(false);
-      try {
-        turnstileRef.current?.reset();
-        setTurnstileToken(null);
-      } catch {
-        // Ignorar si no está montado
-      }
-    }
-  }, [url, legalConsent, turnstileToken]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleSetTarget = (e: Event) => {
-        const customEv = e as CustomEvent<string | { url?: string }>;
-        const targetVal = typeof customEv.detail === 'string' ? customEv.detail : customEv.detail?.url;
-        if (targetVal) {
-          setUrl(targetVal);
-          const inputEl = document.getElementById('url-scan-input-defensati');
-          if (inputEl) {
-            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => inputEl.focus(), 300);
-          }
-        }
-      };
-
-      window.addEventListener('set-target-url', handleSetTarget as EventListener);
-
-      const params = new URLSearchParams(window.location.search);
-      const target = params.get('target') || params.get('url');
-      if (target) {
-        const timer = setTimeout(() => {
-          setUrl(target);
-          const inputEl = document.getElementById('url-scan-input-defensati');
-          if (inputEl) {
-            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => inputEl.focus(), 300);
-          }
-        }, 150);
-        return () => {
-          clearTimeout(timer);
-          window.removeEventListener('set-target-url', handleSetTarget as EventListener);
-        };
-      }
-
-      return () => {
-        window.removeEventListener('set-target-url', handleSetTarget as EventListener);
-      };
-    }
-  }, []);
+  const handleLoadDemo = () => {
+    setReport(DEMO_REPORT);
+    setAuditId('DEMO-EJEMPLO-2026');
+    setUrl('https://ejemplo-empresa-demo.pe');
+    setLegalConsent(true);
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  };
 
   const copyShareLink = () => {
     if (!auditId) return;
-    const shareableUrl = `${window.location.origin}/report/${auditId}`;
     try {
-      if (report) {
-        localStorage.setItem(`report_${auditId}`, JSON.stringify(report));
-      }
+      if (report) localStorage.setItem(`report_${auditId}`, JSON.stringify(report));
     } catch {
       // Ignorar fallo de almacenamiento local
     }
-    navigator.clipboard.writeText(shareableUrl);
+    navigator.clipboard.writeText(`${window.location.origin}/report/${auditId}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -206,9 +105,7 @@ export default function DefensatiPage() {
         // Ignorar
       }
     }
-    setTimeout(() => {
-      window.print();
-    }, 60);
+    setTimeout(() => window.print(), 60);
   };
 
   const handlePrint = (mode: 'both' | 'management' | 'dev' = pdfViewMode) => {
@@ -216,526 +113,160 @@ export default function DefensatiPage() {
     setPdfModalOpen(true);
   };
 
-  const cleanDomain = report?.url ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
+  // Reacción 3D: sincronización de estados con el canvas Three.js
+  useEffect(() => {
+    const detail = loading
+      ? { state: 'scanning' }
+      : report
+      ? { state: 'done', score: report.score }
+      : { state: 'idle' };
+    window.dispatchEvent(new CustomEvent('defensati:scan', { detail }));
+  }, [loading, report]);
+
+  const cleanDomain = report?.url
+    ? report.url.replace(/^https?:\/\//i, '').replace(/\/.*$/, '')
+    : '';
+  const isHyperscale = report ? Boolean(report.isHyperscale) || isHyperscalePlatform(report.url) : false;
 
   return (
-    <div className="relative min-h-screen bg-[#000000] text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white font-sans antialiased overflow-x-hidden">
-      
-      {/* Fondo estético y luces ambientales (El fondo clásico original de DEFENSA TI con +15% de visibilidad) */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-40">
-        <NeuralBackground />
-        <div className="absolute inset-0 bg-radial from-black/10 via-black/35 to-black/65" />
-      </div>
-
-      {/* Luces cósmicas Apple Pro de fondo */}
-      <div className="pointer-events-none fixed inset-0 z-0 flex justify-center overflow-hidden">
-        <div 
-          className="absolute rounded-full bg-gradient-to-b from-[#0071e3]/20 via-[#7928ca]/15 to-transparent"
-          style={{ top: '-80px', height: '640px', width: '1050px', filter: 'blur(140px)' }} 
-        />
-        <div 
-          className="absolute rounded-full bg-[#38bdf8]/10"
-          style={{ top: '35%', right: '-8%', height: '520px', width: '520px', filter: 'blur(160px)' }} 
-        />
-        <div 
-          className="absolute rounded-full bg-[#7928ca]/10"
-          style={{ top: '65%', left: '-8%', height: '540px', width: '540px', filter: 'blur(170px)' }} 
-        />
-      </div>
-
-      {/* Reporte Impreso Oficial */}
+    <div className="ice relative min-h-screen font-sans antialiased overflow-x-clip selection:bg-[#cfe3ee] selection:text-[#0a0c0f]">
+      <CyberWorld />
       {report && auditId && <PrintableReport report={report} auditId={auditId} pdfViewMode={pdfViewMode} />}
 
       <div className="relative z-10 print:hidden flex flex-col min-h-screen">
-        
-        {/* Encabezado Oficial DEFENSA TI (Mobile First) */}
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#000000]/80 backdrop-blur-2xl transition-all">
-          <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            
-            {/* Logo de DEFENSA TI con Escudo de Ciberseguridad */}
-            <div className="flex items-center gap-3">
-              <Link href="/" className="mr-1 text-xs text-neutral-400 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded-lg hover:bg-white/5">
-                <span>&larr;</span>
-                <span className="font-semibold text-sky-400">Neuronal Gravity</span>
-              </Link>
-              <div className="h-4 w-px bg-white/10 hidden sm:block" />
-              <div className="h-9 w-9 rounded-xl bg-linear-to-b from-white/15 to-white/5 border border-white/10 flex items-center justify-center shadow-inner shrink-0">
-                <ShieldCheck className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold text-sm sm:text-base tracking-tight text-white leading-none">
-                  DEFENSA TI
-                </span>
-                <span className="text-[10px] text-neutral-400 font-normal mt-0.5">
-                  Blindaje & Ciberseguridad
-                </span>
-              </div>
-            </div>
-
-            {/* Navegación Desktop */}
-            <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-neutral-300">
-              <a href="#escaner-gratis" className="text-[#38bdf8] font-bold hover:text-white transition-colors flex items-center gap-1.5">
-                <Search className="w-3.5 h-3.5" />
-                <span>Escáner gratis</span>
-              </a>
-              <a href="#problemas" className="hover:text-white transition-colors">Problemas</a>
-              <a href="#servicios" className="hover:text-sky-400 transition-colors">Precios</a>
-              <a href="#como-funciona" className="hover:text-white transition-colors">Cómo funciona</a>
-              <a href="#datos-reales" className="hover:text-white transition-colors">Datos reales</a>
-              <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+        <header className="sticky top-0 z-50 border-b ed-line bg-[#0a0c0f]/80 backdrop-blur-md">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 h-14 grid grid-cols-12 items-center gap-4">
+            <Link href="/defensati" className="col-span-6 lg:col-span-3 flex items-center gap-3">
+              <span className="w-2 h-2 bg-[#cfe3ee]" aria-hidden />
+              <span className="hud-label !text-[#e8edf1] !tracking-[0.24em]">Defensa TI</span>
+            </Link>
+            <nav className="hidden lg:flex col-span-6 justify-center gap-8">
+              {NAV.map(([href, label], i) => (
+                <a key={href} href={href} className="hud-label hover:!text-[#e8edf1] transition-colors">
+                  <span className="text-[#7d8891] mr-1.5">0{i + 1}</span>{label}
+                </a>
+              ))}
             </nav>
-
-            {/* Botón WhatsApp de Contacto Oficial */}
-            <div className="flex items-center gap-2.5">
+            <div className="col-span-6 lg:col-span-3 flex items-center justify-end gap-2">
+              <button type="button" onClick={handleLoadDemo} className="hidden md:inline-flex hud-btn !py-2 !px-3">
+                Demo
+              </button>
               <a
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick({ service: 'general', placement: 'sticky_header' })}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black text-xs sm:text-sm font-bold shadow-md shadow-[#25D366]/20 transition-all cursor-pointer"
+                className="hud-btn hud-btn-solid !py-2 !px-3"
               >
-                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-                <span>WhatsApp</span>
+                <WhatsAppIcon className="w-3.5 h-3.5 fill-current" /> Contacto
               </a>
             </div>
-
           </div>
-
-          {/* Navegación Rápida Móvil (Barra horizontal de acceso con un toque) */}
-          <div className="lg:hidden border-t border-white/10 bg-black/60 px-4 py-2 flex items-center gap-2 overflow-x-auto text-xs no-scrollbar">
-            <a href="#escaner-gratis" className="px-3.5 py-1 rounded-full bg-[#0071e3] text-white whitespace-nowrap font-bold shadow-sm shadow-[#0071e3]/30">Escáner gratis</a>
-            <a href="#problemas" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Problemas</a>
-            <a href="#servicios" className="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 hover:text-sky-300 whitespace-nowrap font-medium border border-sky-500/20">Precios</a>
-            <a href="#como-funciona" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Cómo funciona</a>
-            <a href="#datos-reales" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">Datos reales</a>
-            <a href="#faq" className="px-3 py-1 rounded-full bg-white/5 text-neutral-300 hover:text-white whitespace-nowrap">FAQ</a>
-          </div>
+          <nav className="lg:hidden border-t ed-line px-4 flex gap-6 overflow-x-auto no-scrollbar py-2.5">
+            {NAV.map(([href, label]) => (
+              <a key={href} href={href} className="hud-label whitespace-nowrap">{label}</a>
+            ))}
+          </nav>
         </header>
 
-        {/* Contenido Principal */}
-        <main className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-14 space-y-16 sm:space-y-24 flex-1 w-full overflow-x-hidden">
-          
-          {/* SECCIÓN 1: HERO COMERCIAL */}
-          <DefensatiHero />
+        <DefensatiOdyssey />
 
-          {/* SECCIÓN 2: ESCÁNER GRATUITO GIGANTE (PROMINENTE, LEAD MAGNET PRINCIPAL) */}
-          <section id="escaner-gratis" className="w-full max-w-4xl xl:max-w-5xl mx-auto space-y-8 scroll-mt-24 text-center">
-            
-            <div className="relative space-y-6 sm:space-y-8 p-8 sm:p-14 lg:p-16 rounded-[36px] sm:rounded-[48px] bg-[#121316]/90 border-2 border-white/15 backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.85),0_0_80px_rgba(0,113,227,0.18),inset_0_1px_0_rgba(255,255,255,0.2)] overflow-hidden">
-              
-              {/* Resplandor cósmico ambiental superior */}
-              <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-[#0071e3]/25 via-[#38bdf8]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <main className="max-w-[1440px] mx-auto px-4 sm:px-8 flex-1 w-full">
+          {/* Fase 06 · Detección: escáner perimetral sobre el mismo mundo 3D */}
+          <div id="escaner-perimetral" data-phase="6">
+            <DefensatiHero
+              url={url}
+              setUrl={setUrl}
+              loading={loading}
+              legalConsent={legalConsent}
+              setLegalConsent={setLegalConsent}
+              turnstileRef={turnstileRef}
+              setTurnstileToken={setTurnstileToken}
+              handleScan={handleScan}
+              error={error}
+              setError={setError}
+              onLoadDemo={handleLoadDemo}
+            />
 
-              <div className="relative z-10 space-y-4">
-                <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-[#0071e3]/15 border border-[#0071e3]/30 text-[#38bdf8] text-xs sm:text-sm font-bold tracking-wide shadow-[0_0_20px_rgba(0,113,227,0.25)]">
-                  <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse" />
-                  <span>AUDITORÍA PERIMETRAL EN VIVO • 100% GRATUITA</span>
-                </div>
-                
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#f5f5f7] tracking-[-0.035em] leading-[1.1] max-w-3xl mx-auto">
-                  Prueba el escáner gratuito en tu web
-                </h2>
-                
-                <p className="text-base sm:text-lg lg:text-xl text-[#a1a1a6] font-normal leading-relaxed max-w-2xl mx-auto pt-1">
-                  Analiza al instante certificados SSL/TLS, cabeceras HTTP de transporte, puertos expuestos y blindaje sin costo ni contraseñas.
-                </p>
-              </div>
-
-              {/* Formulario de Escaneo con Casilla de Consentimiento */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleScan();
-                }}
-                className="relative z-10 pt-2 sm:pt-4 max-w-2xl xl:max-w-3xl mx-auto space-y-4 text-left"
-              >
-                <div className="relative p-2 sm:p-2.5 rounded-full bg-black/60 border-2 border-white/20 backdrop-blur-3xl shadow-[0_12px_40px_rgba(0,113,227,0.25)] flex items-center gap-2 sm:gap-3 ring-2 ring-white/5 focus-within:ring-4 focus-within:ring-[#0071e3]/40 focus-within:border-[#0071e3] transition-all">
-                  <div className="pl-4 sm:pl-5 text-[#38bdf8] shrink-0">
-                    <Search className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <input
-                    id="url-scan-input-defensati"
-                    type="text"
-                    placeholder="https://tudominio.com"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    className="w-full bg-transparent border-none py-3 sm:py-4 px-1 text-base sm:text-xl text-[#f5f5f7] placeholder-neutral-500 focus:outline-none font-medium"
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading || !legalConsent || !url.trim()}
-                    title={!legalConsent ? 'Marca la casilla obligatoria para activar el botón' : 'Iniciar auditoría'}
-                    className={`px-6 sm:px-10 py-3.5 sm:py-4 font-bold text-sm sm:text-base rounded-full transition-all flex items-center justify-center gap-2 shrink-0 ${
-                      loading || !legalConsent || !url.trim()
-                        ? 'bg-neutral-800 text-neutral-500 border border-white/10 cursor-not-allowed opacity-60'
-                        : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-[0_4px_25px_rgba(0,113,227,0.5)] cursor-pointer active:scale-[0.98]'
-                    }`}
-                  >
-                    {loading ? (
-                      <>
-                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>Auditando...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Auditar</span>
-                        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {/* Casilla Obligatoria de Declaración Jurada (Ley N° 30096) */}
-                <div
-                  className={`p-4 sm:p-5 rounded-2xl border text-left transition-all duration-300 ${
-                    legalConsent
-                      ? 'bg-emerald-950/25 border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.15)]'
-                      : 'bg-[#141416]/95 border-white/15 hover:border-amber-500/50 shadow-xl'
-                  }`}
-                >
-                  <label htmlFor="sworn-declaration-defensati-checkbox" className="flex items-start gap-3.5 cursor-pointer select-none">
-                    <input
-                      id="sworn-declaration-defensati-checkbox"
-                      type="checkbox"
-                      checked={legalConsent}
-                      onChange={(e) => {
-                        setLegalConsent(e.target.checked);
-                        if (error) setError(null);
-                      }}
-                      className="mt-1 w-5 h-5 rounded-md border-white/30 bg-black text-[#0071e3] focus:ring-[#0071e3] focus:ring-offset-0 cursor-pointer accent-[#0071e3] shrink-0"
-                    />
-                    <div className="space-y-2 flex-1">
-                      <p className="text-xs sm:text-[13.5px] text-neutral-200 leading-snug font-medium whitespace-normal">
-                        Confirmo que esta web es mía o que tengo permiso de su dueño para revisarla, conforme a la{' '}
-                        <Link
-                          href="/terminos#delitos-informaticos"
-                          className="text-[#38bdf8] underline hover:text-white font-semibold"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Ley N° 30096
-                        </Link>
-                        . El análisis es pasivo: no toca ni modifica tu sitio.
-                      </p>
-                      
-                      <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
-                        <span
-                          className={`text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-full font-bold uppercase tracking-wider inline-flex items-center gap-1.5 ${
-                            legalConsent
-                              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                              : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                          }`}
-                        >
-                          {legalConsent ? '✓ Listo, ya puedes auditar' : 'Marca la casilla para activar el botón'}
-                        </span>
-                        <span className="text-[10px] sm:text-[11px] text-neutral-400 font-mono">
-                          Registramos dominio, fecha, hora e IP de esta confirmación.
-                        </span>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-
-                {/* Widget Oficial Cloudflare Turnstile Anti-Bot */}
-                <div className="pt-1 flex flex-col items-center justify-center">
-                  <TurnstileWidget
-                    ref={turnstileRef}
-                    action="scan"
-                    theme="dark"
-                    onVerify={(token) => {
-                      setTurnstileToken(token);
-                      if (error) setError(null);
-                    }}
-                    onExpire={() => setTurnstileToken(null)}
-                  />
-                </div>
-              </form>
-
-              {/* Botones de 1-clic para auditorías de prueba representativas */}
-              <div className="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 text-xs text-neutral-300 pt-3">
-                <span className="text-neutral-400 text-xs font-medium">¿Quieres ver primero qué recibes?</span>
-                <Link
-                  href="/defensati/informe-ejemplo"
-                  className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 text-sky-400 hover:text-sky-300 font-semibold text-xs transition-all cursor-pointer shadow-sm"
-                >
-                  Ver informe de ejemplo
-                </Link>
-              </div>
-
-              {/* Micro-garantías visuales de confianza técnica */}
-              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-white/10 text-xs sm:text-sm text-neutral-300 text-left sm:text-center">
-                <div className="flex items-center sm:justify-center gap-2 p-2.5 rounded-xl bg-white/[0.03]">
-                  <span className="text-emerald-400 text-base">⚡</span>
-                  <span>Análisis perimetral 100% pasivo</span>
-                </div>
-                <div className="flex items-center sm:justify-center gap-2 p-2.5 rounded-xl bg-white/[0.03]">
-                  <span className="text-[#38bdf8] text-base">🔒</span>
-                  <span>Cero contraseñas requeridas</span>
-                </div>
-                <div className="flex items-center sm:justify-center gap-2 p-2.5 rounded-xl bg-white/[0.03]">
-                  <span className="text-purple-400 text-base">📋</span>
-                  <span>Dictamen técnico en PDF</span>
-                </div>
-              </div>
-
-              {/* Comparador de Competencia */}
-              <div className="relative z-10 pt-2">
-                <CompetitorComparisonSection />
-              </div>
-
-              {/* Animación del Escáner */}
-              {loading && <NeuralScanTakeover targetUrl={url || 'sitio web'} />}
-
-              {error && (
-                <div className="relative z-10 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center justify-center gap-2">
-                  <AlertTriangle className="w-4 h-4 shrink-0" />
-                  <span>{error}</span>
-                </div>
-              )}
+            {/* Comparativa Cara a Cara de Competidores */}
+            <div className="mt-6">
+              <CompetitorComparisonSection />
             </div>
+          </div>
 
-          </section>
+          {/* Modal Overlay durante el escaneo en progreso */}
+          {loading && <NeuralScanTakeover targetUrl={url || 'sitio web'} />}
 
-          {/* RESULTADOS DEL ESCÁNER + BOTÓN DESTACADO "LO ARREGLAMOS POR TI" [Escaner] */}
+          {/* 2. Screen 2: App Frame / High Density Dashboard de Auditoría */}
           {report && (
-            <div ref={resultsRef} className="space-y-8 pt-4 scroll-mt-20">
-              
-              {/* Tarjeta superior con datos analizados y descarga de dictamen */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-[#161618] border border-white/10 shadow-2xl backdrop-blur-2xl">
-                <div>
-                  <span className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Sitio Web Analizado</span>
-                  <h3 className="text-xl font-bold text-white break-all">{report.url}</h3>
-                </div>
-                <div className="flex flex-wrap items-center gap-2.5">
-                  {/* Módulo Unificado de Descarga de Dictamen PDF */}
-                  <div className="inline-flex items-center gap-1.5 p-1 rounded-2xl bg-black/60 border border-white/10 shadow-inner">
-                    <span className="text-[10px] uppercase font-mono font-bold text-neutral-400 pl-2.5 pr-1 hidden sm:inline">
-                      Informe PDF:
-                    </span>
+            <div ref={resultsRef} className="space-y-8 scroll-mt-20 py-16">
+              <DefensatiResultsReport
+                report={report}
+                cleanDomain={cleanDomain}
+                auditId={auditId}
+                isHyperscale={isHyperscale}
+                copied={copied}
+                onPdf={(mode) => handlePrint(mode)}
+                onShare={copyShareLink}
+                onDuel={() => setCompetitorModalOpen(true)}
+                onFull={() => setShowFull((v) => !v)}
+                fullOpen={showFull}
+              />
 
-                    {/* Selector de Perspectiva del PDF */}
-                    <div className="inline-flex items-center p-0.5 rounded-xl bg-white/[0.04] border border-white/5">
-                      <button
-                        type="button"
-                        onClick={() => setPdfViewMode('management')}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                          pdfViewMode === 'management'
-                            ? 'bg-[#0071e3] text-white shadow-sm font-bold'
-                            : 'text-neutral-400 hover:text-white'
-                        }`}
-                        title="Informe ejecutivo de 1 página con pérdidas en Soles y ROI para Gerencia"
-                      >
-                        💼 Gerencial
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setPdfViewMode('dev')}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                          pdfViewMode === 'dev'
-                            ? 'bg-[#0071e3] text-white shadow-sm font-bold'
-                            : 'text-neutral-400 hover:text-white'
-                        }`}
-                        title="Informe técnico de 1 página para Desarrolladores / Sysadmin con RFC y código"
-                      >
-                        🛠️ Técnico
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setPdfViewMode('both')}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                          pdfViewMode === 'both'
-                            ? 'bg-[#0071e3] text-white shadow-sm font-bold'
-                            : 'text-neutral-400 hover:text-white'
-                        }`}
-                        title="Informe completo de 2 páginas con ambas perspectivas"
-                      >
-                        📑 Completo
-                      </button>
+              {showFull && (
+                <div className="space-y-8 bg-[#0a0c0f] border border-white/10 p-5 sm:p-10">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="taste-card p-6 border ed-line">
+                      <ScoreCircle score={report.score} grade={report.grade || 'F'} />
                     </div>
-
-                    {/* Botón de Descarga integrado al mismo nivel */}
-                    <button
-                      onClick={() => handlePrint(pdfViewMode)}
-                      className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-[#0071e3] to-[#2997ff] hover:from-[#0077ed] hover:to-[#38bdf8] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
-                      title="Descargar dictamen forense en formato PDF con membrete oficial"
-                    >
-                      <Download className="w-3.5 h-3.5 text-white" />
-                      <span>Descargar PDF</span>
-                    </button>
+                    <div id="section-ssl" className="md:col-span-2 taste-card p-6 border ed-line scroll-mt-24">
+                      <SslResults ssl={report.ssl} />
+                    </div>
                   </div>
 
-                  {/* Acciones Secundarias con misma altura armónica */}
-                  <button
-                    onClick={copyShareLink}
-                    className="px-3.5 py-2 rounded-2xl bg-white/10 hover:bg-white/15 active:scale-[0.98] border border-white/15 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
-                    title="Copiar enlace de auditoría"
-                  >
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Share2 className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Copiado' : 'Compartir'}</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCompetitorModalOpen(true)}
-                    className="px-3.5 py-2 rounded-2xl bg-[#0071e3]/15 hover:bg-[#0071e3]/25 active:scale-[0.98] border border-[#0071e3]/30 text-[#38bdf8] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
-                    title="Comparar tu puntaje frente a un competidor"
-                  >
-                    <Swords className="w-3.5 h-3.5 text-[#38bdf8]" />
-                    <span className="hidden sm:inline">Comparar Competidor</span>
-                    <span className="sm:hidden">Duelo</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* BOTÓN PROMINENTE & RECOMENDACIÓN COMERCIAL DINÁMICA POST-ESCÁNER */}
-              <DefensatiScanRecommendation 
-                report={report} 
-                cleanDomain={cleanDomain}
-                auditId={auditId || undefined}
-                onNavigateToSection={(section) => {
-                  if (section === 'headers' || section === 'ports') {
-                    setViewMode('tech');
-                  }
-                  setTimeout(() => {
-                    const el = document.getElementById(`section-${section}`);
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      el.classList.add('ring-4', 'ring-[#0071e3]', 'shadow-[0_0_40px_rgba(0,113,227,0.5)]', 'transition-all');
-                      setTimeout(() => {
-                        el.classList.remove('ring-4', 'ring-[#0071e3]', 'shadow-[0_0_40px_rgba(0,113,227,0.5)]');
-                      }, 2200);
-                    }
-                  }, 150);
-                }}
-              />
-
-              {/* OFERTA IRRESISTIBLE: VIDEO-DIAGNÓSTICO PERSONALIZADO DE 2 MINUTOS */}
-              <DefensatiVideoAuditCard 
-                domain={cleanDomain} 
-                score={report.score} 
-                grade={report.grade} 
-              />
-
-              {/* Selector de Perspectiva (Negocio vs Técnico) */}
-              <div className="flex justify-center py-2">
-                <div className="inline-flex p-1.5 rounded-2xl bg-[#161618] border border-white/15 shadow-2xl">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('business')}
-                    className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${
-                      viewMode === 'business'
-                        ? 'bg-[#0071e3] text-white shadow-xl shadow-[#0071e3]/40 scale-[1.02]'
-                        : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    <Briefcase className="w-4 h-4" />
-                    <span>Visión Ejecutiva</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('tech')}
-                    className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${
-                      viewMode === 'tech'
-                        ? 'bg-[#0071e3] text-white shadow-xl shadow-[#0071e3]/40 scale-[1.02]'
-                        : 'text-neutral-400 hover:text-white'
-                    }`}
-                  >
-                    <Terminal className="w-4 h-4" />
-                    <span>Detalle Técnico</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Calificación y SSL */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="md:col-span-1 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                  <ScoreCircle score={report.score} grade={report.grade || 'F'} />
-                </div>
-                <div id="section-ssl" className="md:col-span-2 rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
-                  <SslResults ssl={report.ssl} />
-                </div>
-              </div>
-
-              {/* Localización y Widgets */}
-              <ServerLocationCard 
-                location={report.location} 
-                resolvedIp={report.telemetry?.targetResolvedIp} 
-                targetDomain={report.url}
-              />
-
-              <SslAlertWidget 
-                domain={report.url} 
-                daysRemaining={report.ssl?.daysRemaining} 
-              />
-
-              {/* Diagnóstico Perimetral Avanzado: WAF, CMS, Mixed Content y Malware */}
-              <WebAuditCard
-                waf={report.waf}
-                cms={report.cms}
-                mixedContent={report.mixedContent}
-                malware={report.malware}
-                commercial={report.commercial}
-                domain={report.url}
-                isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
-              />
-
-              {/* Termómetro Comparativo: Tu Web vs. Mercado Peruano */}
-              <SecurityBenchmarkBar
-                score={report.score ?? 50}
-                grade={report.grade || 'F'}
-                domain={report.url}
-              />
-
-              {/* Detalle según modo */}
-              {viewMode === 'business' ? (
-                <div className="space-y-6">
-                  <BusinessOverview report={report} />
-                  <AnpdpComplianceCard
+                  {/* Diagnóstico Perimetral Avanzado: WAF, CMS/Plugins, Contenido Mixto y Malware */}
+                  <WebAuditCard
+                    waf={report.waf}
+                    cms={report.cms}
+                    mixedContent={report.mixedContent}
+                    malware={report.malware}
+                    commercial={report.commercial}
                     domain={report.url}
-                    hasValidSsl={Boolean(report.ssl?.valid) && report.ssl?.protocol !== 'Sin HTTPS'}
-                    hasDowngradeRisk={Boolean(report.headers?.some(h => !h.present && (h.header || h.name || '').toLowerCase().includes('transport-security')))}
-                    hasOpenAdminPorts={Boolean(report.ports?.some(p => p.isOpen && [21, 22, 3306, 5432, 1433, 6379, 3389, 445, 27017].includes(p.port)))}
-                    cookiesSecure={Boolean(!report.cookies || report.cookies.totalCookies === 0 || report.cookies.secureCookies === report.cookies.totalCookies)}
-                    isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
+                    isHyperscale={isHyperscale}
                   />
-                  <RoiLossCalculator
-                    domain={report.url}
-                    hasAdPixel={report.commercial?.hasActiveMarketing}
-                    hasEcommerce={report.cms?.isEcommerce}
-                    isOptimal={(report.score ?? 0) >= 90 && (!report.headers || report.headers.filter(h => !h.present).length === 0)}
-                    isHyperscale={Boolean(report.isHyperscale) || isHyperscalePlatform(report.url)}
-                  />
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {Boolean(report.ports?.length) && (
-                    <div id="section-ports" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
-                      <PortResults ports={report.ports || []} />
-                    </div>
-                  )}
 
-                  <div id="section-headers" className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl scroll-mt-24 transition-all duration-300">
+                  {/* Inteligencia de Vulnerabilidades CVE */}
+                  <CveIntelCard cveIntel={report.cveIntel} />
+
+                  {/* Superficie de Ataque, DNS, Correo y TLS Profundo (scanTlsDeep + Buckets Públicos) */}
+                  <AttackSurfaceCard asm={report.asm} />
+
+                  {/* Seguridad de Aplicación Web (Endpoints, APIs, WordPress, CORS, Source Maps) */}
+                  <WebAppSecurityCard webApp={report.webApp} />
+
+                  {/* Cumplimiento Normativo */}
+                  <ComplianceCard compliance={report.compliance} reportId={report.id} hasIntegrity={Boolean(report.integrity)} diff={report.diff} />
+
+                  <div id="section-ports" className="taste-card p-6 border ed-line scroll-mt-24">
+                    <PortResults ports={report.ports || []} verification={report.portsVerification} />
+                  </div>
+
+                  <div id="section-headers" className="taste-card p-6 border ed-line scroll-mt-24">
                     <HeaderResults headers={report.headers || []} domain={report.url} />
                   </div>
 
                   <CookieResults cookies={report.cookies} />
 
-                  <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
+                  <div className="taste-card p-6 border ed-line">
                     <RemediationList items={report.remediations || []} />
                   </div>
 
-                  <div className="rounded-3xl bg-white/2 border border-white/5 p-6 backdrop-blur-xl">
-                    <TechnicalLogs 
-                      id={auditId || ''} 
-                      telemetry={report.telemetry} 
-                      scannedAt={report.scannedAt || ''} 
-                    />
+                  <div className="taste-card p-6 border ed-line">
+                    <TechnicalLogs id={auditId || ''} telemetry={report.telemetry} scannedAt={report.scannedAt || ''} />
                   </div>
                 </div>
               )}
 
-              {/* Hub de Comunidad y Difusión Viral */}
-              <SocialViralHub targetUrl={report.url} score={report.score} />
-
-              {/* Modal de Captura de Lead al Descargar PDF */}
               <PdfLeadModal
                 isOpen={pdfModalOpen}
                 onClose={() => setPdfModalOpen(false)}
@@ -747,16 +278,15 @@ export default function DefensatiPage() {
                 pdfViewMode={pdfViewMode}
               />
 
-              {/* Modal de Duelo / Comparativa con Competidor */}
+              {/* Modal de Duelo Comparativo contra Competidor */}
               <CompetitorDuelModal
                 isOpen={competitorModalOpen}
                 onClose={() => setCompetitorModalOpen(false)}
-                userDomain={report.url}
-                userScore={report.score ?? 50}
-                userGrade={report.grade || 'F'}
+                userDomain={cleanDomain}
+                userScore={report?.score || 0}
+                userGrade={(report?.grade as 'A+' | 'A' | 'B' | 'C' | 'D' | 'F') || 'F'}
               />
 
-              {/* Barra Flotante Inferior de Conversión (Móvil / Desktop) */}
               <MobileStickyConversionBar
                 score={report.score ?? 50}
                 grade={report.grade || 'F'}
@@ -767,107 +297,74 @@ export default function DefensatiPage() {
             </div>
           )}
 
-          {/* SECCIÓN 3: ALCANCE TÉCNICO (Qué SÍ detecta y qué NO detecta) */}
-          <DefensatiScanScope />
+          <div className="space-y-32 sm:space-y-40 py-24">
 
-          {/* SECCIÓN 4: PROBLEMAS QUE SOLUCIONAMOS */}
-          <DefensatiProblems />
+          {/* 4. Screen 4: Precios y Catálogo Oficial DEFENSA TI */}
 
-          {/* SECCIÓN 5: SERVICIOS OFICIALES */}
-          <DefensatiPlans targetUrl={report?.url} />
+          <div data-phase="7">
+            <DefensatiPlans targetUrl={report?.url} />
+          </div>
 
-          {/* SECCIÓN 6: CÓMO TRABAJAMOS (3 Pasos Simples) */}
-          <DefensatiHowItWorks />
+          {/* 5. Screen 5: Metodología Sin Sorpresas + Garantía Escrita */}
+          <div data-phase="8" className="space-y-32 sm:space-y-40">
+          <DefensatiProcess />
 
-          {/* SECCIÓN 8: DATOS REALES CON FUENTE VERIFICABLE */}
-          <DefensatiRealData />
-
-          {/* SECCIÓN 9: CONFIANZA & GARANTÍA OFICIAL */}
-          <DefensatiWarranty />
-
-          {/* SECCIÓN 10: PREGUNTAS FRECUENTES */}
+          {/* 6. Screen 6: Preguntas Frecuentes & Despacho Técnico */}
           <DefensatiFAQ />
 
-          {/* SECCIÓN 11: FORMULARIO DE CONTRATACIÓN (cierre de la página) */}
+          {/* Formulario de Contacto Técnico y Contratación Rápida */}
           <DefensatiQuickContact initialUrl={url} />
-
+          </div>
+          </div>
         </main>
 
-        {/* PIE DE PÁGINA (Contacto, Confianza, RUC, WhatsApp +1, Términos y Libro de Reclamaciones) */}
-        <footer className="border-t border-white/10 py-14 text-xs text-neutral-400 bg-[#000000]/95 backdrop-blur-xl mt-20">
-          <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-center">
-            
-            {/* Canales de Contacto */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {/* WhatsApp Oficial Apple Pill */}
+        {/* Footer.closing: Récord legal, RUC 10704877850 y Navegación de Servicios */}
+        <footer className="border-t ed-line py-16 text-xs text-[#7d8891] mt-24">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 grid grid-cols-12 gap-y-8 lg:gap-x-12">
+            <div className="col-span-12 lg:col-span-4 space-y-2">
+              <p className="hud-label !text-[#e8edf1] mb-4">DEFENSA TI · RUC {siteConfig.business.ruc}</p>
+              <p>Especialista a cargo: Martín Castillo</p>
+              <p>Horario de auditoría: {siteConfig.contact.hours}</p>
               <a
                 href={DEFENSATI_WHATSAPP_MESSAGES.hero()}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick({ service: 'general', placement: 'footer' })}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] font-bold transition-all shadow-[0_0_15px_rgba(37,211,102,0.15)]"
+                className="inline-flex items-center gap-1.5 text-[#cfe3ee] hover:underline pt-1"
               >
-                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-                <span>WhatsApp: {siteConfig.contact.whatsappFormatted}</span>
+                <WhatsAppIcon className="w-3.5 h-3.5 fill-current" /> {siteConfig.contact.whatsappFormatted}
               </a>
-
-              {/* Email Apple Pill */}
-              <a
-                href="mailto:contacto@neuronalgravity.com"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[#f5f5f7] font-medium transition-all"
-              >
-                <span>contacto@neuronalgravity.com</span>
-              </a>
-
-              {/* Horario de Atención Apple Pill */}
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-[#f5f5f7] font-medium">
-                <Clock className="w-4 h-4 text-[#38bdf8] shrink-0" />
-                <span>Horario: {siteConfig.contact.hours}</span>
-              </div>
+              <p className="pt-1">
+                <a href="mailto:contacto@neuronalgravity.com" className="hover:text-[#e8edf1]">
+                  contacto@neuronalgravity.com
+                </a>
+              </p>
             </div>
 
-            {/* Enlaces a páginas de servicio */}
-            <nav aria-label="Servicios de DEFENSA TI" className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
+            <nav aria-label="Servicios de DEFENSA TI" className="col-span-12 lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
               {SERVICE_PAGES.map((s) => (
-                <Link
-                  key={s.slug}
-                  href={`/defensati/servicios/${s.slug}`}
-                  className="inline-block rounded-full bg-white/5 hover:bg-[#0071e3]/20 border border-white/10 hover:border-[#38bdf8]/50 px-3.5 py-2 text-xs font-medium text-neutral-200 hover:text-white transition-all leading-snug"
-                >
+                <Link key={s.slug} href={`/defensati/servicios/${s.slug}`} className="hover:text-[#e8edf1] leading-snug">
                   {s.shortName}
                 </Link>
               ))}
             </nav>
 
-            {/* Créditos y Legalidad */}
-            <div className="space-y-3 text-center max-w-3xl mx-auto">
-              <p className="font-semibold text-white text-sm">
-                &copy; 2026 DEFENSA TI &bull; Soluciones Tecnológicas &bull; RUC {siteConfig.business.ruc}
-              </p>
-              
-              <p className="text-[11px] text-neutral-400">
-                Parte del ecosistema tecnológico <a href="https://neuronalgravity.com" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline font-bold">NeuronalGravity.com</a>
-              </p>
-
-              {/* Enlaces Legales Requeridos (Libro de Reclamaciones y Términos) */}
-              <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-neutral-300 pt-2 border-t border-white/10">
-                <Link href="/terminos" className="hover:text-white transition-colors underline font-medium">
-                  Términos y Política de Privacidad (Perú)
-                </Link>
-                <span>&bull;</span>
-                <Link href="/reclamaciones" className="hover:text-amber-300 transition-colors underline font-bold text-amber-400">
-                  Libro de Reclamaciones Conforme a Ley
-                </Link>
-              </div>
-
-              <p className="text-[10px] text-neutral-500 leading-relaxed pt-2">
-                <strong>Aviso Legal y Descargo:</strong> DEFENSA TI brinda servicios de remediación de software, limpieza y hardening perimetral de servidores y directivas de transporte HTTP según estándares públicos OWASP. El servicio se entrega con comprobante formal bajo RUC 10704877850.
+            <div className="col-span-12 lg:col-span-3 space-y-2">
+              <Link href="/terminos" className="block hover:text-[#e8edf1]">
+                Términos, Privacidad y Ley N° 29733
+              </Link>
+              <Link href="/reclamaciones" className="block hover:text-[#e8edf1]">
+                Libro de Reclamaciones
+              </Link>
+              <a href="https://neuronalgravity.com" className="block hover:text-[#e8edf1]">
+                Neuronal Gravity
+              </a>
+              <p className="pt-2 text-[11px] text-[#4a535b]">
+                Defensa perimetral pasiva. Cumplimiento estricto con la Ley N° 30096 sobre delitos informáticos.
               </p>
             </div>
-
           </div>
         </footer>
-
       </div>
     </div>
   );

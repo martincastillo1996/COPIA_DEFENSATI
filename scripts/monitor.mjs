@@ -26,6 +26,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import tls from 'node:tls';
+import dns from 'node:dns/promises';
+import { notify as sendAlert } from './audit/notify.mjs';
 
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, 'data');
@@ -127,39 +129,12 @@ function checkSslDays(domain) {
   });
 }
 
-async function sendAlert(text) {
-  console.log(`[alerta] ${text.replace(/\n/g, ' | ')}`);
-  const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, LEAD_WEBHOOK_URL } = process.env;
-  const jobs = [];
-  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-    jobs.push(
-      fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
-        signal: AbortSignal.timeout(10_000),
-      })
-    );
-  }
-  if (LEAD_WEBHOOK_URL) {
-    jobs.push(
-      fetch(LEAD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, content: text }),
-        signal: AbortSignal.timeout(10_000),
-      })
-    );
-  }
-  if (jobs.length === 0) {
-    console.warn('[monitor] Sin canal de alerta configurado (TELEGRAM_* o LEAD_WEBHOOK_URL).');
-    return;
-  }
-  const results = await Promise.allSettled(jobs);
-  for (const r of results) {
-    if (r.status === 'rejected' || (r.value && !r.value.ok)) {
-      console.warn('[monitor] No se pudo entregar una alerta por uno de los canales.');
-    }
+/** Registro DMARC actual; '' si no existe, null si el DNS falló (no es un cambio). */
+async function readDmarc(domain) {
+  try {
+    return (await dns.resolveTxt('_dmarc.' + domain)).map((r) => r.join('')).filter((r) => /^v=DMARC1/i.test(r)).sort().join(' | ');
+  } catch (err) {
+    return err?.code === 'ENODATA' || err?.code === 'ENOTFOUND' ? '' : null;
   }
 }
 
@@ -167,7 +142,7 @@ async function sendAlert(text) {
  * Re-escaneo semanal (plan "tienda"). Usa el motor de la propia app en este servidor.
  * El cliente con plan de mantenimiento autorizó por contrato la auditoría de su dominio.
  */
-async function rescanClient(client, s) {
+async function rescanClient(client, s, full = Boolean(process.env.ADMIN_TOKEN)) {
   const base = (process.env.MONITOR_APP_URL || 'http://127.0.0.1:3000').replace(/\/+$/, '');
   s.lastScanAttempt = Date.now();
   let data;
@@ -184,11 +159,20 @@ async function rescanClient(client, s) {
         url: client.domain,
         force: true,
         legalConsentAccepted: true,
-        ...(process.env.ADMIN_TOKEN ? { mode: 'full' } : {}),
+        ...(s.lastScan?.reportId ? { previousReportId: s.lastScan.reportId } : {}),
+        ...(full ? { mode: 'full' } : {}),
       }),
       signal: AbortSignal.timeout(150_000),
     });
     data = await res.json();
+    if (full && data?.code === 'ENGAGEMENT_REQUIRED') {
+      const today = new Date().toISOString().slice(0, 10);
+      if (s.lastAuthAlertDay !== today) {
+        s.lastAuthAlertDay = today;
+        await sendAlert('🟠 AUTORIZACIÓN: ' + client.domain + ' se revisará solo en modo básico. ' + data.error);
+      }
+      return rescanClient(client, s, false);
+    }
     if (!res.ok || !data?.report) throw new Error(data?.error || 'HTTP ' + res.status);
   } catch (err) {
     console.warn('[monitor] Re-escaneo fallido de ' + client.domain + ': ' + (err?.message || err));
@@ -197,10 +181,23 @@ async function rescanClient(client, s) {
 
   const previous = s.lastScan;
   const { score, grade } = data.report;
-  s.lastScan = { at: new Date().toISOString(), score, grade, reportId: data.id };
+  s.lastScan = { at: new Date().toISOString(), score, grade, reportId: data.id, full };
   appendLog(client.domain, { t: s.lastScan.at, scan: true, score, grade, reportId: data.id });
 
-  if (previous && typeof previous.score === 'number' && score < previous.score) {
+  // Diferencias frente al escaneo anterior: hallazgos nuevos de severidad alta/crítica o subdominios nuevos
+  const diff = data.diff || data.report?.diff;
+  if (diff && (diff.newHighOrCritical > 0 || (diff.newSubdomains || []).length > 0)) {
+    const lines = (diff.newFindings || []).filter((f) => f.severity === 'CRÍTICO' || f.severity === 'ALTO').slice(0, 6).map((f) => '• [' + f.severity + '] ' + f.title);
+    const subs = (diff.newSubdomains || []).slice(0, 5);
+    await sendAlert(
+      '🔴 CAMBIO EN LA SUPERFICIE de ' + client.name + ' (' + client.domain + '): ' + diff.summary + '\n' +
+        lines.join('\n') + (subs.length ? '\nSubdominios nuevos: ' + subs.join(', ') : '') + '\n' +
+        'Informe: https://neuronalgravity.com/report/' + data.id
+    );
+  }
+
+  // Una nota completa no se compara con una básica
+  if (previous && (previous.full ?? full) === full && typeof previous.score === 'number' && score < previous.score) {
     await sendAlert(
       '🟠 SEGURIDAD: la calificación de ' + client.name + ' (' + client.domain + ') bajó de ' +
         previous.score + ' (' + previous.grade + ') a ' + score + ' (' + grade + ').\n' +
@@ -244,6 +241,13 @@ async function checkClient(client, state) {
   const today = new Date(now).toISOString().slice(0, 10);
   if (s.lastSslCheckDay !== today) {
     s.lastSslCheckDay = today;
+    const dmarc = await readDmarc(client.domain);
+    if (dmarc !== null) {
+      if (typeof s.dmarc === 'string' && s.dmarc !== dmarc) {
+        await sendAlert(`🟠 DMARC: cambió el registro de ${client.name} (${client.domain}).\nAntes: ${s.dmarc || 'ninguno'}\nAhora: ${dmarc || 'ninguno'}`);
+      }
+      s.dmarc = dmarc;
+    }
     const days = await checkSslDays(client.domain);
     s.sslDaysRemaining = days;
     if (days !== null && days <= SSL_ALERT_DAYS) {

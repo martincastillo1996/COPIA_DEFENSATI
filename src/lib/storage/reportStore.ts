@@ -8,6 +8,12 @@ import { ServerGeoLocation } from '@/lib/scanner/geoScanner';
 import { CookieScanResult } from '@/lib/scanner/cookieScanner';
 import { SensitiveFilesResult } from '@/lib/scanner/sensitiveFilesScanner';
 import { DnsSecurityResult } from '@/lib/scanner/dnsScanner';
+import type { CveIntelResult } from '@/lib/scanner/cveIntelScanner';
+import type { AsmResult } from '@/lib/scanner/asmScanner';
+import type { WebAppResult } from '@/lib/scanner/webAppScanner';
+import type { ComplianceResult } from '@/lib/scanner/complianceMapper';
+import type { ReportDiff } from '@/lib/scanner/findingsDiff';
+import type { ReportIntegrity } from '@/lib/security/reportIntegrity';
 import {
   WafCheckResult,
   CmsCheckResult,
@@ -15,12 +21,21 @@ import {
   MalwareScanResult,
   CommercialImpactResult,
 } from '@/lib/scanner/webAuditScanner';
+import {
+  ResilienceVectors,
+  AuditCategory,
+  IndustryBenchmark,
+  ScoreHistoryPoint,
+  RansomwareRiskResult,
+  DdosResilienceResult,
+  BankingComplianceResult,
+} from '@/types/security';
 
 export interface AuditTelemetry {
   durationMs: number;
-  aiModel: string;
+  aiModel?: string;
   targetResolvedIp?: string;
-  engineVersion: string;
+  engineVersion?: string;
 }
 
 export interface AuditReportRecord {
@@ -31,6 +46,13 @@ export interface AuditReportRecord {
   ssl?: SslCheckResult;
   headers?: HeaderCheckItem[];
   ports?: PortCheckResult[];
+  /** Escáner público: los puertos solo se sondean si se demuestra la titularidad del dominio. */
+  portsVerification?: {
+    verified: boolean;
+    method?: string;
+    record: { host: string; value: string };
+    file: { url: string; content: string };
+  };
   sensitiveFiles?: SensitiveFilesResult;
   dnsSecurity?: DnsSecurityResult;
   waf?: WafCheckResult;
@@ -47,6 +69,25 @@ export interface AuditReportRecord {
   /** 'public' = revisión básica; 'full' = auditoría completa autorizada (puertos y archivos). */
   scanMode?: 'public' | 'full';
   badgeToken?: string;
+  vectors?: ResilienceVectors;
+  categories?: AuditCategory[];
+  benchmark?: IndustryBenchmark;
+  history?: ScoreHistoryPoint[];
+  ttfb_ms?: number | null;
+  asn?: string;
+  auditor_location?: { provider: string; region: string; lat: number; lon: number } | null;
+  waf_detected?: string;
+  ssl_days_left?: number;
+  tls_version?: string;
+  ransomware?: RansomwareRiskResult;
+  ddos?: DdosResilienceResult;
+  banking?: BankingComplianceResult;
+  cveIntel?: CveIntelResult;
+  asm?: AsmResult;
+  webApp?: WebAppResult;
+  compliance?: ComplianceResult;
+  integrity?: ReportIntegrity;
+  diff?: ReportDiff;
 }
 
 // Persistencia en disco: un archivo JSON por informe en data/reports/<uuid>.json.
@@ -214,14 +255,39 @@ export function saveReport(id: string, report: AuditReportRecord): void {
     if (isExpired(entry.scannedAt, Boolean(entry.full))) removeReport(oldId);
   }
 
-  // Retención: al superar el tope se eliminan los informes más antiguos
-  while (reportIndex.size > MAX_STORED_REPORTS) {
-    const oldestKey = reportIndex.keys().next().value;
-    if (!oldestKey) break;
-    reportIndex.delete(oldestKey);
-    reportStore.delete(oldestKey);
-    deleteReportFromDisk(oldestKey);
+  // Retención: el tope solo depura informes públicos; los entregables 'full' no se borran
+  let publicCount = 0;
+  for (const entry of reportIndex.values()) if (!entry.full) publicCount++;
+  for (const [oldId, entry] of reportIndex) {
+    if (publicCount <= MAX_STORED_REPORTS) break;
+    if (entry.full) continue;
+    removeReport(oldId);
+    publicCount--;
   }
+}
+
+/**
+ * Historial medido del mismo host y modo: el último valor de cada día anterior a hoy.
+ * Un informe público nunca muestra las notas de las auditorías privadas.
+ */
+export function getScoreHistory(url: string, mode: 'public' | 'full'): ScoreHistoryPoint[] {
+  ensureIndexLoaded();
+  const domain = cleanDomain(url);
+  const today = new Date().toISOString().slice(0, 10);
+  const days = new Map<string, string>();
+  for (const [id, entry] of reportIndex) {
+    if (entry.domain !== domain || Boolean(entry.full) !== (mode === 'full') || !entry.scannedAt) continue;
+    if (isExpired(entry.scannedAt, Boolean(entry.full))) continue;
+    const day = new Date(entry.scannedAt).toISOString().slice(0, 10);
+    if (day !== today) days.set(day, id);
+  }
+  const points: ScoreHistoryPoint[] = [];
+  for (const [date, id] of [...days].sort().slice(-12)) {
+    const report = readReportFromDisk(id);
+    // Los informes anteriores con nota fija de hiperescala no son mediciones
+    if (report && !report.isHyperscale) points.push({ date, score: report.score });
+  }
+  return points;
 }
 
 export function getReportById(id: string): AuditReportRecord | undefined {

@@ -100,7 +100,7 @@ function SourceLink({ source }: { source: { label: string; href: string } }) {
       href={source.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-start gap-1 text-[11px] text-[#86868b] hover:text-[#38bdf8] transition-colors leading-snug whitespace-normal"
+      className="inline-flex items-start gap-1 text-[11px] text-[#bdbdbd] hover:text-[#bdbdbd] transition-colors leading-snug whitespace-normal"
     >
       <span>Fuente: {source.label}</span>
       <ArrowUpRight className="w-3 h-3 shrink-0 mt-0.5" />
@@ -109,9 +109,9 @@ function SourceLink({ source }: { source: { label: string; href: string } }) {
 }
 
 const CARD =
-  'relative overflow-hidden rounded-[28px] sm:rounded-[32px] bg-[#141416] border border-white/10 p-6 sm:p-8 flex flex-col justify-between gap-6 transition-colors duration-300 hover:border-white/20 snap-center shrink-0 w-[86%] md:w-auto';
-const EYEBROW = 'text-[11px] font-semibold uppercase tracking-[0.14em] text-[#86868b]';
-const BIG = 'font-semibold tracking-[-0.045em] leading-none bg-clip-text text-transparent';
+  'relative overflow-hidden bg-[#0d0d0d] border border-white/10 p-6 sm:p-8 flex flex-col justify-between gap-6 transition-colors duration-300 hover:border-white/20 snap-center shrink-0 w-[86%] md:w-auto';
+const EYEBROW = 'text-[11px] font-semibold uppercase tracking-[0.14em] text-[#bdbdbd]';
+const BIG = 'font-semibold tracking-[-0.045em] leading-none text-[#EDEDED]';
 
 export default function DefensatiRealData() {
   const { ref, inView } = useInView<HTMLDivElement>();
@@ -125,26 +125,26 @@ export default function DefensatiRealData() {
     <section id="datos-reales" className="w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24 text-left space-y-8 sm:space-y-12">
       {/* Cabecera */}
       <div className="max-w-3xl space-y-4">
-        <p className="text-sm font-semibold text-[#38bdf8]">Datos reales, con su fuente</p>
+        <p className="text-sm font-semibold text-[#bdbdbd]">Datos reales, con su fuente</p>
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#f5f5f7] tracking-[-0.04em] leading-[1.06]">
           No te hackean por ser grande.
-          <span className="block text-[#86868b]">Te hackean por estar desactualizado.</span>
+          <span className="block text-[#bdbdbd]">Te hackean por estar desactualizado.</span>
         </h2>
         <p className="text-base sm:text-lg text-[#a1a1a6] leading-relaxed">
           Estas cifras no son nuestras. Vienen de los informes públicos que usa la industria y del Ministerio Público del Perú. Cada tarjeta enlaza a su fuente para que la revises tú mismo.
         </p>
       </div>
 
-      <p className="md:hidden text-xs text-[#86868b] -mb-4">Desliza para ver los 6 datos &rarr;</p>
+      <p className="md:hidden text-xs text-[#bdbdbd] -mb-4">Desliza para ver los 6 datos &rarr;</p>
 
       {/* Bento de datos (carrusel en móvil) */}
       <div ref={ref} className="flex md:grid md:grid-cols-6 gap-4 sm:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-2 md:pb-0">
         {/* 1. Vulnerabilidades por año */}
         <article className={`${CARD} md:col-span-4`}>
-          <div className="pointer-events-none absolute -top-24 -right-16 w-80 h-80 rounded-full bg-[#0071e3]/20 blur-[90px]" />
+          <div className="pointer-events-none absolute -top-24 -right-16 w-80 h-80 hidden blur-[90px]" />
           <div className="relative space-y-3">
             <p className={EYEBROW}>Fallas nuevas en WordPress, 2025</p>
-            <p className={`${BIG} text-6xl sm:text-8xl bg-gradient-to-b from-white to-[#8fd3ff]`}>
+            <p className={`${BIG} text-6xl sm:text-8xl `}>
               <CountUp to={11334} active={inView} />
             </p>
             <p className="text-base sm:text-lg text-[#d1d1d6] leading-snug max-w-md">
@@ -162,15 +162,15 @@ export default function DefensatiRealData() {
                       {item.value.toLocaleString('es-PE')}
                     </span>
                     <div
-                      className={`w-full rounded-t-2xl rounded-b-md transition-[height] duration-[1200ms] ease-out motion-reduce:transition-none ${
-                        isLast ? 'bg-gradient-to-t from-[#0071e3] to-[#38bdf8] shadow-[0_0_40px_rgba(56,189,248,0.35)]' : 'bg-white/[0.12]'
+                      className={`w-full -2xl -md transition-[height] duration-[1200ms] ease-out motion-reduce:transition-none ${
+                        isLast ? ' ' : 'bg-white/[0.12]'
                       }`}
                       style={{
                         height: inView ? `${(item.value / maxVulns) * 78}%` : '0%',
                         transitionDelay: `${index * 140}ms`,
                       }}
                     />
-                    <span className="text-xs text-[#86868b] font-medium">{item.year}</span>
+                    <span className="text-xs text-[#bdbdbd] font-medium">{item.year}</span>
                   </div>
                 );
               })}
@@ -209,10 +209,10 @@ export default function DefensatiRealData() {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-white">
+                <span className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-[#EDEDED]">
                   <CountUp to={91} active={inView} />%
                 </span>
-                <span className="text-xs text-[#86868b] font-medium mt-1">en plugins</span>
+                <span className="text-xs text-[#bdbdbd] font-medium mt-1">en plugins</span>
               </div>
             </div>
             <p className="text-sm text-[#d1d1d6] leading-snug text-center">
@@ -224,10 +224,10 @@ export default function DefensatiRealData() {
 
         {/* 3. 5 horas */}
         <article className={`${CARD} md:col-span-3`}>
-          <div className="pointer-events-none absolute -bottom-24 -left-10 w-72 h-72 rounded-full bg-[#ff453a]/15 blur-[90px]" />
+          <div className="pointer-events-none absolute -bottom-24 -left-10 w-72 h-72 bg-[#ff453a]/15 blur-[90px]" />
           <div className="relative space-y-3">
             <p className={EYEBROW}>Cuánto tardan en atacar</p>
-            <p className={`${BIG} text-6xl sm:text-8xl bg-gradient-to-b from-white to-[#ffb4ae]`}>
+            <p className={`${BIG} text-6xl sm:text-8xl `}>
               <CountUp to={5} active={inView} /> <span className="text-4xl sm:text-5xl">horas</span>
             </p>
             <p className="text-base text-[#d1d1d6] leading-snug max-w-sm">
@@ -235,13 +235,13 @@ export default function DefensatiRealData() {
             </p>
           </div>
           <div className="relative space-y-3">
-            <div className="relative h-3 rounded-full bg-white/[0.08] overflow-hidden" role="img" aria-label="5 de 24 horas">
+            <div className="relative h-3 bg-white/[0.08] overflow-hidden" role="img" aria-label="5 de 24 horas">
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#ff453a] to-[#ff9f0a] transition-[width] duration-[1400ms] ease-out motion-reduce:transition-none"
+                className="absolute inset-y-0 left-0 transition-[width] duration-[1400ms] ease-out motion-reduce:transition-none"
                 style={{ width: inView ? `${(5 / 24) * 100}%` : '0%' }}
               />
             </div>
-            <div className="flex justify-between text-[11px] text-[#86868b] font-medium">
+            <div className="flex justify-between text-[11px] text-[#bdbdbd] font-medium">
               <span>Se publica la falla</span>
               <span>24 h</span>
             </div>
@@ -253,7 +253,7 @@ export default function DefensatiRealData() {
         <article className={`${CARD} md:col-span-3`}>
           <div className="space-y-3">
             <p className={EYEBROW}>¿Y mi hosting no me protege?</p>
-            <p className={`${BIG} text-6xl sm:text-8xl bg-gradient-to-b from-white to-[#9be7b4]`}>
+            <p className={`${BIG} text-6xl sm:text-8xl `}>
               <CountUp to={26} active={inView} />%
             </p>
             <p className="text-base text-[#d1d1d6] leading-snug max-w-sm">
@@ -265,7 +265,7 @@ export default function DefensatiRealData() {
               {Array.from({ length: 100 }).map((_, i) => (
                 <span
                   key={i}
-                  className={`aspect-square rounded-full transition-opacity duration-700 motion-reduce:transition-none ${
+                  className={`aspect-square transition-opacity duration-700 motion-reduce:transition-none ${
                     i < 26 ? 'bg-[#30d158]' : 'bg-[#ff453a]/70'
                   }`}
                   style={{ opacity: inView ? 1 : 0, transitionDelay: `${i * 8}ms` }}
@@ -274,11 +274,11 @@ export default function DefensatiRealData() {
             </div>
             <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-[#d1d1d6]">
               <span className="inline-flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#30d158]" />
+                <span className="w-2 h-2 bg-[#30d158]" />
                 26 bloqueados
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#ff453a]/70" />
+                <span className="w-2 h-2 bg-[#ff453a]/70" />
                 74 pasaron
               </span>
             </div>
@@ -298,12 +298,12 @@ export default function DefensatiRealData() {
               { value: 39.1, label: 'usaba un gestor de contenidos desactualizado al infectarse', color: 'from-[#0071e3] to-[#38bdf8]' },
             ].map((row, index) => (
               <div key={row.label} className="space-y-2">
-                <p className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-white">
+                <p className="text-4xl sm:text-5xl font-semibold tracking-[-0.04em] text-[#EDEDED]">
                   <CountUp to={row.value} active={inView} decimals={1} />%
                 </p>
-                <div className="h-2 rounded-full bg-white/[0.08] overflow-hidden">
+                <div className="h-2 bg-white/[0.08] overflow-hidden">
                   <div
-                    className={`h-full rounded-full bg-gradient-to-r ${row.color} transition-[width] duration-[1300ms] ease-out motion-reduce:transition-none`}
+                    className={`h-full ${row.color} transition-[width] duration-[1300ms] ease-out motion-reduce:transition-none`}
                     style={{ width: inView ? `${row.value}%` : '0%', transitionDelay: `${index * 160}ms` }}
                   />
                 </div>
@@ -316,10 +316,10 @@ export default function DefensatiRealData() {
 
         {/* 6. Perú */}
         <article className={`${CARD} md:col-span-4`}>
-          <div className="pointer-events-none absolute -top-24 -left-16 w-80 h-80 rounded-full bg-[#7928ca]/20 blur-[90px]" />
+          <div className="pointer-events-none absolute -top-24 -left-16 w-80 h-80 hidden blur-[90px]" />
           <div className="relative space-y-3">
             <p className={EYEBROW}>Perú, enero a julio de 2026</p>
-            <p className={`${BIG} text-6xl sm:text-8xl bg-gradient-to-b from-white to-[#c9a8ff]`}>
+            <p className={`${BIG} text-6xl sm:text-8xl `}>
               <CountUp to={PERU_TOTAL} active={inView} />
             </p>
             <p className="text-base sm:text-lg text-[#d1d1d6] leading-snug max-w-lg">
@@ -328,7 +328,7 @@ export default function DefensatiRealData() {
           </div>
 
           <div className="relative space-y-4">
-            <div className="flex h-4 rounded-full overflow-hidden bg-white/[0.06] gap-0.5" role="img" aria-label="Fraude informático 19,602; suplantación de identidad 7,431; otros 2,085">
+            <div className="flex h-4 overflow-hidden bg-white/[0.06] gap-0.5" role="img" aria-label="Fraude informático 19,602; suplantación de identidad 7,431; otros 2,085">
               {PERU_BREAKDOWN.map((part, index) => (
                 <div
                   key={part.label}
@@ -344,8 +344,8 @@ export default function DefensatiRealData() {
             <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {PERU_BREAKDOWN.map((part) => (
                 <li key={part.label} className="space-y-0.5">
-                  <span className="flex items-center gap-2 text-lg font-semibold text-white tabular-nums">
-                    <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: part.color }} />
+                  <span className="flex items-center gap-2 text-lg font-semibold text-[#EDEDED] tabular-nums">
+                    <span className="w-2.5 h-2.5 shrink-0" style={{ backgroundColor: part.color }} />
                     {part.value.toLocaleString('es-PE')}
                   </span>
                   <span className="block text-xs text-[#a1a1a6] leading-snug">{part.label}</span>
@@ -358,7 +358,7 @@ export default function DefensatiRealData() {
       </div>
 
       {/* Cierre: qué significa y qué hacer */}
-      <div className="rounded-[28px] sm:rounded-[32px] bg-[#0e1118] border border-white/10 p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div className="bg-[#0d0d0d] border border-white/10 p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2 max-w-xl">
           <h3 className="text-2xl sm:text-3xl font-semibold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
             ¿Tu web está en ese grupo?
@@ -370,7 +370,7 @@ export default function DefensatiRealData() {
         <div className="flex flex-col sm:flex-row gap-3 shrink-0">
           <a
             href="#escaner-gratis"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white font-semibold text-sm sm:text-base transition-all"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] font-semibold text-sm sm:text-base transition-all"
           >
             <Search className="w-4 h-4 shrink-0" />
             <span>Escanear mi web gratis</span>
@@ -380,7 +380,7 @@ export default function DefensatiRealData() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackWhatsAppClick({ service: 'diagnostico_gratis', placement: 'real_data_section' })}
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/12 active:scale-[0.98] text-[#f5f5f7] font-semibold text-sm sm:text-base transition-all"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white/[0.08] hover:bg-white/[0.14] border border-white/12 text-[#f5f5f7] font-semibold text-sm sm:text-base transition-all"
           >
             <WhatsAppIcon className="w-4 h-4 fill-[#25D366] shrink-0" />
             <span>Que Martín la revise</span>
@@ -396,18 +396,18 @@ export default function DefensatiRealData() {
         <div className="flex flex-wrap items-center gap-2 shrink-0">
           <Link
             href="/defensati/informe-ejemplo"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs transition-all"
           >
-            <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
+            <FileText className="w-3.5 h-3.5 text-[#bdbdbd]" />
             <span>Ver informe online</span>
           </Link>
           <a
             href="/informe-ejemplo-defensati.pdf"
             target="_blank"
             download="informe-ejemplo-defensati.pdf"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 text-[#f5f5f7] font-semibold text-xs transition-all"
           >
-            <Download className="w-3.5 h-3.5 text-[#38bdf8]" />
+            <Download className="w-3.5 h-3.5 text-[#bdbdbd]" />
             <span>Descargar PDF</span>
           </a>
         </div>

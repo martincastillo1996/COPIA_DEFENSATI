@@ -1,0 +1,49 @@
+# LABORATORIO VULNERABLE A PROPÓSITO (OWASP Juice Shop) para medir tu escáner.
+#
+# ⚠ Es una aplicación insegura por diseño. Ejecútalo SOLO en un servidor aparte, sin tus datos ni la app de
+#   auditoría, y apágalo al terminar: docker compose down -v
+# ⚠ ALLOWED_IPS debe incluir la IP del servidor que audita (nmap, ZAP, el rastreador) y la tuya; las demás
+#   reciben 403. Sin esa lista el laboratorio no arranca.
+name: dti-lab
+
+services:
+  juice:
+    image: bkimminich/juice-shop:${JUICE_SHOP_TAG:-latest}
+    restart: unless-stopped
+    networks: [lab]
+    # Solo lo ve Caddy dentro de la red del laboratorio: no se publica ningún puerto de Juice Shop
+    expose:
+      - "3000"
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    pids_limit: 256
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    networks: [lab]
+    depends_on: [juice]
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      LAB_DOMAIN: ${LAB_DOMAIN:?Define LAB_DOMAIN, por ejemplo lab.tudominio.com}
+      ALLOWED_IPS: ${ALLOWED_IPS:?Define ALLOWED_IPS con la IP del servidor que audita y la tuya, separadas por espacios}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 128m
+
+networks:
+  lab: {}
+
+volumes:
+  caddy_data: {}
+  caddy_config: {}

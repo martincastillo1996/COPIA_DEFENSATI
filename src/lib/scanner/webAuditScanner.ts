@@ -11,6 +11,7 @@
  */
 
 import { safeHttpGet } from '@/lib/security/safeNet';
+import { P } from '@/config/catalog';
 
 export interface WafCheckResult {
   hasWaf: boolean;
@@ -331,7 +332,7 @@ export async function scanWebAudit(targetUrl: string): Promise<WebAuditResult> {
       ? `Se detectaron ${malwareIndicators.length} indicadores sospechosos en el código fuente de la página principal. Requiere revisión forense inmediata.`
       : 'No se detectaron firmas visibles de malware, redirecciones sospechosas ni inyecciones de SEO Spam en la portada.',
     remediation: isInfectedOrSuspicious
-      ? 'Contratar servicio de Rescate y Limpieza de Malware DEFENSA TI (S/ 380 - S/ 550) para desinfección forense profunda con respaldo previo y garantía de 30 días.'
+      ? `Contratar servicio de Rescate y Limpieza de Malware DEFENSA TI (${P.rescateCorporativo} - ${P.rescateTienda}) para desinfección forense profunda con respaldo previo y garantía de 30 días.`
       : undefined,
   };
 

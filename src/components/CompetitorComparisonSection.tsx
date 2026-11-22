@@ -38,12 +38,12 @@ export default function CompetitorComparisonSection() {
         fetch('/api/scan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: myUrl.trim(), legalConsentAccepted: true }),
+          body: JSON.stringify({ url: myUrl.trim(), legalConsentAccepted: true, comparison: true }),
         }),
         fetch('/api/scan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: compUrl.trim(), legalConsentAccepted: true }),
+          body: JSON.stringify({ url: compUrl.trim(), legalConsentAccepted: true, comparison: true }),
         }),
       ]);
 
@@ -75,9 +75,9 @@ export default function CompetitorComparisonSection() {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-[#0071e3]/20 via-[#7928ca]/20 to-[#38bdf8]/20 border border-[#38bdf8]/30 text-xs font-semibold text-[#38bdf8] hover:bg-[#38bdf8]/15 transition-all cursor-pointer shadow-sm active:scale-95"
+          className="inline-flex items-center gap-2 px-4 py-2 border border-white/20 text-xs font-semibold text-[#bdbdbd] hover:bg-white/[0.06] transition-all cursor-pointer"
         >
-          <Swords className="w-3.5 h-3.5 text-[#38bdf8] shrink-0" />
+          <Swords className="w-3.5 h-3.5 text-[#bdbdbd] shrink-0" />
           <span className="whitespace-normal leading-tight text-center">
             {isOpen ? 'Ocultar Comparador de Competencia' : '⚡ Nuevo: Comparar Blindaje contra tu Competidor'}
           </span>
@@ -85,10 +85,10 @@ export default function CompetitorComparisonSection() {
       </div>
 
       {isOpen && (
-        <div className="mt-4 p-4 sm:p-6 rounded-2xl bg-neutral-900/90 border border-white/10 backdrop-blur-2xl shadow-[0_0_35px_rgba(0,113,227,0.15)] space-y-5 animate-in fade-in duration-300">
+        <div className="mt-4 p-4 sm:p-6 bg-neutral-900/90 border border-white/10 space-y-5 animate-in fade-in duration-300">
           <div className="text-center space-y-1">
-            <h3 className="text-sm sm:text-base font-bold text-white flex items-center justify-center gap-2">
-              <Swords className="w-4 h-4 text-[#2997ff] shrink-0" />
+            <h3 className="text-sm sm:text-base font-bold text-[#EDEDED] flex items-center justify-center gap-2">
+              <Swords className="w-4 h-4 text-[#bdbdbd] shrink-0" />
               Auditoría Comparativa Cara a Cara
             </h3>
             <p className="text-xs text-slate-300 leading-relaxed max-w-md mx-auto">
@@ -107,7 +107,7 @@ export default function CompetitorComparisonSection() {
                   placeholder="ej. mitienda.pe"
                   value={myUrl}
                   onChange={(e) => setMyUrl(e.target.value)}
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#0071e3]"
+                  className="w-full bg-[#080808] border border-white/15 px-3.5 py-2.5 text-[16px] sm:text-xs text-[#EDEDED] placeholder-slate-500 focus:outline-none focus:border-white/20"
                 />
               </div>
 
@@ -120,17 +120,17 @@ export default function CompetitorComparisonSection() {
                   placeholder="ej. competidordirecto.pe"
                   value={compUrl}
                   onChange={(e) => setCompUrl(e.target.value)}
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#7928ca]"
+                  className="w-full bg-[#080808] border border-white/15 px-3.5 py-2.5 text-[16px] sm:text-xs text-[#EDEDED] placeholder-slate-500 focus:outline-none focus:border-[#7928ca]"
                 />
               </div>
             </div>
 
             {/* Casilla Obligatoria de Declaración Jurada (Ley N° 30096) */}
             <div
-              className={`p-3.5 rounded-2xl border text-left transition-all duration-300 ${
+              className={`p-3.5 border text-left transition-all duration-300 ${
                 legalConsent
-                  ? 'bg-emerald-950/20 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.12)]'
-                  : 'bg-black/60 border-white/10 hover:border-amber-500/40'
+                  ? 'bg-white/[0.03] border-white/10 '
+                  : 'bg-[#080808] border-white/10 hover:border-white/10'
               }`}
             >
               <label htmlFor="comp-legal-consent-checkbox" className="flex items-start gap-3 cursor-pointer select-none">
@@ -142,14 +142,14 @@ export default function CompetitorComparisonSection() {
                     setLegalConsent(e.target.checked);
                     if (error) setError(null);
                   }}
-                  className="mt-1 w-4 h-4 rounded border-white/30 bg-black text-[#0071e3] focus:ring-[#0071e3] focus:ring-offset-0 cursor-pointer accent-[#0071e3] shrink-0"
+                  className="mt-1 w-4 h-4 border-white/30 bg-black text-[#bdbdbd] -0 cursor-pointer accent-[#0071e3] shrink-0"
                 />
                 <div className="space-y-1.5 flex-1">
                   <p className="text-xs text-neutral-200 leading-snug font-medium whitespace-normal">
                     “Declaro bajo juramento que soy el titular del dominio que voy a auditar, o que cuento con autorización expresa y por escrito de su propietario, conforme a la{' '}
                     <a
                       href="/terminos#delitos-informaticos"
-                      className="text-[#38bdf8] underline hover:text-white font-semibold"
+                      className="text-[#bdbdbd] underline hover:text-[#EDEDED] font-semibold"
                       onClick={(e) => e.stopPropagation()}
                     >
                       Ley N° 30096, Delitos Informáticos del Perú
@@ -159,10 +159,10 @@ export default function CompetitorComparisonSection() {
                   
                   <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
                     <span
-                      className={`text-[9.5px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider inline-flex items-center gap-1 ${
+                      className={`text-[9.5px] font-mono px-2 py-0.5 font-bold uppercase tracking-wider inline-flex items-center gap-1 ${
                         legalConsent
-                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                          : 'bg-amber-500/15 text-amber-300 border border-amber-500/25'
+                          ? 'bg-white/[0.03] text-[#EDEDED] border border-white/10'
+                          : 'bg-white/[0.03] text-[#EDEDED] border border-white/10'
                       }`}
                     >
                       {legalConsent ? '✓ Casilla Marcada • Botón Habilitado' : '⚠️ Casilla Requerida para Activar'}
@@ -179,10 +179,10 @@ export default function CompetitorComparisonSection() {
               type="submit"
               disabled={loading || !legalConsent || !myUrl.trim() || !compUrl.trim()}
               title={!legalConsent ? 'Marca la casilla obligatoria para activar la comparativa' : 'Comparar seguridad'}
-              className={`w-full py-3 font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2 active:scale-[0.99] ${
+              className={`w-full py-3 font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 ${
                 loading || !legalConsent || !myUrl.trim() || !compUrl.trim()
-                  ? 'bg-neutral-800 text-neutral-500 border border-white/5 cursor-not-allowed opacity-60 shadow-none'
-                  : 'bg-linear-to-r from-[#0071e3] to-[#7928ca] hover:opacity-95 text-white shadow-lg shadow-[#0071e3]/20 cursor-pointer'
+                  ? 'bg-neutral-800 text-neutral-500 border border-white/5 cursor-not-allowed opacity-60 '
+                  : ' hover:opacity-95 text-[#EDEDED] cursor-pointer'
               }`}
             >
               {loading ? (
@@ -200,7 +200,7 @@ export default function CompetitorComparisonSection() {
           </form>
 
           {error && (
-            <p className="text-xs text-rose-400 font-medium text-center bg-rose-950/20 p-2.5 rounded-lg border border-rose-500/30">
+            <p className="text-xs text-[#ff4d4d] font-medium text-center bg-white/[0.03] p-2.5 border border-white/10">
               {error}
             </p>
           )}
@@ -210,9 +210,9 @@ export default function CompetitorComparisonSection() {
             <div className="pt-4 border-t border-white/10 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {/* Tu Web */}
-                <div className={`p-4 rounded-xl border ${myReport.score >= compReport.score ? 'bg-emerald-950/20 border-emerald-500/40' : 'bg-rose-950/20 border-rose-500/40'}`}>
+                <div className={`p-4 border ${myReport.score >= compReport.score ? 'bg-white/[0.03] border-white/10' : 'bg-white/[0.03] border-white/10'}`}>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Tu Negocio</span>
-                  <h4 className="text-xs sm:text-sm font-bold text-white truncate">{myReport.url}</h4>
+                  <h4 className="text-xs sm:text-sm font-bold text-[#EDEDED] truncate">{myReport.url}</h4>
                   
                   <div className="flex items-center gap-3 my-3">
                     <div className="relative w-12 h-12 shrink-0 flex items-center justify-center">
@@ -220,11 +220,11 @@ export default function CompetitorComparisonSection() {
                         <path className="text-white/10" strokeWidth="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <path className={getScoreColor(myReport.score)} strokeDasharray={`${myReport.score}, 100`} strokeWidth="3.5" strokeLinecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                       </svg>
-                      <span className="absolute font-mono font-bold text-xs text-white">{myReport.score}</span>
+                      <span className="absolute font-mono font-bold text-xs text-[#EDEDED]">{myReport.score}</span>
                     </div>
 
                     <div className="min-w-0">
-                      <span className="text-xs font-bold text-white block">Grado: {myReport.grade}</span>
+                      <span className="text-xs font-bold text-[#EDEDED] block">Grado: {myReport.grade}</span>
                       <span className="text-[11px] text-slate-400 block truncate">
                         {myReport.ssl?.valid ? 'SSL Válido' : 'SSL Vulnerable'} &bull; {myReport.headers?.filter(h => h.present).length ?? 0}/6 Cabeceras
                       </span>
@@ -233,9 +233,9 @@ export default function CompetitorComparisonSection() {
                 </div>
 
                 {/* Competidor */}
-                <div className={`p-4 rounded-xl border ${compReport.score > myReport.score ? 'bg-emerald-950/20 border-emerald-500/40' : 'bg-neutral-900 border-white/10'}`}>
+                <div className={`p-4 border ${compReport.score > myReport.score ? 'bg-white/[0.03] border-white/10' : 'bg-neutral-900 border-white/10'}`}>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Competidor</span>
-                  <h4 className="text-xs sm:text-sm font-bold text-white truncate">{compReport.url}</h4>
+                  <h4 className="text-xs sm:text-sm font-bold text-[#EDEDED] truncate">{compReport.url}</h4>
 
                   <div className="flex items-center gap-3 my-3">
                     <div className="relative w-12 h-12 shrink-0 flex items-center justify-center">
@@ -243,11 +243,11 @@ export default function CompetitorComparisonSection() {
                         <path className="text-white/10" strokeWidth="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <path className={getScoreColor(compReport.score)} strokeDasharray={`${compReport.score}, 100`} strokeWidth="3.5" strokeLinecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                       </svg>
-                      <span className="absolute font-mono font-bold text-xs text-white">{compReport.score}</span>
+                      <span className="absolute font-mono font-bold text-xs text-[#EDEDED]">{compReport.score}</span>
                     </div>
 
                     <div className="min-w-0">
-                      <span className="text-xs font-bold text-white block">Grado: {compReport.grade}</span>
+                      <span className="text-xs font-bold text-[#EDEDED] block">Grado: {compReport.grade}</span>
                       <span className="text-[11px] text-slate-400 block truncate">
                         {compReport.ssl?.valid ? 'SSL Válido' : 'SSL Vulnerable'} &bull; {compReport.headers?.filter(h => h.present).length ?? 0}/6 Cabeceras
                       </span>
@@ -257,11 +257,11 @@ export default function CompetitorComparisonSection() {
               </div>
 
               {/* Veredicto de Conversión */}
-              <div className="p-4 rounded-xl bg-black/60 border border-white/15 text-center space-y-2">
+              <div className="p-4 bg-[#080808] border border-white/15 text-center space-y-2">
                 {compReport.score > myReport.score ? (
                   <>
-                    <p className="text-xs text-amber-300 font-semibold flex items-center justify-center gap-1.5">
-                      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <p className="text-xs text-[#EDEDED] font-semibold flex items-center justify-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4 text-[#EDEDED] shrink-0" />
                       Tu competidor cuenta con un nivel de protección superior ({compReport.score}/100 vs tu {myReport.score}/100).
                     </p>
                     <p className="text-[11px] text-slate-300 leading-normal">
@@ -270,8 +270,8 @@ export default function CompetitorComparisonSection() {
                   </>
                 ) : (
                   <>
-                    <p className="text-xs text-emerald-400 font-semibold flex items-center justify-center gap-1.5">
-                      <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <p className="text-xs text-[#EDEDED] font-semibold flex items-center justify-center gap-1.5">
+                      <Check className="w-4 h-4 text-[#EDEDED] shrink-0" />
                       ¡Lideras en seguridad técnica frente a tu competidor directo! ({myReport.score}/100 vs {compReport.score}/100).
                     </p>
                     <p className="text-[11px] text-slate-300 leading-normal">
@@ -285,7 +285,7 @@ export default function CompetitorComparisonSection() {
                     href={`https://wa.me/${(siteConfig.contact.whatsappNumber || '51987010380').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hola Martín, realicé la comparativa técnica entre mi web ${myReport.url} (${myReport.score} pts) y mi competidor ${compReport.url} (${compReport.score} pts). Deseo blindar mi sitio para superarlo con Grado A.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition-all shadow-md active:scale-95 w-full sm:w-auto"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-[#EDEDED] text-xs font-bold transition-all w-full sm:w-auto"
                   >
                     <span>Coordinar Blindaje Superior por WhatsApp</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />

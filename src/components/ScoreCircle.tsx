@@ -57,11 +57,11 @@ export default function ScoreCircle({ score, grade }: ScoreCircleProps) {
 
   return (
 // Línea 59:
-<div className="flex flex-col items-center justify-between p-6 rounded-3xl bg-neutral-900/80 border border-white/10 backdrop-blur-2xl shadow-2xl h-full min-h-70">      <div className="w-full flex items-center justify-between">
+<div className="flex flex-col items-center justify-between p-6 bg-neutral-900/80 border border-white/10 h-full min-h-70">      <div className="w-full flex items-center justify-between">
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
           Nivel de Seguridad
         </span>
-        <span className={`text-[11px] font-semibold tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 ${theme.text}`}>
+        <span className={`text-[11px] font-semibold tracking-wide uppercase px-2.5 py-0.5 bg-white/5 border border-white/10 ${theme.text}`}>
           {theme.label}
         </span>
       </div>

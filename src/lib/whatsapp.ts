@@ -1,4 +1,5 @@
 import { siteConfig } from '@/config/site';
+import { P } from '@/config/catalog';
 
 /**
  * Genera el enlace directo a WhatsApp oficial (+51 987 010 380) con mensaje claro,
@@ -73,55 +74,55 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
   // Servicio 1: Rescate / Limpieza de malware (Sitio Corporativo: S/ 380)
   precioRescateCorporativo: (domain = '') => {
     const text = domain
-      ? `Hola Martín, mi sitio corporativo (${domain}) tiene malware o redirecciones y necesito el Rescate / Limpieza de malware con garantía de 30 días (S/ 380).`
-      : 'Hola Martín, mi sitio corporativo tiene malware o redirecciones y necesito el Rescate / Limpieza de malware con garantía de 30 días (S/ 380).';
+      ? `Hola Martín, mi sitio corporativo (${domain}) tiene malware o redirecciones y necesito el Rescate / Limpieza de malware con garantía de 30 días (${P.rescateCorporativo}).`
+      : `Hola Martín, mi sitio corporativo tiene malware o redirecciones y necesito el Rescate / Limpieza de malware con garantía de 30 días (${P.rescateCorporativo}).`;
     return getWhatsAppUrl(text);
   },
 
   // Servicio 2: Rescate / Limpieza de malware (WooCommerce / Tienda Online: S/ 550)
   precioRescateWooCommerce: (domain = '') => {
     const text = domain
-      ? `Hola Martín, mi tienda online (${domain}) presenta infección o fallas de seguridad. Deseo contratar el Rescate de WooCommerce / Tienda Online con garantía (S/ 550).`
-      : 'Hola Martín, mi tienda online presenta infección o fallas de seguridad. Deseo contratar el Rescate de WooCommerce / Tienda Online con garantía (S/ 550).';
+      ? `Hola Martín, mi tienda online (${domain}) presenta infección o fallas de seguridad. Deseo contratar el Rescate de WooCommerce / Tienda Online con garantía (${P.rescateTienda}).`
+      : `Hola Martín, mi tienda online presenta infección o fallas de seguridad. Deseo contratar el Rescate de WooCommerce / Tienda Online con garantía (${P.rescateTienda}).`;
     return getWhatsAppUrl(text);
   },
 
   // Servicio 3: Blindaje + WAF Cloudflare Unificado (S/ 450)
   precioBlindajeWaf: (domain = '') => {
     const text = domain
-      ? `Hola Martín, me interesa contratar el paquete unificado de Blindaje + WAF Cloudflare (S/ 450) para blindar mi web (${domain}) contra ataques y bots.`
-      : 'Hola Martín, me interesa contratar el paquete unificado de Blindaje + WAF Cloudflare (S/ 450) para blindar mi página web contra ataques y bots.';
+      ? `Hola Martín, me interesa contratar el paquete unificado de Blindaje + WAF Cloudflare (${P.blindajeWaf}) para blindar mi web (${domain}) contra ataques y bots.`
+      : `Hola Martín, me interesa contratar el paquete unificado de Blindaje + WAF Cloudflare (${P.blindajeWaf}) para blindar mi página web contra ataques y bots.`;
     return getWhatsAppUrl(text);
   },
 
   // Planes Mensuales: Mantenimiento Básico (S/ 90/mes)
   precioMensualBasico: (domain = '') => {
     const text = domain
-      ? `Hola Martín, deseo activar el Mantenimiento Básico de S/ 90/mes para mi web (${domain}) con chequeos 24/7 y alertas a WhatsApp.`
-      : 'Hola Martín, deseo activar el Mantenimiento Básico de S/ 90/mes para mi web con chequeos 24/7 y alertas a WhatsApp.';
+      ? `Hola Martín, deseo activar el Mantenimiento Básico de ${P.mantenimientoBasico}/mes para mi web (${domain}) con chequeos 24/7 y alertas a WhatsApp.`
+      : `Hola Martín, deseo activar el Mantenimiento Básico de ${P.mantenimientoBasico}/mes para mi web con chequeos 24/7 y alertas a WhatsApp.`;
     return getWhatsAppUrl(text);
   },
 
   // Planes Mensuales: Mantenimiento Tiendas Online con Soporte Prioritario (S/ 180/mes)
   precioMensualTiendas: (domain = '') => {
     const text = domain
-      ? `Hola Martín, quisiera suscribirme al Mantenimiento para Tiendas Online de S/ 180/mes para mi tienda (${domain}) con chequeos cada 5 min y soporte prioritario.`
-      : 'Hola Martín, quisiera suscribirme al Mantenimiento para Tiendas Online de S/ 180/mes para mi tienda con chequeos cada 5 min y soporte prioritario.';
+      ? `Hola Martín, quisiera suscribirme al Mantenimiento para Tiendas Online de ${P.mantenimientoTiendas}/mes para mi tienda (${domain}) con chequeos cada 5 min y soporte prioritario.`
+      : `Hola Martín, quisiera suscribirme al Mantenimiento para Tiendas Online de ${P.mantenimientoTiendas}/mes para mi tienda con chequeos cada 5 min y soporte prioritario.`;
     return getWhatsAppUrl(text);
   },
 
   // Aliases de compatibilidad retroactiva
   precioLimpieza: (domain = '') => {
     const text = domain
-      ? `Hola Martín, mi web (${domain}) presenta malware. Quisiera contratar el Rescate / Limpieza de malware (Corporativo S/ 380 | WooCommerce S/ 550).`
-      : 'Hola Martín, mi web presenta malware. Quisiera contratar el Rescate / Limpieza de malware (Corporativo S/ 380 | WooCommerce S/ 550).';
+      ? `Hola Martín, mi web (${domain}) presenta malware. Quisiera contratar el Rescate / Limpieza de malware (Corporativo ${P.rescateCorporativo} | WooCommerce ${P.rescateTienda}).`
+      : `Hola Martín, mi web presenta malware. Quisiera contratar el Rescate / Limpieza de malware (Corporativo ${P.rescateCorporativo} | WooCommerce ${P.rescateTienda}).`;
     return getWhatsAppUrl(text);
   },
 
   precioBlindaje: (domain = '') => {
     const text = domain
-      ? `Hola Martín, deseo blindar mi sitio web (${domain}) con el paquete unificado de Blindaje + WAF Cloudflare (S/ 450).`
-      : 'Hola Martín, deseo blindar mi sitio web con el paquete unificado de Blindaje + WAF Cloudflare (S/ 450).';
+      ? `Hola Martín, deseo blindar mi sitio web (${domain}) con el paquete unificado de Blindaje + WAF Cloudflare (${P.blindajeWaf}).`
+      : `Hola Martín, deseo blindar mi sitio web con el paquete unificado de Blindaje + WAF Cloudflare (${P.blindajeWaf}).`;
     return getWhatsAppUrl(text);
   },
 
@@ -197,14 +198,14 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
   // 1. Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) - S/ 190
   upsellCorreoSpam: (domain = '') => {
     const text = domain
-      ? `Hola Martín, mis correos con dominio (${domain}) están cayendo en spam o temo suplantación de identidad. Deseo contratar el Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) por S/ 190.`
-      : 'Hola Martín, mis correos corporativos caen en spam o temo suplantación. Deseo contratar el Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) por S/ 190.';
+      ? `Hola Martín, mis correos con dominio (${domain}) están cayendo en spam o temo suplantación de identidad. Deseo contratar el Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) por ${P.correoSpfDkimDmarc}.`
+      : `Hola Martín, mis correos corporativos caen en spam o temo suplantación. Deseo contratar el Blindaje de Correo & Anti-Spam (SPF, DKIM, DMARC) por ${P.correoSpfDkimDmarc}.`;
     return getWhatsAppUrl(text);
   },
 
   // 2. Migración Limpia y Segura de Hosting - S/ 290 (Corp) / S/ 450 (Ecom)
   upsellMigracionHosting: (domain = '', tipo: 'corp' | 'ecom' = 'corp') => {
-    const precio = tipo === 'corp' ? 'S/ 290' : 'S/ 450';
+    const precio = tipo === 'corp' ? P.migracionCorporativa : P.migracionTienda;
     const tipoStr = tipo === 'corp' ? 'sitio web' : 'tienda online / e-commerce';
     const text = domain
       ? `Hola Martín, necesito migrar mi ${tipoStr} (${domain}) a un hosting/servidor más rápido y seguro sin caídas (${precio}). ¿Cómo coordinamos el respaldo y traslado?`
@@ -214,7 +215,7 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
 
   // 3. Optimización de Velocidad Web (WPO) + Core Web Vitals - S/ 320 (Corp) / S/ 480 (Ecom)
   upsellVelocidadWpo: (domain = '', tipo: 'corp' | 'ecom' = 'corp') => {
-    const precio = tipo === 'corp' ? 'S/ 320' : 'S/ 480';
+    const precio = tipo === 'corp' ? P.wpoCorporativo : P.wpoTienda;
     const tipoStr = tipo === 'corp' ? 'sitio web' : 'tienda e-commerce';
     const text = domain
       ? `Hola Martín, mi ${tipoStr} (${domain}) carga lenta en celulares y pierde visitas. Me interesa el servicio de Optimización de Velocidad Web (WPO) + Core Web Vitals (${precio}).`
@@ -224,7 +225,7 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
 
   // 4. Adecuación Legal Web (Ley N° 29733 - ANPDP Perú) - S/ 350 (Básico) / S/ 500 (Integral)
   upsellLegalAnpdp: (domain = '', tipo: 'basico' | 'integral' = 'basico') => {
-    const precio = tipo === 'basico' ? 'S/ 350' : 'S/ 500';
+    const precio = tipo === 'basico' ? P.legalBasica : P.legalIntegral;
     const tipoStr = tipo === 'basico' ? 'Plan Esencial (Banner cookies + Políticas)' : 'Plan Integral (Registro de Banco de Datos MINJUS)';
     const text = domain
       ? `Hola Martín, deseo adecuar mi web (${domain}) a la Ley N° 29733 de Protección de Datos Personales (${tipoStr} - ${precio}) para evitar sanciones de la ANPDP.`
@@ -235,8 +236,8 @@ export const DEFENSATI_WHATSAPP_MESSAGES = {
   // 5. Auditoría Técnica de Pasarelas de Pago & Checkout - S/ 420
   upsellPasarelaPago: (domain = '') => {
     const text = domain
-      ? `Hola Martín, tengo una pasarela de pago en mi web (${domain}) y necesito una Auditoría Técnica de Checkout & Pasarelas (S/ 420) para blindar los cobros contra scripts espías y fraude.`
-      : 'Hola Martín, tengo una pasarela de pago en mi web y necesito una Auditoría Técnica de Checkout & Pasarelas (S/ 420) para blindar los cobros contra scripts espías y fraude.';
+      ? `Hola Martín, tengo una pasarela de pago en mi web (${domain}) y necesito una Auditoría Técnica de Checkout & Pasarelas (${P.auditoriaPasarelas}) para blindar los cobros contra scripts espías y fraude.`
+      : `Hola Martín, tengo una pasarela de pago en mi web y necesito una Auditoría Técnica de Checkout & Pasarelas (${P.auditoriaPasarelas}) para blindar los cobros contra scripts espías y fraude.`;
     return getWhatsAppUrl(text);
   },
 };

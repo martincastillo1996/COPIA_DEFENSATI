@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { P } from '@/config/catalog';
 
 export const metadata: Metadata = {
   title: 'DEFENSA TI | Blindaje Web, Desinfección de WordPress y Ciberseguridad en Perú',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'DEFENSA TI | Blindaje Web y Desinfección de Sitios Hackeados',
     description:
-      'Diagnóstico previo sin costo. Rescate de malware desde S/ 380, Blindaje + WAF por S/ 450 con garantía de 30 días por escrito y RUC 10704877850.',
+      `Diagnóstico previo sin costo. Rescate de malware desde ${P.rescateCorporativo}, Blindaje + WAF por ${P.blindajeWaf} con garantía de 30 días por escrito y RUC 10704877850.`,
     url: 'https://neuronalgravity.com/defensati',
     siteName: 'DEFENSA TI • Neuronal Gravity',
     locale: 'es_PE',
@@ -64,7 +65,7 @@ const jsonLd = {
       name: 'DEFENSA TI - Blindaje y Ciberseguridad Web',
       url: 'https://neuronalgravity.com/defensati',
       telephone: '+51987010380',
-      priceRange: 'S/ 90 - S/ 550',
+      priceRange: `${P.mantenimientoBasico} - ${P.rescateTienda}`,
       currenciesAccepted: 'PEN',
       paymentAccepted: 'Yape, Plin, Transferencia Bancaria Directa',
       taxID: '10704877850',
@@ -99,7 +100,7 @@ const jsonLd = {
             name: 'Diagnóstico Gratuito Perimetral',
             price: '0',
             priceCurrency: 'PEN',
-            description: 'Escáner pasivo no intrusivo de SSL/TLS, cabeceras y puertos.',
+            description: 'Escáner no intrusivo de SSL/TLS, cabeceras y puertos.',
           },
           {
             '@type': 'Offer',

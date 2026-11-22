@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, ShieldAlert, ShieldCheck, Lock, RotateCcw, Server, FileText, Clock } from 'lucide-react';
+import SectionHead from './SectionHead';
+import { P } from '@/config/catalog';
 
 interface FAQItem {
   id: string;
   question: string;
   answer: string;
-  icon: React.ElementType;
 }
 
 const FAQS: FAQItem[] = [
@@ -15,124 +15,93 @@ const FAQS: FAQItem[] = [
     id: 'tiempo-entrega',
     question: '¿Cuáles son los plazos de entrega y el horario de atención técnica?',
     answer: 'Atendemos consultas y soporte de Lunes a Sábado de 9:00 a 20:00 (Hora Perú, UTC-5). Los plazos de ejecución técnica son:\n\n• Diagnóstico gratuito preliminar: menos de 2 horas tras indicar tu dominio.\n• Rescate / Limpieza de malware: habitual de 24 a 48 horas hábiles tras recibir los accesos (casos críticos < 24h).\n• Blindaje + WAF Cloudflare (Paquete Unificado): de 3 a 5 días hábiles (incluye calibración fina y meta Grado A).\n• Mantenimiento mensual: activación en menos de 24 horas con vigilancia ininterrumpida 24/7 y aviso inmediato a WhatsApp.',
-    icon: Clock,
   },
   {
     id: 'shopify-wix-compatibilidad',
     question: '¿Atienden tiendas en Shopify o sitios en Wix? ¿Cómo funciona la seguridad y qué precios tienen?',
-    answer: '¡Sí, con total cobertura técnica! Atendemos tiendas en Shopify, sitios en Wix, WordPress/WooCommerce y webs a medida. La diferencia radica en su arquitectura:\n\n• En WordPress (servidor propio): Existen virus de archivos PHP y malware en base de datos; para ellos aplica la desinfección forense completa.\n• En Shopify y Wix (SaaS en la nube): La infraestructura la gestiona la plataforma, por lo que no existen virus de servidor. Sin embargo, enfrentan riesgos reales: scripts espías inyectados en temas Liquid o código Wix (robo de tarjetas / Magecart), aplicaciones rogue y phishing por correo sin SPF/DMARC.\n\nPara todas las plataformas aplicamos precios transparentes y unificados:\n1. Diagnóstico gratuito: S/ 0 (audita certificados SSL, cabeceras HTTP y DNS).\n2. Rescate / Limpieza de malware: S/ 380 (Sitio Corporativo) y S/ 550 (WooCommerce / Tienda Online con saneamiento de plantillas y carritos).\n3. Blindaje + WAF Cloudflare (Paquete Unificado): S/ 450 (cabeceras canónicas, SPF/DKIM/DMARC anti-suplantación y Cloudflare WAF perimetral anti-bots).\n4. Mantenimiento mensual: S/ 90/mes (Básico) y S/ 180/mes (Tiendas Online con soporte prioritario).',
-    icon: ShieldCheck,
+    answer: `¡Sí, con total cobertura técnica! Atendemos tiendas en Shopify, sitios en Wix, WordPress/WooCommerce y webs a medida. La diferencia radica en su arquitectura:\n\n• En WordPress (servidor propio): Existen virus de archivos PHP y malware en base de datos; para ellos aplica la desinfección forense completa.\n• En Shopify y Wix (SaaS en la nube): La infraestructura la gestiona la plataforma, por lo que no existen virus de servidor. Sin embargo, enfrentan riesgos reales: scripts espías inyectados en temas Liquid o código Wix (robo de tarjetas / Magecart), aplicaciones rogue y phishing por correo sin SPF/DMARC.\n\nPara todas las plataformas aplicamos precios transparentes y unificados:\n1. Diagnóstico gratuito: S/ 0 (audita certificados SSL, cabeceras HTTP y DNS).\n2. Rescate / Limpieza de malware: ${P.rescateCorporativo} (Sitio Corporativo) y ${P.rescateTienda} (WooCommerce / Tienda Online con saneamiento de plantillas y carritos).\n3. Blindaje + WAF Cloudflare (Paquete Unificado): ${P.blindajeWaf} (cabeceras canónicas, SPF/DKIM/DMARC anti-suplantación y Cloudflare WAF perimetral anti-bots).\n4. Mantenimiento mensual: ${P.mantenimientoBasico}/mes (Básico) y ${P.mantenimientoTiendas}/mes (Tiendas Online con soporte prioritario).`,
   },
   {
     id: 'privacidad-datos',
     question: '¿Tienen acceso a mis datos bancarios o información confidencial de mis clientes?',
     answer: 'Nunca. La intervención técnica se ejecuta estrictamente a nivel de archivos de servidor (cPanel, SSH, SFTP) y base de datos técnica del CMS. Jamás solicitamos ni manipulamos pasarelas de pago ni datos de tarjetas de tus clientes. Sin intermediarios ni juniors: yo mismo reviso tu web personalmente con total reserva y ética profesional.',
-    icon: Lock,
   },
   {
     id: 'garantia-30-dias',
     question: '¿Cómo funciona la garantía de 30 días en el servicio de limpieza?',
     answer: 'Si dentro de los 30 días calendario posteriores a la desinfección tu web vuelve a presentar la misma infección o puerta trasera remediada, nos encargamos de revisarla y desinfectarla nuevamente sin costo adicional.',
-    icon: RotateCcw,
   },
   {
     id: 'por-que-hosting-suspende',
     question: '¿Por qué mi proveedor de hosting suspendió mi web y no la repara por mí?',
     answer: 'Los proveedores de hosting brindan espacio en servidores compartidos o VPS, pero bajo el principio de responsabilidad compartida de sus contratos (ToS/AUP), el mantenimiento y la seguridad del CMS, plugins y código corresponden al cliente. Cuando un sitio envía spam o aloja malware, el hosting lo suspende de forma preventiva para proteger la reputación de la IP del servidor. Nosotros desinfectamos el código y gestionamos el desbloqueo para que el hosting reactive tu cuenta.',
-    icon: Server,
   },
   {
     id: 'comprobante-fiscal',
     question: '¿Emites comprobante de pago legal para mi empresa o negocio?',
     answer: 'Sí. Emitimos Factura o Boleta electrónica formal conforme a ley peruana bajo RUC 10704877850 a nombre de Martín Castillo, facilitando la deducción contable para personas naturales con negocio o empresas.',
-    icon: FileText,
   },
   {
     id: 'permanencia-monitoreo',
     question: '¿Existe algún contrato de permanencia forzosa en los planes de monitoreo?',
     answer: 'Cero permanencia ni ataduras. El monitoreo preventivo opera bajo modalidad de suscripción mensual prepagada. Puedes solicitar la pausa o cancelación en cualquier momento con un mensaje directo a WhatsApp, sin penalizaciones.',
-    icon: ShieldAlert,
   },
 ];
 
 export default function DefensatiFAQ() {
-  const [openId, setOpenId] = useState<string | null>(FAQS[0].id);
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const toggle = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <section id="faq" className="w-full max-w-5xl mx-auto space-y-8 scroll-mt-24 text-left">
-      {/* Cabecera Estilo Apple Pro */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/12 text-[#2997ff] text-xs font-semibold">
-          <HelpCircle className="w-3.5 h-3.5" />
-          <span>DUDAS RESUELTAS</span>
-        </div>
-        <h2 className="text-3xl sm:text-5xl font-bold text-[#f5f5f7] tracking-[-0.03em] leading-tight">
-          Preguntas frecuentes
-        </h2>
-        <p className="text-sm sm:text-base text-[#86868b] max-w-2xl mx-auto font-normal leading-relaxed">
-          Todo lo que necesitas saber sobre nuestros procesos de desinfección, tiempos, garantías y facturación formal.
-        </p>
-      </div>
-
-      <div className="space-y-3.5">
-        {FAQS.map((faq) => {
-          const isOpen = openId === faq.id;
-          const Icon = faq.icon;
-          return (
-            <div
-              key={faq.id}
-              className={`rounded-[20px] sm:rounded-[24px] transition-all border ${
-                isOpen
-                  ? 'bg-[#161618]/90 border-[#0071e3]/50 shadow-[0_10px_30px_rgba(0,113,227,0.15)]'
-                  : 'bg-[#161618]/60 border-white/10 hover:border-white/20 hover:bg-[#161618]/80'
-              } backdrop-blur-2xl overflow-hidden`}
-            >
-              <button
-                type="button"
-                onClick={() => toggle(faq.id)}
-                aria-expanded={isOpen}
-                className="w-full p-5 sm:p-6 flex items-center justify-between text-left gap-4 cursor-pointer"
-              >
-                <div className="flex items-center gap-3.5">
-                  <div
-                    className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border transition-colors ${
-                      isOpen
-                        ? 'bg-[#0071e3]/20 border-[#0071e3]/40 text-[#38bdf8]'
-                        : 'bg-white/[0.04] border-white/10 text-neutral-400'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <span className="text-base sm:text-lg font-semibold text-white tracking-tight leading-snug">
+    <section id="faq" className="scroll-mt-24 space-y-12">
+      <SectionHead index="08" label="FAQ" title={<>Preguntas<br /><span className="text-[#8b97a2]">frecuentes.</span></>} />
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 lg:col-span-9 lg:col-start-4 border-t ed-line">
+          {FAQS.map((faq, i) => {
+            const isOpen = openId === faq.id;
+            return (
+              <div key={faq.id} className={`border-b ed-line backdrop-blur-sm transition-colors duration-150 ${isOpen ? 'bg-[#0a0c0f]/85' : 'bg-[#0a0c0f]/40 hover:bg-[#0a0c0f]/70'}`}>
+                <button
+                  type="button"
+                  onClick={() => toggle(faq.id)}
+                  aria-expanded={isOpen}
+                  className="w-full py-5 px-3 sm:px-5 grid grid-cols-12 items-center gap-4 text-left group cursor-pointer select-none touch-manipulation focus-visible:outline-none"
+                >
+                  <span className="col-span-2 sm:col-span-1 hud-label font-mono text-[#5d6872]">{String(i + 1).padStart(2, '0')}</span>
+                  <span className={`col-span-9 sm:col-span-10 text-lg sm:text-xl font-light tracking-tight leading-snug transition-colors duration-200 ${isOpen ? 'text-[#e8edf1]' : 'text-[#8b97a2] group-hover:text-[#e8edf1]'}`}>
                     {faq.question}
                   </span>
-                </div>
-
+                  <span
+                    aria-hidden
+                    className={`col-span-1 justify-self-end w-9 h-9 grid place-items-center border font-mono text-lg transition-all duration-200 ${
+                      isOpen ? 'border-[#cfe3ee] text-[#0a0c0f] bg-[#cfe3ee] rotate-45' : 'border-white/15 text-[#cfe3ee] group-hover:border-[#cfe3ee]'
+                    }`}
+                  >
+                    +
+                  </span>
+                </button>
+                {/* Expansión elástica sin saltos mediante CSS Grid (Emil Kowalski / animate) */}
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
-                    isOpen ? 'rotate-180 bg-[#0071e3]/20 text-[#38bdf8]' : 'text-neutral-400 bg-white/[0.03]'
+                  className={`grid transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`}
+                  style={{ gridTemplateRows: isOpen ? 'minmax(0, 1fr)' : 'minmax(0, 0fr)' }}
                 >
-                  <ChevronDown className="w-4 h-4" />
-                </div>
-              </button>
-
-              {isOpen && (
-                <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-0 animate-in fade-in duration-200">
-                  <div className="pl-12 border-l border-white/10 ml-4">
-                    <p className="text-sm sm:text-base text-neutral-200 leading-relaxed font-normal whitespace-pre-line">
-                      {faq.answer}
-                    </p>
+                  <div className="overflow-hidden">
+                    <div className="grid grid-cols-12 gap-4 pb-8 pt-1 px-3 sm:px-5">
+                      <p className="col-span-12 sm:col-span-10 sm:col-start-2 text-sm sm:text-base text-[#8b97a2] leading-relaxed whitespace-pre-line max-w-[70ch]">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

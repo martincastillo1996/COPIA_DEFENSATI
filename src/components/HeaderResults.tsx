@@ -14,7 +14,6 @@ import {
   Building2,
   Info
 } from 'lucide-react';
-import { isHyperscalePlatform } from '@/lib/hyperscalers';
 
 interface Props {
   headers: HeaderResult[];
@@ -106,8 +105,8 @@ export default function HeaderResults({ headers, domain }: Props) {
   const [viewMode, setViewMode] = useState<'plain' | 'technical'>('plain');
   const [expandedHeaders, setExpandedHeaders] = useState<Record<string, boolean>>({});
 
-  const cleanDomain = domain ? domain.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').toLowerCase() : '';
-  const isHyperscale = isHyperscalePlatform(cleanDomain);
+  // Una cabecera ausente nunca se presenta como mitigada por ser de una marca conocida
+  const isHyperscale: boolean = false;
 
   const toggleHeader = (name: string) => {
     setExpandedHeaders(prev => ({
@@ -134,17 +133,17 @@ export default function HeaderResults({ headers, domain }: Props) {
   const missingCount = headers.length - passedCount;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-[#0c0d10] border border-white/10 p-6 sm:p-8 shadow-2xl transition-all duration-300 space-y-6">
+    <div className="relative overflow-hidden bg-[#0c0d10] border border-white/10 p-6 sm:p-8 transition-all duration-300 space-y-6">
       
       {/* 1. ENCABEZADO Y RESUMEN EJECUTIVO */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
-              <Layers className="w-5 h-5 text-[#38bdf8]" />
+            <h3 className="text-base sm:text-lg font-bold text-[#EDEDED] tracking-tight flex items-center gap-2">
+              <Layers className="w-5 h-5 text-[#bdbdbd]" />
               <span>Directivas y Cabeceras Defensivas HTTP</span>
             </h3>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30 font-mono">
+            <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-white/[0.03] text-[#EDEDED] border border-white/10 font-mono">
               OWASP Core
             </span>
           </div>
@@ -159,14 +158,14 @@ export default function HeaderResults({ headers, domain }: Props) {
 
         {/* Selector de Modo + Botón Expandir Todo */}
         <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-          <div className="flex items-center bg-black/50 p-1 rounded-xl border border-white/10">
+          <div className="flex items-center bg-[#080808] p-1 border border-white/10">
             <button
               type="button"
               onClick={() => setViewMode('plain')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === 'plain'
-                  ? 'bg-[#0071e3] text-white shadow'
-                  : 'text-neutral-400 hover:text-white'
+                  ? 'bg-[#EDEDED] text-[#080808] '
+                  : 'text-neutral-400 hover:text-[#EDEDED]'
               }`}
             >
               Dueño de Negocio
@@ -174,10 +173,10 @@ export default function HeaderResults({ headers, domain }: Props) {
             <button
               type="button"
               onClick={() => setViewMode('technical')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                 viewMode === 'technical'
-                  ? 'bg-white/15 text-white shadow'
-                  : 'text-neutral-400 hover:text-white'
+                  ? 'bg-white/15 text-[#EDEDED] '
+                  : 'text-neutral-400 hover:text-[#EDEDED]'
               }`}
             >
               <Binary className="w-3.5 h-3.5" />
@@ -188,7 +187,7 @@ export default function HeaderResults({ headers, domain }: Props) {
           <button
             type="button"
             onClick={toggleAll}
-            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-neutral-300 transition-all cursor-pointer flex items-center gap-1.5"
+            className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-neutral-300 transition-all cursor-pointer flex items-center gap-1.5"
           >
             {areAllExpanded ? (
               <>
@@ -197,7 +196,7 @@ export default function HeaderResults({ headers, domain }: Props) {
               </>
             ) : (
               <>
-                <ChevronDown className="w-3.5 h-3.5 text-[#38bdf8]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#bdbdbd]" />
                 <span>Expandir todo</span>
               </>
             )}
@@ -207,9 +206,9 @@ export default function HeaderResults({ headers, domain }: Props) {
 
       {/* BANNER ESPECIAL DE ARQUITECTURA DE HIPERESCALA (Para Google / Microsoft / Apple / GitHub) */}
       {isHyperscale && (
-        <div className="p-4 rounded-2xl bg-sky-950/30 border border-sky-500/30 text-xs leading-relaxed space-y-2">
-          <div className="flex items-center gap-2 text-sky-300 font-bold">
-            <Building2 className="w-4 h-4 text-sky-400 shrink-0" />
+        <div className="p-4 bg-white/[0.03] border border-white/10 text-xs leading-relaxed space-y-2">
+          <div className="flex items-center gap-2 text-[#EDEDED] font-bold">
+            <Building2 className="w-4 h-4 text-[#EDEDED] shrink-0" />
             <span>¿Por qué Google o gigantes tecnológicos no muestran ciertas cabeceras HTTP tradicionales?</span>
           </div>
           <p className="text-neutral-300 text-[12px] leading-relaxed">
@@ -220,20 +219,20 @@ export default function HeaderResults({ headers, domain }: Props) {
 
       {/* Franja de Resumen Principal */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 text-center sm:text-left">
+        <div className="p-3 bg-white/[0.02] border border-white/5 text-center sm:text-left">
           <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-500 block">Total Evaluadas</span>
-          <span className="text-lg font-black text-white font-mono">{headers.length} Directivas</span>
+          <span className="text-lg font-black text-[#EDEDED] font-mono">{headers.length} Directivas</span>
         </div>
-        <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center sm:text-left">
-          <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-400 block">
+        <div className="p-3 bg-white/[0.03] border border-white/10 text-center sm:text-left">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-[#EDEDED] block">
             {isHyperscale ? 'Blindadas en Red/Browser' : 'Activas y Blindadas'}
           </span>
-          <span className="text-lg font-black text-emerald-300 font-mono">
+          <span className="text-lg font-black text-[#EDEDED] font-mono">
             {isHyperscale ? `${headers.length} / ${headers.length}` : `${passedCount} / ${headers.length}`}
           </span>
         </div>
-        <div className={`col-span-2 sm:col-span-1 p-3 rounded-2xl border text-center sm:text-left ${
-          isHyperscale ? 'bg-sky-500/10 border-sky-500/20' : 'bg-rose-500/10 border-rose-500/20'
+        <div className={`col-span-2 sm:col-span-1 p-3 border text-center sm:text-left ${
+          isHyperscale ? 'bg-white/[0.03] border-white/10' : 'bg-white/[0.03] border-white/10'
         }`}>
           <span className={`text-[10px] uppercase font-mono tracking-wider block ${
             isHyperscale ? 'text-sky-400' : 'text-rose-400'
@@ -274,11 +273,11 @@ export default function HeaderResults({ headers, domain }: Props) {
               className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                 isTreatedAsSafe
                   ? isExpanded 
-                    ? 'bg-[#12161f] border-emerald-500/40 shadow-lg' 
-                    : 'bg-[#101217] border-white/10 hover:border-emerald-500/30'
+                    ? 'bg-[#12161f] border-white/10 ' 
+                    : 'bg-[#101217] border-white/10 hover:border-white/10'
                   : isExpanded 
-                    ? 'bg-[#181216] border-rose-500/40 shadow-lg' 
-                    : 'bg-[#141215] border-rose-500/20 hover:border-rose-500/35'
+                    ? 'bg-[#181216] border-white/10 ' 
+                    : 'bg-[#141215] border-white/10 hover:border-white/10'
               }`}
             >
               {/* FILA PRINCIPAL COMPACTA (SIEMPRE VISIBLE Y CLICKEABLE) */}
@@ -289,28 +288,28 @@ export default function HeaderResults({ headers, domain }: Props) {
                 aria-expanded={isExpanded}
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+                  <div className={`w-8 h-8 flex items-center justify-center shrink-0 ${
                     isTreatedAsSafe
                       ? isHyperscale && !h.present
-                        ? 'bg-sky-500/15 text-sky-400'
-                        : 'bg-emerald-500/15 text-emerald-400'
-                      : 'bg-rose-500/15 text-rose-400'
+                        ? 'bg-white/[0.03] text-[#EDEDED]'
+                        : 'bg-white/[0.03] text-[#EDEDED]'
+                      : 'bg-white/[0.03] text-[#ff4d4d]'
                   }`}>
                     {isTreatedAsSafe ? <CheckCircle2 className="w-4 h-4" /> : <ShieldAlert className="w-4 h-4" />}
                   </div>
 
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono text-xs sm:text-sm font-bold text-white tracking-wide">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-[#EDEDED] tracking-wide">
                         {h.name}
                       </span>
                       {h.severity && (
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white/10 text-neutral-400 uppercase">
+                        <span className="text-[9px] font-mono px-1.5 py-0.2 bg-white/10 text-neutral-400 uppercase">
                           {h.severity}
                         </span>
                       )}
                       {isHyperscale && (
-                        <span className="text-[9px] font-mono px-2 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                        <span className="text-[9px] font-mono px-2 py-0.2 bg-white/[0.03] text-[#EDEDED] border border-white/10">
                           Hiperescala
                         </span>
                       )}
@@ -327,21 +326,21 @@ export default function HeaderResults({ headers, domain }: Props) {
 
                 <div className="flex items-center gap-3 shrink-0">
                   {h.present ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
                       ✓ Activa (+{points} pts)
                     </span>
                   ) : isHyperscale && hyperscaleInfo ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
                       {hyperscaleInfo.badge}
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold bg-white/[0.03] text-[#ff4d4d] border border-white/10">
                       ✗ Falta
                     </span>
                   )}
 
-                  <div className={`p-1.5 rounded-lg bg-white/5 border border-white/10 text-neutral-400 transition-transform duration-200 ${
-                    isExpanded ? 'rotate-180 text-white bg-white/15' : ''
+                  <div className={`p-1.5 bg-white/5 border border-white/10 text-neutral-400 transition-transform duration-200 ${
+                    isExpanded ? 'rotate-180 text-[#EDEDED] bg-white/15' : ''
                   }`}>
                     <ChevronDown className="w-4 h-4" />
                   </div>
@@ -368,36 +367,36 @@ export default function HeaderResults({ headers, domain }: Props) {
 
                   {/* Alerta contextual */}
                   {isHyperscale && !h.present && hyperscaleInfo ? (
-                    <div className="p-3 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-200 text-xs flex items-start gap-2.5">
-                      <Info className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                    <div className="p-3 bg-white/[0.03] border border-white/10 text-[#EDEDED] text-xs flex items-start gap-2.5">
+                      <Info className="w-4 h-4 text-[#EDEDED] shrink-0 mt-0.5" />
                       <div className="space-y-0.5">
-                        <strong className="font-semibold text-white block">Arquitectura de Hiperescala:</strong>
+                        <strong className="font-semibold text-[#EDEDED] block">Arquitectura de Hiperescala:</strong>
                         <p className="leading-snug text-neutral-300">{hyperscaleInfo.plain}</p>
                       </div>
                     </div>
                   ) : !h.present ? (
-                    <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-rose-400 shrink-0" />
+                    <div className="p-3 bg-white/[0.03] border border-white/10 text-[#ff4d4d] text-xs flex items-center gap-2">
+                      <span className="w-2 h-2 bg-white/[0.03] shrink-0" />
                       <strong className="font-semibold">{businessRisk}</strong>
                     </div>
                   ) : null}
 
                   {/* Receta de Código Sugerida para el Desarrollador */}
-                  <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 space-y-1.5 font-mono">
+                  <div className="p-3.5 bg-[#080808] border border-white/10 space-y-1.5 font-mono">
                     <div className="flex items-center justify-between text-[10px] text-neutral-400">
                       <span>{isHyperscale ? 'Regla recomendada para sitios web estándar:' : 'Directiva recomendada para Nginx:'}</span>
                       <span className="text-[#38bdf8]">Solución Rápida</span>
                     </div>
-                    <code className="text-emerald-400 text-xs block overflow-x-auto selection:bg-emerald-500/30">
+                    <code className="text-[#EDEDED] text-xs block overflow-x-auto selection:bg-white/[0.03]">
                       {translation.fixSnippet}
                     </code>
                   </div>
 
                   {item.contextNote && (
-                    <div className="flex items-start gap-2 text-[11px] text-sky-300 bg-sky-950/30 rounded-xl p-2.5 border border-sky-800/40">
-                      <HelpCircle className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-2 text-[11px] text-[#EDEDED] bg-white/[0.03] p-2.5 border border-white/10">
+                      <HelpCircle className="w-3.5 h-3.5 text-[#EDEDED] shrink-0 mt-0.5" />
                       <p className="leading-snug">
-                        <span className="font-semibold text-sky-400">Nota Perimetral: </span>
+                        <span className="font-semibold text-[#EDEDED]">Nota Perimetral: </span>
                         {item.contextNote}
                       </p>
                     </div>
@@ -411,7 +410,7 @@ export default function HeaderResults({ headers, domain }: Props) {
 
       <div className="pt-2 text-center">
         <p className="text-[11px] text-neutral-400 flex items-center justify-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
+          <Sparkles className="w-3.5 h-3.5 text-[#bdbdbd]" />
           <span>Haz clic sobre cualquier directiva para inspeccionar el motivo técnico de su configuración.</span>
         </p>
       </div>

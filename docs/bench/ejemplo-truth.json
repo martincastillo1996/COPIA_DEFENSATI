@@ -1,0 +1,11 @@
+{
+  "lab": "Ejemplo (OWASP Juice Shop): ajústalo a la versión que despliegues",
+  "vulnerabilities": [
+    { "id": "listado-ftp", "match": "listado de directorio|/ftp" },
+    { "id": "metricas-expuestas", "match": "/metrics|prometheus" },
+    { "id": "documentacion-api", "match": "swagger|openapi|/api-docs" },
+    { "id": "xss-busqueda", "match": "cross site scripting|xss" },
+    { "id": "inyeccion-sql", "match": "inyecci[óo]n sql|sql injection" }
+  ],
+  "accepted": ["cabecera", "content-security-policy", "hsts", "cookie"]
+}

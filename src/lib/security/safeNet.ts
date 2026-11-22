@@ -68,6 +68,8 @@ export interface SafeHttpOptions {
   maxBytes?: number;
   /** Redirecciones que se siguen, cada una validada contra SSRF. */
   maxRedirects?: number;
+  /** Método HTTP (por defecto GET). Solo métodos de lectura/inspección. */
+  method?: 'GET' | 'HEAD' | 'OPTIONS';
 }
 
 export interface SafeHttpResult {
@@ -89,7 +91,7 @@ interface RawResponse {
 
 const REDIRECT_STATUS = [301, 302, 303, 307, 308];
 
-function requestOnce(url: URL, headers: Record<string, string>, maxBytes: number, deadline: number): Promise<RawResponse> {
+function requestOnce(url: URL, headers: Record<string, string>, maxBytes: number, deadline: number, method: string = 'GET'): Promise<RawResponse> {
   return new Promise((resolve, reject) => {
     const host = url.hostname.replace(/^\[|\]$/g, '');
     // Las IP literales no pasan por lookup: se comprueban aquí.
@@ -115,7 +117,7 @@ function requestOnce(url: URL, headers: Record<string, string>, maxBytes: number
     const req = lib.request(
       url,
       {
-        method: 'GET',
+        method,
         headers: { ...headers, 'Accept-Encoding': 'gzip, deflate, br' },
         lookup: safeLookup,
         agent: false,
@@ -202,7 +204,7 @@ export async function safeHttpGet(rawUrl: string, options: SafeHttpOptions = {})
   }
 
   for (let hop = 0; ; hop++) {
-    const raw = await requestOnce(current, headers, maxBytes, deadline);
+    const raw = await requestOnce(current, headers, maxBytes, deadline, options.method || 'GET');
     const result: SafeHttpResult = {
       status: raw.status,
       headers: toHeaders(raw.headers),

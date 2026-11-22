@@ -32,11 +32,11 @@ export default function RemediationList({ items }: Props) {
 
   if (!items || items.length === 0) {
     return (
-      <div className="p-8 rounded-3xl bg-emerald-500/5 border border-emerald-500/20 text-center space-y-3 backdrop-blur-xl">
-        <div className="inline-flex p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 mb-1">
+      <div className="p-8 bg-white/[0.03] border border-white/10 text-center space-y-3">
+        <div className="inline-flex p-3 bg-white/[0.03] text-[#EDEDED] mb-1">
           <ShieldCheck className="w-6 h-6" />
         </div>
-        <h3 className="text-base font-semibold text-white tracking-tight">
+        <h3 className="text-base font-semibold text-[#EDEDED] tracking-tight">
           Perímetro Óptimo y Blindado
         </h3>
         <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed">
@@ -56,11 +56,11 @@ export default function RemediationList({ items }: Props) {
     switch (severity) {
       case 'Crítica':
       case 'Alta':
-        return 'text-rose-400 bg-rose-950/40 border-rose-800/50';
+        return 'text-[#ff4d4d] bg-white/[0.03] border-white/10';
       case 'Media':
-        return 'text-amber-400 bg-amber-950/40 border-amber-800/50';
+        return 'text-[#EDEDED] bg-white/[0.03] border-white/10';
       default:
-        return 'text-emerald-400 bg-emerald-950/40 border-emerald-800/50';
+        return 'text-[#EDEDED] bg-white/[0.03] border-white/10';
     }
   };
 
@@ -87,17 +87,17 @@ export default function RemediationList({ items }: Props) {
   return (
     <div className="space-y-6">
       {/* Banner Especial de Solución Rápida sin Código (Cloudflare) */}
-      <div className="p-5 rounded-2xl bg-[#f6821f]/10 border border-[#f6821f]/30 backdrop-blur-xl space-y-3">
+      <div className="p-5 bg-[#f6821f]/10 border border-[#f6821f]/30 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5 text-[#f6821f]">
             <Cloud className="w-5 h-5 shrink-0" />
-            <h4 className="text-sm font-bold text-white">
+            <h4 className="text-sm font-bold text-[#EDEDED]">
               Solución Express sin tocar código en tu Servidor (Cloudflare Transform Rules)
             </h4>
           </div>
           <button
             onClick={copyMasterConfig}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#f6821f] hover:bg-[#e07116] text-black font-semibold text-xs transition-all shadow-md active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#f6821f] hover:bg-[#e07116] text-black font-semibold text-xs transition-all cursor-pointer"
           >
             {copiedMaster ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             {copiedMaster ? '¡Reglas Copiadas!' : 'Copiar Todas las Reglas'}
@@ -106,7 +106,7 @@ export default function RemediationList({ items }: Props) {
         <p className="text-xs text-neutral-300 leading-relaxed">
           En vez de editar archivos delicados de Linux o Apache, puedes añadir Cloudflare gratis a tu dominio y en <strong>Rules &gt; Transform Rules &gt; Modify Response Header</strong> pegar estos valores para subir a <strong>Grado A+</strong> en 2 minutos:
         </p>
-        <pre className="p-3 rounded-xl bg-black/60 border border-white/10 text-[11px] font-mono text-amber-300 overflow-x-auto whitespace-pre">
+        <pre className="p-3 bg-[#080808] border border-white/10 text-[11px] font-mono text-[#EDEDED] overflow-x-auto whitespace-pre">
           {masterCloudflareConfig}
         </pre>
       </div>
@@ -134,22 +134,22 @@ export default function RemediationList({ items }: Props) {
           }
 
           return (
-            <div key={idx} className="bg-slate-950 border border-slate-800/80 rounded-xl p-4 space-y-3">
+            <div key={idx} className="bg-slate-950 border border-slate-800/80 p-4 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono font-semibold text-sm text-slate-200">{title}</span>
-                  <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${getSeverityBadge(item.severity)}`}>
+                  <span className={`text-[10px] uppercase font-bold px-2 py-0.5 border ${getSeverityBadge(item.severity)}`}>
                     {item.severity}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded p-0.5 text-xs font-mono">
+                <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 p-0.5 text-xs font-mono">
                   {(['cloudflare', 'nginx', 'apache', 'express'] as ServerType[]).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTabs((prev) => ({ ...prev, [idx]: tab }))}
-                      className={`px-2 py-0.5 rounded transition capitalize ${
-                        currentTab === tab ? 'bg-indigo-600 text-white font-semibold' : 'text-slate-400 hover:text-slate-200'
+                      className={`px-2 py-0.5 transition capitalize ${
+                        currentTab === tab ? 'bg-white/[0.03] text-[#EDEDED] font-semibold' : 'text-slate-400 hover:text-slate-200'
                       }`}
                     >
                       {tab}
@@ -162,12 +162,12 @@ export default function RemediationList({ items }: Props) {
               {item.impact && <p className="text-xs text-slate-500 italic">Impacto: {item.impact}</p>}
 
               <div className="relative group">
-                <pre className="bg-slate-900 border border-slate-800 rounded p-3 text-xs font-mono text-emerald-400 overflow-x-auto">
+                <pre className="bg-slate-900 border border-slate-800 p-3 text-xs font-mono text-[#EDEDED] overflow-x-auto">
                   <code>{currentCode}</code>
                 </pre>
                 <button
                   onClick={() => handleCopy(currentCode, idx)}
-                  className="absolute top-2 right-2 px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono rounded transition opacity-80 group-hover:opacity-100 cursor-pointer"
+                  className="absolute top-2 right-2 px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono transition opacity-80 group-hover:opacity-100 cursor-pointer"
                 >
                   {copiedIdx === idx ? 'Copiado!' : 'Copiar'}
                 </button>

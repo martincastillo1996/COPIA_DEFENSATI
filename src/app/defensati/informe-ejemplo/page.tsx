@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import NeuralBackground from '@/components/NeuralBackground';
 import PrintableReport from '@/components/PrintableReport';
 import { 
   ShieldCheck, 
@@ -29,6 +28,7 @@ import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { AuditReportRecord } from '@/lib/storage/reportStore';
 import AuditEngineExplanation from '@/components/AuditEngineExplanation';
 import HeaderResults from '@/components/HeaderResults';
+import { P } from '@/config/catalog';
 
 const DEMO_REPORT: AuditReportRecord = {
   id: 'DEMO-EJEMPLO-2026',
@@ -119,18 +119,17 @@ Set dynamic: Strict-Transport-Security = "max-age=31536000; includeSubDomains; p
 Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-white selection:bg-[#0071e3] selection:text-white font-sans antialiased relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#080808] selection:bg-[#EDEDED] selection:text-[#080808] font-sans antialiased relative overflow-x-hidden">
       
       {/* Componente PDF que se activa con window.print() */}
       <PrintableReport report={DEMO_REPORT} auditId="DEMO-2026-TEXTIL" />
 
       {/* Fondo estelar limpio */}
-      <NeuralBackground showDomains={false} />
 
       {/* Cabecera */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/60 border-b border-white/10 print:hidden">
+      <header className="sticky top-0 z-50 bg-[#080808] border-b border-white/10 print:hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/defensati" className="inline-flex items-center gap-2 text-xs sm:text-sm text-neutral-300 hover:text-white transition-colors">
+          <Link href="/defensati" className="inline-flex items-center gap-2 text-xs sm:text-sm text-neutral-300 hover:text-[#EDEDED] transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Volver a DEFENSA TI</span>
           </Link>
@@ -141,9 +140,9 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
               href="/informe-ejemplo-defensati.pdf"
               target="_blank"
               download="informe-ejemplo-defensati.pdf"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-xs font-bold text-white transition-all shadow-md shadow-blue-500/25 active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] text-xs font-bold transition-all cursor-pointer"
             >
-              <Download className="w-3.5 h-3.5 text-sky-200" />
+              <Download className="w-3.5 h-3.5 text-[#EDEDED]" />
               <span className="hidden sm:inline">Descargar PDF (2 Páginas)</span>
               <span className="sm:hidden">PDF</span>
             </a>
@@ -152,9 +151,9 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             <a
               href="/informe-ejemplo-defensati.pdf"
               target="_blank"
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-semibold text-white transition-all cursor-pointer"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-semibold text-[#EDEDED] transition-all cursor-pointer"
             >
-              <ExternalLink className="w-3.5 h-3.5 text-[#38bdf8]" />
+              <ExternalLink className="w-3.5 h-3.5 text-[#bdbdbd]" />
               <span>Abrir PDF</span>
             </a>
 
@@ -168,12 +167,12 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 relative z-10 space-y-8 print:hidden">
         
         {/* Banner de Orientación */}
-        <div className="p-6 rounded-3xl bg-gradient-to-r from-blue-900/20 via-[#141416] to-emerald-950/20 border border-white/10 backdrop-blur-xl space-y-3">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#38bdf8]">
+        <div className="p-6 border border-white/10 space-y-3">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#bdbdbd]">
             <ShieldCheck className="w-4 h-4" />
             <span>Entregable Oficial DEFENSA TI (2 Vistas en 1 Solo Documento)</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-[#EDEDED] tracking-tight">
             Así es el Informe Técnico y Comercial que recibes en tu Auditoría
           </h1>
           <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
@@ -185,7 +184,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
               href="/informe-ejemplo-defensati.pdf"
               target="_blank"
               download="informe-ejemplo-defensati.pdf"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] text-xs font-bold transition-all cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Descargar PDF Oficial de Ejemplo</span>
@@ -194,9 +193,9 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             <a
               href="/informe-ejemplo-defensati.pdf"
               target="_blank"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/15 border border-white/15 text-[#EDEDED] text-xs font-semibold transition-all cursor-pointer"
             >
-              <ExternalLink className="w-4 h-4 text-[#38bdf8]" />
+              <ExternalLink className="w-4 h-4 text-[#bdbdbd]" />
               <span>Abrir PDF en Pantalla Completa</span>
             </a>
           </div>
@@ -204,14 +203,14 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
 
         {/* SELECTOR INTERACTIVO DE LAS 2 EXPLICACIONES: NEGOCIO VS DEV */}
         <div className="flex justify-center">
-          <div className="p-1.5 rounded-2xl bg-white/5 border border-white/15 backdrop-blur-2xl grid grid-cols-2 gap-2 w-full max-w-xl shadow-xl">
+          <div className="p-1.5 bg-white/5 border border-white/15 grid grid-cols-2 gap-2 w-full max-w-xl">
             <button
               type="button"
               onClick={() => setActiveTab('business')}
-              className={`py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              className={`py-3 px-4 text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 activeTab === 'business'
-                  ? 'bg-gradient-to-r from-[#0071e3] to-sky-500 text-white shadow-lg shadow-blue-500/30 scale-[1.01]'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                  ? ' text-[#EDEDED] '
+                  : 'text-neutral-400 hover:text-[#EDEDED] hover:bg-white/5'
               }`}
             >
               <Building2 className="w-4 h-4" />
@@ -221,10 +220,10 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             <button
               type="button"
               onClick={() => setActiveTab('dev')}
-              className={`py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              className={`py-3 px-4 text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 activeTab === 'dev'
-                  ? 'bg-gradient-to-r from-[#0071e3] to-sky-500 text-white shadow-lg shadow-blue-500/30 scale-[1.01]'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                  ? ' text-[#EDEDED] '
+                  : 'text-neutral-400 hover:text-[#EDEDED] hover:bg-white/5'
               }`}
             >
               <Code2 className="w-4 h-4" />
@@ -234,33 +233,33 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
         </div>
 
         {/* CONTENEDOR DEL DOCUMENTO MODELO */}
-        <div className="relative p-6 sm:p-10 rounded-3xl bg-[#0f1219]/90 border border-white/10 shadow-2xl space-y-8 backdrop-blur-xl overflow-hidden">
+        <div className="relative p-6 sm:p-10 bg-[#0f1219]/90 border border-white/10 space-y-8 overflow-hidden">
           
           {/* Marca de Agua ENCIMA EN TODOS LADOS (Web Overlay: z-40 flotante visible) */}
           <div className="absolute inset-0 pointer-events-none select-none z-40 overflow-hidden flex flex-col justify-around py-8 opacity-[0.20]">
             <div className="flex justify-around transform -rotate-25 whitespace-nowrap">
-              <span className="font-black text-5xl tracking-widest text-white border-4 border-white/80 px-6 py-2 rounded-2xl">
+              <span className="font-black text-5xl tracking-widest text-[#EDEDED] border-4 border-white/80 px-6 py-2">
                 EJEMPLO &bull; NO OFICIAL
               </span>
-              <span className="font-black text-5xl tracking-widest text-white border-4 border-white/80 px-6 py-2 rounded-2xl">
+              <span className="font-black text-5xl tracking-widest text-[#EDEDED] border-4 border-white/80 px-6 py-2">
                 MUESTRA DIDÁCTICA
               </span>
             </div>
             <div className="flex justify-around transform -rotate-25 whitespace-nowrap">
-              <span className="font-black text-6xl tracking-widest text-white border-4 border-white/80 px-8 py-3 rounded-2xl">
+              <span className="font-black text-6xl tracking-widest text-[#EDEDED] border-4 border-white/80 px-8 py-3">
                 CASO FICTICIO &bull; DEFENSA TI
               </span>
             </div>
             <div className="flex justify-around transform -rotate-25 whitespace-nowrap">
-              <span className="font-black text-5xl tracking-widest text-white border-4 border-white/80 px-6 py-2 rounded-2xl">
+              <span className="font-black text-5xl tracking-widest text-[#EDEDED] border-4 border-white/80 px-6 py-2">
                 DOCUMENTO DE MUESTRA
               </span>
-              <span className="font-black text-5xl tracking-widest text-white border-4 border-white/80 px-6 py-2 rounded-2xl">
+              <span className="font-black text-5xl tracking-widest text-[#EDEDED] border-4 border-white/80 px-6 py-2">
                 EJEMPLO &bull; NO OFICIAL
               </span>
             </div>
             <div className="flex justify-around transform -rotate-25 whitespace-nowrap">
-              <span className="font-black text-5xl tracking-widest text-white border-4 border-white/80 px-6 py-2 rounded-2xl">
+              <span className="font-black text-5xl tracking-widest text-[#EDEDED] border-4 border-white/80 px-6 py-2">
                 MUESTRA DIDÁCTICA &bull; NO VINCULANTE
               </span>
             </div>
@@ -268,12 +267,12 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
 
           <div className="relative z-10 space-y-8">
             {/* Banner de Advertencia Legal: Documento Didáctico de Muestra */}
-            <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs font-semibold flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+            <div className="p-3 bg-white/[0.03] border border-white/10 text-[#EDEDED] text-xs font-semibold flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
               <span className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-[#EDEDED] shrink-0" />
                 <span>⚠️ DOCUMENTO DE MUESTRA Y CASO MODELO FICTICIO &bull; NO ES UN DICTAMEN OFICIAL NI AFECTA A NINGUNA ENTIDAD REAL</span>
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[10px] uppercase font-bold shrink-0">
+              <span className="px-2 py-0.5 bg-white/[0.03] text-[#EDEDED] font-mono text-[10px] uppercase font-bold shrink-0">
                 EJEMPLO NO OFICIAL
               </span>
             </div>
@@ -281,11 +280,11 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             {/* Encabezado del dictamen */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10">
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-[#38bdf8] text-xs font-semibold mb-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/[0.03] border border-white/10 text-[#bdbdbd] text-xs font-semibold mb-2">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>CASO DE AUDITORÍA MODELO (MUESTRA DIDÁCTICA)</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-[#EDEDED] tracking-tight">
                   Auditoría Perimetral y de Riesgo Comercial
                 </h2>
                 <p className="text-xs text-neutral-400 mt-1 font-mono">
@@ -297,7 +296,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 <span>Entrega: <strong>24 a 48 Horas Laborables</strong></span>
                 <span>Auditor Responsable: <strong className="text-white">Karol Martín Castillo Rojas</strong></span>
                 <span>RUC: <strong>10704877850</strong> (Neuronal Gravity &bull; Lima, Perú)</span>
-                <span className="text-emerald-400 font-semibold mt-0.5">✓ Soporte Directo y Meta Grado A (Tope 14 Días)</span>
+                <span className="text-[#EDEDED] font-semibold mt-0.5">✓ Soporte Directo y Meta Grado A (Tope 14 Días)</span>
               </div>
             </div>
 
@@ -308,40 +307,40 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             <div className="space-y-8 animate-in fade-in duration-300">
               
               {/* Badge Identificador de Vista */}
-              <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-xs text-blue-200 flex items-center justify-between">
+              <div className="p-3 bg-white/[0.03] border border-white/10 text-xs text-[#EDEDED] flex items-center justify-between">
                 <span className="font-semibold flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-[#38bdf8]" />
+                  <Building2 className="w-4 h-4 text-[#bdbdbd]" />
                   <span>Explicación para el Dueño o Gerencia: Impacto en ventas, reputación y pasarelas</span>
                 </span>
-                <span className="font-mono text-[10px] text-blue-300">Sin jerga incomprensible</span>
+                <span className="font-mono text-[10px] text-[#EDEDED]">Sin jerga incomprensible</span>
               </div>
 
               {/* Métricas Visuales de Impacto Empresarial */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="p-5 rounded-2xl bg-black/40 border border-amber-500/20 flex flex-col items-center justify-center text-center">
+                <div className="p-5 bg-[#080808] border border-white/10 flex flex-col items-center justify-center text-center">
                   <span className="text-[11px] uppercase font-mono text-neutral-400 tracking-wider">Calificación Inicial</span>
-                  <span className="text-4xl sm:text-5xl font-black text-amber-400 my-1.5">Grado C</span>
-                  <span className="text-[11px] text-amber-300/90 font-medium">Vulnerable a clonación de pasarela</span>
+                  <span className="text-4xl sm:text-5xl font-black text-[#EDEDED] my-1.5">Grado C</span>
+                  <span className="text-[11px] text-[#EDEDED] font-medium">Vulnerable a clonación de pasarela</span>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-black/40 border border-emerald-500/20 flex flex-col items-center justify-center text-center">
+                <div className="p-5 bg-[#080808] border border-white/10 flex flex-col items-center justify-center text-center">
                   <span className="text-[11px] uppercase font-mono text-neutral-400 tracking-wider">Cifrado de Clientes</span>
-                  <span className="text-4xl sm:text-5xl font-black text-emerald-400 my-1.5">TLS 1.3</span>
-                  <span className="text-[11px] text-emerald-300/90 font-medium">Canal activo y seguro</span>
+                  <span className="text-4xl sm:text-5xl font-black text-[#EDEDED] my-1.5">TLS 1.3</span>
+                  <span className="text-[11px] text-[#EDEDED] font-medium">Canal activo y seguro</span>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-black/40 border border-rose-500/20 flex flex-col items-center justify-center text-center">
+                <div className="p-5 bg-[#080808] border border-white/10 flex flex-col items-center justify-center text-center">
                   <span className="text-[11px] uppercase font-mono text-neutral-400 tracking-wider">Impacto Económico en Riesgo</span>
-                  <span className="text-4xl sm:text-5xl font-black text-rose-400 my-1.5">Alto</span>
-                  <span className="text-[11px] text-rose-300/90 font-medium">Robo de pedidos en Wi-Fi abierta</span>
+                  <span className="text-4xl sm:text-5xl font-black text-[#ff4d4d] my-1.5">Alto</span>
+                  <span className="text-[11px] text-[#ff4d4d] font-medium">Robo de pedidos en Wi-Fi abierta</span>
                 </div>
               </div>
 
               {/* Hallazgos traducidos a Lenguaje de Negocio */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#38bdf8]" />
+                  <h3 className="text-base font-bold text-[#EDEDED] flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-[#bdbdbd]" />
                     <span>3 Hallazgos Críticos Detectados y su Impacto en Ventas</span>
                   </h3>
                   <span className="text-xs text-neutral-400 hidden sm:inline">Explicado sin jerga innecesaria</span>
@@ -349,55 +348,55 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
 
                 <div className="space-y-3">
                   {/* Fallo 1 */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/10 border border-rose-500/25 space-y-2">
+                  <div className="p-4 sm:p-5 bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-bold text-rose-200 text-xs sm:text-sm">
+                      <span className="font-bold text-[#ff4d4d] text-xs sm:text-sm">
                         1. Tu tienda o web puede ser incrustada en páginas clonadas (Falta de X-Frame-Options)
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-300 font-mono text-[10px] font-bold uppercase">
+                      <span className="px-2.5 py-0.5 bg-white/[0.03] border border-white/10 text-[#ff4d4d] font-mono text-[10px] font-bold uppercase">
                         🔴 Peligro Crítico
                       </span>
                     </div>
                     <p className="text-xs text-neutral-300 leading-relaxed">
                       <strong className="text-white">Impacto en el Negocio:</strong> Un ciberdelincuente puede crear un dominio similar y meter tu web en un marco invisible. Cuando el cliente hace clic en tu botón de pago o WhatsApp, el dinero o el pedido se desvían a la cuenta del atacante.
                     </p>
-                    <div className="p-2.5 rounded-xl bg-black/40 border border-rose-500/20 text-[11px] text-emerald-400 font-medium">
+                    <div className="p-2.5 bg-[#080808] border border-white/10 text-[11px] text-[#EDEDED] font-medium">
                       ✓ Solución con DEFENSA TI: Inyectamos directivas de bloqueo perimetral. Nadie fuera de tu dominio puede replicar tu web.
                     </div>
                   </div>
 
                   {/* Fallo 2 */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/25 space-y-2">
+                  <div className="p-4 sm:p-5 bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-bold text-amber-200 text-xs sm:text-sm">
+                      <span className="font-bold text-[#EDEDED] text-xs sm:text-sm">
                         2. Conexión desprotegida en redes públicas de restaurantes y hoteles (Falta de HSTS)
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-mono text-[10px] font-bold uppercase">
+                      <span className="px-2.5 py-0.5 bg-white/[0.03] border border-white/10 text-[#EDEDED] font-mono text-[10px] font-bold uppercase">
                         🟡 Riesgo Comercial
                       </span>
                     </div>
                     <p className="text-xs text-neutral-300 leading-relaxed">
                       <strong className="text-white">Impacto en el Negocio:</strong> Si un comprador o administrador de tu empresa se conecta desde una cafetería o feria comercial, un tercero en la misma red Wi-Fi puede degradar la conexión y espiar las compras o pedidos en trámite.
                     </p>
-                    <div className="p-2.5 rounded-xl bg-black/40 border border-amber-500/20 text-[11px] text-emerald-400 font-medium">
+                    <div className="p-2.5 bg-[#080808] border border-white/10 text-[11px] text-[#EDEDED] font-medium">
                       ✓ Solución con DEFENSA TI: Forzado de túnel cifrado permanente HSTS con precarga de 1 año.
                     </div>
                   </div>
 
                   {/* Fallo 3 */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/25 space-y-2">
+                  <div className="p-4 sm:p-5 bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-bold text-amber-200 text-xs sm:text-sm">
+                      <span className="font-bold text-[#EDEDED] text-xs sm:text-sm">
                         3. Visibilidad de tu versión de CMS a ojos de robots atacantes (Server Tokens Expuestos)
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-mono text-[10px] font-bold uppercase">
+                      <span className="px-2.5 py-0.5 bg-white/[0.03] border border-white/10 text-[#EDEDED] font-mono text-[10px] font-bold uppercase">
                         🟡 Alerta Preventiva
                       </span>
                     </div>
                     <p className="text-xs text-neutral-300 leading-relaxed">
                       <strong className="text-white">Impacto en el Negocio:</strong> Los atacantes usan bots automáticos buscando tiendas con versiones antiguas. Si dejas expuesta la versión exacta de tu servidor o plugins, te conviertes en un blanco fácil en listas de ataque masivo.
                     </p>
-                    <div className="p-2.5 rounded-xl bg-black/40 border border-amber-500/20 text-[11px] text-emerald-400 font-medium">
+                    <div className="p-2.5 bg-[#080808] border border-white/10 text-[11px] text-[#EDEDED] font-medium">
                       ✓ Solución con DEFENSA TI: Ocultamiento perimetral de cabeceras de servidor e insensibilización de versiones.
                     </div>
                   </div>
@@ -405,13 +404,13 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
               </div>
 
               {/* Semáforo de Cumplimiento de Ley de Protección de Datos */}
-              <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+              <div className="p-4 bg-white/[0.03] border border-white/10 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-300 flex items-center gap-2">
+                  <span className="text-xs font-bold text-[#EDEDED] flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4" />
                     <span>Cumplimiento Legal: Ley de Protección de Datos Personales (Perú Ley N° 29733)</span>
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
+                  <span className="text-[10px] font-mono px-2 py-0.5 bg-white/[0.03] text-[#EDEDED] font-bold">
                     🟢 En Adecuación
                   </span>
                 </div>
@@ -421,13 +420,13 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
               </div>
 
               {/* Cuadro de Planes Comerciales y Retorno de Inversión (ROI) */}
-              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#141416] to-[#0c0d10] border border-white/10 space-y-4">
+              <div className="p-5 sm:p-6 border border-white/10 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
-                  <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-emerald-400" />
+                  <h4 className="text-xs sm:text-sm font-bold text-[#EDEDED] uppercase tracking-wider flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-[#EDEDED]" />
                     <span>¿Cómo solucionar estos hallazgos y alcanzar Grado A? (Servicios y Precios)</span>
                   </h4>
-                  <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 font-bold self-start sm:self-center">
+                  <span className="text-[11px] font-mono text-[#EDEDED] bg-white/[0.03] px-2 py-0.5 border border-white/10 font-bold self-start sm:self-center">
                     Meta de Blindaje: Grado A (90-100 pts)
                   </span>
                 </div>
@@ -437,20 +436,20 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                  <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                  <div className="p-4 bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-extrabold text-white text-xs">Rescate / Limpieza de malware</span>
-                      <span className="text-xs font-mono font-black text-rose-400">S/ 380 – S/ 550</span>
+                      <span className="font-extrabold text-[#EDEDED] text-xs">Rescate / Limpieza de malware</span>
+                      <span className="text-xs font-mono font-black text-[#ff4d4d]">{P.rescateCorporativo} – {P.rescateTienda}</span>
                     </div>
                     <p className="text-[11px] text-neutral-400 leading-relaxed">
-                      Desinfección forense en 24 a 48h para sitios corporativos (S/ 380) o tiendas WooCommerce (S/ 550) con respaldo integral, desbloqueo de hosting y <strong>garantía formal de 30 días</strong>.
+                      Desinfección forense en 24 a 48h para sitios corporativos ({P.rescateCorporativo}) o tiendas WooCommerce ({P.rescateTienda}) con respaldo integral, desbloqueo de hosting y <strong>garantía formal de 30 días</strong>.
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-sky-500/10 border border-sky-500/30 space-y-2">
+                  <div className="p-4 bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-extrabold text-white text-xs">Blindaje + WAF Cloudflare (Unificado)</span>
-                      <span className="text-xs font-mono font-black text-[#38bdf8]">S/ 450 PEN</span>
+                      <span className="font-extrabold text-[#EDEDED] text-xs">Blindaje + WAF Cloudflare (Unificado)</span>
+                      <span className="text-xs font-mono font-black text-[#bdbdbd]">{P.blindajeWaf} PEN</span>
                     </div>
                     <p className="text-[11px] text-neutral-300 leading-relaxed">
                       Paquete unificado de prevención: cabeceras estrictas (HSTS, CSP, X-Frame) más Firewall WAF Cloudflare perimetral anti-bots, DDoS y scrapers con <strong>meta Grado A</strong>.
@@ -469,19 +468,19 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
             <div className="space-y-8 animate-in fade-in duration-300">
               
               {/* Badge Identificador de Vista */}
-              <div className="p-3 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-xs text-sky-200 flex items-center justify-between">
+              <div className="p-3 bg-white/[0.03] border border-white/10 text-xs text-[#EDEDED] flex items-center justify-between">
                 <span className="font-semibold flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-[#38bdf8]" />
+                  <Code2 className="w-4 h-4 text-[#bdbdbd]" />
                   <span>Explicación para el Programador o SysAdmin: Receta de configuración y telemetría RFC</span>
                 </span>
-                <span className="font-mono text-[10px] text-sky-300">Código Listo para Copiar</span>
+                <span className="font-mono text-[10px] text-[#EDEDED]">Código Listo para Copiar</span>
               </div>
 
               {/* Matriz de Puertos Auditados */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Server className="w-4 h-4 text-[#38bdf8]" />
+                  <h3 className="text-sm font-bold text-[#EDEDED] flex items-center gap-2">
+                    <Server className="w-4 h-4 text-[#bdbdbd]" />
                     <span>Revisión de Puertos Expuestos a Internet (Sondeo Seguro)</span>
                   </h3>
                   <span className="text-[11px] font-mono text-neutral-400">
@@ -501,15 +500,15 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                       if (isPort443) {
                         statusTitle = 'Abierto (Óptimo)';
                         subtitle = 'HTTPS Seguro';
-                        badgeColor = 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300';
+                        badgeColor = 'bg-white/[0.03] border-white/10 text-[#EDEDED]';
                       } else if (isPort80) {
                         statusTitle = 'Redirección HTTPS';
                         subtitle = 'Hacia puerto 443';
-                        badgeColor = 'bg-blue-500/15 border-blue-500/40 text-sky-300';
+                        badgeColor = 'bg-white/[0.03] border-white/10 text-[#EDEDED]';
                       } else {
                         statusTitle = 'Expuesto';
                         subtitle = 'Alerta de riesgo';
-                        badgeColor = 'bg-rose-500/15 border-rose-500/40 text-rose-300';
+                        badgeColor = 'bg-white/[0.03] border-white/10 text-[#ff4d4d]';
                       }
                     } else {
                       subtitle = 'Protegido';
@@ -518,9 +517,9 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                     return (
                       <div 
                         key={p.port}
-                        className={`p-2.5 rounded-xl border text-center ${badgeColor}`}
+                        className={`p-2.5 border text-center ${badgeColor}`}
                       >
-                        <div className="font-mono font-bold text-xs text-white">Puerto {p.port}</div>
+                        <div className="font-mono font-bold text-xs text-[#EDEDED]">Puerto {p.port}</div>
                         <div className="text-[10px] font-semibold mt-0.5">{statusTitle}</div>
                         <div className="text-[9px] opacity-70 mt-0.5">{subtitle}</div>
                       </div>
@@ -533,24 +532,24 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
               <HeaderResults headers={DEMO_REPORT.headers || []} />
 
               {/* RECETA DE CÓDIGO INTERACTIVA (NGINX / APACHE / CLOUDFLARE) */}
-              <div className="space-y-4 p-5 sm:p-6 rounded-2xl bg-black/70 border border-white/15">
+              <div className="space-y-4 p-5 sm:p-6 bg-[#080808] border border-white/15">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-0.5">
-                    <span className="text-xs font-mono text-[#38bdf8] uppercase font-bold block">
+                    <span className="text-xs font-mono text-[#bdbdbd] uppercase font-bold block">
                       Receta de Código para Remediación (5 Minutos)
                     </span>
-                    <h4 className="text-sm sm:text-base font-bold text-white">
+                    <h4 className="text-sm sm:text-base font-bold text-[#EDEDED]">
                       Aplica estas directivas para elevar la web a Grado A
                     </h4>
                   </div>
 
                   {/* Selector de Servidor */}
-                  <div className="inline-flex p-1 rounded-xl bg-white/10 border border-white/10 gap-1 text-xs">
+                  <div className="inline-flex p-1 bg-white/10 border border-white/10 gap-1 text-xs">
                     <button
                       type="button"
                       onClick={() => setActiveServerTab('nginx')}
-                      className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        activeServerTab === 'nginx' ? 'bg-[#0071e3] text-white shadow' : 'text-neutral-400 hover:text-white'
+                      className={`px-3 py-1.5 font-bold transition-all cursor-pointer ${
+                        activeServerTab === 'nginx' ? 'bg-[#EDEDED] text-[#080808] ' : 'text-neutral-400 hover:text-[#EDEDED]'
                       }`}
                     >
                       Nginx
@@ -558,8 +557,8 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                     <button
                       type="button"
                       onClick={() => setActiveServerTab('apache')}
-                      className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        activeServerTab === 'apache' ? 'bg-[#0071e3] text-white shadow' : 'text-neutral-400 hover:text-white'
+                      className={`px-3 py-1.5 font-bold transition-all cursor-pointer ${
+                        activeServerTab === 'apache' ? 'bg-[#EDEDED] text-[#080808] ' : 'text-neutral-400 hover:text-[#EDEDED]'
                       }`}
                     >
                       Apache
@@ -567,8 +566,8 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                     <button
                       type="button"
                       onClick={() => setActiveServerTab('cloudflare')}
-                      className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                        activeServerTab === 'cloudflare' ? 'bg-[#0071e3] text-white shadow' : 'text-neutral-400 hover:text-white'
+                      className={`px-3 py-1.5 font-bold transition-all cursor-pointer ${
+                        activeServerTab === 'cloudflare' ? 'bg-[#EDEDED] text-[#080808] ' : 'text-neutral-400 hover:text-[#EDEDED]'
                       }`}
                     >
                       Cloudflare
@@ -577,20 +576,20 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 </div>
 
                 {/* Bloque de Código con botón de copia */}
-                <div className="relative rounded-xl overflow-hidden bg-[#07090e] border border-white/10 p-4">
+                <div className="relative overflow-hidden bg-[#080808] border border-white/10 p-4">
                   <button
                     type="button"
                     onClick={() => {
                       const code = activeServerTab === 'nginx' ? nginxSnippet : activeServerTab === 'apache' ? apacheSnippet : cloudflareSnippet;
                       copyCode(code);
                     }}
-                    className="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-mono text-white transition-all flex items-center gap-1.5 cursor-pointer"
+                    className="absolute top-3 right-3 px-3 py-1.5 bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-mono text-[#EDEDED] transition-all flex items-center gap-1.5 cursor-pointer"
                   >
-                    {copiedSnippet ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedSnippet ? <Check className="w-3.5 h-3.5 text-[#EDEDED]" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedSnippet ? 'Copiado' : 'Copiar'}</span>
                   </button>
 
-                  <pre className="font-mono text-xs text-emerald-400 overflow-x-auto leading-relaxed pt-2">
+                  <pre className="font-mono text-xs text-[#EDEDED] overflow-x-auto leading-relaxed pt-2">
                     <code>
                       {activeServerTab === 'nginx' && nginxSnippet}
                       {activeServerTab === 'apache' && apacheSnippet}
@@ -599,7 +598,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                   </pre>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-neutral-300 font-mono">
+                <div className="p-3 bg-white/5 border border-white/10 text-xs text-neutral-300 font-mono">
                   <span>Comando de verificación posterior: </span>
                   <code className="text-sky-300">curl -I https://ejemplo-empresa-demo.pe</code>
                 </div>
@@ -622,16 +621,16 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
               href="/informe-ejemplo-defensati.pdf"
               target="_blank"
               download="informe-ejemplo-defensati.pdf"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs sm:text-sm font-bold transition-all shadow-lg shadow-blue-500/25 text-center flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+              className="w-full sm:w-auto px-6 py-3.5 bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Download className="w-4 h-4 text-sky-200" />
+              <Download className="w-4 h-4 text-[#EDEDED]" />
               <span>Descargar PDF de Ejemplo (2 Páginas)</span>
             </a>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <Link
                 href="/defensati"
-                className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-5 py-3.5 bg-white/5 hover:bg-white/10 border border-white/15 text-[#EDEDED] text-xs sm:text-sm font-bold transition-all text-center flex items-center justify-center gap-2"
               >
                 <span>Escanear mi Web</span>
                 <ArrowRight className="w-4 h-4" />
@@ -641,7 +640,7 @@ Set dynamic: Referrer-Policy = "strict-origin-when-cross-origin"`;
                 href={`${siteConfig.contact.whatsappLink}?text=${encodeURIComponent('Hola Martín, revisé el informe de ejemplo de DEFENSA TI (Negocio + Dev) y quiero consultar sobre la auditoría y blindaje para mi empresa.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-black text-xs sm:text-sm font-extrabold transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/30 active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto px-5 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-black text-xs sm:text-sm font-extrabold transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
               >
                 <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
                 <span>Consultar por WhatsApp</span>

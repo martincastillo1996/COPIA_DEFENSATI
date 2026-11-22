@@ -35,7 +35,7 @@ export default function CookieConsentBanner() {
       aria-label="Consentimiento de Cookies y Privacidad"
       className="fixed bottom-0 inset-x-0 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-md z-50 animate-in fade-in-50 slide-in-from-bottom-5 duration-500"
     >
-      <div className="p-3 sm:p-5 rounded-t-2xl sm:rounded-3xl bg-[#161618]/95 border border-white/15 shadow-2xl backdrop-blur-2xl text-[#f5f5f7] space-y-2 sm:space-y-4">
+      <div className="p-3 sm:p-5 -2xl bg-[#0d0d0d] border border-white/15 text-[#f5f5f7] space-y-2 sm:space-y-4">
 
         {/* Móvil: una sola línea para no tapar el titular ni los botones */}
         <p className="sm:hidden text-[11px] text-neutral-300 leading-snug">
@@ -44,11 +44,11 @@ export default function CookieConsentBanner() {
 
         <div className="hidden sm:flex items-start justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-[#0071e3]/15 border border-[#0071e3]/30 flex items-center justify-center text-[#2997ff]">
+            <div className="w-9 h-9 bg-white/[0.06] border border-white/20 flex items-center justify-center text-[#bdbdbd]">
               <Cookie className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white tracking-tight">Privacidad & Cookies</h4>
+              <h4 className="text-sm font-bold text-[#EDEDED] tracking-tight">Privacidad & Cookies</h4>
               <p className="text-[11px] text-neutral-400">Ley Peruana N° 29733 (LPDP)</p>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default function CookieConsentBanner() {
             type="button"
             onClick={handleEssentialOnly}
             aria-label="Cerrar banner de cookies"
-            className="p-1 rounded-xl hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
+            className="p-1 hover:bg-white/10 text-neutral-400 hover:text-[#EDEDED] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -71,7 +71,7 @@ export default function CookieConsentBanner() {
           <button
             type="button"
             onClick={handleAccept}
-            className="flex-1 py-2 px-4 rounded-xl bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-semibold shadow-lg shadow-[#0071e3]/30 transition-all active:scale-[0.98]"
+            className="flex-1 py-2 px-4 bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] text-xs font-semibold transition-all"
           >
             Aceptar Todas
           </button>
@@ -79,14 +79,14 @@ export default function CookieConsentBanner() {
           <button
             type="button"
             onClick={handleEssentialOnly}
-            className="py-2 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-medium transition-all active:scale-[0.98]"
+            className="py-2 px-4 bg-white/5 hover:bg-white/10 border border-white/10 text-[#EDEDED] text-xs font-medium transition-all"
           >
             Solo Esenciales
           </button>
         </div>
 
         <div className="hidden sm:flex text-[10px] text-neutral-500 items-center gap-1.5 pt-1 border-t border-white/5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <ShieldCheck className="w-3.5 h-3.5 text-[#EDEDED]" />
           <span>Datos cifrados de extremo a extremo sin venta a terceros</span>
         </div>
 

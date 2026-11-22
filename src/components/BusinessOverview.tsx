@@ -54,6 +54,7 @@ export default function BusinessOverview({ report }: Props) {
     ? 'yellow'
     : 'green';
 
+  const portsScanned = Boolean(report.ports?.length);
   const dbStatus: 'green' | 'yellow' | 'red' = hasOpenAdminPorts
     ? 'red'
     : 'green';
@@ -70,30 +71,30 @@ export default function BusinessOverview({ report }: Props) {
     switch (status) {
       case 'green':
         return {
-          container: 'bg-emerald-500/10 border-emerald-500/30',
-          icon: <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />,
+          container: 'bg-white/[0.03] border-white/10',
+          icon: <CheckCircle2 className="w-5 h-5 text-[#EDEDED] shrink-0 mt-0.5" />,
           badge: (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+            <span className="px-2 py-0.5 text-[10px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
               🟢 Óptimo
             </span>
           )
         };
       case 'yellow':
         return {
-          container: 'bg-amber-500/10 border-amber-500/30',
-          icon: <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />,
+          container: 'bg-white/[0.03] border-white/10',
+          icon: <AlertTriangle className="w-5 h-5 text-[#EDEDED] shrink-0 mt-0.5" />,
           badge: (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+            <span className="px-2 py-0.5 text-[10px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
               🟡 Advertencia
             </span>
           )
         };
       case 'red':
         return {
-          container: 'bg-rose-500/10 border-rose-500/30',
-          icon: <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />,
+          container: 'bg-white/[0.03] border-white/10',
+          icon: <ShieldAlert className="w-5 h-5 text-[#ff4d4d] shrink-0 mt-0.5" />,
           badge: (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">
+            <span className="px-2 py-0.5 text-[10px] font-bold bg-white/[0.03] text-[#ff4d4d] border border-white/10">
               🔴 Crítico
             </span>
           )
@@ -106,10 +107,10 @@ export default function BusinessOverview({ report }: Props) {
       
       {/* Banner de Alerta Máxima por Fuga de Archivos Sensibles */}
       {report.sensitiveFiles?.hasExposedFiles && (
-        <div className="p-5 rounded-2xl bg-rose-950/40 border border-rose-500/50 text-rose-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl animate-pulse">
-          <AlertTriangle className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+        <div className="p-5 bg-white/[0.03] border border-white/10 text-[#ff4d4d] text-xs sm:text-sm flex items-start gap-3.5">
+          <AlertTriangle className="w-6 h-6 text-[#ff4d4d] shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <span className="font-bold text-white text-base">⚠️ Fuga Crítica de Archivos Confidenciales Detectada</span>
+            <span className="font-bold text-[#EDEDED] text-base">⚠️ Fuga Crítica de Archivos Confidenciales Detectada</span>
             <p className="text-rose-100 leading-relaxed">
               Se detectaron archivos de configuración o código fuente expuestos a internet público: {' '}
               <strong>{report.sensitiveFiles.findings.map(f => f.name).join(', ')}</strong>.
@@ -121,10 +122,10 @@ export default function BusinessOverview({ report }: Props) {
 
       {/* Banner de Alerta Crítica por Anomalías de Malware en Portada */}
       {report.malware?.isInfectedOrSuspicious && (
-        <div className="p-5 rounded-2xl bg-rose-950/40 border border-rose-500/50 text-rose-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl animate-pulse">
-          <AlertTriangle className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+        <div className="p-5 bg-white/[0.03] border border-white/10 text-[#ff4d4d] text-xs sm:text-sm flex items-start gap-3.5">
+          <AlertTriangle className="w-6 h-6 text-[#ff4d4d] shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <span className="font-bold text-white text-base">🚨 Alerta de Seguridad: Posible Infección o Código Ofuscado en Portada</span>
+            <span className="font-bold text-[#EDEDED] text-base">🚨 Alerta de Seguridad: Posible Infección o Código Ofuscado en Portada</span>
             <p className="text-rose-100 leading-relaxed">
               {report.malware.description}
             </p>
@@ -134,10 +135,10 @@ export default function BusinessOverview({ report }: Props) {
 
       {/* Banner de Explicación de Caso Especial (Google, Cloudflare, etc.) */}
       {isGoogleOrGiant && (
-        <div className="p-5 rounded-2xl bg-[#0f172a] border border-blue-500/30 text-blue-200 text-xs sm:text-sm flex items-start gap-3.5 shadow-xl">
-          <HelpCircle className="w-5 h-5 text-[#2997ff] shrink-0 mt-0.5" />
+        <div className="p-5 bg-[#0f172a] border border-white/10 text-[#EDEDED] text-xs sm:text-sm flex items-start gap-3.5">
+          <HelpCircle className="w-5 h-5 text-[#bdbdbd] shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <span className="font-semibold text-white">¿Por qué un gigante como este obtiene Grado {report.grade || 'B'}?</span>
+            <span className="font-semibold text-[#EDEDED]">¿Por qué un gigante como este obtiene Grado {report.grade || 'B'}?</span>
             <p className="text-neutral-200 leading-relaxed">
               Empresas masivas como Google priorizan la compatibilidad global con navegadores muy antiguos y utilizan listas de precarga nativas del navegador (<strong>HSTS Preload</strong> en Chrome). Sin embargo, <strong>para una empresa o comercio local</strong>, omitir estas cabeceras significa no tener ninguna protección ante ataques de suplantación.
             </p>
@@ -149,21 +150,21 @@ export default function BusinessOverview({ report }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         {/* Tarjeta 1: Riesgo de Marca y Phishing */}
-        <div className="p-6 rounded-3xl bg-[#161618] border border-white/10 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="p-6 bg-[#0d0d0d] border border-white/10 flex flex-col justify-between space-y-4">
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-wider text-neutral-400 font-semibold">Suplantación de Marca</span>
               {hasClickjackingRisk ? (
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                <span className="px-2.5 py-0.5 text-[11px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
                   Riesgo Medio
                 </span>
               ) : (
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                <span className="px-2.5 py-0.5 text-[11px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
                   Blindado
                 </span>
               )}
             </div>
-            <h4 className="text-lg font-bold text-white">Clonación y Clickjacking</h4>
+            <h4 className="text-lg font-bold text-[#EDEDED]">Clonación y Clickjacking</h4>
             <p className="text-xs text-neutral-200 leading-relaxed font-normal">
               {isGoogleOrGiant
                 ? 'Infraestructura de Hiperescala: La plataforma gestiona directivas de aislamiento propias a nivel de red troncal, bloqueando intentos de incrustación.'
@@ -173,27 +174,27 @@ export default function BusinessOverview({ report }: Props) {
             </p>
           </div>
           <div className="text-xs text-neutral-400 flex items-center gap-2 pt-3 border-t border-white/10">
-            <Users className="w-4 h-4 text-[#2997ff]" />
+            <Users className="w-4 h-4 text-[#bdbdbd]" />
             <span>Impacto: Reputación y confianza de clientes</span>
           </div>
         </div>
 
         {/* Tarjeta 2: Fuga de Ventas y Advertencias */}
-        <div className="p-6 rounded-3xl bg-[#161618] border border-white/10 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="p-6 bg-[#0d0d0d] border border-white/10 flex flex-col justify-between space-y-4">
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-wider text-neutral-400 font-semibold">Conversión y Ventas</span>
               {hasDowngradeRisk ? (
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                <span className="px-2.5 py-0.5 text-[11px] font-bold bg-white/[0.03] text-[#ff4d4d] border border-white/10">
                   Pérdida Potencial
                 </span>
               ) : (
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                <span className="px-2.5 py-0.5 text-[11px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
                   Óptimo
                 </span>
               )}
             </div>
-            <h4 className="text-lg font-bold text-white">Fricción en el Navegador</h4>
+            <h4 className="text-lg font-bold text-[#EDEDED]">Fricción en el Navegador</h4>
             <p className="text-xs text-neutral-200 leading-relaxed font-normal">
               {isGoogleOrGiant
                 ? 'Cifrado forzado a nivel de navegador (HSTS Preload nativo en Chromium). No sufre riesgo de degradación a HTTP.'
@@ -203,35 +204,41 @@ export default function BusinessOverview({ report }: Props) {
             </p>
           </div>
           <div className="text-xs text-neutral-400 flex items-center gap-2 pt-3 border-t border-white/10">
-            <TrendingDown className="w-4 h-4 text-rose-400" />
+            <TrendingDown className="w-4 h-4 text-[#ff4d4d]" />
             <span>Impacto: Hasta 23% de rebote en pagos</span>
           </div>
         </div>
 
         {/* Tarjeta 3: Intrusión Perimetral */}
-        <div className="p-6 rounded-3xl bg-[#161618] border border-white/10 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="p-6 bg-[#0d0d0d] border border-white/10 flex flex-col justify-between space-y-4">
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-wider text-neutral-400 font-semibold">Acceso al Servidor</span>
-              {hasOpenAdminPorts ? (
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">
+              {!portsScanned ? (
+                <span className="px-2.5 py-0.5 text-[11px] font-bold text-neutral-400 border border-white/10">
+                  No evaluado
+                </span>
+              ) : hasOpenAdminPorts ? (
+                <span className="px-2.5 py-0.5 text-[11px] font-bold bg-white/[0.03] text-[#ff4d4d] border border-white/10">
                   Crítico
                 </span>
               ) : (
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                <span className="px-2.5 py-0.5 text-[11px] font-bold bg-white/[0.03] text-[#EDEDED] border border-white/10">
                   Protegido
                 </span>
               )}
             </div>
-            <h4 className="text-lg font-bold text-white">Puertas de Administración</h4>
+            <h4 className="text-lg font-bold text-[#EDEDED]">Puertas de Administración</h4>
             <p className="text-xs text-neutral-200 leading-relaxed font-normal">
-              {hasOpenAdminPorts
+              {!portsScanned
+                ? 'No evaluado: este informe no incluye medición de puertos.'
+                : hasOpenAdminPorts
                 ? 'Se detectaron puertos de base de datos o administración (SSH/FTP) expuestos directamente a internet público sin firewall perimetral.'
                 : 'Los puertos críticos de administración y bases de datos están filtrados o cerrados al público exterior.'}
             </p>
           </div>
           <div className="text-xs text-neutral-400 flex items-center gap-2 pt-3 border-t border-white/10">
-            <DollarSign className="w-4 h-4 text-amber-400" />
+            <DollarSign className="w-4 h-4 text-[#EDEDED]" />
             <span>Impacto: Continuidad operativa y datos</span>
           </div>
         </div>
@@ -239,15 +246,15 @@ export default function BusinessOverview({ report }: Props) {
       </div>
 
       {/* Resumen Ejecutivo para Gerencia - Formato Ultra Claro y Humano */}
-      <div className="p-6 sm:p-7 rounded-3xl bg-[#141416] border border-white/10 shadow-2xl space-y-5">
+      <div className="p-6 sm:p-7 bg-[#0d0d0d] border border-white/10 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
           <div className="flex items-center gap-2.5">
-            <Building2 className="w-5 h-5 text-white" />
-            <h3 className="text-base font-bold text-white tracking-tight">
+            <Building2 className="w-5 h-5 text-[#EDEDED]" />
+            <h3 className="text-base font-bold text-[#EDEDED] tracking-tight">
               Diagnóstico en Términos de Negocio (Para el Dueño o Gerente)
             </h3>
           </div>
-          <div className="flex items-center gap-2 text-[11px] font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 w-fit">
+          <div className="flex items-center gap-2 text-[11px] font-mono px-3 py-1 bg-white/5 border border-white/10 text-neutral-300 w-fit">
             <span className="text-emerald-400 font-bold">🟢 Óptimo</span>
             <span>&bull;</span>
             <span className="text-amber-400 font-bold">🟡 Advertencia</span>
@@ -262,7 +269,7 @@ export default function BusinessOverview({ report }: Props) {
           {(() => {
             const styles = getTrafficLightStyles(sslStatus);
             return (
-              <div className={`flex items-start justify-between gap-3 p-3.5 rounded-2xl border transition-colors ${styles.container}`}>
+              <div className={`flex items-start justify-between gap-3 p-3.5 border transition-colors ${styles.container}`}>
                 <div className="flex items-start gap-3">
                   {styles.icon}
                   <div className="space-y-0.5">
@@ -283,7 +290,7 @@ export default function BusinessOverview({ report }: Props) {
           {(() => {
             const styles = getTrafficLightStyles(antiCloningStatus);
             return (
-              <div className={`flex items-start justify-between gap-3 p-3.5 rounded-2xl border transition-colors ${styles.container}`}>
+              <div className={`flex items-start justify-between gap-3 p-3.5 border transition-colors ${styles.container}`}>
                 <div className="flex items-start gap-3">
                   {styles.icon}
                   <div className="space-y-0.5">
@@ -306,9 +313,17 @@ export default function BusinessOverview({ report }: Props) {
 
           {/* 3. Accesos y Bases de Datos */}
           {(() => {
+            if (!portsScanned) {
+              return (
+                <div className="p-3.5 border border-white/10">
+                  <strong className="text-white block">3. Accesos y Bases de Datos:</strong>
+                  <span className="text-neutral-400">No evaluado: este informe no incluye medición de puertos.</span>
+                </div>
+              );
+            }
             const styles = getTrafficLightStyles(dbStatus);
             return (
-              <div className={`flex items-start justify-between gap-3 p-3.5 rounded-2xl border transition-colors ${styles.container}`}>
+              <div className={`flex items-start justify-between gap-3 p-3.5 border transition-colors ${styles.container}`}>
                 <div className="flex items-start gap-3">
                   {styles.icon}
                   <div className="space-y-0.5">
@@ -328,7 +343,7 @@ export default function BusinessOverview({ report }: Props) {
           {(() => {
             const styles = getTrafficLightStyles(privacyLawStatus);
             return (
-              <div className={`flex items-start justify-between gap-3 p-3.5 rounded-2xl border transition-colors ${styles.container}`}>
+              <div className={`flex items-start justify-between gap-3 p-3.5 border transition-colors ${styles.container}`}>
                 <div className="flex items-start gap-3">
                   {styles.icon}
                   <div className="space-y-0.5">

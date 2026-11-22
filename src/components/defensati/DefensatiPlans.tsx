@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check, ChevronDown, Search } from 'lucide-react';
-import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { ArrowRight } from 'lucide-react';
+import SectionHead from './SectionHead';
 import { DEFENSATI_WHATSAPP_MESSAGES } from '@/lib/whatsapp';
 import { trackServiceClick, trackWhatsAppClick } from '@/lib/analytics';
+import { P, PRICES } from '@/config/catalog';
+import { siteConfig } from '@/config/site';
 
 interface Props {
   targetUrl?: string;
@@ -12,13 +14,40 @@ interface Props {
 
 type SiteType = 'corp' | 'ecom';
 
-/**
- * Precios oficiales del catálogo DEFENSA TI (AGENTS.md, regla 7).
- * Un único selector de tipo de web ajusta todos los precios a la vez.
- */
+/** Botón "+" que gira a "×" al abrir. */
+function Toggle({ open }: { open: boolean }) {
+  return (
+    <span
+      aria-hidden
+      className={`w-9 h-9 shrink-0 grid place-items-center border font-mono text-lg transition-all duration-200 ${
+        open ? 'border-[#cfe3ee] text-[#0a0c0f] bg-[#cfe3ee] rotate-45' : 'border-white/15 text-[#cfe3ee] group-hover:border-[#cfe3ee]'
+      }`}
+    >
+      +
+    </span>
+  );
+}
+
+/** Contenedor desplegable con altura animada (CSS grid 0fr → 1fr). */
+function Collapse({ open, id, children }: { open: boolean; id?: string; children: React.ReactNode }) {
+  return (
+    <div
+      id={id}
+      className={`grid transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}
+      style={{ gridTemplateRows: open ? 'minmax(0, 1fr)' : 'minmax(0, 0fr)' }}
+    >
+      <div className="overflow-hidden">{children}</div>
+    </div>
+  );
+}
+
 export default function DefensatiPlans({ targetUrl }: Props) {
   const cleanUrl = targetUrl ? targetUrl.replace(/^https?:\/\//i, '').replace(/\/.*$/, '') : '';
   const [siteType, setSiteType] = useState<SiteType>('corp');
+  const [openPlan, setOpenPlan] = useState<string | null>(null);
+  const [showTerms, setShowTerms] = useState(false);
   const [showExtras, setShowExtras] = useState(false);
   const isShop = siteType === 'ecom';
 
@@ -27,17 +56,16 @@ export default function DefensatiPlans({ targetUrl }: Props) {
       id: isShop ? 'rescate_woocommerce' : 'rescate_corporativo',
       situation: 'Mi web ya tiene un problema',
       name: 'Rescate y limpieza de malware',
-      price: isShop ? 550 : 380,
+      price: isShop ? PRICES.rescateTienda : PRICES.rescateCorporativo,
       unit: 'pago único',
-      time: 'Lista en 24 a 48 horas',
-      accent: '#ff453a',
+      time: 'Resuelto en 24 a 48 horas',
       features: [
-        'Respaldo completo antes de tocar nada',
-        'Eliminamos virus, spam y accesos ocultos',
-        'Gestionamos el desbloqueo con tu hosting y con Google',
-        'Garantía de 30 días por escrito',
+        'Respaldo completo de archivos y base de datos antes de intervenir',
+        'Eliminación de virus, puertas traseras y scripts espías',
+        'Gestión formal del desbloqueo con hosting y Google Safe Browsing',
+        'Garantía por escrito de 30 días contra reinfección',
       ],
-      cta: 'Pedir rescate',
+      cta: 'Solicitar rescate urgente',
       href: isShop
         ? DEFENSATI_WHATSAPP_MESSAGES.precioRescateWooCommerce(cleanUrl)
         : DEFENSATI_WHATSAPP_MESSAGES.precioRescateCorporativo(cleanUrl),
@@ -46,41 +74,39 @@ export default function DefensatiPlans({ targetUrl }: Props) {
       id: 'blindaje_waf',
       situation: 'Funciona, pero quiero protegerla',
       name: 'Blindaje + Firewall Cloudflare',
-      price: 450,
+      price: PRICES.blindajeWaf,
       unit: 'pago único',
-      time: 'Lista en 3 a 5 días hábiles',
-      accent: '#38bdf8',
+      time: 'Listo en 3 a 5 días hábiles',
       features: [
-        'Firewall activo contra bots, scrapers y ataques',
-        'Cabeceras de seguridad estrictas (HSTS, CSP, X-Frame)',
-        'Ocultamos versiones de servidor y gestor de contenidos',
-        'Si tu calificación no mejora, te devolvemos el pago',
+        'Firewall WAF activo con reglas anti-scraping y anti-DDoS',
+        'Cabeceras de seguridad estrictas: HSTS, CSP, X-Frame-Options',
+        'Ocultamiento de firmas de servidor, PHP y gestor de contenidos',
+        'Si la auditoría no alcanza calificación Grado A, devolvemos el pago',
       ],
-      cta: 'Pedir blindaje',
+      cta: 'Implementar blindaje',
       href: DEFENSATI_WHATSAPP_MESSAGES.precioBlindajeWaf(cleanUrl),
     },
     {
       id: isShop ? 'mantenimiento_tiendas' : 'mantenimiento_basico',
-      situation: 'Quiero que alguien la vigile',
-      name: 'Mantenimiento mensual',
-      price: isShop ? 180 : 90,
+      situation: 'Quiero monitoreo preventivo continuo',
+      name: 'Mantenimiento y monitoreo',
+      price: isShop ? PRICES.mantenimientoTiendas : PRICES.mantenimientoBasico,
       unit: 'al mes, sin permanencia',
       time: 'Vigilancia continua 24/7',
-      accent: '#30d158',
       features: isShop
         ? [
-            'Revisamos que tu tienda esté en línea cada 5 minutos',
-            'Alerta prioritaria a tu WhatsApp si se cae',
-            'Re-escaneo de seguridad cada semana',
-            'Hasta 90 minutos de soporte prioritario al mes',
+            'Monitoreo perimetral continuo cada 5 minutos',
+            'Alerta inmediata a WhatsApp ante caídas o cambios DNS',
+            'Re-escaneo de vulnerabilidades cada semana',
+            'Hasta 90 minutos de soporte técnico prioritario al mes',
           ]
         : [
-            'Revisamos que tu web esté en línea cada 15 minutos',
-            'Aviso antes de que venza tu certificado SSL',
-            'Reporte mensual a tu WhatsApp',
-            'Hasta 40 minutos de soporte al mes',
+            'Monitoreo perimetral cada 15 minutos',
+            'Aviso con 15 días de anticipación al vencimiento de SSL',
+            'Reporte mensual técnico consolidado a WhatsApp',
+            'Hasta 40 minutos de soporte técnico al mes',
           ],
-      cta: 'Pedir mantenimiento',
+      cta: 'Activar monitoreo',
       href: isShop
         ? DEFENSATI_WHATSAPP_MESSAGES.precioMensualTiendas(cleanUrl)
         : DEFENSATI_WHATSAPP_MESSAGES.precioMensualBasico(cleanUrl),
@@ -90,192 +116,202 @@ export default function DefensatiPlans({ targetUrl }: Props) {
   const extras = [
     {
       id: 'correo_antispam',
-      name: 'Blindaje de correo y anti-spam',
-      detail: 'Tus correos dejan de caer en spam y nadie puede suplantar tu dominio (SPF, DKIM, DMARC).',
-      price: 'S/ 190',
-      pricePen: 190,
+      name: 'Blindaje de correo (SPF/DKIM/DMARC)',
+      price: P.correoSpfDkimDmarc,
+      pricePen: PRICES.correoSpfDkimDmarc,
       href: DEFENSATI_WHATSAPP_MESSAGES.upsellCorreoSpam(cleanUrl),
-    },
-    {
-      id: 'migracion_hosting',
-      name: 'Migración segura de hosting',
-      detail: 'Trasladamos tu web a un servidor mejor, con respaldo y sin que se caiga.',
-      price: isShop ? 'S/ 450' : 'S/ 290',
-      pricePen: isShop ? 450 : 290,
-      href: DEFENSATI_WHATSAPP_MESSAGES.upsellMigracionHosting(cleanUrl, siteType),
-    },
-    {
-      id: 'velocidad_wpo',
-      name: 'Optimización de velocidad',
-      detail: 'Tu web carga más rápido en celulares y mejora en Core Web Vitals.',
-      price: isShop ? 'S/ 480' : 'S/ 320',
-      pricePen: isShop ? 480 : 320,
-      href: DEFENSATI_WHATSAPP_MESSAGES.upsellVelocidadWpo(cleanUrl, siteType),
-    },
-    {
-      id: 'legal_anpdp',
-      name: 'Adecuación legal (Ley N° 29733)',
-      detail: 'Banner de cookies, políticas y cláusulas de consentimiento. Básica S/ 350, integral S/ 500.',
-      price: 'Desde S/ 350',
-      pricePen: 350,
-      href: DEFENSATI_WHATSAPP_MESSAGES.upsellLegalAnpdp(cleanUrl, 'basico'),
     },
     {
       id: 'pasarela_pago',
       name: 'Auditoría de pasarela de pago',
-      detail: 'Revisamos tu checkout (Niubiz, Culqi, Izipay, MercadoPago o Stripe) contra robo de datos.',
-      price: 'S/ 420',
-      pricePen: 420,
+      price: P.auditoriaPasarelas,
+      pricePen: PRICES.auditoriaPasarelas,
       href: DEFENSATI_WHATSAPP_MESSAGES.upsellPasarelaPago(cleanUrl),
+    },
+    {
+      id: 'migracion_hosting',
+      name: 'Migración de hosting sin caída',
+      price: isShop ? P.migracionTienda : P.migracionCorporativa,
+      pricePen: isShop ? PRICES.migracionTienda : PRICES.migracionCorporativa,
+      href: DEFENSATI_WHATSAPP_MESSAGES.upsellMigracionHosting(cleanUrl, isShop ? 'ecom' : 'corp'),
     },
   ];
 
   return (
-    <section id="servicios" className="relative w-full max-w-6xl xl:max-w-7xl mx-auto scroll-mt-24 text-left space-y-8 sm:space-y-10">
-      <div id="precios" className="absolute -top-24 pointer-events-none" />
-
-      {/* Cabecera */}
-      <div className="max-w-3xl space-y-4">
-        <p className="text-sm font-semibold text-[#38bdf8]">Precios</p>
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#f5f5f7] tracking-[-0.04em] leading-[1.06]">
-          Elige según lo que le pasa a tu web.
-        </h2>
-        <p className="text-base sm:text-lg text-[#a1a1a6] leading-relaxed">
-          Tres servicios, precio fijo en soles. Si no sabes cuál necesitas, empieza por el diagnóstico gratuito: no pagas nada hasta saber qué tiene tu web.
-        </p>
-      </div>
-
-      {/* Selector único de tipo de web */}
-      <div className="space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#86868b]">¿Qué tipo de web tienes?</p>
-        <div className="inline-flex p-1 rounded-full bg-white/[0.06] border border-white/10" role="group" aria-label="Tipo de web">
-          {[
-            { id: 'corp' as const, label: 'Web corporativa' },
-            { id: 'ecom' as const, label: 'Tienda online' },
-          ].map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              aria-pressed={siteType === option.id}
-              onClick={() => setSiteType(option.id)}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                siteType === option.id ? 'bg-[#f5f5f7] text-black shadow-md' : 'text-[#d1d1d6] hover:text-white'
-              }`}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Tres opciones */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
-        {plans.map((plan) => (
-          <article
-            key={plan.name}
-            className="rounded-[28px] sm:rounded-[32px] bg-[#141416] border border-white/10 hover:border-white/20 transition-colors duration-300 p-6 sm:p-8 flex flex-col gap-6"
-          >
-            <div className="space-y-3">
-              <p className="inline-flex items-center gap-2 text-sm font-semibold leading-snug" style={{ color: plan.accent }}>
-                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: plan.accent }} />
-                {plan.situation}
-              </p>
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#f5f5f7] tracking-[-0.03em] leading-tight">{plan.name}</h3>
-            </div>
-
-            <div className="space-y-1">
-              <p className="flex items-baseline gap-2 flex-wrap">
-                <span className="text-5xl sm:text-6xl font-semibold tracking-[-0.045em] text-white tabular-nums">S/ {plan.price}</span>
-                <span className="text-sm text-[#a1a1a6]">{plan.unit}</span>
-              </p>
-              <p className="text-sm text-[#a1a1a6]">{plan.time}</p>
-            </div>
-
-            <ul className="space-y-2.5 flex-1">
-              {plan.features.map((feature) => (
-                <li key={feature} className="flex items-start gap-2.5 text-sm text-[#d1d1d6] leading-snug">
-                  <Check className="w-4 h-4 shrink-0 mt-0.5" style={{ color: plan.accent }} />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href={plan.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                trackServiceClick({ serviceName: plan.name, pricePen: plan.price, serviceId: plan.id });
-                trackWhatsAppClick({ service: plan.id, placement: 'pricing_card', domain: cleanUrl });
-              }}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-black font-semibold text-base transition-all"
-            >
-              <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-              <span>{plan.cta}</span>
-            </a>
-          </article>
-        ))}
-      </div>
-
-      {/* Condiciones en una línea clara */}
-      <div className="rounded-[24px] bg-[#0e1118] border border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-2 text-sm text-[#d1d1d6] leading-snug">
-          <li><strong className="text-white font-semibold">Pagas en dos partes.</strong> Rescate y blindaje: 50 % al empezar y 50 % al verificar. El mantenimiento se paga mes a mes.</li>
-          <li><strong className="text-white font-semibold">Yape, Plin o transferencia.</strong> Con factura o boleta electrónica.</li>
-          <li><strong className="text-white font-semibold">Sin sorpresas.</strong> El precio que ves es el precio final.</li>
-        </ul>
-        <a
-          href="#escaner-gratis"
-          className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-[0.98] text-white font-semibold text-sm transition-all"
-        >
-          <Search className="w-4 h-4 shrink-0" />
-          <span>Empezar con el diagnóstico gratis</span>
-        </a>
-      </div>
-
-      {/* Servicios adicionales, plegados */}
-      <div className="rounded-[24px] bg-[#141416] border border-white/10 overflow-hidden">
-        <button
-          type="button"
-          aria-expanded={showExtras}
-          onClick={() => setShowExtras((prev) => !prev)}
-          className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer hover:bg-white/[0.03] transition-colors"
-        >
-          <span>
-            <span className="block text-base sm:text-lg font-semibold text-[#f5f5f7]">Servicios adicionales</span>
-            <span className="block text-sm text-[#a1a1a6] leading-snug">Correo, migración, velocidad, adecuación legal y pasarelas de pago.</span>
-          </span>
-          <ChevronDown className={`w-5 h-5 shrink-0 text-[#38bdf8] transition-transform duration-200 ${showExtras ? 'rotate-180' : ''}`} />
-        </button>
-
-        {showExtras && (
-          <ul className="border-t border-white/10 divide-y divide-white/10">
-            {extras.map((extra) => (
-              <li key={extra.id} className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="space-y-1 max-w-xl">
-                  <p className="text-base font-semibold text-[#f5f5f7] leading-snug">{extra.name}</p>
-                  <p className="text-sm text-[#a1a1a6] leading-snug">{extra.detail}</p>
-                </div>
-                <div className="flex items-center gap-4 shrink-0">
-                  <span className="text-lg font-semibold text-white tabular-nums whitespace-nowrap">{extra.price}</span>
-                  <a
-                    href={extra.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      trackServiceClick({ serviceName: extra.name, pricePen: extra.pricePen, serviceId: extra.id });
-                      trackWhatsAppClick({ service: extra.id, placement: 'pricing_extras', domain: cleanUrl });
-                    }}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/12 text-[#f5f5f7] font-semibold text-sm transition-all"
-                  >
-                    <WhatsAppIcon className="w-3.5 h-3.5 fill-[#25D366] shrink-0" />
-                    <span>Consultar</span>
-                  </a>
-                </div>
-              </li>
+    <section id="servicios" className="scroll-mt-24 space-y-10">
+      <SectionHead
+        index="07"
+        label="Contención · Precios"
+        title={
+          <>
+            Precios cerrados,
+            <br />
+            <span className="text-[#8b97a2]">sin sorpresas.</span>
+          </>
+        }
+      />
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 lg:col-span-9 lg:col-start-4 space-y-8">
+          {/* Tipo de sitio: cambia los precios al instante */}
+          <div role="tablist" aria-label="Tipo de sitio" className="inline-flex border ed-line p-1 bg-[#0a0c0f]/70 backdrop-blur-sm">
+            {[
+              { id: 'corp' as SiteType, label: 'Web corporativa' },
+              { id: 'ecom' as SiteType, label: 'Tienda online' },
+            ].map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={siteType === id}
+                onClick={() => setSiteType(id)}
+                className={`hud-label !tracking-[0.18em] px-4 py-2.5 transition-colors duration-75 cursor-pointer select-none ${
+                  siteType === id ? '!text-[#0a0c0f] bg-[#e8edf1]' : 'hover:!text-[#e8edf1]'
+                }`}
+              >
+                {label}
+              </button>
             ))}
-          </ul>
-        )}
+          </div>
+
+          {/* Planes: el precio siempre a la vista, el detalle se despliega */}
+          <div className="border-t ed-line">
+            {plans.map((plan, i) => {
+              const open = openPlan === plan.id;
+              const recommended = plan.id === 'blindaje_waf';
+              return (
+                <article
+                  key={plan.id}
+                  className={`border-b ed-line backdrop-blur-sm transition-colors duration-150 ${
+                    open ? 'bg-[#0a0c0f]/85' : 'bg-[#0a0c0f]/45 hover:bg-[#0a0c0f]/75'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={`plan-${plan.id}`}
+                    onClick={() => setOpenPlan(open ? null : plan.id)}
+                    className="w-full grid grid-cols-12 items-center gap-x-4 gap-y-3 px-3 sm:px-5 py-5 sm:py-6 text-left cursor-pointer group focus-visible:outline focus-visible:outline-1 focus-visible:outline-[#cfe3ee]"
+                  >
+                    <span className="col-span-2 sm:col-span-1 font-mono text-[11px] tracking-[0.2em] text-[#7d8891]">0{i + 1}</span>
+                    <span className="col-span-10 sm:col-span-6">
+                      <span className="hud-label block">
+                        {plan.situation}
+                        {recommended && <span className="ml-2 !text-[#0a0c0f] bg-[#cfe3ee] px-1.5 py-0.5">Recomendado</span>}
+                      </span>
+                      <span className="mt-1.5 block text-xl sm:text-2xl font-light tracking-tight text-[#e8edf1]">{plan.name}</span>
+                    </span>
+                    <span className="col-span-9 col-start-3 sm:col-span-4 sm:col-start-auto sm:text-right">
+                      <span className="block text-4xl sm:text-5xl font-light tracking-[-0.04em] text-[#e8edf1] tabular-nums">
+                        S/ {plan.price}
+                      </span>
+                      <span className="hud-label block mt-1">{plan.unit}</span>
+                    </span>
+                    <span className="col-span-1 justify-self-end">
+                      <Toggle open={open} />
+                    </span>
+                  </button>
+                  <Collapse open={open} id={`plan-${plan.id}`}>
+                    <div className="grid grid-cols-12 gap-x-4 gap-y-5 px-3 sm:px-5 pb-6">
+                      <ul className="col-span-12 sm:col-span-6 sm:col-start-2 space-y-2">
+                        {plan.features.map((f) => (
+                          <li
+                            key={f}
+                            className="text-sm text-[#9aa6af] leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-[#4a535b]"
+                          >
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="col-span-12 sm:col-span-5 flex flex-col sm:items-end justify-between gap-4">
+                        <p className="hud-label">{plan.time}</p>
+                        <a
+                          href={plan.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => {
+                            trackServiceClick({ serviceName: plan.name, pricePen: plan.price, serviceId: plan.id });
+                            trackWhatsAppClick({ service: plan.id, placement: 'pricing_card', domain: cleanUrl });
+                          }}
+                          className={`hud-btn group/btn ${recommended ? 'hud-btn-solid' : ''}`}
+                        >
+                          <span>{plan.cta}</span>
+                          <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                        </a>
+                      </div>
+                    </div>
+                  </Collapse>
+                </article>
+              );
+            })}
+          </div>
+
+          {/* Condiciones en una línea; el detalle se despliega */}
+          <div className="border-b ed-line">
+            <button
+              type="button"
+              aria-expanded={showTerms}
+              onClick={() => setShowTerms((v) => !v)}
+              className="w-full flex items-center justify-between gap-4 py-3 text-left cursor-pointer group"
+            >
+              <span className="hud-label !tracking-[0.18em] group-hover:!text-[#e8edf1]">
+                50% al iniciar · Factura o boleta · Sin permanencia
+              </span>
+              <Toggle open={showTerms} />
+            </button>
+            <Collapse open={showTerms}>
+              <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm pb-4">
+                <div>
+                  <dt className="hud-label">Pago</dt>
+                  <dd className="mt-1 text-[#9aa6af]">50% al iniciar y 50% tras verificar la mejora.</dd>
+                </div>
+                <div>
+                  <dt className="hud-label">Comprobante</dt>
+                  <dd className="mt-1 text-[#9aa6af]">Factura o boleta con RUC {siteConfig.business.ruc}.</dd>
+                </div>
+                <div>
+                  <dt className="hud-label">Permanencia</dt>
+                  <dd className="mt-1 text-[#9aa6af]">Ninguna. El monitoreo se cancela cuando quieras.</dd>
+                </div>
+              </dl>
+            </Collapse>
+          </div>
+
+          {/* Servicios complementarios */}
+          <div className="border-b ed-line">
+            <button
+              type="button"
+              aria-expanded={showExtras}
+              onClick={() => setShowExtras((v) => !v)}
+              className="w-full flex items-center justify-between gap-4 py-3 text-left cursor-pointer group"
+            >
+              <span className="hud-label !tracking-[0.18em] group-hover:!text-[#e8edf1]">
+                Servicios complementarios · {extras.length}
+              </span>
+              <Toggle open={showExtras} />
+            </button>
+            <Collapse open={showExtras}>
+              <ul className="pb-2">
+                {extras.map((extra) => (
+                  <li key={extra.id} className="border-t ed-line">
+                    <a
+                      href={extra.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        trackServiceClick({ serviceName: extra.name, pricePen: extra.pricePen, serviceId: extra.id });
+                        trackWhatsAppClick({ service: extra.id, placement: 'pricing_extras', domain: cleanUrl });
+                      }}
+                      className="flex items-baseline justify-between gap-4 py-4 px-2 -mx-2 text-[#e8edf1] transition-colors duration-75 hover:bg-[#e8edf1] hover:text-[#0a0c0f]"
+                    >
+                      <span className="text-base font-light">{extra.name}</span>
+                      <span className="font-mono text-sm shrink-0 tabular-nums">{extra.price} →</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Collapse>
+          </div>
+        </div>
       </div>
     </section>
   );

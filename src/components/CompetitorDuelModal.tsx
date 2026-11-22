@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Swords, X, ArrowRight, Loader2, CheckCircle2, ShieldAlert, ExternalLink } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { P } from '@/config/catalog';
 
 interface CompetitorDuelModalProps {
   isOpen: boolean;
@@ -51,6 +52,7 @@ export default function CompetitorDuelModal({
         body: JSON.stringify({
           url: target,
           legalConsentAccepted: true,
+          comparison: true,
         }),
       });
 
@@ -85,20 +87,20 @@ export default function CompetitorDuelModal({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl rounded-3xl bg-[#12141c] border border-white/15 p-6 sm:p-8 shadow-2xl space-y-6 text-left overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080808] animate-in fade-in duration-200">
+      <div className="relative w-full max-w-2xl bg-[#12141c] border border-white/15 p-6 sm:p-8 space-y-6 text-left overflow-hidden">
         
         {/* Glow Superior */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#0071e3]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-40 hidden blur-3xl pointer-events-none" />
 
         {/* Encabezado */}
         <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#0071e3]/15 border border-[#0071e3]/30 text-[#38bdf8] flex items-center justify-center">
+            <div className="w-9 h-9 bg-white/[0.06] border border-white/20 text-[#bdbdbd] flex items-center justify-center">
               <Swords className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white tracking-tight">
+              <h3 className="text-lg font-bold text-[#EDEDED] tracking-tight">
                 Duelo de Ciberseguridad: Tú vs. Tu Competidor
               </h3>
               <p className="text-xs text-neutral-400">
@@ -109,7 +111,7 @@ export default function CompetitorDuelModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-all cursor-pointer"
+            className="p-1.5 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-[#EDEDED] transition-all cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -138,15 +140,15 @@ export default function CompetitorDuelModal({
               placeholder="https://competidor.pe"
               value={competitorUrl}
               onChange={(e) => setCompetitorUrl(e.target.value)}
-              className="flex-1 bg-black/50 border border-white/15 rounded-xl py-2.5 px-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#0071e3] transition-all"
+              className="flex-1 bg-[#080808] border border-white/15 py-2.5 px-3.5 text-sm text-[#EDEDED] placeholder-neutral-500 focus:outline-none focus:border-white/20 transition-all"
             />
             <button
               type="submit"
               disabled={loading || !competitorUrl.trim() || !legalConsent}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
+              className={`px-5 py-2.5 text-xs font-bold transition-all flex items-center gap-2 shrink-0 ${
                 loading || !competitorUrl.trim() || !legalConsent
                   ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-60'
-                  : 'bg-[#0071e3] hover:bg-[#0077ed] text-white shadow-lg shadow-[#0071e3]/30 cursor-pointer active:scale-95'
+                  : 'bg-[#EDEDED] text-[#080808] hover:bg-[#EDEDED] hover:text-[#080808] cursor-pointer '
               }`}
             >
               {loading ? (
@@ -162,21 +164,21 @@ export default function CompetitorDuelModal({
               )}
             </button>
           </div>
-          {error && <p className="text-xs text-rose-400">{error}</p>}
+          {error && <p className="text-xs text-[#ff4d4d]">{error}</p>}
         </form>
 
         {/* Tarjetas Cara a Cara */}
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
           {/* Tu Sitio */}
-          <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2">
-            <span className="text-[10px] uppercase font-mono text-[#38bdf8] font-bold block">
+          <div className="p-4 bg-white/[0.03] border border-white/10 space-y-2">
+            <span className="text-[10px] uppercase font-mono text-[#bdbdbd] font-bold block">
               Tu Sitio Web
             </span>
-            <span className="text-sm font-bold text-white truncate block">
+            <span className="text-sm font-bold text-[#EDEDED] truncate block">
               {cleanUserDomain}
             </span>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-black text-white font-mono">{userScore}</span>
+              <span className="text-3xl font-black text-[#EDEDED] font-mono">{userScore}</span>
               <span className="text-xs text-neutral-400 font-mono">/100 (Grado {userGrade})</span>
             </div>
             <p className="text-[11px] text-neutral-400">
@@ -185,7 +187,7 @@ export default function CompetitorDuelModal({
           </div>
 
           {/* Competidor */}
-          <div className="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+          <div className="p-4 bg-[#080808] border border-white/10 space-y-2">
             <span className="text-[10px] uppercase font-mono text-neutral-400 font-bold block">
               Tu Competidor
             </span>
@@ -220,19 +222,19 @@ export default function CompetitorDuelModal({
 
         {/* Veredicto de la Comparativa */}
         {competitorResult && (
-          <div className={`relative z-10 p-3.5 rounded-2xl border text-xs leading-relaxed space-y-1 ${
+          <div className={`relative z-10 p-3.5 border text-xs leading-relaxed space-y-1 ${
             isUserWinning
-              ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-300'
-              : 'bg-rose-950/20 border-rose-500/30 text-rose-300'
+              ? 'bg-white/[0.03] border-white/10 text-[#EDEDED]'
+              : 'bg-white/[0.03] border-white/10 text-[#ff4d4d]'
           }`}>
             <span className="font-bold flex items-center gap-1.5">
-              {isUserWinning ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <ShieldAlert className="w-4 h-4 text-rose-400" />}
+              {isUserWinning ? <CheckCircle2 className="w-4 h-4 text-[#EDEDED]" /> : <ShieldAlert className="w-4 h-4 text-[#ff4d4d]" />}
               {isUserWinning ? '¡Tu web supera a tu competencia en ciberseguridad!' : 'Tu competidor tiene mejor blindaje perimetral que tú'}
             </span>
             <p className="text-neutral-300 text-[11px]">
               {isUserWinning
                 ? `Tienes ${userScore - competitorResult.score} puntos más que ${competitorResult.domain}. Asegura esta ventaja comercial activando el monitoreo mensual para no degradar tu estándar.`
-                : `Tu competidor cuenta con mejor protección perimetral (${competitorResult.score} vs ${userScore}). Implementar el paquete unificado de Blindaje + WAF Cloudflare (S/ 450) cerrará esta brecha en 24h.`}
+                : `Tu competidor cuenta con mejor protección perimetral (${competitorResult.score} vs ${userScore}). Implementar el paquete unificado de Blindaje + WAF Cloudflare (${P.blindajeWaf}) cerrará esta brecha en 24h.`}
             </p>
           </div>
         )}
@@ -246,7 +248,7 @@ export default function CompetitorDuelModal({
             href={`https://wa.me/${whatsappNumber}?text=${whatsappMsg}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-black font-extrabold text-xs transition-all shadow-md cursor-pointer shrink-0"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-black font-extrabold text-xs transition-all cursor-pointer shrink-0"
           >
             <span>Consultar con Martín por WhatsApp</span>
             <ExternalLink className="w-3.5 h-3.5" />

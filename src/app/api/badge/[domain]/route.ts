@@ -27,8 +27,8 @@ export async function GET(request: Request, context: RouteContext) {
     badgeGrade = 'A';
   }
 
-  // Las grandes corporaciones de referencia (hiperescala) no son clientes auditados: su nota es
-  // una referencia fija, así que nunca obtienen sello por token ni por informes almacenados.
+  // Las grandes corporaciones de referencia (hiperescala) no son clientes auditados:
+  // nunca obtienen sello por token ni por informes almacenados.
   const isReferenceGiant = isHyperscalePlatform(cleanDomain);
 
   // 2. Verificación criptográfica mediante token firmado HMAC-SHA256
@@ -42,7 +42,8 @@ export async function GET(request: Request, context: RouteContext) {
   // 3. Verificación contra el almacén de reportes por auditId directo
   if (status === 'unverified' && !isReferenceGiant && auditId) {
     const report = getReportById(auditId);
-    if (report && !report.isHyperscale) {
+    // Un informe de auditoría completa es del cliente: no certifica ni desacredita en público
+    if (report && !report.isHyperscale && report.scanMode !== 'full') {
       const repDomain = normalizeDomain(report.url);
       // Dominio exacto (solo se ignora "www."): un informe ajeno no certifica a otro host
       if (stripWww(repDomain) === stripWww(cleanDomain)) {
@@ -60,7 +61,7 @@ export async function GET(request: Request, context: RouteContext) {
   // 4. Verificación retrospectiva contra el almacén en memoria por nombre de dominio
   if (status === 'unverified' && !isReferenceGiant) {
     const domainReport = getReportByDomain(cleanDomain);
-    if (domainReport && !domainReport.isHyperscale) {
+    if (domainReport && !domainReport.isHyperscale && domainReport.scanMode !== 'full') {
       if (domainReport.grade === 'A+' || domainReport.grade === 'A' || domainReport.score >= 85) {
         status = 'verified';
         badgeGrade = domainReport.grade || 'A';

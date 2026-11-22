@@ -19,6 +19,8 @@ export interface HeaderScanResult {
   score: number;
   grade: 'A+' | 'A' | 'B' | 'C' | 'D' | 'F';
   cookies?: CookieScanResult;
+  ttfb_ms?: number;
+  rawHeaders?: Record<string, string>;
   redirectAudit?: {
     followed: boolean;
     initialUrl: string;
@@ -80,6 +82,9 @@ export async function scanHeaders(targetUrl: string): Promise<HeaderScanResult> 
     'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
   };
 
+  const headerFetchStart = Date.now();
+  let ttfb_ms = 0;
+
   try {
     // Solo cabeceras (maxBytes 0), hasta 2 redirecciones validadas contra SSRF una a una,
     // con la IP comprobada en el momento de conectar.
@@ -89,6 +94,7 @@ export async function scanHeaders(targetUrl: string): Promise<HeaderScanResult> 
       maxBytes: 0,
       maxRedirects: 2,
     });
+    ttfb_ms = Math.max(1, Date.now() - headerFetchStart);
 
     responseHeaders = response.headers;
     rawSetCookie = response.headers.get('set-cookie');
@@ -128,12 +134,21 @@ export async function scanHeaders(targetUrl: string): Promise<HeaderScanResult> 
   // Auditar cookies Set-Cookie
   const cookieAudit = auditCookies(rawSetCookie);
 
+  const rawHeadersMap: Record<string, string> = {};
+  if (responseHeaders) {
+    responseHeaders.forEach((val, key) => {
+      rawHeadersMap[key.toLowerCase()] = val;
+    });
+  }
+
   return {
     headers: results,
     missingHeaders: missing,
     score: 0,
     grade: 'F',
     cookies: cookieAudit,
+    ttfb_ms,
+    rawHeaders: rawHeadersMap,
     redirectAudit: {
       followed: currentUrl !== targetUrl,
       initialUrl: targetUrl,

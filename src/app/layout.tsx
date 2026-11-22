@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nContext";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 import FloatingWhatsAppButton from "@/components/FloatingWhatsAppButton";
 import AiConsultantWidget from "@/components/AiConsultantWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import SiteChrome from "@/components/SiteChrome";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -94,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-black`}
+      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased bg-black`}
     >
       <head>
         <script
@@ -102,14 +109,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-black text-[#f5f5f7]">
+      <body className="min-h-full flex flex-col bg-[#080808] text-[#f5f5f7]">
         <I18nProvider>
           {children}
-          <CookieConsentBanner />
-          <FloatingWhatsAppButton />
-          <AiConsultantWidget />
+          <SiteChrome>
+            <CookieConsentBanner />
+            <FloatingWhatsAppButton />
+            <AiConsultantWidget />
+          </SiteChrome>
         </I18nProvider>
-        <GoogleAnalytics />
+        <SiteChrome>
+          <GoogleAnalytics />
+        </SiteChrome>
       </body>
     </html>
   );
