@@ -233,13 +233,13 @@ export async function POST(req: Request) {
         engagement = await authorizeFull(hostname, typeof engagementId === 'string' ? engagementId : undefined);
         logEvent('scan.full', { engagement: engagement?.id, host: hostname, ip: clientIp, actor: authenticate(req)?.actor });
       } catch (err) {
-        if (!isLocalOrDev) {
+        if (!isLocalOrDev && !isPremiumKey && !adminRequest) {
           return NextResponse.json(
             { error: `Auditoría completa no autorizada: ${err instanceof Error ? err.message : 'sin autorización'}`, code: 'ENGAGEMENT_REQUIRED' },
             { status: 403 }
           );
         }
-        // En entorno local o dev con escaneo profundo activo, se permite continuar
+        // Con clave serial autorizada, petición de admin o flag de escaneo profundo activo, se permite continuar
       }
     }
 
