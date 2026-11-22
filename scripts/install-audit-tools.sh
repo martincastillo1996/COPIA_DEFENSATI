@@ -36,7 +36,10 @@ runuser -u "$APP_USER" -- env HOME="$(getent passwd "$APP_USER" | cut -d: -f6)" 
 echo "17 4 * * * $APP_USER /usr/local/bin/nuclei -update-templates -silent >/dev/null 2>&1" > /etc/cron.d/defensati-nuclei
 chmod 0644 /etc/cron.d/defensati-nuclei
 
-docker pull zaproxy/zap-stable
+systemctl start docker 2>/dev/null || true
+if [[ "${SKIP_ZAP:-0}" != "1" ]]; then
+  docker pull zaproxy/zap-stable || echo "Aviso: docker pull zap-stable falló o ZAP no está disponible. Puedes continuar."
+fi
 
 if [[ "${INSTALL_CHROME:-0}" == "1" ]]; then
   [[ "$(dpkg --print-architecture)" == "amd64" ]] || { echo "Chrome estable solo existe para amd64: instala un Chromium propio y define CHROME_PATH." >&2; exit 1; }
