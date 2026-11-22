@@ -154,7 +154,7 @@ export async function POST(req: Request) {
 
     // 0.05 Diferenciación de versiones: Lite (gratuita / pública) vs. Premium (clientes con clave serial)
     const rawKey = typeof serialKey === 'string' ? serialKey.trim() : typeof licenseKey === 'string' ? licenseKey.trim() : '';
-    const configuredKeys = (process.env.PREMIUM_SERIAL_KEYS || 'DEFENSA-VIP-2026,DTI-PREMIUM-2026')
+    const configuredKeys = (process.env.PREMIUM_SERIAL_KEYS || '')
       .split(',')
       .map((k) => k.trim().toLowerCase())
       .filter(Boolean);

@@ -115,7 +115,9 @@ export default function DefensatiHero({
               <span className="text-[10px] font-mono uppercase text-amber-400 shrink-0 font-bold">Clave Serial / Licencia:</span>
               <input
                 type="text"
-                placeholder="Ej. DEFENSA-VIP-2026"
+                placeholder="Tu clave de cliente"
+                autoComplete="off"
+                spellCheck={false}
                 value={serialKey || ''}
                 onChange={(e) => setSerialKey?.(e.target.value)}
                 className="w-full bg-black/60 border border-amber-500/30 px-2.5 py-1 text-xs font-mono text-amber-200 placeholder-amber-500/40 focus:outline-none focus:border-amber-400"
@@ -202,6 +204,7 @@ export default function DefensatiHero({
               if (error) setError(null);
             }}
             onExpire={() => setTurnstileToken(null)}
+            onError={() => setError?.('No se pudo cargar la verificación de Cloudflare. Recarga la página o desactiva bloqueadores de contenido.')}
           />
           {error && (
             <p className="flex items-center gap-2 font-mono text-xs text-[#ff6b6b]">

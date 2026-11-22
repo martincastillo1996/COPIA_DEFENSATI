@@ -32,6 +32,11 @@ export function useSecurityScan() {
       return;
     }
 
+    if (isPremiumMode && !serialKey.trim()) {
+      setError('Ingresa tu clave serial para la Auditoría Premium.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setReport(null);
@@ -39,9 +44,13 @@ export function useSecurityScan() {
     const startTime = Date.now();
     trackScanStart(finalUrl);
 
+    const controller = new AbortController();
+    const abortTimer = setTimeout(() => controller.abort(), isPremiumMode ? 200_000 : 120_000);
+
     try {
       const scanPromise = fetch('/api/scan', {
         method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           url: finalUrl,
@@ -76,9 +85,12 @@ export function useSecurityScan() {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Error de conexión con el motor perimetral';
+      const msg = err instanceof DOMException && err.name === 'AbortError'
+        ? 'La auditoría tardó demasiado en responder. Inténtalo de nuevo en unos minutos.'
+        : err instanceof Error ? err.message : 'Error de conexión con el motor perimetral';
       setError(msg);
     } finally {
+      clearTimeout(abortTimer);
       setLoading(false);
       try {
         turnstileRef.current?.reset();
@@ -87,7 +99,7 @@ export function useSecurityScan() {
         // Ignorar si no está montado
       }
     }
-  }, [url, legalConsent, turnstileToken]);
+  }, [url, legalConsent, turnstileToken, serialKey, isPremiumMode]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

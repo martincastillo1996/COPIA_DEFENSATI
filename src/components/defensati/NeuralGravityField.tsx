@@ -119,7 +119,15 @@ export default function NeuralGravityField({ className = '', global = false }: {
         pulses.push({ e: ei, dir: brain.edges[ei].a === node ? 1 : -1, t: 0, s: 0.03 + Math.random() * 0.03 });
       }
     };
+    // Impulso de "rueda virtual": teclas y clics reproducen el efecto del scroll (giro, zoom y cascada de neuronas)
+    let kick = 0, virt = 0;
+    const bump = (amount = 70) => { kick = Math.min(160, kick + amount); };
+    const onKey = (ev: KeyboardEvent) => {
+      if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+      if (ev.key.length === 1 || ev.key === 'Enter' || ev.key === 'Backspace' || ev.key === ' ') bump(55);
+    };
     const press = (ev: PointerEvent) => {
+      bump(90);
       waves.push({ x: ev.clientX, y: ev.clientY, r: 0 });
       for (let i = 0; i < N; i++) if (Math.hypot(px[i] - ev.clientX, py[i] - ev.clientY) < 160 && Math.random() < 0.5) fire(i);
     };
@@ -128,7 +136,10 @@ export default function NeuralGravityField({ className = '', global = false }: {
       ctx.clearRect(0, 0, w, h);
       const sMax = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const sp = global ? Math.min(1, window.scrollY / sMax) : 0;
-      const sv = global ? Math.abs(window.scrollY - lastScroll) : 0;
+      virt += kick * 0.0012;
+      const sv = Math.max(global ? Math.abs(window.scrollY - lastScroll) : 0, kick);
+      kick *= 0.92;
+      if (kick < 0.5) kick = 0;
       lastScroll = window.scrollY;
       const t = performance.now() / 1000;
       mouse.x += (mouse.tx - mouse.x) * 0.15;
@@ -165,14 +176,14 @@ export default function NeuralGravityField({ className = '', global = false }: {
 
       // cámara
       const wide = w > 900;
-      const zoom = 1 + Math.sin(sp * Math.PI) * 0.5;
+      const zoom = 1 + Math.sin(sp * Math.PI) * 0.5 + Math.min(0.35, kick * 0.003);
       const R = Math.max(w * (wide ? 0.42 : 0.85), h * 0.72) * zoom;
       const cx = w * (0.5 + Math.sin(sp * 6) * 0.08);
       const cy = h * (0.5 + Math.sin(sp * 5) * 0.08);
       const nx = mouse.in ? (mouse.x - w / 2) / w : 0;
       const ny = mouse.in ? (mouse.y - h / 2) / h : 0;
       spin += 0.0028;
-      const rotY = 1.1 + Math.sin(spin) * 0.35 + nx * 1.3 + sp * Math.PI * 1.6;
+      const rotY = 1.1 + Math.sin(spin) * 0.35 + nx * 1.3 + (sp + virt) * Math.PI * 1.6;
       const rotX = 0.1 + ny * 0.7 + Math.sin(sp * 4) * 0.15;
       const cr = Math.cos(rotY), sr = Math.sin(rotY), cxr = Math.cos(rotX), sxr = Math.sin(rotX);
       const beat = 1 + 0.02 * Math.sin(t * 2.0);
@@ -304,12 +315,14 @@ export default function NeuralGravityField({ className = '', global = false }: {
     window.addEventListener('resize', resize);
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerdown', press);
+    window.addEventListener('keydown', onKey);
     document.documentElement.addEventListener('mouseleave', leave);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerdown', press);
+      window.removeEventListener('keydown', onKey);
       document.documentElement.removeEventListener('mouseleave', leave);
     };
   }, [global]);

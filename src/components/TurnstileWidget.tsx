@@ -42,10 +42,14 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
     const containerRef = useRef<HTMLDivElement>(null);
     const widgetIdRef = useRef<string | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    // Callbacks en refs: evita re-renderizar el widget (y perder el token) en cada render del padre
+    const cbRef = useRef({ onVerify, onError, onExpire });
+    cbRef.current = { onVerify, onError, onExpire };
 
     const siteKey =
       process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY ||
-      '0x4AAAAAAF8DbY8yRfaTRdQP';
+      // En desarrollo local, el sitekey de prueba de Cloudflare (siempre aprueba) evita el error de dominio no autorizado
+      (process.env.NODE_ENV !== 'production' ? '1x00000000000000000000AA' : '0x4AAAAAAF8DbY8yRfaTRdQP');
 
     useImperativeHandle(ref, () => ({
       reset: () => {
@@ -103,13 +107,13 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
           theme,
           action,
           callback: (token: string) => {
-            onVerify(token);
+            cbRef.current.onVerify(token);
           },
           'error-callback': (errorCode: string) => {
-            if (onError) onError(errorCode);
+            cbRef.current.onError?.(errorCode);
           },
           'expired-callback': () => {
-            if (onExpire) onExpire();
+            cbRef.current.onExpire?.();
           },
         });
 
@@ -128,7 +132,7 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
           }
         }
       };
-    }, [isLoaded, siteKey, theme, action, onVerify, onError, onExpire]);
+    }, [isLoaded, siteKey, theme, action]);
 
     return (
       <div className={`flex justify-center my-3 transition-opacity duration-300 ${className}`}>
